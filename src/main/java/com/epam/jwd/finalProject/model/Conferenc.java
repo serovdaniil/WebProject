@@ -1,0 +1,60 @@
+package com.epam.jwd.finalProject.model;
+
+import java.util.Objects;
+
+public class Conferenc implements Entity {
+    private final Long id;
+    private final String name;
+    private final String description;
+    private final Category category;
+
+    public Conferenc(Long id, String name, String description, Category category) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.category = category;
+    }
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Conferenc)) return false;
+        Conferenc conferenc = (Conferenc) o;
+        return Objects.equals(id, conferenc.id) &&
+                Objects.equals(name, conferenc.name) &&
+                Objects.equals(description, conferenc.description) &&
+                Objects.equals(category, conferenc.category);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description, category);
+    }
+
+    @Override
+    public String toString() {
+        return "Conferenc{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", category=" + category +
+                '}';
+    }
+}
