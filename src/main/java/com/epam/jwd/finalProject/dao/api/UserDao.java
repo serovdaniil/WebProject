@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserDao {
-    boolean create(String email, String password);
+    Optional<User> create(String email, String password);
 
     boolean updatePasswordByLogin(String login, String password);
 

@@ -79,6 +79,8 @@
 <h3>Question</h3>
 <a href="/controller?command=show_questions">question all</a>
 <br>
+<a href="/controller?command=show_create_an_account">registration</a>
+<br>
 <c:choose>
     <c:when test="${not empty sessionScope.user}">
         <a href="/controller?command=logout">logout</a>
@@ -86,6 +88,7 @@
     <c:otherwise>
         <a href="/controller?command=show_login">login</a>
     </c:otherwise>
+
 </c:choose>
 </body>
 </html>

@@ -67,6 +67,8 @@ public enum CommandRegistry {
     ERROR(ShowErrorPageCommand.getInstance(), "show_error"),
     SHOW_LOGIN(ShowLoginPageCommand.getInstance(), "show_login", UNAUTHORIZED),
     LOGIN(LoginCommand.getInstance(), "login", UNAUTHORIZED),
+    SHOW_CREATE_AN_ACCOUNT(ShowCreateAnAccountCommand.getInstance(), "show_create_an_account", UNAUTHORIZED),
+    CREATE_AN_ACCOUNT(CreateAnAccountCommand.getInstance(), "create_an_account", UNAUTHORIZED),
     LOGOUT(LogoutCommand.getInstance(), "logout", USER, ADMIN),
     DEFAULT(ShowMainPageCommand.getInstance(), "");
 

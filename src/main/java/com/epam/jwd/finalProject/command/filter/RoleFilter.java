@@ -72,4 +72,5 @@ public class RoleFilter implements Filter {
                 .map(User::getRole)
                 .orElse(Role.UNAUTHORIZED);
     }
+
 }

@@ -27,7 +27,7 @@ public class MethodUserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean create(String email, String password) {
+    public Optional<User> create(String email, String password) {
         boolean result = false;
         LOG.info("Start create user");
         try (Connection connection = connectionPool.getConnection();
@@ -47,7 +47,7 @@ public class MethodUserDaoImpl implements UserDao {
         } catch (NullPointerException e) {
             LOG.error(e);
         }
-        return result;
+        return findByEmail(email);
     }
 
     @Override

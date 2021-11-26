@@ -27,6 +27,7 @@ public enum PagePaths {
     QUESTIONS("/WEB-INF/jsp/common/question/questions.jsp"),
 
     LOGIN("/WEB-INF/jsp/common/login.jsp"),
+    CREATEANACCOUNT("/WEB-INF/jsp/common/createAnAccount.jsp"),
     ERROR("/WEB-INF/jsp/common/error/error.jsp");
 
     private final String path;

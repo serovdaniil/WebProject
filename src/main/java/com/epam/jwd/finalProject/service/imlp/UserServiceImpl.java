@@ -36,4 +36,9 @@ public class UserServiceImpl implements UserService {
         final Optional<User> readUser = userDao.findByEmail(email);
         return readUser.filter(user -> user.getPassword().equals(password)); //todo: hash password
     }
+
+    @Override
+    public Optional<User> registration(String email, String password) {
+        return userDao.create(email,password);
+    }
 }
