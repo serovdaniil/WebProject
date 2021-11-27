@@ -3,6 +3,10 @@ package com.epam.jwd.finalProject.command.factory;
 import com.epam.jwd.finalProject.command.admin.category.*;
 import com.epam.jwd.finalProject.command.admin.conferenc.*;
 import com.epam.jwd.finalProject.command.admin.sectionConferenc.*;
+import com.epam.jwd.finalProject.command.admin.user.ReadUserByIdCommand;
+import com.epam.jwd.finalProject.command.admin.user.ShowUsersPageCommand;
+import com.epam.jwd.finalProject.command.admin.user.ShowReadUserByIdPageCommand;
+import com.epam.jwd.finalProject.command.admin.user.UpdateRoleCommand;
 import com.epam.jwd.finalProject.command.common.*;
 import com.epam.jwd.finalProject.command.common.category.*;
 import com.epam.jwd.finalProject.command.common.conferenc.FindConferencByNameCommand;
@@ -10,6 +14,7 @@ import com.epam.jwd.finalProject.command.common.conferenc.ShowConferencesPageCom
 import com.epam.jwd.finalProject.command.common.conferenc.ShowFindConferencByNameCommand;
 import com.epam.jwd.finalProject.command.common.question.ShowQuestionPageCommand;
 import com.epam.jwd.finalProject.command.common.sectionConferenc.*;
+import com.epam.jwd.finalProject.command.common.user.*;
 import com.epam.jwd.finalProject.command.error.ShowErrorPageCommand;
 import com.epam.jwd.finalProject.model.Role;
 
@@ -62,7 +67,17 @@ public enum CommandRegistry {
     REMOVE_CATEGORY(RemoveCategoryByIdCommand.getInstance(), "remove_category_by_id"),
     //Question
     SHOW_QUESTONS(ShowQuestionPageCommand.getInstance(), "show_questions"),
+    //User
+    SHOW_USERS(ShowUsersPageCommand.getInstance(), "show_users",ADMIN),
+    UPDATE_PASSWORD_BY_USER(UpdatePasswordCommand.getInstance(), "update_password_by_user",USER,ADMIN),
+    UPDATE_EMAIL_BY_USER(UpdateEmailCommand.getInstance(), "update_email_by_user",USER,ADMIN),
+    UPDATE_FIRST_NAME_BY_USER(UpdateFirstNameCommand.getInstance(), "update_first_name_by_user",USER,ADMIN),
+    UPDATE_LAST_NAME_BY_USER(UpdateLastNameCommand.getInstance(), "update_last_name_by_user",USER,ADMIN),
+    UPDATE_ROLE_BY_USER(UpdateRoleCommand.getInstance(), "update_role_by_user",ADMIN),
+    READ_USER_BY_ID(ReadUserByIdCommand.getInstance(), "read_user_by_id",ADMIN),
+    SHOW_READ_USER_BY_ID(ShowReadUserByIdPageCommand.getInstance(), "show_read_user_by_id",ADMIN),
 
+    SHOW_UPDATE_PASSWORD_BY_USER(ShowPerosnalInformationCommand.getInstance(), "show_personal_infomation",USER,ADMIN),
     //
     ERROR(ShowErrorPageCommand.getInstance(), "show_error"),
     SHOW_LOGIN(ShowLoginPageCommand.getInstance(), "show_login", UNAUTHORIZED),

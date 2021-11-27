@@ -1,6 +1,7 @@
 package com.epam.jwd.finalProject.controller;
 
 import com.epam.jwd.finalProject.command.factory.CommandRequest;
+import com.epam.jwd.finalProject.model.User;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -39,9 +40,9 @@ public class WrappingCommandRequest implements CommandRequest {
     }
 
     @Override
-    public Optional<Object> retrieveFromSession(String name) {
+    public Optional<User> retrieveFromSession(String name) {
         return Optional.ofNullable(request.getSession(false))
-                .map(session -> session.getAttribute(name));
+                .map(session -> (User) session.getAttribute(name));
     }
 
     @Override

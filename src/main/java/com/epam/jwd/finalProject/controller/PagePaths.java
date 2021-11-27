@@ -25,7 +25,9 @@ public enum PagePaths {
     IDCATEGORY("/WEB-INF/jsp/admin/category/idCategory.jsp"),
     REMOVECATEGORYBYID("/WEB-INF/jsp/admin/category/removeCategoryById.jsp"),
     QUESTIONS("/WEB-INF/jsp/common/question/questions.jsp"),
-
+    USERS("/WEB-INF/jsp/admin/user/users.jsp"),
+    PERSONALINFORMATION("/WEB-INF/jsp/personalAccount/personalInformation.jsp"),
+    READUSERBYID("/WEB-INF/jsp/admin/user/readUserById.jsp"),
     LOGIN("/WEB-INF/jsp/common/login.jsp"),
     CREATEANACCOUNT("/WEB-INF/jsp/common/createAnAccount.jsp"),
     ERROR("/WEB-INF/jsp/common/error/error.jsp");

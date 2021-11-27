@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="com.epam.jwd.finalProject.model.Role" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -17,7 +18,7 @@
 <a href="/controller?command=show_find_conferences_by_name">find Conferences by name</a>
 <br>
 <br>
-<a href="/controller?command=show_update_description_in_conferenc">update description in Conferenc by ID</a>
+<a href="${pageContext.request.contextPath}/controller?command=show_update_description_in_conferenc">update description in Conferenc by ID</a>
 <br>
 <br>
 <a href="/controller?command=show_find_conferenc_by_id">find Conferences by ID</a>
@@ -26,11 +27,20 @@
 <a href="/controller?command=show_remove_conferenc_by_id">remove Conferences by ID</a>
 <br>
 <br>
-<c:if test="${not empty sessionScope.user && sessionScope.user.role eq Role.ADMIN}">
-    <a href="/controller?command=show_create_conferenc">create conferenc</a>
+<c:if test="${not empty sessionScope.user && sessionScope.user.role eq Role.UNAUTHORIZED}">
+    <a href="${pageContext.request.contextPath}/controller?command=show_create_conferenc">create conferenc</a>
     <br>
 </c:if>
 <br>
+<c:if test="${not empty sessionScope.user && sessionScope.user.role eq Role.ADMIN}">
+    <a href="${pageContext.request.contextPath}/controller?command=show_users">show User</a>
+    <br>
+</c:if>
+<br>
+<c:if test="${not empty sessionScope.user && sessionScope.user.role eq Role.ADMIN}">
+    <a href="${pageContext.request.contextPath}/controller?command=show_read_user_by_id">Read user by id</a>
+    <br>
+</c:if>
 <br>
 <h3>SectionConferenc</h3>
 <a href="/controller?command=show_section_conferences">section Conferenc</a>
@@ -41,6 +51,7 @@
 <br>
 <a href="/controller?command=show_remove_section_conferenc_by_id">remove SectionConferences by ID</a>
 <br>
+
 <br>
 <a href="/controller?command=show_create_section_conferenc">create section conferenc</a>
 <br>
@@ -80,6 +91,10 @@
 <a href="/controller?command=show_questions">question all</a>
 <br>
 <a href="/controller?command=show_create_an_account">registration</a>
+<br>
+<h3>Personal information</h3>
+<br>
+<a href="/controller?command=show_personal_infomation">Personal information</a>
 <br>
 <c:choose>
     <c:when test="${not empty sessionScope.user}">

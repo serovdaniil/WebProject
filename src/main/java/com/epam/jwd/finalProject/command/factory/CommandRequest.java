@@ -1,5 +1,7 @@
 package com.epam.jwd.finalProject.command.factory;
 
+import com.epam.jwd.finalProject.model.User;
+
 import java.util.Optional;
 
 public interface CommandRequest {
@@ -12,7 +14,7 @@ public interface CommandRequest {
 
     boolean addToSession(String name, Object value);
 
-    Optional<Object> retrieveFromSession(String name);
+    Optional<User> retrieveFromSession(String name);
 
     void clearSession();
 

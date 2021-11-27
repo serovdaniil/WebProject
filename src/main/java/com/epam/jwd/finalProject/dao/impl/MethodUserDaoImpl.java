@@ -75,7 +75,7 @@ public class MethodUserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean updatePasswordByLogin(String login, String password) {
+    public Optional<User> updatePasswordByLogin(String login, String password) {
         LOG.info("START update password by login account");
         boolean result = false;
         try (Connection connection = connectionPool.getConnection();
@@ -93,7 +93,7 @@ public class MethodUserDaoImpl implements UserDao {
         } catch (NullPointerException e) {
             LOG.error(e);
         }
-        return result;
+        return findPasswordByLogin(login);
     }
 
     @Override
@@ -119,17 +119,14 @@ public class MethodUserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean updateEmail(Long id, String email) {
+    public Optional<User> updateEmail(Long id, String email) {
         LOG.info("START update email by id account");
         boolean result = false;
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_EMAIL_BY_ID_ACCOUNT)) {
             statement.setLong(2, id);
             statement.setString(1, email);
-            int rowCount = statement.executeUpdate();
-            if (rowCount != 0) {
-                result = true;
-            }
+            statement.executeUpdate();
             LOG.info("END update email by id account");
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
@@ -137,21 +134,17 @@ public class MethodUserDaoImpl implements UserDao {
         } catch (NullPointerException e) {
             LOG.error(e);
         }
-        return result;
+        return readById(id);
     }
 
     @Override
-    public boolean updateFirstName(Long id, String firstName) {
+    public Optional<User> updateFirstName(Long id, String firstName) {
         LOG.info("START update firstName by id account");
-        boolean result = false;
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_FIRSTNAME_BY_ID_ACCOUNT)) {
             statement.setLong(2, id);
             statement.setString(1, firstName);
-            int rowCount = statement.executeUpdate();
-            if (rowCount != 0) {
-                result = true;
-            }
+            statement.executeUpdate();
             LOG.info("END update firstName by id account");
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
@@ -159,21 +152,17 @@ public class MethodUserDaoImpl implements UserDao {
         } catch (NullPointerException e) {
             LOG.error(e);
         }
-        return result;
+        return readById(id);
     }
 
     @Override
-    public boolean updateLastName(Long id, String lastName) {
+    public Optional<User> updateLastName(Long id, String lastName) {
         LOG.info("START update lastName by id account");
-        boolean result = false;
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_LASTNAME_BY_ID_ACCOUNT)) {
             statement.setLong(2, id);
             statement.setString(1, lastName);
-            int rowCount = statement.executeUpdate();
-            if (rowCount != 0) {
-                result = true;
-            }
+            statement.executeUpdate();
             LOG.info("END update lastName by id account");
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
@@ -181,21 +170,17 @@ public class MethodUserDaoImpl implements UserDao {
         } catch (NullPointerException e) {
             LOG.error(e);
         }
-        return result;
+        return readById(id);
     }
 
     @Override
-    public boolean updateRole(Long idAccount, Long idRole) {
+    public Optional<User> updateRole(Long idAccount, Long idRole) {
         LOG.info("START update role by id account");
-        boolean result = false;
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_ROLE_BY_ID_ACCOUNT)) {
             statement.setLong(2, idAccount);
             statement.setLong(1, idRole);
-            int rowCount = statement.executeUpdate();
-            if (rowCount != 0) {
-                result = true;
-            }
+            statement.executeUpdate();
             LOG.info("END update role by id account");
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
@@ -203,7 +188,7 @@ public class MethodUserDaoImpl implements UserDao {
         } catch (NullPointerException e) {
             LOG.error(e);
         }
-        return result;
+        return readById(idAccount);
     }
 
     @Override
@@ -277,8 +262,6 @@ public class MethodUserDaoImpl implements UserDao {
             if (resultSet.next()) {
                 User user = extractUser(resultSet);
                 productOptional = Optional.of(user);
-
-                LOG.info(user.getPassword());
             }
             LOG.info("End find email by account");
         } catch (SQLException e) {
@@ -293,23 +276,23 @@ public class MethodUserDaoImpl implements UserDao {
     }
 
     @Override
-    public String findPasswordByLogin(String login) {
-        LOG.info("Start readAll account");
-        String password = "Not found";
+    public Optional<User> findPasswordByLogin(String login) {
+        LOG.info("Start find password by login");
+        Optional<User> productOptional = Optional.empty();
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_PASSWORD_BY_LOGIN)) {
             statement.setString(1, login);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                password = resultSet.getString("password");
+                User user = extractUser(resultSet);
+                productOptional = Optional.of(user);
             }
-            LOG.info("End readAll account");
-            return password;
-        } catch (SQLException e) {
+            LOG.info("End find password by login");
+        } catch (SQLException | EntityExtractionFailedException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", SqlQuery.FIND_PASSWORD_BY_LOGIN);
         }
-        return password;
+        return productOptional;
     }
 
     private static User extractUser(ResultSet resultSet) throws EntityExtractionFailedException {

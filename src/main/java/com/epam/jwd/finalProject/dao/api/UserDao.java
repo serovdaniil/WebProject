@@ -11,17 +11,17 @@ import java.util.Optional;
 public interface UserDao {
     Optional<User> create(String email, String password);
 
-    boolean updatePasswordByLogin(String login, String password);
+    Optional<User> updatePasswordByLogin(String login, String password);
 
     boolean updateLogin(Long id, String login);
 
-    boolean updateEmail(Long id, String email);
+    Optional<User> updateEmail(Long id, String email);
 
-    boolean updateFirstName(Long id, String firstName);
+    Optional<User> updateFirstName(Long id, String firstName);
 
-    boolean updateLastName(Long id, String lastName);
+    Optional<User> updateLastName(Long id, String lastName);
 
-    boolean updateRole(Long idAccount, Long idRole);
+    Optional<User> updateRole(Long idAccount, Long idRole);
 
     List<User> readAll() throws EntityExtractionFailedException;
 
@@ -33,7 +33,7 @@ public interface UserDao {
 
     Optional<User> findByEmail(String email);
 
-    String findPasswordByLogin(String login);
+    Optional<User> findPasswordByLogin(String login);
 
     static UserDao instance() {
         return MethodUserDaoImpl.getInstance();
