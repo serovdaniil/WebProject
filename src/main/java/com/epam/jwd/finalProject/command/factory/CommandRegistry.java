@@ -1,8 +1,6 @@
 package com.epam.jwd.finalProject.command.factory;
 
-import com.epam.jwd.finalProject.command.admin.application.FindByStatusResultApplicationCommand;
-import com.epam.jwd.finalProject.command.admin.application.ShowApplicationPageCommand;
-import com.epam.jwd.finalProject.command.admin.application.ShowFindByStatusResultApplicationPageCommand;
+import com.epam.jwd.finalProject.command.admin.application.*;
 import com.epam.jwd.finalProject.command.admin.category.*;
 import com.epam.jwd.finalProject.command.admin.conferenc.*;
 import com.epam.jwd.finalProject.command.admin.sectionConferenc.*;
@@ -11,7 +9,9 @@ import com.epam.jwd.finalProject.command.admin.user.ShowUsersPageCommand;
 import com.epam.jwd.finalProject.command.admin.user.ShowReadUserByIdPageCommand;
 import com.epam.jwd.finalProject.command.admin.user.UpdateRoleCommand;
 import com.epam.jwd.finalProject.command.common.*;
+import com.epam.jwd.finalProject.command.common.application.CreateApplicationCommand;
 import com.epam.jwd.finalProject.command.common.application.FindAccountIdByApplicationCommand;
+import com.epam.jwd.finalProject.command.common.application.ShowCreateApplicationPageCommand;
 import com.epam.jwd.finalProject.command.common.category.*;
 import com.epam.jwd.finalProject.command.common.conferenc.FindConferencByNameCommand;
 import com.epam.jwd.finalProject.command.common.conferenc.ShowConferencesPageCommand;
@@ -86,6 +86,11 @@ public enum CommandRegistry {
     SHOW_APPLICATIONS_BY_ACCOUNT(FindAccountIdByApplicationCommand.getInstance(), "show_applications_by_account"),
     FIND_BY_STATUS_RESULT_APPLICATION(FindByStatusResultApplicationCommand.getInstance(), "find_by_status_result_application",ADMIN),
     SHOW_FIND_BY_STATUS_RESULT_APPLICATION(ShowFindByStatusResultApplicationPageCommand.getInstance(), "show_find_by_status_result_application",ADMIN),
+    DELETE_APPLICATION(DeleteApplicationByIdCommand.getInstance(), "delete_application",ADMIN),
+    SHOW_DELETE_APPLICATION(ShowDeleteApplicationByIdPageCommand.getInstance(), "show_delete_application",ADMIN),
+    CREATE_APPLICATION(CreateApplicationCommand.getInstance(), "create_application",USER,ADMIN),
+    SHOW_CREATE_APPLICATION(ShowCreateApplicationPageCommand.getInstance(), "show_create_application",USER,ADMIN),
+    SHOW_PESONAL_ACCOUNT(ShowPersonalAccountPageCommand.getInstance(), "show_personal_account",USER,ADMIN),
 
     ERROR(ShowErrorPageCommand.getInstance(), "show_error"),
     SHOW_LOGIN(ShowLoginPageCommand.getInstance(), "show_login", UNAUTHORIZED),

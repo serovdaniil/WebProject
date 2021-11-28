@@ -18,7 +18,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public boolean create(Long idAccount, Long idSectionConferenc, Long idResultSection) {
-        return false;
+        return applicationDao.create(idAccount,idSectionConferenc,idResultSection);
     }
 
     @Override
@@ -102,6 +102,6 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public boolean remove(Long id) {
-        return false;
+        return applicationDao.delete(id);
     }
 }

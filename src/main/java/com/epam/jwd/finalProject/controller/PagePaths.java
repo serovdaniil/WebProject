@@ -1,6 +1,5 @@
 package com.epam.jwd.finalProject.controller;
 
-
 public enum PagePaths {
     INDEX("/"),
     MAIN("/WEB-INF/jsp/common/main.jsp"),
@@ -33,6 +32,9 @@ public enum PagePaths {
     APPLICATIONS("/WEB-INF/jsp/admin/application/applications.jsp"),
     APPLICATIONSBYACCOUNT("/WEB-INF/jsp/common/application/applicationsByAccount.jsp"),
     APPLICATIONSBYSTATUSRESULT("/WEB-INF/jsp/admin/application/findByStatusResultApplication.jsp"),
+    DELETEAPPLICATION("/WEB-INF/jsp/admin/application/deleteApplication.jsp"),
+    CREATEAPPLICATION("/WEB-INF/jsp/common/application/createApplication.jsp"),
+    PERSONALACCOUNT("/WEB-INF/jsp/personalAccount/personalAccount.jsp"),
 
     ERROR("/WEB-INF/jsp/common/error/error.jsp");
 

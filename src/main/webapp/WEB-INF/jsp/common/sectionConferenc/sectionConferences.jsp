@@ -9,6 +9,12 @@
     <p>Hello, ${sessionScope.user.firstName}</p>
 </c:if>
 <h3>avdsvas</h3>
+<form name="createApplication-form" action="/controller?command=create_application" method="post">
+    <label for="login-input">ID application:</label>
+    <input id="login-input" type="text" name="id" value=""/>
+    <input type="submit" value="Create"/>
+</form>
+<h3> ${requestScope.result}</h3>
 <table>
     <tr>
         <th>ID</th>

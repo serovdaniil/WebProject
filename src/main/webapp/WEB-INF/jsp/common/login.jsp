@@ -5,6 +5,7 @@
     <title>Log in</title>
 </head>
 <body>
+<%@include file="/WEB-INF/jsp/common/header.jsp" %>
 <h3>Please log in:</h3>
 <form name="login-form" action="/controller?command=login" method="post">
     <label for="login-input">Login:</label>
@@ -17,7 +18,17 @@
         <b>${requestScope.errorLoginPassMessage}</b>
         <br>
     </c:if>
-    <input type="submit" value="Log in"/>
+    <style>
+        <%@include file="/WEB-INF/css/loginStyle.css"%>
+    </style>
+    <div>
+        <button  id="login" class="button blue">
+            <i class="fa fa-unlock"></i>
+            <span>Log in</span>
+        </button>
+    </div>
+    <%-- <input type="submit" value="Log in">--%>
+</form>
 </form>
 </body>
 </html>

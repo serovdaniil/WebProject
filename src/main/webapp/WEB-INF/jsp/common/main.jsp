@@ -7,45 +7,54 @@
     <title>MAIN</title>
 </head>
 <body>
+<style>
+    <%@include file="/WEB-INF/css/welcomebackground.css"%>
+    <%@include file="/WEB-INF/css/loginStyle.css"%>
+</style>
+<ul>
+    <li><a href="/controller?command=">Home</a></li>
+    <li><a href="/controller?command=show_conferences">Conferenc</a></li>
+    <li><a href="/controller?command=show_categories">Category</a></li>
+    <li><a href="#">Сontacts</a></li>
+    <li><c:choose>
+        <c:when test="${not empty sessionScope.user}">
+            <a href="/controller?command=logout">logout</a>
+        </c:when>
+        <c:otherwise>
+            <a href="/controller?command=show_login">login</a>
+        </c:otherwise>
+    </c:choose></li>
+    <c:if test="${not empty sessionScope.user && sessionScope.user.role eq Role.UNAUTHORIZED}">
+        <li><a href="/controller?command=show_create_an_account">registration</a></li>
+    </c:if>
+    <c:if test="${not empty sessionScope.user}">
+        <li><a href="/controller?command=show_personal_account">Personal account</a></li>
+    </c:if>
+</ul>
+<br>
 <h1>World Hello</h1>
 <c:if test="${not empty sessionScope.user}">
     <p>Hello, ${sessionScope.user.firstName}</p>
     <p>${sessionScope.user.role}</p>
 </c:if>
-<p>sent from jsp</p>
 <br>
-<a href="/controller?command=show_applications">APPLICATIONS</a>
+<a href="/controller?command=show_delete_application">delete application</a>
+<br>
+<br>
+<a href="/controller?command=show_create_application">create application</a>
 <br>
 <br>
 <a href="/controller?command=show_find_by_status_result_application">Find application by status result</a>
 <br>
-<br>
-<a href="/controller?command=show_applications_by_account">Application by account page</a>
-<br>
-<br>
-<a href="/controller?command=show_conferences">Conferences page</a>
-<br>
+
 <a href="/controller?command=show_find_conferences_by_name">find Conferences by name</a>
 <br>
 <br>
-<a href="${pageContext.request.contextPath}/controller?command=show_update_description_in_conferenc">update description in Conferenc by ID</a>
+<a href="${pageContext.request.contextPath}/controller?command=show_update_description_in_conferenc">update description
+    in Conferenc by ID</a>
 <br>
 <br>
 <a href="/controller?command=show_find_conferenc_by_id">find Conferences by ID</a>
-<br>
-<br>
-<a href="/controller?command=show_remove_conferenc_by_id">remove Conferences by ID</a>
-<br>
-<br>
-<c:if test="${not empty sessionScope.user && sessionScope.user.role eq Role.UNAUTHORIZED}">
-    <a href="${pageContext.request.contextPath}/controller?command=show_create_conferenc">create conferenc</a>
-    <br>
-</c:if>
-<br>
-<c:if test="${not empty sessionScope.user && sessionScope.user.role eq Role.ADMIN}">
-    <a href="${pageContext.request.contextPath}/controller?command=show_users">show User</a>
-    <br>
-</c:if>
 <br>
 <c:if test="${not empty sessionScope.user && sessionScope.user.role eq Role.ADMIN}">
     <a href="${pageContext.request.contextPath}/controller?command=show_read_user_by_id">Read user by id</a>
@@ -61,10 +70,6 @@
 <br>
 <a href="/controller?command=show_remove_section_conferenc_by_id">remove SectionConferences by ID</a>
 <br>
-
-<br>
-<a href="/controller?command=show_create_section_conferenc">create section conferenc</a>
-<br>
 <br>
 <a href="/controller?command=show_update_description_in_section_conferenc">update description in SectionConferenc by
     ID</a>
@@ -77,8 +82,6 @@
 <br>
 <br>
 <h3>Category</h3>
-<a href="/controller?command=show_categories">categories all</a>
-<br>
 <a href="/controller?command=show_create_category">add category</a>
 <br>
 <br>
@@ -96,24 +99,5 @@
 <br>
 <a href="/controller?command=show_remove_category_by_id">remove category</a>
 <br>
-<br>
-<h3>Question</h3>
-<a href="/controller?command=show_questions">question all</a>
-<br>
-<a href="/controller?command=show_create_an_account">registration</a>
-<br>
-<h3>Personal information</h3>
-<br>
-<a href="/controller?command=show_personal_infomation">Personal information</a>
-<br>
-<c:choose>
-    <c:when test="${not empty sessionScope.user}">
-        <a href="/controller?command=logout">logout</a>
-    </c:when>
-    <c:otherwise>
-        <a href="/controller?command=show_login">login</a>
-    </c:otherwise>
-
-</c:choose>
 </body>
 </html>
