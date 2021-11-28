@@ -4,11 +4,12 @@ import com.epam.jwd.finalProject.dao.exception.EntityExtractionFailedException;
 import com.epam.jwd.finalProject.dao.impl.MethodQuestionDaoImpl;
 import com.epam.jwd.finalProject.model.Question;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
 public interface QuestionDao {
-    boolean create(Question question);
+    boolean create(String name, Date date, Long idUser);
 
     boolean addAnswer(Long id, String answer);
 

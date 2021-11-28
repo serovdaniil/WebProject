@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Show all categories</title>
+    <title>Applications by account</title>
 </head>
 <body>
 <c:if test="${not empty sessionScope.user}">

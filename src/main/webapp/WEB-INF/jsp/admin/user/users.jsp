@@ -8,6 +8,8 @@
 <c:if test="${not empty sessionScope.user}">
     <p>Hello, ${sessionScope.user.firstName}</p>
 </c:if>
+<c:if test="${not empty sessionScope.user && sessionScope.user.role eq Role.ADMIN}">
+   <br>
 <form name="updateRole-form" action="/controller?command=update_role_by_user" method="post">
     <label for="idAccount-input">Id account:</label>
     <input id="idAccount-input" type="text" name="id" value=""/>
@@ -16,6 +18,8 @@
     <input id="role-input" type="text" name="role" value="" />
     <input type="submit" value="Update role"/>
 </form>
+    <a href="${pageContext.request.contextPath}/controller?command=show_read_user_by_id">Read user by id</a>
+</c:if>
 <br>
 <table>
     <tr>

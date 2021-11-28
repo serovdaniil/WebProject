@@ -1,13 +1,14 @@
 package com.epam.jwd.finalProject.model;
 
+
 import java.sql.Date;
 import java.util.Objects;
 
-public class Question implements Entity{
+public class Question implements Entity {
     private final Long id;
     private final String question;
     private final String answer;
-    private final java.sql.Date date;
+    private final Date date;
     private final User user;
 
     public Question(Long id, String question, String answer, Date date, User user) {

@@ -2,13 +2,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Find application by ID status - </title>
+    <title>Find applications by id status result</title>
 </head>
 <body>
 <c:if test="${not empty sessionScope.user}">
     <p>Hello, ${sessionScope.user.firstName}</p>
 </c:if>
-<h3>Find Conferenc by name</h3>
+<h3>Find applications by id status result</h3>
 
 <form name="idCategory-form" action="/controller?command=find_by_status_result_application" method="post">
     <label for="login-input">ID status application:</label>

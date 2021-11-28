@@ -1,4 +1,4 @@
-package com.epam.jwd.finalProject.command.common.question;
+package com.epam.jwd.finalProject.command.admin.question;
 
 import com.epam.jwd.finalProject.command.factory.Command;
 import com.epam.jwd.finalProject.command.factory.CommandRequest;

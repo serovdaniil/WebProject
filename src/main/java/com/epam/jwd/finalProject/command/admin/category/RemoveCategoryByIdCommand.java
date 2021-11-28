@@ -9,6 +9,7 @@ import com.epam.jwd.finalProject.model.Category;
 import com.epam.jwd.finalProject.service.api.CategoryService;
 import com.epam.jwd.finalProject.service.factory.ServiceFactory;
 
+import java.util.List;
 import java.util.Optional;
 
 public class RemoveCategoryByIdCommand implements Command {
@@ -16,8 +17,10 @@ public class RemoveCategoryByIdCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
     private static final String PARAM_ID = "id";
-    private static final String REMOVE_CATEGORY_BY_ID_ATTRIBUTE_NAME = "result";
-    private static final String REMOVE_CATEGORY_BY_ID_CATEGORY_PAGE = "page.removeCategoryById";
+    private static final String CATEGORIES_ATTRIBUTE_NAME_RESULT = "result";
+    private static final String CATEGORIES_ATTRIBUTE_NAME = "categories";
+    private static final String CATEGORIES_PAGE = "page.categories";
+
     RemoveCategoryByIdCommand(CategoryService service, RequestFactory requestFactory, PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().categoryService();
         this.requestFactory = RequestFactory.getInstance();
@@ -27,9 +30,17 @@ public class RemoveCategoryByIdCommand implements Command {
     @Override
     public CommandResponse execute(CommandRequest request) {
         final Long id =Long.parseLong(request.getParameter(PARAM_ID));
-        final boolean result= service.remove(id);
-        request.addAttributeToJsp(REMOVE_CATEGORY_BY_ID_ATTRIBUTE_NAME, result);
-        return requestFactory.createForwardResponse(propertyContext.get(REMOVE_CATEGORY_BY_ID_CATEGORY_PAGE));
+        final boolean resultRemove= service.remove(id);
+        final List<Category> categoriesALL = service.findAll();
+        String result;
+        if (!resultRemove) {
+            result = "Unsuccessful remove";
+        } else {
+            result = "Successful remove";
+        }
+        request.addAttributeToJsp(CATEGORIES_ATTRIBUTE_NAME, categoriesALL);
+        request.addAttributeToJsp(CATEGORIES_ATTRIBUTE_NAME_RESULT, result);
+        return requestFactory.createForwardResponse(propertyContext.get(CATEGORIES_PAGE));
     }
 
     public static RemoveCategoryByIdCommand getInstance() {

@@ -2,7 +2,6 @@ package com.epam.jwd.finalProject.dao.impl;
 
 import com.epam.jwd.finalProject.dao.api.QuestionDao;
 import com.epam.jwd.finalProject.dao.connection.ConnectionPool;
-import com.epam.jwd.finalProject.dao.connection.LockingConnectionPool;
 import com.epam.jwd.finalProject.dao.exception.EntityExtractionFailedException;
 import com.epam.jwd.finalProject.model.Question;
 import com.epam.jwd.finalProject.model.Role;
@@ -26,15 +25,15 @@ public class MethodQuestionDaoImpl implements QuestionDao {
     private static final Logger LOG = LogManager.getLogger(MethodQuestionDaoImpl.class);
 
     @Override
-    public boolean create(Question question) {
+    public boolean create(String name,  Date date, Long idUser) {
         boolean result = false;
         LOG.info("Start create and add new question");
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.CREATE_QUESTION)) {
-            statement.setString(1, question.getQuestion());
-            statement.setString(2, question.getAnswer());
-            statement.setDate(3, (Date) question.getDate());
-            statement.setLong(4, question.getUser().getId());
+            statement.setString(1, name);
+            statement.setString(2, "");
+            statement.setDate(3, date);
+            statement.setLong(4, idUser);
             int rowCount = statement.executeUpdate();
             if (rowCount != 0) {
                 result = true;

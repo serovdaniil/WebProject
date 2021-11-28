@@ -17,8 +17,10 @@ public class FindCategoryByIdCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
     private static final String PARAM_ID = "id";
-    private static final String CATEGORY_BY_ID_ATTRIBUTE_NAME = "category";
-    private static final String CATEGORY_BY_ID_CATEGORY_PAGE = "page.idCategory";
+    private static final String CATEGORIES_ATTRIBUTE_NAME_RESULT = "category";
+    private static final String CATEGORIES_ATTRIBUTE_NAME = "categories";
+    private static final String CATEGORIES_PAGE = "page.categories";
+
     FindCategoryByIdCommand(CategoryService service, RequestFactory requestFactory, PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().categoryService();
         this.requestFactory = RequestFactory.getInstance();
@@ -29,8 +31,10 @@ public class FindCategoryByIdCommand implements Command {
     public CommandResponse execute(CommandRequest request) {
         final Long id =Long.parseLong(request.getParameter(PARAM_ID));
         final Optional<Category> category= service.findId(id);
-        request.addAttributeToJsp(CATEGORY_BY_ID_ATTRIBUTE_NAME, category);
-        return requestFactory.createForwardResponse(propertyContext.get(CATEGORY_BY_ID_CATEGORY_PAGE));
+        final List<Category> categoriesALL = service.findAll();
+        request.addAttributeToJsp(CATEGORIES_ATTRIBUTE_NAME, categoriesALL);
+        request.addAttributeToJsp(CATEGORIES_ATTRIBUTE_NAME_RESULT, category);
+        return requestFactory.createForwardResponse(propertyContext.get(CATEGORIES_PAGE));
     }
 
     public static FindCategoryByIdCommand getInstance() {

@@ -10,16 +10,19 @@ import com.epam.jwd.finalProject.service.api.ApplicationService;
 import com.epam.jwd.finalProject.service.api.EntityService;
 import com.epam.jwd.finalProject.service.factory.ServiceFactory;
 
-public class DeleteApplicationByIdCommand implements Command {
+import java.util.List;
+
+public class RemoveApplicationByIdCommand implements Command {
     private static final String PARAM_ID = "id";
-    private static final String APPLICATIONS_ATTRIBUTE_NAME = "result";
-    private static final String APPLICATIONS_PAGE = "page.deleteApplication";
+    private static final String APPLICATIONS_ATTRIBUTE_NAME_RESULT = "result";
+    private static final String APPLICATIONS_ATTRIBUTE_NAME = "applications";
+    private static final String APPLICATIONS_PAGE = "page.applications";
 
     private final ApplicationService service;
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    DeleteApplicationByIdCommand(EntityService<Application> service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    RemoveApplicationByIdCommand(EntityService<Application> service, RequestFactory requestFactory, PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().applicationService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -28,18 +31,26 @@ public class DeleteApplicationByIdCommand implements Command {
     @Override
     public CommandResponse execute(CommandRequest request) {
         final Long id =Long.parseLong(request.getParameter(PARAM_ID));
-        final boolean result = service.remove(id);
-        request.addAttributeToJsp(APPLICATIONS_ATTRIBUTE_NAME, result);
+        final boolean resultRemove = service.remove(id);
+        final List<Application> applicationList = service.findAll();
+        String result;
+        if (!resultRemove) {
+            result = "Unsuccessful remove";
+        } else {
+            result = "Successful remove";
+        }
+        request.addAttributeToJsp(APPLICATIONS_ATTRIBUTE_NAME, applicationList);
+        request.addAttributeToJsp(APPLICATIONS_ATTRIBUTE_NAME_RESULT, result);
         return requestFactory.createForwardResponse(propertyContext.get(APPLICATIONS_PAGE));
     }
 
-    public static DeleteApplicationByIdCommand getInstance() {
-        return DeleteApplicationByIdCommand.Holder.INSTANCE;
+    public static RemoveApplicationByIdCommand getInstance() {
+        return RemoveApplicationByIdCommand.Holder.INSTANCE;
     }
 
     private static class Holder {
-        public static final DeleteApplicationByIdCommand INSTANCE =
-                new DeleteApplicationByIdCommand(ServiceFactory.simple().serviceFor(Application.class), RequestFactory.getInstance(),
+        public static final RemoveApplicationByIdCommand INSTANCE =
+                new RemoveApplicationByIdCommand(ServiceFactory.simple().serviceFor(Application.class), RequestFactory.getInstance(),
                         PropertyContext.instance());
     }
 }

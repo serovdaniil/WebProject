@@ -5,6 +5,7 @@ import com.epam.jwd.finalProject.dao.impl.MethodQuestionDaoImpl;
 import com.epam.jwd.finalProject.model.Question;
 import com.epam.jwd.finalProject.service.api.QuestionService;
 
+import java.sql.Date;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -36,13 +37,13 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public boolean create(Question question) {
-        return false;
+    public boolean create(String name, Date date, Long idUser) {
+        return questionDao.create(name,date,idUser);
     }
 
     @Override
     public boolean addAnswer(Long id, String answer) {
-        return false;
+        return questionDao.addAnswer(id, answer);
     }
 
     @Override
@@ -52,7 +53,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public List<Question> findAccountIdByQuestion(Long id) {
-        return null;
+        return questionDao.findAccountIdByQuestion(id);
     }
 
     @Override

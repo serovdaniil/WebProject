@@ -2,20 +2,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Show all questions</title>
+    <title>Show all conferences</title>
 </head>
 <body>
-<h4>Add answer to question</h4>
-<form name="addAnswer-form" action="/controller?command=add_answer_to_question" method="post">
-    <label for="id-input">ID:</label>
-    <input id="id-input" type="text" name="id" value=""/>
-    <br>
-    <label for="answer-input">Answer:</label>
-    <input id="answer-input" type="text" name="answer" value=""/>
-    <input type="submit" value="Add answer"/>
-    <br/>
-</form>
-<h4> Result: ${requestScope.result}</h4>
+<c:if test="${not empty sessionScope.user}">
+    <p>Hello, ${sessionScope.user.firstName}</p>
+</c:if>
 <table>
     <tr>
         <th>ID</th>

@@ -4,7 +4,7 @@
     <title>Error</title>
 </head>
 <body>
-<h3>Something went wrong</h3>
+<h3>You don't have enough rights</h3>
 <%--todo: add detailed error description--%>
 </body>
 </html>
