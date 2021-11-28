@@ -16,7 +16,7 @@ public class CategoryServiceImpl implements CategoryService {
     private final MethodCategoryDaoImpl categoryDao;
 
     public CategoryServiceImpl(MethodCategoryDaoImpl categoryDao) {
-        this.categoryDao = categoryDao;
+        this.categoryDao = categoryDao.getInstance();
     }
 
     @Override

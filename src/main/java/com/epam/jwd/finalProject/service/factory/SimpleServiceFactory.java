@@ -37,6 +37,8 @@ public enum SimpleServiceFactory implements ServiceFactory {
                     return ProxyEntityService.of(new CategoryServiceImpl(MethodCategoryDaoImpl.getInstance()));
                 case "Question":
                     return ProxyEntityService.of(new QuestionServiceImpl(MethodQuestionDaoImpl.getInstance()));
+                case "Application":
+                    return ProxyEntityService.of(new ApplicationServiceImpl(MethodApplicationDaoImpl.getInstance()));
 
                 case "User":
                     return new UserServiceImpl((MethodUserDaoImpl) UserDao.instance());

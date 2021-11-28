@@ -13,6 +13,16 @@
     <p>${sessionScope.user.role}</p>
 </c:if>
 <p>sent from jsp</p>
+<br>
+<a href="/controller?command=show_applications">APPLICATIONS</a>
+<br>
+<br>
+<a href="/controller?command=show_find_by_status_result_application">Find application by status result</a>
+<br>
+<br>
+<a href="/controller?command=show_applications_by_account">Application by account page</a>
+<br>
+<br>
 <a href="/controller?command=show_conferences">Conferences page</a>
 <br>
 <a href="/controller?command=show_find_conferences_by_name">find Conferences by name</a>

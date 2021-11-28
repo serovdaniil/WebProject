@@ -1,5 +1,8 @@
 package com.epam.jwd.finalProject.command.factory;
 
+import com.epam.jwd.finalProject.command.admin.application.FindByStatusResultApplicationCommand;
+import com.epam.jwd.finalProject.command.admin.application.ShowApplicationPageCommand;
+import com.epam.jwd.finalProject.command.admin.application.ShowFindByStatusResultApplicationPageCommand;
 import com.epam.jwd.finalProject.command.admin.category.*;
 import com.epam.jwd.finalProject.command.admin.conferenc.*;
 import com.epam.jwd.finalProject.command.admin.sectionConferenc.*;
@@ -8,6 +11,7 @@ import com.epam.jwd.finalProject.command.admin.user.ShowUsersPageCommand;
 import com.epam.jwd.finalProject.command.admin.user.ShowReadUserByIdPageCommand;
 import com.epam.jwd.finalProject.command.admin.user.UpdateRoleCommand;
 import com.epam.jwd.finalProject.command.common.*;
+import com.epam.jwd.finalProject.command.common.application.FindAccountIdByApplicationCommand;
 import com.epam.jwd.finalProject.command.common.category.*;
 import com.epam.jwd.finalProject.command.common.conferenc.FindConferencByNameCommand;
 import com.epam.jwd.finalProject.command.common.conferenc.ShowConferencesPageCommand;
@@ -26,7 +30,7 @@ import static com.epam.jwd.finalProject.model.Role.*;
 public enum CommandRegistry {
     MAIN_PAGE(ShowMainPageCommand.getInstance(), "main_page"),
     //Conferenc
-    SHOW_CONFERENCES(ShowConferencesPageCommand.getInstance(), "show_conferences",ADMIN),
+    SHOW_CONFERENCES(ShowConferencesPageCommand.getInstance(), "show_conferences"),
     FIND_CONFERENCES_BY_NAME(FindConferencByNameCommand.getInstance(), "find_conferences_by_name", USER, ADMIN),
     SHOW_FIND_CONFERENCES_BY_NAME(ShowFindConferencByNameCommand.getInstance(), "show_find_conferences_by_name"),
     SHOW_UPDATE_DECRIPTION_IN_CONFERENC(ShowUpdateDescriptionInConferencCommand.getInstance(), "show_update_description_in_conferenc"),
@@ -76,9 +80,13 @@ public enum CommandRegistry {
     UPDATE_ROLE_BY_USER(UpdateRoleCommand.getInstance(), "update_role_by_user",ADMIN),
     READ_USER_BY_ID(ReadUserByIdCommand.getInstance(), "read_user_by_id",ADMIN),
     SHOW_READ_USER_BY_ID(ShowReadUserByIdPageCommand.getInstance(), "show_read_user_by_id",ADMIN),
-
     SHOW_UPDATE_PASSWORD_BY_USER(ShowPerosnalInformationCommand.getInstance(), "show_personal_infomation",USER,ADMIN),
-    //
+    //application
+    SHOW_APPLICATION(ShowApplicationPageCommand.getInstance(), "show_applications"),
+    SHOW_APPLICATIONS_BY_ACCOUNT(FindAccountIdByApplicationCommand.getInstance(), "show_applications_by_account"),
+    FIND_BY_STATUS_RESULT_APPLICATION(FindByStatusResultApplicationCommand.getInstance(), "find_by_status_result_application",ADMIN),
+    SHOW_FIND_BY_STATUS_RESULT_APPLICATION(ShowFindByStatusResultApplicationPageCommand.getInstance(), "show_find_by_status_result_application",ADMIN),
+
     ERROR(ShowErrorPageCommand.getInstance(), "show_error"),
     SHOW_LOGIN(ShowLoginPageCommand.getInstance(), "show_login", UNAUTHORIZED),
     LOGIN(LoginCommand.getInstance(), "login", UNAUTHORIZED),

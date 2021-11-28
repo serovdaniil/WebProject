@@ -13,7 +13,7 @@ public class QuestionServiceImpl implements QuestionService {
     private final MethodQuestionDaoImpl questionDao;
 
     public QuestionServiceImpl(MethodQuestionDaoImpl questionDao) {
-        this.questionDao = questionDao;
+        this.questionDao = questionDao.getInstance();
     }
 
     @Override

@@ -18,8 +18,13 @@ public interface ServiceFactory {
     default CategoryService categoryService() {
         return (CategoryService) serviceFor(Category.class);
     }
+
     default QuestionService questionService() {
         return (QuestionService) serviceFor(Question.class);
+    }
+
+    default ApplicationService applicationService() {
+        return (ApplicationService) serviceFor(Application.class);
     }
 
     default SectionConferencService sectionConferencService() {

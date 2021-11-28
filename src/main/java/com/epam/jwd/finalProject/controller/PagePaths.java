@@ -30,7 +30,12 @@ public enum PagePaths {
     READUSERBYID("/WEB-INF/jsp/admin/user/readUserById.jsp"),
     LOGIN("/WEB-INF/jsp/common/login.jsp"),
     CREATEANACCOUNT("/WEB-INF/jsp/common/createAnAccount.jsp"),
+    APPLICATIONS("/WEB-INF/jsp/admin/application/applications.jsp"),
+    APPLICATIONSBYACCOUNT("/WEB-INF/jsp/common/application/applicationsByAccount.jsp"),
+    APPLICATIONSBYSTATUSRESULT("/WEB-INF/jsp/admin/application/findByStatusResultApplication.jsp"),
+
     ERROR("/WEB-INF/jsp/common/error/error.jsp");
+
 
     private final String path;
 

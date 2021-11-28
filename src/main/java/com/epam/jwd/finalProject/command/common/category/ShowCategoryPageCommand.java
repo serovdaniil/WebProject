@@ -1,13 +1,11 @@
 package com.epam.jwd.finalProject.command.common.category;
 
-import com.epam.jwd.finalProject.command.common.sectionConferenc.ShowSectionConferencesPageCommand;
 import com.epam.jwd.finalProject.command.factory.Command;
 import com.epam.jwd.finalProject.command.factory.CommandRequest;
 import com.epam.jwd.finalProject.command.factory.CommandResponse;
 import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
 import com.epam.jwd.finalProject.model.Category;
-import com.epam.jwd.finalProject.model.SectionConferenc;
 import com.epam.jwd.finalProject.service.api.EntityService;
 import com.epam.jwd.finalProject.service.factory.ServiceFactory;
 

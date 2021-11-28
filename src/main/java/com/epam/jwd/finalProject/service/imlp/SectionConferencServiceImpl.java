@@ -15,7 +15,7 @@ public class SectionConferencServiceImpl implements SectionConferencService {
     private final MethodSectionConferencDaoImpl sectionConferencDao;
 
     public SectionConferencServiceImpl(MethodSectionConferencDaoImpl sectionConferencDao) {
-        this.sectionConferencDao = sectionConferencDao;
+        this.sectionConferencDao = sectionConferencDao.getInstance();
     }
 
     @Override
