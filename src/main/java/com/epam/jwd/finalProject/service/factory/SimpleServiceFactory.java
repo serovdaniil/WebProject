@@ -1,5 +1,6 @@
 package com.epam.jwd.finalProject.service.factory;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.epam.jwd.finalProject.dao.api.UserDao;
 import com.epam.jwd.finalProject.dao.impl.*;
 import com.epam.jwd.finalProject.model.Entity;
@@ -41,7 +42,7 @@ public enum SimpleServiceFactory implements ServiceFactory {
                     return ProxyEntityService.of(new ApplicationServiceImpl(MethodApplicationDaoImpl.getInstance()));
 
                 case "User":
-                    return new UserServiceImpl((MethodUserDaoImpl) UserDao.instance());
+                    return new UserServiceImpl((MethodUserDaoImpl) UserDao.instance(), BCrypt.withDefaults(), BCrypt.verifyer());
                 default:
                     throw new IllegalArgumentException(String.format(SERVICE_NOT_FOUND, className));
             }

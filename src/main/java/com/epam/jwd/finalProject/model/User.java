@@ -2,7 +2,9 @@ package com.epam.jwd.finalProject.model;
 
 import java.util.Objects;
 
-public class User implements Entity{
+import static com.epam.jwd.finalProject.model.Role.USER;
+
+public class User implements Entity {
     private final Long id;
     private final String login;
     private final String email;
@@ -10,6 +12,10 @@ public class User implements Entity{
     private final String firstName;
     private final String lastName;
     private final Role role;
+
+    public User(Long id, String login, String email, String password, String firstName,String lastName) {
+        this(id, login, email, password, firstName,lastName,USER);
+    }
 
     public User(Long id, String login, String email, String password, String firstName, String lastName, Role role) {
         this.id = id;
@@ -48,6 +54,10 @@ public class User implements Entity{
 
     public Role getRole() {
         return role;
+    }
+
+    public User withPassword(String password) {
+        return new User(id, login, email, password, firstName,lastName);
     }
 
     @Override

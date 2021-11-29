@@ -35,9 +35,9 @@ public class UpdatePasswordCommand implements Command {
         final String password = request.getParameter(FIND_PARAM_PASSWORD);
         final Optional<User> user = service.updatePasswordByLogin(login, password);
         if (password.equals(user.get().getPassword())) {
-            request.addAttributeToJsp(USERS_ATTRIBUTE_NAME, SUCCESSFUL_RESULT_UPDATE_INFORMATION);
-        } else {
             request.addAttributeToJsp(USERS_ATTRIBUTE_NAME, UNSUCCESSFUL_UPDATE_PASSWORD_USER_PAGE);
+        } else {
+            request.addAttributeToJsp(USERS_ATTRIBUTE_NAME, SUCCESSFUL_RESULT_UPDATE_INFORMATION);
         }
         request.clearSession();
         request.createSession();
