@@ -13,10 +13,6 @@ public class User implements Entity {
     private final String lastName;
     private final Role role;
 
-    public User(Long id, String login, String email, String password, String firstName,String lastName) {
-        this(id, login, email, password, firstName,lastName,USER);
-    }
-
     public User(Long id, String login, String email, String password, String firstName, String lastName, Role role) {
         this.id = id;
         this.login = login;
@@ -54,10 +50,6 @@ public class User implements Entity {
 
     public Role getRole() {
         return role;
-    }
-
-    public User withPassword(String password) {
-        return new User(id, login, email, password, firstName,lastName);
     }
 
     @Override

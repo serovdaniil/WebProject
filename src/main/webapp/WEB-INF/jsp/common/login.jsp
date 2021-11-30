@@ -8,32 +8,34 @@
 <fmt:message bundle="${loc}" key="label.password" var="password"/>
 <fmt:message bundle="${loc}" key="label.email" var="email"/>
 <fmt:message bundle="${loc}" key="label.link.login" var="loginLink"/>
+<fmt:message bundle="${loc}" key="label.removeText" var="removeText"/>
 <html>
 <head>
     <title>${loginLink}</title>
 </head>
 <body>
-<%@include file="/WEB-INF/jsp/common/header.jsp" %>
-<h3>${loginPlease}:</h3>
+<style>
+    <%@include file="/WEB-INF/css/loginStyle.css"%>
+</style>
+<h3>${loginLink}:</h3>
 <form name="login-form" action="/controller?command=login" method="post">
-    <label for="login-input">${login}:</label>
-    <input id="login-input" type="text" name="login" value=""/>
-    <br>
-    <label for="password-input">${password}:</label>
-    <input id="password-input" type="password" name="password" value=""/>
-    <br/>
-    <c:if test="${not empty requestScope.errorLoginPassMessage}">
-        <b>${requestScope.errorLoginPassMessage}</b>
+    <div class="container">
+        <label for="login-input">${login}:</label>
+        <input id="login-input" type="text" required name="login" value=""/>
         <br>
-    </c:if>
-    <style>
-        <%@include file="/WEB-INF/css/loginStyle.css"%>
-    </style>
-    <div>
-        <button  id="login" class="button blue">
-            <i class="fa fa-unlock"></i>
-            <span>${loginLink}</span>
-        </button>
+        <label for="password-input">${password}:</label>
+        <input id="password-input" type="password" required name="password" value=""/>
+        <br/>
+        <c:if test="${not empty requestScope.errorLoginPassMessage}">
+            <b>${requestScope.errorLoginPassMessage}</b>
+            <br>
+        </c:if>
+        <button type="submit">${loginLink}</button>
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1">
+        <button type="reset" class="cancelbtn">${removeText}</button>
+       <%-- <span class="psw">Forgot <a href="#">password?</a></span>--%>
     </div>
     <%-- <input type="submit" value="Log in">--%>
 </form>

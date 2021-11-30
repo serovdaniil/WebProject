@@ -6,24 +6,34 @@
 <fmt:message bundle="${loc}" key="label.email" var="email"/>
 <fmt:message bundle="${loc}" key="label.password" var="password"/>
 <fmt:message bundle="${loc}" key="label.link.registration" var="registrationLink"/>
+<fmt:message bundle="${loc}" key="label.removeText" var="removeText"/>
 <html>
 <head>
     <title>${registrationLink}</title>
 </head>
 <body>
+<style>
+    <%@include file="/WEB-INF/css/loginStyle.css"%>
+</style>
 <h3>${registrationLink}:</h3>
 <form name="login-form" action="/controller?command=create_an_account" method="post">
+    <div class="container">
     <label for="login-input">${email}:</label>
-    <input id="login-input" type="text" name="email" value=""/>
+    <input id="login-input" type="text" required name="email"  value="" pattern="/^(?!.*@.*@.*$)(?!.*@.*\-\-.*\..*$)(?!.*@.*\-\..*$)(?!.*@.*\-$)(.*@.+(\..{1,11})?)$/"/>
     <br>
     <label for="password-input">${password}:</label>
-    <input id="password-input" type="password" name="password" value=""/>
+    <input id="password-input" type="password" required name="password" value=""/>
     <br/>
     <c:if test="${not empty requestScope.errorRegistrationPassMessage}">
         <b>${requestScope.errorRegistrationPassMessage}</b>
         <br>
     </c:if>
-    <input type="submit" value="${registrationLink}"/>
+        <button type="submit">${registrationLink}</button>
+    </div>
+    <div class="container" style="background-color:#f1f1f1">
+        <button type="reset" class="cancelbtn">${removeText}</button>
+        <%-- <span class="psw">Forgot <a href="#">password?</a></span>--%>
+    </div>
 </form>
 </body>
 </html>

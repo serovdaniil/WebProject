@@ -38,7 +38,7 @@
 <br>
 <form name="updatePassword-form" action="${pageContext.request.contextPath}/controller?command=update_password_by_user" method="post">
     <label for="password-input">${password}:</label>
-    <input id="password-input" type="password" name="password" value="${sessionScope.user.password}"/>
+    <input id="password-input" type="password" name="password" placeholder="${password}"/>
     <input type="submit" value="${updatePassword}"/>
 </form>
 <br>
