@@ -26,13 +26,13 @@
 
 <form name="updateFirstName-form" action="/controller?command=update_first_name_by_user" method="post">
     <label for="firstName-input">${firstName}:</label>
-    <input id="firstName-input" type="text" name="firstName" min="1" max="45" required pattern="@^([А-Я]{1}[а-яё]{1,44}|[A-Z]{1}[a-z]{1,44})$@gm" value="${sessionScope.user.firstName}" />
+    <input id="firstName-input" type="text" name="firstName" min="1" max="45" required pattern="^[A-ZА-Яa-zа-я]+((\s)?((\'|\-|\.)?([A-ZА-Яa-zа-я])+))*$" value="${sessionScope.user.firstName}" />
     <input type="submit" value="${update} ${firstName}"/>
 </form>
 <br>
 <form name="updateLastName-form" action="${pageContext.request.contextPath}/controller?command=update_last_name_by_user" method="post">
     <label for="lastName-input">${lastName}:</label>
-    <input id="lastName-input" type="text" name="lastName" min="1" max="45" required pattern="^[А-Я][а-я]*(-[А-Я][а-я]*)?$" value="${sessionScope.user.lastName}" />
+    <input id="lastName-input" type="text" name="lastName" min="1" max="45" required pattern="^[A-ZА-Яa-zа-я]+((\s)?((\'|\-|\.)?([A-ZА-Яa-zа-я])+))*$" value="${sessionScope.user.lastName}" />
     <input type="submit" value="${updateLastName}"/>
 </form>
 <br>

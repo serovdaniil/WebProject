@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
     private final MethodUserDaoImpl userDao;
     private final BCrypt.Hasher hasher;
     private final BCrypt.Verifyer verifier;
-    private UserDataValidator userDataValidator = new UserDataValidator().getInstance();
+    private final UserDataValidator userDataValidator = new UserDataValidator().getInstance();
 
     public UserServiceImpl(MethodUserDaoImpl userDao, BCrypt.Hasher hasher, BCrypt.Verifyer verifier) {
         this.userDao = userDao.getInstance();
@@ -66,9 +66,6 @@ public class UserServiceImpl implements UserService {
             throw new ValidationException("The entered data is not correct!");
         }
         LOG.debug("Service: Authenticating started.");
-        if (login == null || password == null) {
-            return Optional.empty();
-        }
         final byte[] enteredPassword = password.getBytes(StandardCharsets.UTF_8);
         final Optional<User> readUser = userDao.findPasswordByLogin(login);
         if (readUser.isPresent()) {

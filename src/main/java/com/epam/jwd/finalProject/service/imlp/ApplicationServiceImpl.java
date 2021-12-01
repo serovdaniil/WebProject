@@ -4,6 +4,10 @@ import com.epam.jwd.finalProject.dao.exception.EntityExtractionFailedException;
 import com.epam.jwd.finalProject.dao.impl.MethodApplicationDaoImpl;
 import com.epam.jwd.finalProject.model.Application;
 import com.epam.jwd.finalProject.service.api.ApplicationService;
+import com.epam.jwd.finalProject.service.exception.ValidationException;
+import com.epam.jwd.finalProject.service.validator.ApplicationDataValidator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Collections;
 import java.util.List;
@@ -11,14 +15,24 @@ import java.util.Optional;
 
 public class ApplicationServiceImpl implements ApplicationService {
     private final MethodApplicationDaoImpl applicationDao;
+    private static final Logger LOG = LogManager.getLogger(ApplicationServiceImpl.class);
+    private final ApplicationDataValidator applicationDataValidator = new ApplicationDataValidator().getInstance();
 
     public ApplicationServiceImpl(MethodApplicationDaoImpl applicationDao) {
         this.applicationDao = applicationDao.getInstance();
     }
 
     @Override
-    public boolean create(Long idAccount, Long idSectionConferenc, Long idResultSection) {
-        return applicationDao.create(idAccount,idSectionConferenc,idResultSection);
+    public boolean create(Long idUser, Long idSectionConferenc, Long idResultSection) throws ValidationException {
+        LOG.debug("Service: Creating application started.");
+        if (!applicationDataValidator.isIdValid(idUser) ||
+                !applicationDataValidator.isIdValid(idSectionConferenc) ||
+                !applicationDataValidator.isIdValid(idResultSection)) {
+            LOG.error("The entered data is not correct!");
+            throw new ValidationException("The entered data is not correct!");
+        }
+        LOG.debug("Service: Creating application finished.");
+        return applicationDao.create(idUser, idSectionConferenc, idResultSection);
     }
 
     @Override
@@ -27,7 +41,13 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public List<Application> findAccountIdByApplication(Long id) {
+    public List<Application> findAccountIdByApplication(Long id) throws ValidationException {
+        LOG.debug("Service: Find applications by id user started.");
+        if (!applicationDataValidator.isIdValid(id)) {
+            LOG.error("The entered data is not correct!");
+            throw new ValidationException("The entered data is not correct!");
+        }
+        LOG.debug("Service: Find applications by id user finished.");
         return applicationDao.findAccountIdByApplication(id);
     }
 
@@ -52,7 +72,13 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public List<Application> findByStatusResult(Long idStatus) {
+    public List<Application> findByStatusResult(Long idStatus) throws ValidationException {
+        LOG.debug("Service: Find applications by id status result started.");
+        if (!applicationDataValidator.isIdValid(idStatus)) {
+            LOG.error("The entered data is not correct!");
+            throw new ValidationException("The entered data is not correct!");
+        }
+        LOG.debug("Service: Find applications by id status result finished.");
         return applicationDao.findByStatusResult(idStatus);
     }
 
@@ -88,11 +114,14 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public List findAll() {
+        LOG.debug("Service: Reading all applications started.");
         try {
             return applicationDao.readAll();
         } catch (EntityExtractionFailedException e) {
             e.printStackTrace();
-        }return Collections.emptyList();
+        }
+        LOG.debug("Service: Reading all applications finished.");
+        return Collections.emptyList();
     }
 
     @Override
@@ -101,7 +130,13 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public boolean remove(Long id) {
+    public boolean remove(Long id) throws ValidationException {
+        LOG.debug("Service: Removing application started.");
+        if (!applicationDataValidator.isIdValid(id)) {
+            LOG.error("The entered data is not correct!");
+            throw new ValidationException("The entered data is not correct!");
+        }
+        LOG.debug("Service: Removing application finished.");
         return applicationDao.delete(id);
     }
 }

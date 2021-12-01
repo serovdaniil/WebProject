@@ -11,7 +11,10 @@ import com.epam.jwd.finalProject.model.User;
 import com.epam.jwd.finalProject.service.api.ApplicationService;
 import com.epam.jwd.finalProject.service.api.EntityService;
 import com.epam.jwd.finalProject.service.api.SectionConferencService;
+import com.epam.jwd.finalProject.service.exception.ValidationException;
 import com.epam.jwd.finalProject.service.factory.ServiceFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +25,7 @@ public class CreateApplicationCommand implements Command {
     private static final String APPLICATIONS_ATTRIBUTE_NAME_SECTION_CONFERENC = "sectionConferences";
     private static final String APPLICATIONS_ATTRIBUTE_NAME = "result";
     private static final String APPLICATIONS_PAGE = "page.sectionConferences";
+    private static final Logger LOG = LogManager.getLogger(CreateApplicationCommand.class);
 
     private final ApplicationService applicationServiceservice;
     private final SectionConferencService sectionConferencServiceservice;
@@ -40,10 +44,15 @@ public class CreateApplicationCommand implements Command {
         final Optional<User> userOptional = request.retrieveFromSession(USER_SESSION_ATTRIBUTE_NAME);
         final Long idAccount = userOptional.get().getId();
         final Long idSectionConferenc = Long.parseLong(request.getParameter(PARAM_ID));
-        final boolean result = applicationServiceservice.create(idAccount, idSectionConferenc, (long) 1);
-        final List<SectionConferenc> sectionConferencesAll = sectionConferencServiceservice.findAll();
-        request.addAttributeToJsp(APPLICATIONS_ATTRIBUTE_NAME_SECTION_CONFERENC, sectionConferencesAll);
-        request.addAttributeToJsp(APPLICATIONS_ATTRIBUTE_NAME, result);
+        final boolean result;
+        try {
+            result = applicationServiceservice.create(idAccount, idSectionConferenc, (long) 1);
+            final List<SectionConferenc> sectionConferencesAll = sectionConferencServiceservice.findAll();
+            request.addAttributeToJsp(APPLICATIONS_ATTRIBUTE_NAME_SECTION_CONFERENC, sectionConferencesAll);
+            request.addAttributeToJsp(APPLICATIONS_ATTRIBUTE_NAME, result);
+        }  catch (ValidationException e) {
+            LOG.error("The entered data is not correct!" + e);
+        }
         return requestFactory.createForwardResponse(propertyContext.get(APPLICATIONS_PAGE));
     }
 

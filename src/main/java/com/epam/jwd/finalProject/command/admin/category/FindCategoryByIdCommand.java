@@ -42,7 +42,6 @@ public class FindCategoryByIdCommand implements Command {
             categoriesALL = service.findAll();
             request.addAttributeToJsp(CATEGORIES_ATTRIBUTE_NAME, categoriesALL);
             request.addAttributeToJsp(CATEGORIES_ATTRIBUTE_NAME_RESULT, category);
-
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
         }

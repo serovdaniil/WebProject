@@ -4,8 +4,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class UserDataValidator {
-    private static final String REGEX_FIRST_NAME = "@^([А-Я]{1}[а-яё]{1,44}|[A-Z]{1}[a-z]{1,44})$@gm";
-    private static final String REGEX_LAST_NAME = "^[А-Я][а-я]*(-[А-Я][а-я]*)?$";
+    private static final String REGEX_FIRST_NAME = "^[A-ZА-Яa-zа-я]+((\\s)?((\\'|\\-|\\.)?([A-ZА-Яa-zа-я])+))*$";
+    private static final String REGEX_LAST_NAME = "^[A-ZА-Яa-zа-я]+((\\s)?((\\'|\\-|\\.)?([A-ZА-Яa-zа-я])+))*$";
     private static final String REGEX_EMAIL = "^([A-Za-z0-9_-]+\\.)*[a-z0-9_-]+@[a-z0-9_-]+(\\.[a-z0-9_-]+)*\\.[a-z]{2,6}$";
     private static final String REGEX_LOGIN = "^([A-Za-z0-9_-]+\\.)*[a-z0-9_-]+@[a-z0-9_-]+(\\.[a-z0-9_-]+)*\\.[a-z]{2,6}$";
     private static final String REGEX_PASSWORD = "(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,15})$";

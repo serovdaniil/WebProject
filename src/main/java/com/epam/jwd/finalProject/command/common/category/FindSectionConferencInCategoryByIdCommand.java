@@ -7,7 +7,10 @@ import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
 import com.epam.jwd.finalProject.model.SectionConferenc;
 import com.epam.jwd.finalProject.service.api.CategoryService;
+import com.epam.jwd.finalProject.service.exception.ValidationException;
 import com.epam.jwd.finalProject.service.factory.ServiceFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
@@ -18,6 +21,8 @@ public class FindSectionConferencInCategoryByIdCommand implements Command {
     private static final String PARAM_ID = "id";
     private static final String ALL_SECTION_CONFERENC_IN_CATEGORY_ATTRIBUTE_NAME = "sectionConferences";
     private static final String ALL_SECTION_CONFERENC_IN_CATEGORY_PAGE = "page.allSectionConferencesInCategory";
+    private static final Logger LOG = LogManager.getLogger(FindSectionConferencInCategoryByIdCommand.class);
+
     FindSectionConferencInCategoryByIdCommand(CategoryService service, RequestFactory requestFactory, PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().categoryService();
         this.requestFactory = RequestFactory.getInstance();
@@ -26,9 +31,15 @@ public class FindSectionConferencInCategoryByIdCommand implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        final Long id =Long.parseLong(request.getParameter(PARAM_ID));
-        final List<SectionConferenc> conferencInIdCategory= service.findSectionConferencInIdCategory(id);
-        request.addAttributeToJsp(ALL_SECTION_CONFERENC_IN_CATEGORY_ATTRIBUTE_NAME, conferencInIdCategory);
+        final Long id = Long.parseLong(request.getParameter(PARAM_ID));
+        final List<SectionConferenc> conferencInIdCategory;
+        try {
+            conferencInIdCategory = service.findSectionConferencInIdCategory(id);
+            request.addAttributeToJsp(ALL_SECTION_CONFERENC_IN_CATEGORY_ATTRIBUTE_NAME, conferencInIdCategory);
+
+        } catch (ValidationException e) {
+            LOG.error("The entered data is not correct!" + e);
+        }
         return requestFactory.createForwardResponse(propertyContext.get(ALL_SECTION_CONFERENC_IN_CATEGORY_PAGE));
     }
 
@@ -38,7 +49,7 @@ public class FindSectionConferencInCategoryByIdCommand implements Command {
 
     private static class Holder {
         public static final FindSectionConferencInCategoryByIdCommand INSTANCE =
-                new FindSectionConferencInCategoryByIdCommand(ServiceFactory.simple().categoryService(),RequestFactory.getInstance(),
+                new FindSectionConferencInCategoryByIdCommand(ServiceFactory.simple().categoryService(), RequestFactory.getInstance(),
                         PropertyContext.instance());
     }
 }

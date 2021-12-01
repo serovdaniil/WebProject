@@ -7,7 +7,10 @@ import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
 import com.epam.jwd.finalProject.model.Category;
 import com.epam.jwd.finalProject.service.api.CategoryService;
+import com.epam.jwd.finalProject.service.exception.ValidationException;
 import com.epam.jwd.finalProject.service.factory.ServiceFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
@@ -19,6 +22,7 @@ public class CreateCategoryCommand implements Command {
     private static final String CATEGORIES_ATTRIBUTE_NAME_RESULT = "result";
     private static final String CATEGORIES_ATTRIBUTE_NAME = "categories";
     private static final String CATEGORIES_PAGE = "page.categories";
+    private static final Logger LOG = LogManager.getLogger(CreateCategoryCommand.class);
 
     CreateCategoryCommand(CategoryService service, RequestFactory requestFactory, PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().categoryService();
@@ -29,16 +33,22 @@ public class CreateCategoryCommand implements Command {
     @Override
     public CommandResponse execute(CommandRequest request) {
         final String name = request.getParameter(PARAM_NAME);
-        final boolean resultCreate = service.create(name);
-        final List<Category> categoriesALL = service.findAll();
-        String result;
-        if (!resultCreate) {
-            result = "Unsuccessful create";
-        } else {
-            result = "Successful create";
+        final boolean resultCreate;
+        try {
+            resultCreate = service.create(name);
+            final List<Category> categoriesALL = service.findAll();
+            String result;
+            if (!resultCreate) {
+                result = "Unsuccessful create";
+            } else {
+                result = "Successful create";
+            }
+            request.addAttributeToJsp(CATEGORIES_ATTRIBUTE_NAME, categoriesALL);
+            request.addAttributeToJsp(CATEGORIES_ATTRIBUTE_NAME_RESULT, result);
+        } catch (ValidationException e) {
+            LOG.error("The entered data is not correct!" + e);
         }
-        request.addAttributeToJsp(CATEGORIES_ATTRIBUTE_NAME, categoriesALL);
-        request.addAttributeToJsp(CATEGORIES_ATTRIBUTE_NAME_RESULT, result);
+
         return requestFactory.createForwardResponse(propertyContext.get(CATEGORIES_PAGE));
     }
 

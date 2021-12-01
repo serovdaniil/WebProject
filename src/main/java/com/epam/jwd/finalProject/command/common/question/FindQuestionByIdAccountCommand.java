@@ -1,5 +1,6 @@
 package com.epam.jwd.finalProject.command.common.question;
 
+import com.epam.jwd.finalProject.command.common.LoginCommand;
 import com.epam.jwd.finalProject.command.factory.Command;
 import com.epam.jwd.finalProject.command.factory.CommandRequest;
 import com.epam.jwd.finalProject.command.factory.CommandResponse;
@@ -8,7 +9,10 @@ import com.epam.jwd.finalProject.controller.RequestFactory;
 import com.epam.jwd.finalProject.model.Question;
 import com.epam.jwd.finalProject.model.User;
 import com.epam.jwd.finalProject.service.api.QuestionService;
+import com.epam.jwd.finalProject.service.exception.ValidationException;
 import com.epam.jwd.finalProject.service.factory.ServiceFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +24,7 @@ public class FindQuestionByIdAccountCommand implements Command {
     private static final String USER_SESSION_ATTRIBUTE_NAME = "user";
     private static final String QUESTION_ATTRIBUTE_NAME = "questions";
     private static final String FIND_QUESTIONS_BY_ID_ACCOUNT_PAGE = "page.findQuestionsByIdAccount";
-
+    private static final Logger LOG = LogManager.getLogger(FindQuestionByIdAccountCommand.class);
     FindQuestionByIdAccountCommand(QuestionService service, RequestFactory requestFactory, PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().questionService();
         this.requestFactory = RequestFactory.getInstance();
@@ -31,8 +35,14 @@ public class FindQuestionByIdAccountCommand implements Command {
     public CommandResponse execute(CommandRequest request) {
         final Optional<User> userOptional = request.retrieveFromSession(USER_SESSION_ATTRIBUTE_NAME);
         final Long idAccount = userOptional.get().getId();
-        final List<Question> questionList = service.findAccountIdByQuestion(idAccount);
-        request.addAttributeToJsp(QUESTION_ATTRIBUTE_NAME, questionList);
+        final List<Question> questionList;
+        try {
+            questionList = service.findAccountIdByQuestion(idAccount);
+            request.addAttributeToJsp(QUESTION_ATTRIBUTE_NAME, questionList);
+        } catch (ValidationException e) {
+            LOG.error("The entered data is not correct!" + e);
+        }
+
         return requestFactory.createForwardResponse(propertyContext.get(FIND_QUESTIONS_BY_ID_ACCOUNT_PAGE));
     }
 

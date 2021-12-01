@@ -1,5 +1,6 @@
 package com.epam.jwd.finalProject.command.admin.conferenc;
 
+import com.epam.jwd.finalProject.command.admin.application.RemoveApplicationByIdCommand;
 import com.epam.jwd.finalProject.command.factory.Command;
 import com.epam.jwd.finalProject.command.factory.CommandRequest;
 import com.epam.jwd.finalProject.command.factory.CommandResponse;
@@ -7,7 +8,10 @@ import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
 import com.epam.jwd.finalProject.model.Conferenc;
 import com.epam.jwd.finalProject.service.api.ConferencService;
+import com.epam.jwd.finalProject.service.exception.ValidationException;
 import com.epam.jwd.finalProject.service.factory.ServiceFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
@@ -19,6 +23,7 @@ public class RemoveConferencByIdCommand implements Command {
     private static final String CONFERENCES_ATTRIBUTE_NAME_RESULT_REMOVE = "result";
     private static final String CONFERENCES_ATTRIBUTE_NAME = "conferences";
     private static final String CONFERENCES_PAGE = "page.conferences";
+    private static final Logger LOG = LogManager.getLogger(RemoveConferencByIdCommand.class);
 
     RemoveConferencByIdCommand(ConferencService service, RequestFactory requestFactory, PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().conferencService();
@@ -29,14 +34,19 @@ public class RemoveConferencByIdCommand implements Command {
     @Override
     public CommandResponse execute(CommandRequest request) {
         final Long id = Long.parseLong(request.getParameter(PARAM_ID));
-        final boolean resultRemove = service.remove(id);
-        final List<Conferenc> conferencesAll = service.findAll();
-        String result;
-        if (!resultRemove){
-            result="Successful remove";
-        }else{result="Unsuccessful remove";}
-        request.addAttributeToJsp(CONFERENCES_ATTRIBUTE_NAME, conferencesAll);
-        request.addAttributeToJsp(CONFERENCES_ATTRIBUTE_NAME_RESULT_REMOVE, result);
+        final boolean resultRemove;
+        try {
+            resultRemove = service.remove(id);
+            final List<Conferenc> conferencesAll = service.findAll();
+            String result;
+            if (!resultRemove){
+                result="Successful remove";
+            }else{result="Unsuccessful remove";}
+            request.addAttributeToJsp(CONFERENCES_ATTRIBUTE_NAME, conferencesAll);
+            request.addAttributeToJsp(CONFERENCES_ATTRIBUTE_NAME_RESULT_REMOVE, result);
+        } catch (ValidationException e) {
+            LOG.error("The entered data is not correct!" + e);
+        }
         return requestFactory.createForwardResponse(propertyContext.get(CONFERENCES_PAGE));
     }
 

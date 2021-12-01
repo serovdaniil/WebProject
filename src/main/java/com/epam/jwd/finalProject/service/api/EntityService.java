@@ -12,5 +12,5 @@ public interface EntityService<T extends Entity> {
 
     Optional<T> findId(Long id) throws ValidationException;
 
-    boolean remove(Long id);
+    boolean remove(Long id) throws ValidationException;
 }
