@@ -35,9 +35,11 @@ public class RemoveConferencByIdCommand implements Command {
     public CommandResponse execute(CommandRequest request) {
         final Long id = Long.parseLong(request.getParameter(PARAM_ID));
         final boolean resultRemove;
-        try {
+        try {LOG.info("11111");
             resultRemove = service.remove(id);
+            LOG.info("222222");
             final List<Conferenc> conferencesAll = service.findAll();
+            LOG.info("33333");
             String result;
             if (!resultRemove){
                 result="Successful remove";

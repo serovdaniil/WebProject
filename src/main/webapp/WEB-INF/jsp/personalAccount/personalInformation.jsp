@@ -19,15 +19,21 @@
     <title>${pesronalInformationLink}</title>
 </head>
 <body>
+<style>
+    <%@include file="/WEB-INF/css/loginStyle.css"%>
+</style>
+<%@include file="/WEB-INF/jsp/common/header.jsp" %>
 <c:if test="${not empty sessionScope.user}">
     <p>Hello, ${sessionScope.user.firstName}</p>
 </c:if>
 <h2>${pesronalInformationLink}</h2>
 
 <form name="updateFirstName-form" action="/controller?command=update_first_name_by_user" method="post">
+    <div class="container" style="background-color:#ce3232">
     <label for="firstName-input">${firstName}:</label>
     <input id="firstName-input" type="text" name="firstName" min="1" max="45" required pattern="^[A-ZА-Яa-zа-я]+((\s)?((\'|\-|\.)?([A-ZА-Яa-zа-я])+))*$" value="${sessionScope.user.firstName}" />
     <input type="submit" value="${update} ${firstName}"/>
+    </div>
 </form>
 <br>
 <form name="updateLastName-form" action="${pageContext.request.contextPath}/controller?command=update_last_name_by_user" method="post">

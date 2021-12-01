@@ -7,6 +7,10 @@
     <title>Show conferences</title>
 </head>
 <body>
+<style>
+    <%@include file="/WEB-INF/css/table.css"%>
+</style>
+<%@include file="/WEB-INF/jsp/common/header.jsp"%>
 <c:if test="${not empty sessionScope.user}">
     <p>Hello, ${sessionScope.user.firstName}</p>
 </c:if>
@@ -53,27 +57,25 @@
     </br>
 </c:if>
 <br>
-<a href="/controller?command=show_find_section_conferences_in_conferenc_by_id">find SectionConferences in conferenc</a>
-<br>
-<br>
 <a href="/controller?command=show_find_section_conferences_by_name">find SectionConferences by name</a>
 <br>
-<table>
-    <tr>
-        <th>ID</th>
-        <th>NAME</th>
-        <th>DESCRIPTION</th>
-        <th>CATEGORY</th>
-
-    </tr>
+<ul class="list3a">
     <c:forEach var="conferenc" items="${requestScope.conferences}">
-        <tr>
-            <td>${conferenc.id}</td>
-            <td>${conferenc.name}</td>
-            <td>${conferenc.description}</td>
-            <td>${conferenc.category.name}</td>
-        </tr>
+            <form name="removeConferencd-form" action="/controller?command=find_section_conferences_in_conferenc_by_id"
+                  method="post">
+                <li>
+                    <input class="container" type="text" name="id" readonly value="Уникальный номер: ${conferenc.id}"/>
+                    <input class="container"type="text" name="name" readonly value="Название: ${conferenc.name}"/>
+                    <input class="container"type="text" name="categoryName" readonly value="Категория: ${conferenc.category.name}"/>
+                    <br>
+                    <input class="container"type="text" name="categoryName" readonly value="Описание: ${conferenc.description}"/>
+                    <br>
+                    <div class="container" style="background-color:#ffffff">
+                        <button type="submit" class="cancelbtn">${removeText}</button>
+                            <%-- <span class="psw">Forgot <a href="#">password?</a></span>--%>
+                    </div>
+            </form>
     </c:forEach>
-</table>
+</ul>
 </body>
 </html>

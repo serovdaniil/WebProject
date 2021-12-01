@@ -40,7 +40,6 @@ public class FindSectionConferencByNameCommand implements Command {
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
         }
-
         return requestFactory.createForwardResponse(propertyContext.get(FIND_SECTION_CONFERENCES_BY_NAME_PAGE));
     }
 

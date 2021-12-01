@@ -17,6 +17,7 @@
 <style>
     <%@include file="/WEB-INF/css/loginStyle.css"%>
 </style>
+<%@include file="/WEB-INF/jsp/common/header.jsp"%>
 <h3>${registrationLink}:</h3>
 <form name="login-form" action="/controller?command=create_an_account" method="post">
     <div class="container">

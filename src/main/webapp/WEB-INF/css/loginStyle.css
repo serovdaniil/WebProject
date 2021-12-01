@@ -5,7 +5,7 @@ body{
 
 /* Bordered form */
 form {
-    border: 3px solid #4c51da;
+    border: 2px solid #4CAF50;
 }
 
 /* Full-width inputs */
@@ -14,13 +14,13 @@ input[type=text], input[type=password] {
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
-    border: 1px solid #ccc;
+    border: 1px solid #4CAF50;
     box-sizing: border-box;
 }
 
 /* Set a style for all buttons */
 button {
-    background-color: #4c51da;
+    background-color: #4CAF50;
     /*#4CAF50 - зеленый цвет*/
     color: white;
     padding: 14px 20px;

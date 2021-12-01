@@ -38,8 +38,9 @@ public class FindConferencByIdCommand implements Command {
         final Optional<Conferenc> conferenc;
         final List<Conferenc> conferencesAll;
         try {
-            conferencesAll = service.findAll();
             conferenc = service.findId(id);
+            conferencesAll = service.findAll();
+
             request.addAttributeToJsp(CONFERENCES_ATTRIBUTE_NAME, conferencesAll);
             request.addAttributeToJsp(CONFERENCES_ATTRIBUTE_NAME_FIND, conferenc);
         } catch (ValidationException e) {

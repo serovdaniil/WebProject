@@ -14,7 +14,7 @@
 <fmt:message bundle="${loc}" key="label.link.logout" var="logoutLink"/>
 <fmt:message bundle="${loc}" key="label.link.personalAccount" var="personalAccountLink"/>
 <fmt:message bundle="${loc}" key="label.link.registration" var="registrationLink"/>
-
+<fmt:setLocale value="${lang}" scope="session"/>
 <html>
 <head>
     <title>${pageTitle}<</title>
@@ -23,31 +23,9 @@
 <style>
     <%@include file="/WEB-INF/css/loginStyle.css"%>
 </style>
-
-<ul>
-    <li><a href="${pageContext.request.contextPath}/controller?command=">${homeLink}</a></li>
-    <li><a href="${pageContext.request.contextPath}/controller?command=show_conferences">${conferencesLink}</a></li>
-    <li>
-        <a href="${pageContext.request.contextPath}/controller?command=show_section_conferences">${sectionConferencesLink}</a>
-    </li>
-    <li><a href="${pageContext.request.contextPath}/controller?command=show_categories">${categoryLink}</a></li>
-    <li><a href="${pageContext.request.contextPath}/controller?command=show_contact">${contactsLink}</a></li>
-    <li><c:choose>
-        <c:when test="${not empty sessionScope.user}">
-            <a href="/controller?command=logout">${logoutLink}</a>
-        </c:when>
-        <c:otherwise>
-            <a href="/controller?command=show_login">${loginLink}</a>
-        </c:otherwise>
-    </c:choose></li>
-    <c:choose> <c:when test="${not empty sessionScope.user}">
-        <li><a href="/controller?command=show_personal_account">${personalAccountLink}</a></li>
-    </c:when>
-        <c:otherwise>
-            <li><a href="/controller?command=show_create_an_account">${registrationLink}</a></li>
-        </c:otherwise>
-    </c:choose>
-</ul>
+<%@include file="/WEB-INF/jsp/common/header.jsp" %>
+<a href="${request.contextPath}controller?command=main_page&lang=en_EN">EN</a>
+<a href="${request.contextPath}controller?command=main_page&lang=ru_RU">BE</a>
 <br>
 <h1>${helloMessage}</h1>
 <c:if test="${not empty sessionScope.user}">
@@ -62,5 +40,13 @@
 <br>
 <a href="/controller?command=show_all_section_conferences_in_category">section conferences in category</a>
 <br>
+<br>
+<a href="/controller?command=show_find_section_conferences_in_conferenc_by_id">sec----- conferences in category</a>
+<br>
+<form name="removeConferenc-form" action="/controller?command=remove_conferenc_by_id" method="post">
+    <label for="id-input">ID conferenc:</label>
+    <input id="id-input" type="text" name="id" value=""/>
+    <input type="submit" value="Remove"/>
+</form>
 </body>
 </html>

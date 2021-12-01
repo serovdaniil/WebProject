@@ -37,7 +37,7 @@ public enum CommandRegistry {
     SHOW_FIND_CONFERENCES_BY_NAME(ShowFindConferencByNameCommand.getInstance(), "show_find_conferences_by_name", UNAUTHORIZED, USER, ADMIN),
     UPDATE_DESCRIPTION_IN_CONFERENC(UpdateDescriptionInConferencCommand.getInstance(), "update_description_in_conferenc", ADMIN),
     FIND_CONFERENCES_BY_ID(FindConferencByIdCommand.getInstance(), "find_conferenc_by_id", ADMIN),
-    REMOVE_CONFERENCES_BY_ID(RemoveConferencByIdCommand.getInstance(), "remove_conferenc_by_id, ADMIN"),
+    REMOVE_CONFERENCES_BY_ID(RemoveConferencByIdCommand.getInstance(), "remove_conferenc_by_id", ADMIN),
     CREATE_CONFERENCES(CreateConferencCommand.getInstance(), "create_conferenc", ADMIN),
     // sectionConferenc
     SHOW_SECTON_CONFERENCES(ShowSectionConferencesPageCommand.getInstance(), "show_section_conferences", UNAUTHORIZED, USER, ADMIN),
@@ -47,7 +47,7 @@ public enum CommandRegistry {
     UPDATE_DESCRIPTION_IN_SECTION_CONFERENC(UpdateDescriptionInSectionConferencCommand.getInstance(), "update_description_in_section_conferenc", ADMIN),
     FIND_SECTION_CONFERENCES_BY_NAME(FindSectionConferencByNameCommand.getInstance(), "find_section_conferences_by_name", UNAUTHORIZED, USER, ADMIN),
     SHOW_FIND_SECTION_CONFERENCES_BY_NAME(ShowFindSectionConferencByNameCommand.getInstance(), "show_find_section_conferences_by_name", UNAUTHORIZED, USER, ADMIN),
-    FIND_SECTION_CONFERENCES_IN_CONFERENC_BY_ID(FindSectionConferencesInConferencByIdCommand.getInstance(), "find_section_conferences_in_conferenc_by_id", ADMIN),
+    FIND_SECTION_CONFERENCES_IN_CONFERENC_BY_ID(FindSectionConferencesInConferencByIdCommand.getInstance(), "find_section_conferences_in_conferenc_by_id", UNAUTHORIZED, USER, ADMIN),
     SHOW_FIND_SECTION_CONFERENCES_IN_CONFERENC_BY_ID(ShowFindSectionConferencesInConferencByIdCommand.getInstance(), "show_find_section_conferences_in_conferenc_by_id", UNAUTHORIZED, USER, ADMIN),
     // categories
     SHOW_CATEGORIES(ShowCategoryPageCommand.getInstance(), "show_categories", UNAUTHORIZED, USER, ADMIN),

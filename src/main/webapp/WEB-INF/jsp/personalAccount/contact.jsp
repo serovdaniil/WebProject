@@ -13,6 +13,7 @@
     <title>${contactsLink}</title>
 </head>
 <body>
+<%@include file="/WEB-INF/jsp/common/header.jsp" %>
 <h3>${createQuestion}</h3>
 
 <form name="createQuestion-form" action="/controller?command=create_question" method="post">

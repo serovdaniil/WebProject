@@ -48,7 +48,7 @@ public class ConferencServiceImpl implements ConferencService {
 
     @Override
     public List<Conferenc> findAll() {
-        LOG.debug("Service: Readind all conferences started.");
+        LOG.debug("Service: Readind all conferences started1.");
         try {
             return conferencDao.readAll();
         } catch (EntityExtractionFailedException e) {

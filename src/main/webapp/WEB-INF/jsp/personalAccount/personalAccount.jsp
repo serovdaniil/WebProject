@@ -16,6 +16,7 @@
     <title>${personalAccountLink}</title>
 </head>
 <body>
+<%@include file="/WEB-INF/jsp/common/header.jsp" %>
 <ul>
     <c:if test="${not empty sessionScope.user}">
         <li><a href="${pageContext.request.contextPath}/controller?command=show_personal_infomation">${pesronalInformationLink}</a></li>
