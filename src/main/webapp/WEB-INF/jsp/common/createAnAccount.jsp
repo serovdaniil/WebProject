@@ -7,8 +7,10 @@
 <fmt:message bundle="${loc}" key="label.password" var="password"/>
 <fmt:message bundle="${loc}" key="label.link.registration" var="registrationLink"/>
 <fmt:message bundle="${loc}" key="label.removeText" var="removeText"/>
+<!doctype html>
 <html>
 <head>
+    <meta charset="utf-8">
     <title>${registrationLink}</title>
 </head>
 <body>
@@ -18,16 +20,16 @@
 <h3>${registrationLink}:</h3>
 <form name="login-form" action="/controller?command=create_an_account" method="post">
     <div class="container">
-    <label for="login-input">${email}:</label>
-    <input id="login-input" type="text" required name="email"  value="" pattern="/^(?!.*@.*@.*$)(?!.*@.*\-\-.*\..*$)(?!.*@.*\-\..*$)(?!.*@.*\-$)(.*@.+(\..{1,11})?)$/"/>
-    <br>
-    <label for="password-input">${password}:</label>
-    <input id="password-input" type="password" required name="password" value=""/>
-    <br/>
-    <c:if test="${not empty requestScope.errorRegistrationPassMessage}">
-        <b>${requestScope.errorRegistrationPassMessage}</b>
+        <label for="login-input">${email}:</label>
+        <input id="login-input" type="text"  name="email"  min="1" max="45" value="" required pattern="^([A-Za-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$"/>
         <br>
-    </c:if>
+        <label for="password-input">${password}:</label>
+        <input id="password-input" type="password" required name="password" value=""/>
+        <br/>
+        <c:if test="${not empty requestScope.errorRegistrationPassMessage}">
+            <b>${requestScope.errorRegistrationPassMessage}</b>
+            <br>
+        </c:if>
         <button type="submit">${registrationLink}</button>
     </div>
     <div class="container" style="background-color:#f1f1f1">

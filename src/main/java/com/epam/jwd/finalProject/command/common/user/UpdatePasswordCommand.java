@@ -7,7 +7,11 @@ import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
 import com.epam.jwd.finalProject.model.User;
 import com.epam.jwd.finalProject.service.api.UserService;
+import com.epam.jwd.finalProject.service.exception.ValidationException;
 import com.epam.jwd.finalProject.service.factory.ServiceFactory;
+import com.epam.jwd.finalProject.service.imlp.UserServiceImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Optional;
 
@@ -21,6 +25,7 @@ public class UpdatePasswordCommand implements Command {
     private static final String UPDATE_PASSWORD_USER_PAGE = "page.personalInformation";
     private static final String SUCCESSFUL_RESULT_UPDATE_INFORMATION = "Successful updating of personal information";
     private static final String UNSUCCESSFUL_UPDATE_PASSWORD_USER_PAGE = "Unsuccessful updating of personal information";
+    private static final Logger LOG = LogManager.getLogger(UpdatePasswordCommand.class);
 
     UpdatePasswordCommand(UserService service, RequestFactory requestFactory, PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().userService();
@@ -33,16 +38,22 @@ public class UpdatePasswordCommand implements Command {
         final Optional<User> userOptional = request.retrieveFromSession(USER_SESSION_ATTRIBUTE_NAME);
         final String login = userOptional.get().getLogin();
         final String password = request.getParameter(FIND_PARAM_PASSWORD);
-        final Optional<User> user = service.updatePasswordByLogin(login, password);
-        if (password.equals(user.get().getPassword())) {
-            request.addAttributeToJsp(USERS_ATTRIBUTE_NAME, UNSUCCESSFUL_UPDATE_PASSWORD_USER_PAGE);
-        } else {
-            request.addAttributeToJsp(USERS_ATTRIBUTE_NAME, SUCCESSFUL_RESULT_UPDATE_INFORMATION);
+        final Optional<User> user;
+        try {
+            user = service.updatePasswordByLogin(login, password);
+            if (password.equals(user.get().getPassword())) {
+                request.addAttributeToJsp(USERS_ATTRIBUTE_NAME, UNSUCCESSFUL_UPDATE_PASSWORD_USER_PAGE);
+            } else {
+                request.addAttributeToJsp(USERS_ATTRIBUTE_NAME, SUCCESSFUL_RESULT_UPDATE_INFORMATION);
+            }
+            request.clearSession();
+            request.createSession();
+            request.addToSession(USER_SESSION_ATTRIBUTE_NAME, user.get());
+        } catch (ValidationException e) {
+            LOG.error("The entered data is not correct!" + e);
         }
-        request.clearSession();
-        request.createSession();
-        request.addToSession(USER_SESSION_ATTRIBUTE_NAME, user.get());
         return requestFactory.createForwardResponse(propertyContext.get(UPDATE_PASSWORD_USER_PAGE));
+
     }
 
     public static UpdatePasswordCommand getInstance() {

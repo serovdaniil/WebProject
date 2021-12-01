@@ -21,7 +21,6 @@
 </head>
 <body>
 <style>
-    <%@include file="/WEB-INF/css/welcomebackground.css"%>
     <%@include file="/WEB-INF/css/loginStyle.css"%>
 </style>
 

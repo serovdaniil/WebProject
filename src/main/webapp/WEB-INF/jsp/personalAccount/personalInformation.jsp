@@ -26,25 +26,25 @@
 
 <form name="updateFirstName-form" action="/controller?command=update_first_name_by_user" method="post">
     <label for="firstName-input">${firstName}:</label>
-    <input id="firstName-input" type="text" name="firstName" value="${sessionScope.user.firstName}" />
+    <input id="firstName-input" type="text" name="firstName" min="1" max="45" required pattern="@^([А-Я]{1}[а-яё]{1,44}|[A-Z]{1}[a-z]{1,44})$@gm" value="${sessionScope.user.firstName}" />
     <input type="submit" value="${update} ${firstName}"/>
 </form>
 <br>
 <form name="updateLastName-form" action="${pageContext.request.contextPath}/controller?command=update_last_name_by_user" method="post">
     <label for="lastName-input">${lastName}:</label>
-    <input id="lastName-input" type="text" name="lastName" value="${sessionScope.user.lastName}" />
+    <input id="lastName-input" type="text" name="lastName" min="1" max="45" required pattern="^[А-Я][а-я]*(-[А-Я][а-я]*)?$" value="${sessionScope.user.lastName}" />
     <input type="submit" value="${updateLastName}"/>
 </form>
 <br>
 <form name="updatePassword-form" action="${pageContext.request.contextPath}/controller?command=update_password_by_user" method="post">
     <label for="password-input">${password}:</label>
-    <input id="password-input" type="password" name="password" placeholder="${password}"/>
+    <input id="password-input" type="password" name="password" required placeholder="${password}"/>
     <input type="submit" value="${updatePassword}"/>
 </form>
 <br>
 <form name="updateEmail-form" action="${pageContext.request.contextPath}/controller?command=update_email_by_user" method="post">
     <label for="email-input">${email}:</label>
-    <input id="email-input" type="text" name="email" value="${sessionScope.user.email}" />
+    <input id="email-input" type="text" name="email" requiredpattern="^([A-Za-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$"value="${sessionScope.user.email}" />
     <input type="submit" value="${updateEmail}"/>
 </form>
 <br>

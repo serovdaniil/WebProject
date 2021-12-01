@@ -1,5 +1,6 @@
 package com.epam.jwd.finalProject.command.common;
 
+import com.epam.jwd.finalProject.command.common.user.UpdatePasswordCommand;
 import com.epam.jwd.finalProject.command.factory.Command;
 import com.epam.jwd.finalProject.command.factory.CommandRequest;
 import com.epam.jwd.finalProject.command.factory.CommandResponse;
@@ -7,7 +8,10 @@ import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
 import com.epam.jwd.finalProject.model.User;
 import com.epam.jwd.finalProject.service.api.UserService;
+import com.epam.jwd.finalProject.service.exception.ValidationException;
 import com.epam.jwd.finalProject.service.factory.ServiceFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Optional;
 
@@ -21,6 +25,7 @@ public class LoginCommand implements Command {
     private static final String LOGIN_REQUEST_PARAM_NAME = "login";
     private static final String PASSWORD_REQUEST_PARAM_NAME = "password";
     private static final String ERROR_LOGIN_PASS_MESSAGE = "Invalid login or password";
+    private static final Logger LOG = LogManager.getLogger(LoginCommand.class);
 
     private final UserService userService;
     private final RequestFactory requestFactory;
@@ -34,21 +39,27 @@ public class LoginCommand implements Command {
     }
 
     @Override
-    public CommandResponse execute(CommandRequest request) {
+    public CommandResponse execute(CommandRequest request)  {
         if (request.sessionExists() && request.retrieveFromSession(USER_SESSION_ATTRIBUTE_NAME).isPresent()) {
             //todo: error - user already logged in
             return null;
         }
         final String login = request.getParameter(LOGIN_REQUEST_PARAM_NAME);
         final String password = request.getParameter(PASSWORD_REQUEST_PARAM_NAME);
-        final Optional<User> user = userService.authenticate(login, password);
-        if (!user.isPresent()) {
-            request.addAttributeToJsp(ERROR_LOGIN_PASS_ATTRIBUTE, ERROR_LOGIN_PASS_MESSAGE);
-            return requestFactory.createForwardResponse(propertyContext.get(LOGIN_PAGE));
+        final Optional<User> user;
+        try {
+            user = userService.authenticate(login, password);
+            if (!user.isPresent()) {
+                request.addAttributeToJsp(ERROR_LOGIN_PASS_ATTRIBUTE, ERROR_LOGIN_PASS_MESSAGE);
+                return requestFactory.createForwardResponse(propertyContext.get(LOGIN_PAGE));
+            }
+            request.clearSession();
+            request.createSession();
+            request.addToSession(USER_SESSION_ATTRIBUTE_NAME, user.get());
+        } catch (ValidationException e) {
+            LOG.error("The entered data is not correct!" + e);
         }
-        request.clearSession();
-        request.createSession();
-        request.addToSession(USER_SESSION_ATTRIBUTE_NAME, user.get());
+
         return requestFactory.createRedirectResponse(propertyContext.get(INDEX_PAGE));
     }
 

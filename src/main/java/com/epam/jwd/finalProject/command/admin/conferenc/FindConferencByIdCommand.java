@@ -1,5 +1,6 @@
 package com.epam.jwd.finalProject.command.admin.conferenc;
 
+import com.epam.jwd.finalProject.command.admin.user.ReadUserByIdCommand;
 import com.epam.jwd.finalProject.command.factory.Command;
 import com.epam.jwd.finalProject.command.factory.CommandRequest;
 import com.epam.jwd.finalProject.command.factory.CommandResponse;
@@ -7,7 +8,10 @@ import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
 import com.epam.jwd.finalProject.model.Conferenc;
 import com.epam.jwd.finalProject.service.api.ConferencService;
+import com.epam.jwd.finalProject.service.exception.ValidationException;
 import com.epam.jwd.finalProject.service.factory.ServiceFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +24,7 @@ public class FindConferencByIdCommand implements Command {
     private static final String CONFERENCES_ATTRIBUTE_NAME = "conferences";
     private static final String CONFERENCES_ATTRIBUTE_NAME_FIND = "conferenc";
     private static final String CONFERENCES_PAGE = "page.conferences";
+    private static final Logger LOG = LogManager.getLogger(FindConferencByIdCommand.class);
 
     FindConferencByIdCommand(ConferencService service, RequestFactory requestFactory, PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().conferencService();
@@ -30,10 +35,16 @@ public class FindConferencByIdCommand implements Command {
     @Override
     public CommandResponse execute(CommandRequest request) {
         final Long id = Long.parseLong(request.getParameter(PARAM_ID));
-        final Optional<Conferenc> conferenc = service.findId(id);
-        final List<Conferenc> conferencesAll = service.findAll();
-        request.addAttributeToJsp(CONFERENCES_ATTRIBUTE_NAME, conferencesAll);
-        request.addAttributeToJsp(CONFERENCES_ATTRIBUTE_NAME_FIND, conferenc);
+        final Optional<Conferenc> conferenc;
+        final List<Conferenc> conferencesAll;
+        try {
+            conferencesAll = service.findAll();
+            conferenc = service.findId(id);
+            request.addAttributeToJsp(CONFERENCES_ATTRIBUTE_NAME, conferencesAll);
+            request.addAttributeToJsp(CONFERENCES_ATTRIBUTE_NAME_FIND, conferenc);
+        } catch (ValidationException e) {
+            LOG.error("The entered data is not correct!" + e);
+        }
         return requestFactory.createForwardResponse(propertyContext.get(CONFERENCES_PAGE));
     }
 
@@ -43,7 +54,7 @@ public class FindConferencByIdCommand implements Command {
 
     private static class Holder {
         public static final FindConferencByIdCommand INSTANCE =
-                new FindConferencByIdCommand(ServiceFactory.simple().conferencService(),RequestFactory.getInstance(),
+                new FindConferencByIdCommand(ServiceFactory.simple().conferencService(), RequestFactory.getInstance(),
                         PropertyContext.instance());
     }
 }

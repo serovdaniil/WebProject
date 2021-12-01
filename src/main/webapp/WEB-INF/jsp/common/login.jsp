@@ -21,7 +21,7 @@
 <form name="login-form" action="/controller?command=login" method="post">
     <div class="container">
         <label for="login-input">${login}:</label>
-        <input id="login-input" type="text" required name="login" value=""/>
+        <input id="login-input" type="text" min="1" max="40" required pattern="^([A-Za-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$" name="login" value=""/>
         <br>
         <label for="password-input">${password}:</label>
         <input id="password-input" type="password" required name="password" value=""/>
@@ -35,7 +35,7 @@
 
     <div class="container" style="background-color:#f1f1f1">
         <button type="reset" class="cancelbtn">${removeText}</button>
-       <%-- <span class="psw">Forgot <a href="#">password?</a></span>--%>
+        <%-- <span class="psw">Forgot <a href="#">password?</a></span>--%>
     </div>
     <%-- <input type="submit" value="Log in">--%>
 </form>

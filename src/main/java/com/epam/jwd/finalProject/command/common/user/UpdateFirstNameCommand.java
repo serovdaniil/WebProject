@@ -7,7 +7,10 @@ import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
 import com.epam.jwd.finalProject.model.User;
 import com.epam.jwd.finalProject.service.api.UserService;
+import com.epam.jwd.finalProject.service.exception.ValidationException;
 import com.epam.jwd.finalProject.service.factory.ServiceFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Optional;
 
@@ -21,6 +24,7 @@ public class UpdateFirstNameCommand implements Command {
     private static final String UPDATE_FIRST_NAME_USER_PAGE = "page.personalInformation";
     private static final String SUCCESSFUL_RESULT_UPDATE_INFORMATION = "Successful updating of personal information";
     private static final String UNSUCCESSFUL_RESULT_UPDATE_INFORMATION = "Unsuccessful updating of personal information";
+    private static final Logger LOG = LogManager.getLogger(UpdateFirstNameCommand.class);
 
     UpdateFirstNameCommand(UserService service, RequestFactory requestFactory, PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().userService();
@@ -33,18 +37,23 @@ public class UpdateFirstNameCommand implements Command {
         final Optional<User> userOptional = request.retrieveFromSession(USER_SESSION_ATTRIBUTE_NAME);
         final Long id = userOptional.get().getId();
         final String firstName = request.getParameter(FIND_PARAM_FIRTS_NAME);
-        final Optional<User> user = service.updateFirstName(id, firstName);
-        request.clearSession();
-        request.createSession();
-        request.addToSession(USER_SESSION_ATTRIBUTE_NAME, user.get());
-        if (firstName.equals(user.get().getFirstName())) {
-            request.addAttributeToJsp(USERS_ATTRIBUTE_NAME, SUCCESSFUL_RESULT_UPDATE_INFORMATION);
-        } else {
-            request.addAttributeToJsp(USERS_ATTRIBUTE_NAME, UNSUCCESSFUL_RESULT_UPDATE_INFORMATION);
+        final Optional<User> user;
+        try {
+            user = service.updateFirstName(id, firstName);
+            request.clearSession();
+            request.createSession();
+            request.addToSession(USER_SESSION_ATTRIBUTE_NAME, user.get());
+            if (firstName.equals(user.get().getFirstName())) {
+                request.addAttributeToJsp(USERS_ATTRIBUTE_NAME, SUCCESSFUL_RESULT_UPDATE_INFORMATION);
+            } else {
+                request.addAttributeToJsp(USERS_ATTRIBUTE_NAME, UNSUCCESSFUL_RESULT_UPDATE_INFORMATION);
+            }
+            request.clearSession();
+            request.createSession();
+            request.addToSession(USER_SESSION_ATTRIBUTE_NAME, user.get());
+        } catch (ValidationException e) {
+            LOG.error("The entered data is not correct!" + e);
         }
-        request.clearSession();
-        request.createSession();
-        request.addToSession(USER_SESSION_ATTRIBUTE_NAME, user.get());
         return requestFactory.createForwardResponse(propertyContext.get(UPDATE_FIRST_NAME_USER_PAGE));
     }
 
