@@ -97,6 +97,7 @@ public class UserServiceImpl implements UserService {
             LOG.error("The entered data is not correct!");
             throw new ValidationException("The entered data is not correct!");
         }
+
         final char[] rawPassword = password.toCharArray();
         final String hashedPassword = hasher.hashToString(MIN_COST, rawPassword);
         LOG.debug("Service: Registration finished.");

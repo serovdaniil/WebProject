@@ -7,10 +7,7 @@ import com.epam.jwd.finalProject.model.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -41,6 +38,9 @@ public class MethodUserDaoImpl implements UserDao {
                 result = true;
             }
             LOG.info("End create user");
+        } catch (SQLIntegrityConstraintViolationException e) {
+            LOG.error("Diplicate email" + e);
+            return Optional.empty();
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", SqlQuery.CREATE_USER);
@@ -128,6 +128,9 @@ public class MethodUserDaoImpl implements UserDao {
             statement.setString(1, email);
             statement.executeUpdate();
             LOG.info("END update email by id account");
+        } catch (SQLIntegrityConstraintViolationException e) {
+            LOG.error("Diplicate email" + e);
+            return Optional.empty();
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", SqlQuery.UPDATE_EMAIL_BY_ID_ACCOUNT);

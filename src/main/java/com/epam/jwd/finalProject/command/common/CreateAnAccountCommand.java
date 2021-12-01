@@ -13,6 +13,7 @@ import com.epam.jwd.finalProject.service.factory.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Optional;
 
 public class CreateAnAccountCommand implements Command {

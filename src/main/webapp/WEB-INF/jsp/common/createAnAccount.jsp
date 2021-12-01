@@ -24,7 +24,7 @@
         <input id="login-input" type="text"  name="email"  min="1" max="45" value="" required pattern="^([A-Za-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$"/>
         <br>
         <label for="password-input">${password}:</label>
-        <input id="password-input" type="password" required name="password" value=""/>
+        <input id="password-input" type="password" required pattern="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,15})$" name="password" value=""/>
         <br/>
         <c:if test="${not empty requestScope.errorRegistrationPassMessage}">
             <b>${requestScope.errorRegistrationPassMessage}</b>
