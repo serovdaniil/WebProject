@@ -1,9 +1,9 @@
 #menu {
-    list-style:none;
-    width:1440px;
-    margin:30px auto 0px auto;
-    height:43px;
-    padding:0px 20px 0px 20px;
+    list-style: none;
+    width: 1440px;
+    margin: 30px auto 0px auto;
+    height: 43px;
+    padding: 0px 20px 0px 20px;
     /* Rounded Corners */
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
@@ -12,48 +12,69 @@
     background: #4CAF50;
     /* Borders */
     border: 1px solid #155018;
-    -moz-box-shadow:inset 0px 0px 1px #edf9ff;
-    -webkit-box-shadow:inset 0px 0px 1px #edf9ff;
-    box-shadow:inset 0px 0px 1px #edf9ff;
+    -moz-box-shadow: inset 0px 0px 1px #edf9ff;
+    -webkit-box-shadow: inset 0px 0px 1px #edf9ff;
+    box-shadow: inset 0px 0px 1px #edf9ff;
+}
+
+#menuRight {
+    list-style: none;
+    width: 15%;
+    margin-top: 1%;
+    margin-left: 80%;
+    height: 43px;
+    padding: 0px 20px 0px 20px;
+    /* Rounded Corners */
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    /* Background color and gradients */
+    background: #4CAF50;
+    /* Borders */
+    border: 1px solid #155018;
+    -moz-box-shadow: inset 0px 0px 1px #edf9ff;
+    -webkit-box-shadow: inset 0px 0px 1px #edf9ff;
+    box-shadow: inset 0px 0px 1px #edf9ff;
 }
 
 #menu li {
-    float:left;
-    display:block;
-    text-align:center;
-    position:relative;
+    float: left;
+    display: block;
+    text-align: center;
+    position: relative;
     padding: 4px 10px 4px 10px;
-    margin-right:20px;
-    margin-top:7px;
-    border:none;
+    margin-right: 20px;
+    margin-top: 7px;
+    border: none;
 }
-#menuRight li {
 
-    float:right;
-    display:block;
-    text-align:center;
-    position:relative;
+#menuRight li {
+    float: right;
+    display: block;
+    text-align: center;
+    position: relative;
     padding: 4px 10px 4px 10px;
-    margin-right:20px;
-    margin-top:7px;
-    border:none;
+    margin-right: 2%;
+    margin-top: 7px;
+    border: none;
 }
 
 #menuRight li a {
-    font-family:Arial, Helvetica, sans-serif;
-    font-size:16px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
     color: #ffffff;
-    display:block;
-    outline:0;
-    text-decoration:none;
+    display: block;
+    outline: 0;
+    text-decoration: none;
 }
 
 #menu li a {
-    font-family:Arial, Helvetica, sans-serif;
-    font-size:16px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
     color: #ffffff;
-    display:block;
-    outline:0;
-    text-decoration:none;
+    display: block;
+    outline: 0;
+    text-decoration: none;
 }
+
 

@@ -5,6 +5,7 @@
     <title>Show all questions</title>
 </head>
 <body>
+<%@include file="/WEB-INF/jsp/common/header.jsp" %>
 <h4>Add answer to question</h4>
 <form name="addAnswer-form" action="/controller?command=add_answer_to_question" method="post">
     <label for="id-input">ID:</label>
@@ -37,5 +38,6 @@
         </tr>
     </c:forEach>
 </table>
+<%@include file="/WEB-INF/jsp/common/footer.jsp" %>
 </body>
 </html>

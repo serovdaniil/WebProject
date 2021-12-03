@@ -16,29 +16,74 @@
     <title>${personalAccountLink}</title>
 </head>
 <body>
+<style>
+    <%@include file="/WEB-INF/css/personalAccountStyle.css"%>
+</style>
 <%@include file="/WEB-INF/jsp/common/header.jsp" %>
-<ul>
-    <c:if test="${not empty sessionScope.user}">
-        <li><a href="${pageContext.request.contextPath}/controller?command=show_personal_infomation">${pesronalInformationLink}</a></li>
-    </c:if>
-    <c:if test="${not empty sessionScope.user && sessionScope.user.role eq Role.USER}">
-        <li><a href="${pageContext.request.contextPath}/controller?command=show_applications_by_account">${myApplicationsLink}</a></li>
-    </c:if>
-    <c:if test="${not empty sessionScope.user && sessionScope.user.role eq Role.USER}">
-        <li><a href="${pageContext.request.contextPath}/controller?command=find_questions_by_id_account">${myQuestionsLink}</a></li>
-    </c:if>
-    <c:if test="${not empty sessionScope.user && sessionScope.user.role eq Role.ADMIN}">
-        <li><a href="${pageContext.request.contextPath}/controller?command=show_questions">${allQuestionsLink}</a></li>
-    </c:if>
-    <c:if test="${not empty sessionScope.user && sessionScope.user.role eq Role.ADMIN}">
-        <li><a href="${pageContext.request.contextPath}/controller?command=show_users">${usersLink}</a></li>
-    </c:if>
-    <c:if test="${not empty sessionScope.user && sessionScope.user.role eq Role.ADMIN}">
-        <li><a href="${pageContext.request.contextPath}/controller?command=show_applications">${allApplicationsLink}</a></li>
-        </c:if>
-    <c:if test="${not empty sessionScope.user && sessionScope.user.role eq Role.ADMIN}">
-    <li><a href="${pageContext.request.contextPath}/controller?command=show_read_user_by_id">Find user by id</a></li>
-    </c:if>
-</ul>
+<div id="block">
+<c:if test="${not empty sessionScope.user && sessionScope.user.role eq Role.ADMIN}">
+    <div id="container-right">
+        <p class="center-pic"><img src="/jpg/pngegg.png" alt="img"/></p>
+        <p class="title">Все вопросы пользователей</p>
+        <p>Просмотр всех вопросов, а также добавление ответов на вопросы и удаление их.</p>
+        <a class="button"
+           href="${pageContext.request.contextPath}/controller?command=show_questions">${allQuestionsLink}</a>
+    </div>
+</c:if>
+<c:if test="${not empty sessionScope.user}">
+    <div id="container">
+        <p class="center-pic"><img src="/jpg/761.png" alt="img"/></p>
+        <p class="title"> Личная информация</p>
+        <p>Редактирование основное информации своего профиля: Email, пароль, имя, фамилия.</p>
+        <a class="button"
+           href="${pageContext.request.contextPath}/controller?command=show_personal_infomation">${pesronalInformationLink}</a>
+    </div>
+</c:if>
+<c:if test="${not empty sessionScope.user && sessionScope.user.role eq Role.USER}">
+    <div id="container">
+        <p class="center-pic"><img src="/jpg/pngegg4.png" alt="img"/></p>
+        <p class="title">Мои заявки</p>
+        <p>Просмотр моих заявок, а также удаление.</p>
+        <a class="button"
+           href="${pageContext.request.contextPath}/controller?command=show_applications_by_account">${myApplicationsLink}</a>
+    </div>
+</c:if>
+<c:if test="${not empty sessionScope.user && sessionScope.user.role eq Role.USER}">
+    <div id="container-right">
+        <p class="center-pic"><img src="/jpg/pngegg.png" alt="img"/></p>
+        <p class="title">Мои вопросы</p>
+        <p>Просмотр моих вопросов, а также удаление.</p>
+        <a class="button"
+           href="${pageContext.request.contextPath}/controller?command=find_questions_by_id_account">${myQuestionsLink}</a>
+    </div>
+</c:if>
+<c:if test="${not empty sessionScope.user && sessionScope.user.role eq Role.ADMIN}">
+    <div id="container-right">
+        <p class="center-pic"><img src="/jpg/pngegg15.png" alt="img"/></p>
+        <p class="title">Пользователи</p>
+        <p>Просмотр пользователей, добавление новых полномочий, удаление.</p>
+        <a class="button" href="${pageContext.request.contextPath}/controller?command=show_users">${usersLink}</a>
+    </div>
+</c:if>
+<c:if test="${not empty sessionScope.user && sessionScope.user.role eq Role.ADMIN}">
+    <div id="container">
+        <p class="center-pic"><img src="/jpg/pngegg4.png" alt="img"/></p>
+        <p class="title">Просмотр заявок</p>
+        <p>Все заявки, а также их обновление и удаление</p>
+        <a class="button"
+           href="${pageContext.request.contextPath}/controller?command=show_applications">${allApplicationsLink}</a>
+    </div>
+</c:if>
+<c:if test="${not empty sessionScope.user && sessionScope.user.role eq Role.ADMIN}">
+    <div id="container-center">
+        <p class="center-pic"><img src="/jpg/pngegg7.png" alt="img"/></p>
+        <p class="title">Поиск пользователя по id</p>
+        <p>Страница для детального просмотра пользователя по id.</p>
+        <a class="button" href="${pageContext.request.contextPath}/controller?command=show_read_user_by_id">Find user
+            by id</a>
+    </div>
+</c:if>
+</div>
+<%@include file="/WEB-INF/jsp/common/footer.jsp" %>
 </body>
 </html>

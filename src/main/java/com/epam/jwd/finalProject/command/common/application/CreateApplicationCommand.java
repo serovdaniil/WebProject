@@ -22,19 +22,19 @@ import java.util.Optional;
 public class CreateApplicationCommand implements Command {
     private static final String PARAM_ID = "id";
     private static final String USER_SESSION_ATTRIBUTE_NAME = "user";
-    private static final String APPLICATIONS_ATTRIBUTE_NAME_SECTION_CONFERENC = "sectionConferences";
+    private static final String APPLICATIONS_ATTRIBUTE_NAME_SECTION_CONFERENC = "applications";
     private static final String APPLICATIONS_ATTRIBUTE_NAME = "result";
-    private static final String APPLICATIONS_PAGE = "page.sectionConferences";
+    private static final String APPLICATIONS_PAGE = "page.applicationsByAccount";
     private static final Logger LOG = LogManager.getLogger(CreateApplicationCommand.class);
 
-    private final ApplicationService applicationServiceservice;
+    private final ApplicationService applicationService;
     private final SectionConferencService sectionConferencServiceservice;
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
     CreateApplicationCommand(EntityService<Application> service, SectionConferencService sectionConferencServiceservice, RequestFactory requestFactory, PropertyContext propertyContext) {
         this.sectionConferencServiceservice = ServiceFactory.simple().sectionConferencService();
-        this.applicationServiceservice = ServiceFactory.simple().applicationService();
+        this.applicationService = ServiceFactory.simple().applicationService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
     }
@@ -45,10 +45,11 @@ public class CreateApplicationCommand implements Command {
         final Long idAccount = userOptional.get().getId();
         final Long idSectionConferenc = Long.parseLong(request.getParameter(PARAM_ID));
         final boolean result;
+        final List<Application> applicationList;
         try {
-            result = applicationServiceservice.create(idAccount, idSectionConferenc, (long) 1);
-            final List<SectionConferenc> sectionConferencesAll = sectionConferencServiceservice.findAll();
-            request.addAttributeToJsp(APPLICATIONS_ATTRIBUTE_NAME_SECTION_CONFERENC, sectionConferencesAll);
+            result = applicationService.create(idAccount, idSectionConferenc, (long) 1);
+            applicationList = applicationService.findAccountIdByApplication(idAccount);
+            request.addAttributeToJsp(APPLICATIONS_ATTRIBUTE_NAME_SECTION_CONFERENC, applicationList);
             request.addAttributeToJsp(APPLICATIONS_ATTRIBUTE_NAME, result);
         }  catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);

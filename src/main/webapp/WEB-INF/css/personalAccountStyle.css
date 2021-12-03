@@ -1,0 +1,71 @@
+#container {
+    margin-top: 25px;
+    height: 270px;
+    width: 35%;
+    margin-right: 10%;
+    float: right;
+    border: 3px solid #4CAF50;
+    padding: 16px;
+    border-radius: 30px;
+}
+
+#container-right {
+    margin-top: 25px;
+    height: 270px;
+    width: 35%;
+    margin-right: 10%;
+    float: right;
+    border: 3px solid #4CAF50;
+    padding: 16px;
+    border-radius: 30px;
+}
+#container-center {
+    margin-top: 25px;
+    height: 270px;
+    width: 35%;
+    margin-right: 33%;
+    margin-left: 33%;
+    float: right;
+    border: 3px solid #4CAF50;
+    padding: 16px;
+    border-radius: 30px;
+}
+#block {
+    height: auto;
+}
+p{
+    text-align: center;
+    font-size: 18px;
+}
+p.title{
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+.center-pic{
+    display:block;
+    margin:auto;
+    text-align: center;
+    border: 2px solid #4CAF50;
+    width: 19%;
+    border-radius: 50%;
+}
+img{
+    width: 100px;
+    height: 100px;
+}
+/* Set a style for all buttons */
+a.button {
+    color: white;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 30px;
+    font-weight: bold;
+    width: auto;
+    padding: 10px 18px;
+    background-color: #f44336;
+    display:block;
+    margin:auto;
+    text-align: center;
+}

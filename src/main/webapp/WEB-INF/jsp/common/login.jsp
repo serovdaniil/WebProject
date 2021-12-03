@@ -25,7 +25,7 @@
         <input id="login-input" type="text" min="1" max="40" required pattern="^([A-Za-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$" name="login" value=""/>
         <br>
         <label for="password-input">${password}:</label>
-        <input id="password-input" type="password" required name="password" value=""/>
+        <input id="password-input" type="password" required pattern="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,15})$" name="password" value=""/>
         <br/>
         <c:if test="${not empty requestScope.errorLoginPassMessage}">
             <b>${requestScope.errorLoginPassMessage}</b>
@@ -33,13 +33,11 @@
         </c:if>
         <button type="submit">${loginLink}</button>
     </div>
-
     <div class="container" style="background-color:#ffffff">
         <button type="reset" class="cancelbtn">${removeText}</button>
         <%-- <span class="psw">Forgot <a href="#">password?</a></span>--%>
     </div>
-    <%-- <input type="submit" value="Log in">--%>
 </form>
-</form>
+<%@include file="/WEB-INF/jsp/common/footer.jsp" %>
 </body>
 </html>

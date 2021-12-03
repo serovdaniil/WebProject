@@ -38,5 +38,6 @@
         <%-- <span class="psw">Forgot <a href="#">password?</a></span>--%>
     </div>
 </form>
+<%@include file="/WEB-INF/jsp/common/footer.jsp" %>
 </body>
 </html>

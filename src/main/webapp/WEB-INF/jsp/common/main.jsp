@@ -14,7 +14,7 @@
 <fmt:message bundle="${loc}" key="label.link.logout" var="logoutLink"/>
 <fmt:message bundle="${loc}" key="label.link.personalAccount" var="personalAccountLink"/>
 <fmt:message bundle="${loc}" key="label.link.registration" var="registrationLink"/>
-<fmt:setLocale value="${lang}" scope="session"/>
+
 <html>
 <head>
     <title>${pageTitle}<</title>
@@ -24,8 +24,7 @@
     <%@include file="/WEB-INF/css/loginStyle.css"%>
 </style>
 <%@include file="/WEB-INF/jsp/common/header.jsp" %>
-<a href="${request.contextPath}controller?command=main_page&lang=en_EN">EN</a>
-<a href="${request.contextPath}controller?command=main_page&lang=ru_RU">BE</a>
+<br>
 <br>
 <h1>${helloMessage}</h1>
 <c:if test="${not empty sessionScope.user}">
@@ -48,5 +47,6 @@
     <input id="id-input" type="text" name="id" value=""/>
     <input type="submit" value="Remove"/>
 </form>
+<%@include file="/WEB-INF/jsp/common/footer.jsp" %>
 </body>
 </html>
