@@ -16,7 +16,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 
 public class FindByStatusResultApplicationCommand implements Command {
-    private static final String PARAM_ID = "id";
+    private static final String PARAM_NAME_RESULT = "resultNew";
     private static final String APPLICATIONS_ATTRIBUTE_NAME = "applications";
     private static final String APPLICATIONS_PAGE = "page.applicationsByStatusResult";
     private static final Logger LOG = LogManager.getLogger(FindByStatusResultApplicationCommand.class);
@@ -33,10 +33,10 @@ public class FindByStatusResultApplicationCommand implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        final Long id = Long.parseLong(request.getParameter(PARAM_ID));
+        final String nameResult= request.getParameter(PARAM_NAME_RESULT);
         final List<Application> applicationList;
         try {
-            applicationList = service.findByStatusResult(id);
+            applicationList = service.findByStatusResult(nameResult);
             request.addAttributeToJsp(APPLICATIONS_ATTRIBUTE_NAME, applicationList);
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);

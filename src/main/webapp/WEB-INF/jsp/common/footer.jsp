@@ -20,6 +20,9 @@
 <style>
     <%@include file="/WEB-INF/css/footerStyle.css"%>
 </style>
-<div id="footer"></div>
+<div id="footer">
+    <p class="footer">ITFurute.com</p>
+    <p class="footer">@the author Daniil Serov</p>
+</div>
 </body>
 </html>

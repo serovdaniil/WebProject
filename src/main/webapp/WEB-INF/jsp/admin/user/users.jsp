@@ -5,43 +5,49 @@
     <title>Show user</title>
 </head>
 <body>
-<c:if test="${not empty sessionScope.user}">
-    <p>Hello, ${sessionScope.user.firstName}</p>
-</c:if>
-<c:if test="${not empty sessionScope.user && sessionScope.user.role eq Role.ADMIN}">
-   <br>
-<form name="updateRole-form" action="/controller?command=update_role_by_user" method="post">
-    <label for="idAccount-input">Id account:</label>
-    <input id="idAccount-input" type="text" name="id" value=""/>
-    <br>
-    <label for="role-input">Name role:</label>
-    <input id="role-input" type="text" name="role" value="" />
-    <input type="submit" value="Update role"/>
-</form>
-    <a href="${pageContext.request.contextPath}/controller?command=show_read_user_by_id">Read user by id</a>
-</c:if>
+<style>
+    <%@include file="/WEB-INF/css/tableStyle.css"%>
+</style>
+<%@include file="/WEB-INF/jsp/common/header.jsp" %>
 <br>
 <table>
     <tr>
         <th>ID</th>
         <th>LOGIN</th>
         <th>EMAIL</th>
-        <th>PASSWORD</th>
         <th>FIRST NAME</th>
         <th>LAST NAME</th>
         <th>ROLE</th>
+        <th></th>
     </tr>
     <c:forEach var="user" items="${requestScope.users}">
-        <tr>
-            <td>${user.id}</td>
-            <td>${user.login}</td>
-            <td>${user.email}</td>
-            <td>${user.password}</td>
-            <td>${user.firstName}</td>
-            <td>${user.lastName}</td>
-            <td>${user.role}</td>
-        </tr>
+        <form name="application-form" action="${pageContext.request.contextPath}/controller?command=read_user_by_id" method="post">
+            <tr>
+                <td>
+                    <input class="container" type="text" name="id" readonly value="${user.id}"/>
+                </td>
+                <td>
+                    <input class="container" type="text" name="login" readonly value="${user.login}"/>
+                </td>
+                <td>
+                    <input class="container" type="text" name="email" readonly value="${user.email}"/>
+                </td>
+                <td>
+                    <input class="container" type="text" name="firstName" readonly value="${user.firstName}"/>
+                </td>
+                <td>
+                    <input class="container" type="text" name="lastName" readonly value="${user.lastName}"/>
+                </td>
+                <td>
+                    <input class="container" type="text" name="lastName" readonly value="${user.role}"/>
+                </td>
+                <td>
+                    <button type="submit" >Подробнее</button>
+                </td>
+            </tr>
+        </form>
     </c:forEach>
 </table>
+<%@include file="/WEB-INF/jsp/common/footer.jsp" %>
 </body>
 </html>

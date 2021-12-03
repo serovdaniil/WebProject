@@ -35,9 +35,11 @@ public class ReadUserByIdCommand implements Command {
     public CommandResponse execute(CommandRequest request) {
         final Optional<User> userOptional = request.retrieveFromSession(USER_SESSION_ATTRIBUTE_NAME);
         final Long idAccount = Long.parseLong(request.getParameter(FIND_PARAM_ID_ACCOUNT));
-        final Optional<User> user;
+        final Optional<User> optionalUser;
+        final User user;
         try {
-            user = service.findId(idAccount);
+            optionalUser = service.findId(idAccount);
+            user=optionalUser.get();
             request.addAttributeToJsp(USER_ATTRIBUTE_NAME, user);
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);

@@ -17,5 +17,5 @@ public interface UserService extends EntityService<User> {
 
     Optional<User> updateLastName(Long id, String lastName) throws ValidationException;
 
-    Optional<User> updateRole(Long idAccount, Long idRole);
+    Optional<User> updateRole(Long idAccount, String nameRole) throws ValidationException;
 }

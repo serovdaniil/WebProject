@@ -1,6 +1,5 @@
 package com.epam.jwd.finalProject.command.common.question;
 
-import com.epam.jwd.finalProject.command.common.LoginCommand;
 import com.epam.jwd.finalProject.command.factory.Command;
 import com.epam.jwd.finalProject.command.factory.CommandRequest;
 import com.epam.jwd.finalProject.command.factory.CommandResponse;
@@ -15,7 +14,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,11 +21,11 @@ public class CreateQuestionCommand implements Command {
     private final QuestionService service;
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
-
     private static final String FIND_PARAM_NAME = "name";
     private static final String USER_SESSION_ATTRIBUTE_NAME = "user";
-    private static final String QUESTION_ATTRIBUTE_NAME = "result";
-    private static final String FIND_QUESTIONS_BY_ID_ACCOUNT_PAGE = "page.contact";
+    private static final String QUESTION_ATTRIBUTE_NAME_RESULT = "result";
+    private static final String QUESTION_ATTRIBUTE_NAME = "questions";
+    private static final String FIND_QUESTIONS_BY_ID_ACCOUNT_PAGE = "controller?command=find_questions_by_id_account";
     private static final Logger LOG = LogManager.getLogger(CreateQuestionCommand.class);
 
     CreateQuestionCommand(QuestionService service, RequestFactory requestFactory, PropertyContext propertyContext) {
@@ -43,14 +41,17 @@ public class CreateQuestionCommand implements Command {
         final String name = request.getParameter(FIND_PARAM_NAME);
         final Date date=new Date(981684);
         final boolean result;
+        final List<Question> questionList;
         try {
             result = service.create(name,date,idAccount);
-            request.addAttributeToJsp(QUESTION_ATTRIBUTE_NAME, result);
+            questionList = service.findAccountIdByQuestion(idAccount);
+            request.addAttributeToJsp(QUESTION_ATTRIBUTE_NAME, questionList);
+            request.addAttributeToJsp(QUESTION_ATTRIBUTE_NAME_RESULT, result);
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
         }
 
-        return requestFactory.createForwardResponse(propertyContext.get(FIND_QUESTIONS_BY_ID_ACCOUNT_PAGE));
+        return requestFactory.createRedirectResponse(FIND_QUESTIONS_BY_ID_ACCOUNT_PAGE);
     }
 
     public static CreateQuestionCommand getInstance() {

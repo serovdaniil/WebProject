@@ -5,16 +5,40 @@
     <title>Show user by id</title>
 </head>
 <body>
-<c:if test="${not empty sessionScope.user}">
-    <p>Hello, ${sessionScope.user.firstName}</p>
-</c:if>
-<form name="updateRole-form" action="/controller?command=read_user_by_id" method="post">
-    <label for="idAccount-input">Id account:</label>
-    <input id="idAccount-input" type="text" name="id" value=""/>
-    <input type="submit" value="Read user"/>
+<style>
+    <%@include file="/WEB-INF/css/styleForObject.css"%>
+</style>
+<%@include file="/WEB-INF/jsp/common/header.jsp" %>
+<h2> Пользователь, ${requestScope.user.firstName} ${requestScope.user.lastName}</h2>
+<form name="question-form" action="${pageContext.request.contextPath}/controller?command=update_role_by_user" method="post">
+    <label for="id-input">Уникальный номер:</label>
+    <input id="id-input" class="container" type="text" name="id" readonly
+           value="${requestScope.user.id}"/>
+    <label for="firstName-input">Имя пользователя:</label>
+    <input id="firstName-input" class="container" type="text" name="first_name" readonly
+           value="${requestScope.user.firstName} ${requestScope.application.user.lastName}"/>
+    <label for="lastName-input">Фамилия пользователя:</label>
+    <input id="lastName-input" class="container" type="text" name="last_name" readonly
+           value="${requestScope.user.lastName}"/>
+    <label for="login-input">Логин:</label>
+    <input id="login-input" class="container" type="text" name="login" readonly
+           value="${requestScope.user.login}"/>
+    <label for="email-input">Email:</label>
+    <input id="email-input" class="container" type="text" name="email" readonly
+           value="${requestScope.user.email}"/>
+    <label for="password-input">Пароль:</label>
+    <input id="password-input" class="container" type="password" name="password" readonly
+           value="${requestScope.user.password}"/>
+    <label for="role-input">Роль:</label>
+    <input id="role-input" class="container" type="text" name="role" readonly
+           value="${requestScope.user.role}"/>
+    <label for="roleNew-input">Выберите новую роль:</label>
+    <select id="roleNew-input" name="roleNew">
+        <option>USER</option>
+        <option>ADMIN</option>
+    </select>
+    <button type="submit" class="button">Обновить роль</button>
 </form>
-<br>
-        <h3>${requestScope.user}</h3>
-
+<%@include file="/WEB-INF/jsp/common/footer.jsp" %>
 </body>
 </html>

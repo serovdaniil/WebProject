@@ -21,7 +21,7 @@ public class UpdateEmailCommand implements Command {
     private static final String USER_SESSION_ATTRIBUTE_NAME = "user";
     private static final String FIND_PARAM_EMAIL = "email";
     private static final String USERS_ATTRIBUTE_NAME = "user";
-    private static final String UPDATE_EMAIL_USER_PAGE = "page.personalInformation";
+    private static final String URL_ACCOUNT_PAGE = "/controller?command=show_personal_infomation";
     private static final String SUCCESSFUL_RESULT_UPDATE_INFORMATION = "Successful updating of personal information";
     private static final String UNSUCCESSFUL_RESULT_UPDATE_INFORMATION = "Unsuccessful updating of personal information";
     private static final Logger LOG = LogManager.getLogger(UpdateEmailCommand.class);
@@ -51,7 +51,7 @@ public class UpdateEmailCommand implements Command {
             LOG.error("The entered data is not correct!" + e);
         }
 
-        return requestFactory.createForwardResponse(propertyContext.get(UPDATE_EMAIL_USER_PAGE));
+        return requestFactory.createRedirectResponse(URL_ACCOUNT_PAGE);
     }
 
     public static UpdateEmailCommand getInstance() {

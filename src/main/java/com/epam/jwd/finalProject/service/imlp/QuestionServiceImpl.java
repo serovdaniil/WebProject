@@ -35,12 +35,25 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Optional<Question> findId(Long id) {return Optional.empty();
+    public Optional<Question> findId(Long id) throws ValidationException {
+        LOG.debug("Service: Finding question by id started.");
+        if (!questionDataValidator.isIdValid(id)) {
+            LOG.error("The entered data is not correct!");
+            throw new ValidationException("The entered data is not correct!");
+        }
+        LOG.debug("Service: Finding question by id finished.");
+        return questionDao.readById(id);
     }
 
     @Override
-    public boolean remove(Long id) {
-        return false;
+    public boolean remove(Long id) throws ValidationException {
+        LOG.debug("Service: Removing question by id started.");
+        if (!questionDataValidator.isIdValid(id)) {
+            LOG.error("The entered data is not correct!");
+            throw new ValidationException("The entered data is not correct!");
+        }
+        LOG.debug("Service: Removing question by id finished.");
+        return questionDao.delete(id);
     }
 
     @Override

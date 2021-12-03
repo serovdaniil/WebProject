@@ -32,6 +32,7 @@
         <li>Email в формате Email</li>
     </ul>
 </div>
+
 <div id="main">
     <form name="updateFirstName-form"
           action="/controller?command=update_first_name_by_user" method="post">
@@ -39,7 +40,7 @@
         <input id="firstName-input" type="text" name="firstName" min="1" max="45" required
                pattern="^[A-ZА-Яa-zа-я]+((\s)?((\'|\-|\.)?([A-ZА-Яa-zа-я])+))*$"
                value="${sessionScope.user.firstName}"/>
-        <button type="submit" class="cancelbtn">${firstName}></button>
+        <button type="submit" class="cancelbtn">${firstName}</button>
     </form>
     <br>
     <form name="updateLastName-form"
@@ -49,7 +50,6 @@
                pattern="^[A-ZА-Яa-zа-я]+((\s)?((\'|\-|\.)?([A-ZА-Яa-zа-я])+))*$" value="${sessionScope.user.lastName}"/>
         <button type="submit" class="cancelbtn">${updateLastName}</button>
     </form>
-    <br>
     <form name="updatePassword-form"
           action="${pageContext.request.contextPath}/controller?command=update_password_by_user" method="post">
         <label for="password-input">${password}:</label>
@@ -57,7 +57,6 @@
                pattern="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,15})$" placeholder="${password}"/>
         <button type="submit" class="cancelbtn">${updatePassword}</button>
     </form>
-    <br>
     <form name="updateEmail-form"
           action="${pageContext.request.contextPath}/controller?command=update_email_by_user" method="post">
         <label for="email-input">${email}:</label>

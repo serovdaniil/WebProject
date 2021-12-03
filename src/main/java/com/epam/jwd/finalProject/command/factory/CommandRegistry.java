@@ -12,13 +12,16 @@ import com.epam.jwd.finalProject.command.admin.user.UpdateRoleCommand;
 import com.epam.jwd.finalProject.command.common.*;
 import com.epam.jwd.finalProject.command.common.application.CreateApplicationCommand;
 import com.epam.jwd.finalProject.command.common.application.FindAccountIdByApplicationCommand;
+import com.epam.jwd.finalProject.command.common.application.FindApplicationByIdCommand;
 import com.epam.jwd.finalProject.command.common.category.*;
 import com.epam.jwd.finalProject.command.common.conferenc.FindConferencByNameCommand;
 import com.epam.jwd.finalProject.command.common.conferenc.ShowConferencesPageCommand;
 import com.epam.jwd.finalProject.command.common.conferenc.ShowFindConferencByNameCommand;
 import com.epam.jwd.finalProject.command.admin.question.ShowQuestionPageCommand;
 import com.epam.jwd.finalProject.command.common.question.CreateQuestionCommand;
+import com.epam.jwd.finalProject.command.common.question.RemoveQuestionByIdCommand;
 import com.epam.jwd.finalProject.command.common.question.FindQuestionByIdAccountCommand;
+import com.epam.jwd.finalProject.command.common.question.FindQuestionByIdCommand;
 import com.epam.jwd.finalProject.command.common.sectionConferenc.*;
 import com.epam.jwd.finalProject.command.common.user.*;
 import com.epam.jwd.finalProject.command.error.ShowErrorPageCommand;
@@ -63,8 +66,10 @@ public enum CommandRegistry {
     SHOW_QUESTONS(ShowQuestionPageCommand.getInstance(), "show_questions", ADMIN),
     ADDANSWERTOQUESTION(AddAnswerToQuestionCommand.getInstance(), "add_answer_to_question", ADMIN),
     CREATEQUESTION(CreateQuestionCommand.getInstance(), "create_question", USER, ADMIN),
-
     FIND_QUESTIONS_BY_ID_ACCOUNT(FindQuestionByIdAccountCommand.getInstance(), "find_questions_by_id_account", USER, ADMIN),
+    FIND_QUESTION_BY_ID(FindQuestionByIdCommand.getInstance(), "find_question_by_id", USER, ADMIN),
+    REMOVE_QUESTION_BY_ID(RemoveQuestionByIdCommand.getInstance(), "remove_question_by_id", USER, ADMIN),
+
     //User
     SHOW_USERS(ShowUsersPageCommand.getInstance(), "show_users", ADMIN),
     UPDATE_PASSWORD_BY_USER(UpdatePasswordCommand.getInstance(), "update_password_by_user", USER, ADMIN),
@@ -80,8 +85,11 @@ public enum CommandRegistry {
     SHOW_APPLICATIONS_BY_ACCOUNT(FindAccountIdByApplicationCommand.getInstance(), "show_applications_by_account", USER, ADMIN),
     FIND_BY_STATUS_RESULT_APPLICATION(FindByStatusResultApplicationCommand.getInstance(), "find_by_status_result_application", ADMIN),
     SHOW_FIND_BY_STATUS_RESULT_APPLICATION(ShowFindByStatusResultApplicationPageCommand.getInstance(), "show_find_by_status_result_application", ADMIN),
-    DELETE_APPLICATION(RemoveApplicationByIdCommand.getInstance(), "delete_application", ADMIN),
+    REMOVE_APPLICATION(RemoveApplicationByIdCommand.getInstance(), "remove_application", USER, ADMIN),
     CREATE_APPLICATION(CreateApplicationCommand.getInstance(), "create_application", USER, ADMIN),
+    FIND_APPLICATION_BY_ID(FindApplicationByIdCommand.getInstance(), "find_application_by_id", USER, ADMIN),
+    UPDATE_STATUS_RESULT_APPLICATION_BY_ID(UpdateStatusResultByIdApplicationCommand.getInstance(), "update_status_result_application", ADMIN),
+
     SHOW_PESONAL_ACCOUNT(ShowPersonalAccountPageCommand.getInstance(), "show_personal_account", USER, ADMIN),
     CONTACT(ShowContactPageCommand.getInstance(), "show_contact"),
     ERROR(ShowErrorPageCommand.getInstance(), "show_error"),

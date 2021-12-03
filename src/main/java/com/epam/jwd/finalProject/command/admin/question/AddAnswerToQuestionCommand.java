@@ -1,6 +1,5 @@
 package com.epam.jwd.finalProject.command.admin.question;
 
-import com.epam.jwd.finalProject.command.common.question.CreateQuestionCommand;
 import com.epam.jwd.finalProject.command.factory.Command;
 import com.epam.jwd.finalProject.command.factory.CommandRequest;
 import com.epam.jwd.finalProject.command.factory.CommandResponse;
@@ -20,8 +19,8 @@ public class AddAnswerToQuestionCommand implements Command {
     private static final String PARAM_ID = "id";
     private static final String PARAM_ANSWER = "answer";
     private static final String APPLICATIONS_ATTRIBUTE_NAME_RESULT_ADD = "result";
-    private static final String QUESTIONS_ATTRIBUTE_NAME = "questions";
-    private static final String QUESTION_PAGE = "page.questions";
+    private static final String QUESTIONS_ATTRIBUTE_NAME = "question";
+    private static final String URL_QUESTION_PAGE = "/controller?command=show_questions";
     private static final Logger LOG = LogManager.getLogger(AddAnswerToQuestionCommand.class);
 
 
@@ -55,7 +54,7 @@ public class AddAnswerToQuestionCommand implements Command {
             LOG.error("The entered data is not correct!" + e);
         }
 
-        return requestFactory.createForwardResponse(propertyContext.get(QUESTION_PAGE));
+        return requestFactory.createRedirectResponse(URL_QUESTION_PAGE);
     }
 
     public static AddAnswerToQuestionCommand getInstance() {

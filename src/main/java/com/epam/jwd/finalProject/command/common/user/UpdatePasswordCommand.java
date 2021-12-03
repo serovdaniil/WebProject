@@ -9,7 +9,6 @@ import com.epam.jwd.finalProject.model.User;
 import com.epam.jwd.finalProject.service.api.UserService;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
 import com.epam.jwd.finalProject.service.factory.ServiceFactory;
-import com.epam.jwd.finalProject.service.imlp.UserServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,7 +21,7 @@ public class UpdatePasswordCommand implements Command {
     private static final String USER_SESSION_ATTRIBUTE_NAME = "user";
     private static final String FIND_PARAM_PASSWORD = "password";
     private static final String USERS_ATTRIBUTE_NAME = "user";
-    private static final String UPDATE_PASSWORD_USER_PAGE = "page.personalInformation";
+    private static final String URL_ACCOUNT_PAGE = "/controller?command=show_personal_infomation";
     private static final String SUCCESSFUL_RESULT_UPDATE_INFORMATION = "Successful updating of personal information";
     private static final String UNSUCCESSFUL_UPDATE_PASSWORD_USER_PAGE = "Unsuccessful updating of personal information";
     private static final Logger LOG = LogManager.getLogger(UpdatePasswordCommand.class);
@@ -52,7 +51,7 @@ public class UpdatePasswordCommand implements Command {
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
         }
-        return requestFactory.createForwardResponse(propertyContext.get(UPDATE_PASSWORD_USER_PAGE));
+        return requestFactory.createRedirectResponse(URL_ACCOUNT_PAGE);
 
     }
 

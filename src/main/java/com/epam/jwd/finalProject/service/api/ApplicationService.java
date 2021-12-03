@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface ApplicationService extends EntityService {
     boolean create(Long idAccount, Long idSectionConferenc, Long idResultSection) throws ValidationException;
 
-    boolean updateIdStatusApplication(Long idApplication, Long idResultSection);
+    boolean updateIdStatusApplication(Long idApplication, String resultSection) throws ValidationException;
 
     List<Application> findAccountIdByApplication(Long id) throws ValidationException;
 
@@ -22,7 +22,7 @@ public interface ApplicationService extends EntityService {
 
     List<Application> findByLogin(String login);
 
-    List<Application> findByStatusResult(Long idStatus) throws ValidationException;
+    List<Application> findByStatusResult(String nameStatus) throws ValidationException;
 
     List<Application> findByConferencId(Long idConferenc);
 

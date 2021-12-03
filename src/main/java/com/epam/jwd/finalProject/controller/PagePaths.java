@@ -22,8 +22,10 @@ public enum PagePaths {
     APPLICATIONSBYSTATUSRESULT("/WEB-INF/jsp/admin/application/findByStatusResultApplication.jsp"),
     PERSONALACCOUNT("/WEB-INF/jsp/personalAccount/personalAccount.jsp"),
     FINDQUESTIONSBYIDACCOUNT("/WEB-INF/jsp/common/question/questionsAccountId.jsp"),
+    FINDQUESTIONBYID("/WEB-INF/jsp/common/question/questionById.jsp"),
+    APPLICATIONBYID("/WEB-INF/jsp/common/application/applicationById.jsp"),
     CONTACT("/WEB-INF/jsp/personalAccount/contact.jsp"),
-    ERROR("/WEB-INF/jsp/common/error/error.jsp");
+    ERROR("/WEB-INF/jsp/common/error.jsp");
 
     private final String path;
 

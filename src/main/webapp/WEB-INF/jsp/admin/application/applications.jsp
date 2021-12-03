@@ -7,42 +7,50 @@
     <title>Show all applications</title>
 </head>
 <body>
-<c:if test="${not empty sessionScope.user}">
-    <p>Hello, ${sessionScope.user.firstName}</p>
-</c:if>
-<c:if test="${not empty sessionScope.user && sessionScope.user.role eq Role.ADMIN}">
-
-    <h4>Remove application</h4>
-    <form name="removeApplication-form" action="/controller?command=delete_application" method="post">
-        <label for="id-input">ID section conferenc:</label>
-        <input id="id-input" type="text" name="id" value=""/>
-        <input type="submit" value="Remove application"/>
-    </form>
-    <h4> Result: ${requestScope.result}</h4>
-    <a href="/controller?command=show_find_by_status_result_application">Find application by status result</a>
-    <br>
-</c:if>
-<br>
-
+<style>
+    <%@include file="/WEB-INF/css/tableStyle.css"%>
+</style>
+<%@include file="/WEB-INF/jsp/common/header.jsp" %>
+<h2> Заявки клиентов на обучение. </h2>
+<p>На странице представлен список заявок на обучение. С каждоый подробнее Вы можете ознакомиться.</p>
+<p>Также Вам доступен поиск по статусу заявки.</p>
+<a class="create" href="/controller?command=show_find_by_status_result_application">Find application by status result</a>
 <table>
     <tr>
-        <th>ID</th>
-        <th>USER ID</th>
-        <th>USER NAME</th>
-        <th>SECTION CONFERENC ID</th>
-        <th>SECTION CONFERENC NAME</th>
-        <th>RESULT</th>
+        <th>Уникальный номер</th>
+        <th>ID пользователя</th>
+        <th>Название секции</th>
+        <th>Название конференции</th>
+        <th>Статус заявки</th>
+        <th></th>
     </tr>
     <c:forEach var="application" items="${requestScope.applications}">
-        <tr>
-            <td>${application.id}</td>
-            <td>${application.user.id}</td>
-            <td>${application.user.firstName}</td>
-            <td>${application.sectionConferenc.id}</td>
-            <td>${application.sectionConferenc.name}</td>
-            <td>${application.result.result}</td>
-        </tr>
+        <form name="application-form" action="/controller?command=find_application_by_id" method="post">
+            <tr>
+                <td>
+                    <input class="container" type="text" name="id" readonly value="${application.id}"/>
+                </td>
+                <td>
+                    <input class="container" type="text" name="idUser" readonly value="${application.user.id}"/>
+                </td>
+                <td>
+                    <input class="container" type="text" name="sectionName" readonly
+                           value="${application.sectionConferenc.name}"/>
+                </td>
+                <td>
+                    <input class="container" type="text" name="sectionName" readonly
+                           value="${application.sectionConferenc.conferenc.name}"/>
+                </td>
+                <td>
+                    <input class="container" type="text" name="result" readonly value="${application.result.result}"/>
+                </td>
+                <td>
+                    <button type="submit" >Подробнее</button>
+                </td>
+            </tr>
+        </form>
     </c:forEach>
 </table>
+<%@include file="/WEB-INF/jsp/common/footer.jsp" %>
 </body>
 </html>

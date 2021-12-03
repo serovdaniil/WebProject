@@ -28,12 +28,10 @@ public class CreateApplicationCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(CreateApplicationCommand.class);
 
     private final ApplicationService applicationService;
-    private final SectionConferencService sectionConferencServiceservice;
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    CreateApplicationCommand(EntityService<Application> service, SectionConferencService sectionConferencServiceservice, RequestFactory requestFactory, PropertyContext propertyContext) {
-        this.sectionConferencServiceservice = ServiceFactory.simple().sectionConferencService();
+    CreateApplicationCommand(EntityService<Application> service, RequestFactory requestFactory, PropertyContext propertyContext) {
         this.applicationService = ServiceFactory.simple().applicationService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -63,7 +61,7 @@ public class CreateApplicationCommand implements Command {
 
     private static class Holder {
         public static final CreateApplicationCommand INSTANCE =
-                new CreateApplicationCommand(ServiceFactory.simple().serviceFor(Application.class), ServiceFactory.simple().sectionConferencService(),RequestFactory.getInstance(),
+                new CreateApplicationCommand(ServiceFactory.simple().serviceFor(Application.class),RequestFactory.getInstance(),
                         PropertyContext.instance());
     }
 }

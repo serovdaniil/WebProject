@@ -36,8 +36,16 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public boolean updateIdStatusApplication(Long idApplication, Long idResultSection) {
-        return false;
+    public boolean updateIdStatusApplication(Long idApplication, String resultSection) throws ValidationException {
+        LOG.debug("Service: Updating status result for application started.");
+        final Long idResult = resultSection(resultSection);
+        if (!applicationDataValidator.isIdValid(idApplication) ||
+                !applicationDataValidator.isIdValid(idResult)) {
+            LOG.error("The entered data is not correct!");
+            throw new ValidationException("The entered data is not correct!");
+        }
+        LOG.debug("Service: Updating status result for application  finished.");
+        return applicationDao.updateIdStatusApplication(idApplication, idResult);
     }
 
     @Override
@@ -72,8 +80,9 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public List<Application> findByStatusResult(Long idStatus) throws ValidationException {
+    public List<Application> findByStatusResult(String nameStatus) throws ValidationException {
         LOG.debug("Service: Find applications by id status result started.");
+        final Long idStatus = resultSection(nameStatus);
         if (!applicationDataValidator.isIdValid(idStatus)) {
             LOG.error("The entered data is not correct!");
             throw new ValidationException("The entered data is not correct!");
@@ -125,8 +134,14 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public Optional findId(Long id) {
-        return Optional.empty();
+    public Optional findId(Long id) throws ValidationException {
+        LOG.debug("Service: Finding application by id started.");
+        if (!applicationDataValidator.isIdValid(id)) {
+            LOG.error("The entered data is not correct!");
+            throw new ValidationException("The entered data is not correct!");
+        }
+        LOG.debug("Service: Finding application by id finished.");
+        return applicationDao.readById(id);
     }
 
     @Override
@@ -138,5 +153,28 @@ public class ApplicationServiceImpl implements ApplicationService {
         }
         LOG.debug("Service: Removing application finished.");
         return applicationDao.delete(id);
+    }
+
+    private Long resultSection(String resultSection) {
+        final Long idResult;
+        switch (resultSection) {
+            case "Open": {
+                idResult = (long) 1;
+                break;
+            }
+            case "Waiting": {
+                idResult = (long) 2;
+                break;
+            }
+            case "Completed": {
+                idResult = (long) 3;
+                break;
+            }
+            default: {
+                idResult = (long) 4;
+                break;
+            }
+        }
+        return idResult;
     }
 }

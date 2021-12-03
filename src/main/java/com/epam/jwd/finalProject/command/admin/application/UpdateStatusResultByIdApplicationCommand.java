@@ -15,17 +15,18 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
-public class RemoveApplicationByIdCommand implements Command {
+public class UpdateStatusResultByIdApplicationCommand implements Command {
     private static final String PARAM_ID = "id";
+    private static final String PARAM_RESULT = "resultNew";
     private static final String APPLICATIONS_ATTRIBUTE_NAME_RESULT = "result";
-    private static final String URL_APPLICATIONS_PAGE = "/controller?command=show_applications_by_account";
-    private static final Logger LOG = LogManager.getLogger(RemoveApplicationByIdCommand.class);
+    private static final String URL_APPLICATIONS_PAGE = "/controller?command=show_applications";
+    private static final Logger LOG = LogManager.getLogger(UpdateStatusResultByIdApplicationCommand.class);
 
     private final ApplicationService service;
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    RemoveApplicationByIdCommand(EntityService<Application> service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    UpdateStatusResultByIdApplicationCommand(EntityService<Application> service, RequestFactory requestFactory, PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().applicationService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -34,14 +35,15 @@ public class RemoveApplicationByIdCommand implements Command {
     @Override
     public CommandResponse execute(CommandRequest request) {
         final Long id =Long.parseLong(request.getParameter(PARAM_ID));
-        final boolean resultRemove;
+        final String nameResult =request.getParameter(PARAM_RESULT);
+        final boolean resultUpdate;
         try {
-            resultRemove = service.remove(id);
+            resultUpdate = service.updateIdStatusApplication(id,nameResult);
             String result;
-            if (!resultRemove) {
-                result = "Unsuccessful remove";
+            if (!resultUpdate) {
+                result = "Unsuccessful update";
             } else {
-                result = "Successful remove";
+                result = "Successful update";
             }
             request.addAttributeToJsp(APPLICATIONS_ATTRIBUTE_NAME_RESULT, result);
         } catch (ValidationException e) {
@@ -50,13 +52,13 @@ public class RemoveApplicationByIdCommand implements Command {
         return requestFactory.createRedirectResponse(URL_APPLICATIONS_PAGE);
     }
 
-    public static RemoveApplicationByIdCommand getInstance() {
-        return RemoveApplicationByIdCommand.Holder.INSTANCE;
+    public static UpdateStatusResultByIdApplicationCommand getInstance() {
+        return UpdateStatusResultByIdApplicationCommand.Holder.INSTANCE;
     }
 
     private static class Holder {
-        public static final RemoveApplicationByIdCommand INSTANCE =
-                new RemoveApplicationByIdCommand(ServiceFactory.simple().serviceFor(Application.class), RequestFactory.getInstance(),
+        public static final UpdateStatusResultByIdApplicationCommand INSTANCE =
+                new UpdateStatusResultByIdApplicationCommand(ServiceFactory.simple().serviceFor(Application.class), RequestFactory.getInstance(),
                         PropertyContext.instance());
     }
 }

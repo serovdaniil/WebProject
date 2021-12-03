@@ -1,5 +1,14 @@
+body {
+    font-family: "Times New Roman";
+}
 #footer{
-
-    height: 100px;
+    margin-top: 25px;
+    height: 70px;
     background-color: #000000;
+    padding: 10px;
+}
+p.footer {
+    font-size: 14px;
+    text-align: left;
+    color: white;
 }

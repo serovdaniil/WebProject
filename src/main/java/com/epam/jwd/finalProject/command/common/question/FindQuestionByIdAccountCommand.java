@@ -1,6 +1,5 @@
 package com.epam.jwd.finalProject.command.common.question;
 
-import com.epam.jwd.finalProject.command.common.LoginCommand;
 import com.epam.jwd.finalProject.command.factory.Command;
 import com.epam.jwd.finalProject.command.factory.CommandRequest;
 import com.epam.jwd.finalProject.command.factory.CommandResponse;
@@ -25,6 +24,7 @@ public class FindQuestionByIdAccountCommand implements Command {
     private static final String QUESTION_ATTRIBUTE_NAME = "questions";
     private static final String FIND_QUESTIONS_BY_ID_ACCOUNT_PAGE = "page.findQuestionsByIdAccount";
     private static final Logger LOG = LogManager.getLogger(FindQuestionByIdAccountCommand.class);
+
     FindQuestionByIdAccountCommand(QuestionService service, RequestFactory requestFactory, PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().questionService();
         this.requestFactory = RequestFactory.getInstance();
