@@ -20,8 +20,9 @@ public class RemoveSectionConferencByIdCommand implements Command {
     private final PropertyContext propertyContext;
     private static final String PARAM_ID = "id";
     private static final String SECTION_CONFERENCES_ATTRIBUTE_NAME_RESULT = "result";
-    private static final String SECTION_CONFERENCES_ATTRIBUTE_NAME_ALL = "sectionConferences";
-    private static final String SECTION_CONFERENCES_PAGE = "page.sectionConferences";
+    private static final String OPERATION_WAS_UNSUCCSESFUL = "The operation was unsuccsesful";
+    private static final String SECTION_ADMIN_PANEL_PAGE = "page.adminPanelSectionConferenc";
+    private static final String SECTION_CONFERENCES_PAGE = "/controller?command=show_section_conferences";
     private static final Logger LOG = LogManager.getLogger(RemoveSectionConferencByIdCommand.class);
 
     RemoveSectionConferencByIdCommand(SectionConferencService service, RequestFactory requestFactory, PropertyContext propertyContext) {
@@ -33,23 +34,18 @@ public class RemoveSectionConferencByIdCommand implements Command {
     @Override
     public CommandResponse execute(CommandRequest request) {
         final Long id = Long.parseLong(request.getParameter(PARAM_ID));
-        final boolean resultRemove;
+        boolean resultRemove = false;
         try {
             resultRemove = service.remove(id);
-            final List<SectionConferenc> sectionConferencesAll = service.findAll();
-            String result;
-            if (!resultRemove) {
-                result = "Unsuccessful remove";
-            } else {
-                result = "Successful remove";
-            }
-            request.addAttributeToJsp(SECTION_CONFERENCES_ATTRIBUTE_NAME_ALL, sectionConferencesAll);
-            request.addAttributeToJsp(SECTION_CONFERENCES_ATTRIBUTE_NAME_RESULT, result);
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
         }
-
-        return requestFactory.createForwardResponse(propertyContext.get(SECTION_CONFERENCES_PAGE));
+        if (!resultRemove) {
+            request.addAttributeToJsp(SECTION_CONFERENCES_ATTRIBUTE_NAME_RESULT, OPERATION_WAS_UNSUCCSESFUL);
+            return requestFactory.createForwardResponse(propertyContext.get(SECTION_ADMIN_PANEL_PAGE));
+        } else {
+            return requestFactory.createRedirectResponse(SECTION_CONFERENCES_PAGE);
+        }
     }
 
     public static RemoveSectionConferencByIdCommand getInstance() {
@@ -58,7 +54,7 @@ public class RemoveSectionConferencByIdCommand implements Command {
 
     private static class Holder {
         public static final RemoveSectionConferencByIdCommand INSTANCE =
-                new RemoveSectionConferencByIdCommand(ServiceFactory.simple().sectionConferencService(),RequestFactory.getInstance(),
+                new RemoveSectionConferencByIdCommand(ServiceFactory.simple().sectionConferencService(), RequestFactory.getInstance(),
                         PropertyContext.instance());
     }
 }

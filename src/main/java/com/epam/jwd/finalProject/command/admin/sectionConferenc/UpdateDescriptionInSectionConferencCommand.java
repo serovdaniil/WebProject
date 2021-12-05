@@ -21,8 +21,9 @@ public class UpdateDescriptionInSectionConferencCommand implements Command {
     private static final String PARAM_ID = "id";
     private static final String PARAM_DESCTIPTION = "description";
     private static final String RESULT_ATTRIBUTE_NAME = "result";
-    private static final String SECTION_CONFERENCES_ATTRIBUTE_NAME_ALL = "sectionConferences";
-    private static final String SECTION_CONFERENCES_PAGE = "page.sectionConferences";
+    private static final String OPERATION_WAS_UNSUCCSESFUL = "The operation was unsuccsesful";
+    private static final String SECTION_ADMIN_PANEL_PAGE = "page.adminPanelSectionConferenc";
+    private static final String SECTION_CONFERENCES_PAGE = "/controller?command=show_section_conferences";
     private static final Logger LOG = LogManager.getLogger(UpdateDescriptionInSectionConferencCommand.class);
 
     UpdateDescriptionInSectionConferencCommand(SectionConferencService service, RequestFactory requestFactory, PropertyContext propertyContext) {
@@ -35,23 +36,18 @@ public class UpdateDescriptionInSectionConferencCommand implements Command {
     public CommandResponse execute(CommandRequest request) {
         final Long id = Long.parseLong(request.getParameter(PARAM_ID));
         final String description = request.getParameter(PARAM_DESCTIPTION);
-        final boolean resultUpdate;
+        boolean resultUpdate = false;
         try {
-            resultUpdate = service.updateDescription(id,description);
-            final List<SectionConferenc> sectionConferencesAll = service.findAll();
-            String result;
-            if (!resultUpdate) {
-                result = "Unsuccessful update";
-            } else {
-                result = "Successful update";
-            }
-            request.addAttributeToJsp(SECTION_CONFERENCES_ATTRIBUTE_NAME_ALL, sectionConferencesAll);
-            request.addAttributeToJsp(RESULT_ATTRIBUTE_NAME, result);
-        }catch (ValidationException e) {
+            resultUpdate = service.updateDescription(id, description);
+        } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
         }
-
-        return requestFactory.createForwardResponse(propertyContext.get(SECTION_CONFERENCES_PAGE));
+        if (!resultUpdate) {
+            request.addAttributeToJsp(RESULT_ATTRIBUTE_NAME, OPERATION_WAS_UNSUCCSESFUL);
+            return requestFactory.createForwardResponse(propertyContext.get(SECTION_ADMIN_PANEL_PAGE));
+        } else {
+            return requestFactory.createRedirectResponse(SECTION_CONFERENCES_PAGE);
+        }
     }
 
     public static UpdateDescriptionInSectionConferencCommand getInstance() {
@@ -60,7 +56,7 @@ public class UpdateDescriptionInSectionConferencCommand implements Command {
 
     private static class Holder {
         public static final UpdateDescriptionInSectionConferencCommand INSTANCE =
-                new UpdateDescriptionInSectionConferencCommand(ServiceFactory.simple().sectionConferencService(),RequestFactory.getInstance(),
+                new UpdateDescriptionInSectionConferencCommand(ServiceFactory.simple().sectionConferencService(), RequestFactory.getInstance(),
                         PropertyContext.instance());
     }
 }

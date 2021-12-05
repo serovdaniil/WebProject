@@ -16,6 +16,8 @@
 <p><a href="#remove" class="create">Удалить категорию</a></p>
 <p><a href="#searchById" class="create">Поиск по id категории</a></p>
 <p><a href="${pageContext.request.contextPath}/controller?command=show_categories" class="create">Просмотр категорий</a></p>
+<p>${requestScope.result}</p>
+<p>${requestScope.category}</p>
 <p><a name="create"></a></p>
 <p class="bolt">Создание конференции
     <br>
@@ -37,7 +39,7 @@
     <label for="idUpdate-input" class="bolt">ID:</label>
     <input id="idUpdate-input" type="text" name="id" value=""required pattern="^[0-9]+$"/>
     <br>
-    <label for="descriprionConferenc-input" class="bolt">Description:</label>
+    <label for="descriprionConferenc-input" class="bolt">New name:</label>
     <input id="descriprionConferenc-input" type="text" name="name" value=""required pattern="^[A-Za-z]+((\s)?((\'|\-|\.|\,)?([A-Za-z])+))*$"/>
     <button type="submit" class="create">Update name</button>
     <br>
@@ -64,6 +66,7 @@
     <input id="idConferenc-input" type="text" name="id" value=""required pattern="^[0-9]+$"/>
     <button type="submit" class="create">Search</button>
 </form>
+
 <%@include file="/WEB-INF/jsp/common/footer.jsp" %>
 </body>
 </html>

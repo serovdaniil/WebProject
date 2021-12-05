@@ -20,8 +20,9 @@ public class CreateCategoryCommand implements Command {
     private final PropertyContext propertyContext;
     private static final String PARAM_NAME = "name";
     private static final String CATEGORIES_ATTRIBUTE_NAME_RESULT = "result";
-    private static final String CATEGORIES_ATTRIBUTE_NAME = "categories";
-    private static final String CATEGORIES_PAGE = "page.categories";
+    private static final String OPERATION_WAS_UNSUCCSESFUL = "The operation was unsuccsesful";
+    private static final String CATEGORY_ADMIN_PANEL_PAGE = "page.adminPanelCategory";
+    private static final String CATEGORY_PAGE = "/controller?command=show_categories";
     private static final Logger LOG = LogManager.getLogger(CreateCategoryCommand.class);
 
     CreateCategoryCommand(CategoryService service, RequestFactory requestFactory, PropertyContext propertyContext) {
@@ -33,23 +34,18 @@ public class CreateCategoryCommand implements Command {
     @Override
     public CommandResponse execute(CommandRequest request) {
         final String name = request.getParameter(PARAM_NAME);
-        final boolean resultCreate;
+        boolean resultCreate = false;
         try {
             resultCreate = service.create(name);
-            final List<Category> categoriesALL = service.findAll();
-            String result;
-            if (!resultCreate) {
-                result = "Unsuccessful create";
-            } else {
-                result = "Successful create";
-            }
-            request.addAttributeToJsp(CATEGORIES_ATTRIBUTE_NAME, categoriesALL);
-            request.addAttributeToJsp(CATEGORIES_ATTRIBUTE_NAME_RESULT, result);
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
         }
-
-        return requestFactory.createForwardResponse(propertyContext.get(CATEGORIES_PAGE));
+        if (!resultCreate) {
+            request.addAttributeToJsp(CATEGORIES_ATTRIBUTE_NAME_RESULT, OPERATION_WAS_UNSUCCSESFUL);
+            return requestFactory.createForwardResponse(propertyContext.get(CATEGORY_ADMIN_PANEL_PAGE));
+        } else {
+            return requestFactory.createRedirectResponse(CATEGORY_PAGE);
+        }
     }
 
     public static CreateCategoryCommand getInstance() {
@@ -58,7 +54,7 @@ public class CreateCategoryCommand implements Command {
 
     private static class Holder {
         public static final CreateCategoryCommand INSTANCE =
-                new CreateCategoryCommand(ServiceFactory.simple().categoryService(),RequestFactory.getInstance(),
+                new CreateCategoryCommand(ServiceFactory.simple().categoryService(), RequestFactory.getInstance(),
                         PropertyContext.instance());
     }
 }

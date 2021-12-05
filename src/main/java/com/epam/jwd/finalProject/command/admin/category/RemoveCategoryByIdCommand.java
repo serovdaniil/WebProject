@@ -1,6 +1,5 @@
 package com.epam.jwd.finalProject.command.admin.category;
 
-import com.epam.jwd.finalProject.command.admin.application.RemoveApplicationByIdCommand;
 import com.epam.jwd.finalProject.command.factory.Command;
 import com.epam.jwd.finalProject.command.factory.CommandRequest;
 import com.epam.jwd.finalProject.command.factory.CommandResponse;
@@ -14,7 +13,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
-import java.util.Optional;
 
 public class RemoveCategoryByIdCommand implements Command {
     private final CategoryService service;
@@ -22,8 +20,9 @@ public class RemoveCategoryByIdCommand implements Command {
     private final PropertyContext propertyContext;
     private static final String PARAM_ID = "id";
     private static final String CATEGORIES_ATTRIBUTE_NAME_RESULT = "result";
-    private static final String CATEGORIES_ATTRIBUTE_NAME = "categories";
-    private static final String CATEGORIES_PAGE = "page.categories";
+    private static final String OPERATION_WAS_UNSUCCSESFUL = "The operation was unsuccsesful";
+    private static final String CATEGORY_ADMIN_PANEL_PAGE = "page.adminPanelCategory";
+    private static final String CATEGORY_PAGE = "/controller?command=show_categories";
     private static final Logger LOG = LogManager.getLogger(RemoveCategoryByIdCommand.class);
 
     RemoveCategoryByIdCommand(CategoryService service, RequestFactory requestFactory, PropertyContext propertyContext) {
@@ -35,22 +34,18 @@ public class RemoveCategoryByIdCommand implements Command {
     @Override
     public CommandResponse execute(CommandRequest request) {
         final Long id =Long.parseLong(request.getParameter(PARAM_ID));
-        final boolean resultRemove;
+        boolean resultRemove=false;
         try {
             resultRemove = service.remove(id);
-            final List<Category> categoriesALL = service.findAll();
-            String result;
-            if (!resultRemove) {
-                result = "Unsuccessful remove";
-            } else {
-                result = "Successful remove";
-            }
-            request.addAttributeToJsp(CATEGORIES_ATTRIBUTE_NAME, categoriesALL);
-            request.addAttributeToJsp(CATEGORIES_ATTRIBUTE_NAME_RESULT, result);
-        } catch (ValidationException e) {
+         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
         }
-        return requestFactory.createForwardResponse(propertyContext.get(CATEGORIES_PAGE));
+        if (!resultRemove) {
+            request.addAttributeToJsp(CATEGORIES_ATTRIBUTE_NAME_RESULT, OPERATION_WAS_UNSUCCSESFUL);
+            return requestFactory.createForwardResponse(propertyContext.get(CATEGORY_ADMIN_PANEL_PAGE));
+        } else {
+            return requestFactory.createRedirectResponse(CATEGORY_PAGE);
+        }
     }
 
     public static RemoveCategoryByIdCommand getInstance() {

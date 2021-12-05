@@ -1,6 +1,5 @@
 package com.epam.jwd.finalProject.command.admin.conferenc;
 
-import com.epam.jwd.finalProject.command.admin.user.ReadUserByIdCommand;
 import com.epam.jwd.finalProject.command.factory.Command;
 import com.epam.jwd.finalProject.command.factory.CommandRequest;
 import com.epam.jwd.finalProject.command.factory.CommandResponse;
@@ -13,7 +12,6 @@ import com.epam.jwd.finalProject.service.factory.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.List;
 import java.util.Optional;
 
 public class FindConferencByIdCommand implements Command {
@@ -21,9 +19,8 @@ public class FindConferencByIdCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
     private static final String PARAM_ID = "id";
-    private static final String CONFERENCES_ATTRIBUTE_NAME = "conferences";
     private static final String CONFERENCES_ATTRIBUTE_NAME_FIND = "conferenc";
-    private static final String CONFERENCES_PAGE = "page.conferences";
+    private static final String CONFERENCES_PAGE = "page.adminPanelConferenc";
     private static final Logger LOG = LogManager.getLogger(FindConferencByIdCommand.class);
 
     FindConferencByIdCommand(ConferencService service, RequestFactory requestFactory, PropertyContext propertyContext) {
@@ -36,12 +33,8 @@ public class FindConferencByIdCommand implements Command {
     public CommandResponse execute(CommandRequest request) {
         final Long id = Long.parseLong(request.getParameter(PARAM_ID));
         final Optional<Conferenc> conferenc;
-        final List<Conferenc> conferencesAll;
         try {
             conferenc = service.findId(id);
-            conferencesAll = service.findAll();
-
-            request.addAttributeToJsp(CONFERENCES_ATTRIBUTE_NAME, conferencesAll);
             request.addAttributeToJsp(CONFERENCES_ATTRIBUTE_NAME_FIND, conferenc);
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);

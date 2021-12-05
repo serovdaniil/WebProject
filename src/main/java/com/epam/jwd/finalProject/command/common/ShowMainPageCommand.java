@@ -5,6 +5,11 @@ import com.epam.jwd.finalProject.command.factory.CommandRequest;
 import com.epam.jwd.finalProject.command.factory.CommandResponse;
 import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
+import com.epam.jwd.finalProject.model.Category;
+import com.epam.jwd.finalProject.service.api.EntityService;
+import com.epam.jwd.finalProject.service.factory.ServiceFactory;
+
+import java.util.List;
 
 public class ShowMainPageCommand implements Command {
     private static final String MAIN_PAGE = "page.main";
@@ -13,8 +18,8 @@ public class ShowMainPageCommand implements Command {
     private final PropertyContext propertyContext;
 
     ShowMainPageCommand(RequestFactory requestFactory, PropertyContext propertyContext) {
-        this.requestFactory = requestFactory;
-        this.propertyContext = propertyContext;
+          this.requestFactory = RequestFactory.getInstance();
+        this.propertyContext = PropertyContext.instance();
     }
 
     @Override

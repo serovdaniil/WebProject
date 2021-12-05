@@ -9,7 +9,7 @@
 <body>
 <style>
     <%@include file="/WEB-INF/css/dataListStyle.css"%>
-    <%@include file="/WEB-INF/css/text.css"%>
+
 </style>
 <%@include file="/WEB-INF/jsp/common/header.jsp" %>
 <h2>НАЙТИ ТЕКСТ! Инфа о наших конференциях, которые мы проводим.</h2>

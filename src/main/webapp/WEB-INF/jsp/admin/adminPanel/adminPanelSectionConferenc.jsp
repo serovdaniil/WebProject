@@ -15,9 +15,10 @@
 <p><a href="#update" class="create">Обновить описание</a></p>
 <p><a href="#remove" class="create">Удаление секции конференции</a></p>
 <p><a href="#searchById" class="create">Поиск по id секции конференции</a></p>
-<p><a href="${pageContext.request.contextPath}/controller?command=show_conferences" class="create">Просмотр секцийконференций</a></p>
+<p><a href="${pageContext.request.contextPath}/controller?command=show_conferences" class="create">Просмотр секций конференций</a></p>
 <p><a href="${pageContext.request.contextPath}/controller?command=show_categories" class="create">Просмотр категорий</a></p>
-
+<p>${requestScope.result}</p>
+<p>${requestScope.sectionConferenc}</p>
 <p><a name="create"></a></p>
 <p class="bolt">Создание секции конференции
     <br>
@@ -28,11 +29,11 @@
     <input id="nameConferenc-input" type="text" name="name" value="" required pattern="(^[A-Za-z]+((\s)?((\'|\-|\.|\,)?([A-Za-z])+))*$)"/>
     <br>
     <label for="description-input" class="bolt">Descriprion section conferenc:</label>
-    <input id="description-input" type="text" name="description" required pattern="^[A-Za-z]+((\s)?((\'|\-|\.|\,)?([A-Za-z])+))*$"/>
+    <input id="description-input" type="text" name="description" value="" required pattern="^[A-Za-z]+((\s)?((\'|\-|\.|\,)?([A-Za-z])+))*$"/>
     <br>
-    <label for="idCategory-input" class="bolt">ID category:</label>
+    <label for="idCategory-input" class="bolt">ID conferenc:</label>
     <input id="idCategory-input" type="text" name="idConferenc" required pattern="^[0-9]+$" value=""/>
-    <button type="submit" class="create"> Create conferenc</button>
+    <button type="submit" class="create"> Create section conferenc</button>
     <br>
 </form>
 <br>
@@ -61,6 +62,7 @@
     <input id="idForm-input" type="text" name="id" value=""required pattern="^[0-9]+$"/>
     <button type="submit" class="create">Remove</button>
 </form>
+
 <br>
 <p><a name="searchById"></a></p>
 <p class="bolt">Find section conferenc by ID
@@ -69,7 +71,7 @@
 </p>
 <form name="findConferencById-form" action="/controller?command=find_section_conferenc_by_id" method="post">
     <label for="idConferenc-input" class="bolt">ID conferenc:</label>
-    <input id="idConferenc-input" type="text" name="id" value=""required pattern="#^[0-9]+$#"/>
+    <input id="idConferenc-input" type="text" name="id" value=""required pattern="^[0-9]+$"/>
     <button type="submit" class="create">Search</button>
 </form>
 <br>

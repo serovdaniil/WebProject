@@ -1,6 +1,5 @@
 package com.epam.jwd.finalProject.command.admin.category;
 
-import com.epam.jwd.finalProject.command.admin.conferenc.FindConferencByIdCommand;
 import com.epam.jwd.finalProject.command.factory.Command;
 import com.epam.jwd.finalProject.command.factory.CommandRequest;
 import com.epam.jwd.finalProject.command.factory.CommandResponse;
@@ -13,7 +12,6 @@ import com.epam.jwd.finalProject.service.factory.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.List;
 import java.util.Optional;
 
 public class FindCategoryByIdCommand implements Command {
@@ -21,9 +19,8 @@ public class FindCategoryByIdCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
     private static final String PARAM_ID = "id";
-    private static final String CATEGORIES_ATTRIBUTE_NAME_RESULT = "category";
-    private static final String CATEGORIES_ATTRIBUTE_NAME = "categories";
-    private static final String CATEGORIES_PAGE = "page.categories";
+    private static final String CATEGORIES_ATTRIBUTE_NAME = "category";
+    private static final String CATEGORIES_PAGE = "page.adminPanelCategory";
     private static final Logger LOG = LogManager.getLogger(FindCategoryByIdCommand.class);
 
     FindCategoryByIdCommand(CategoryService service, RequestFactory requestFactory, PropertyContext propertyContext) {
@@ -36,12 +33,9 @@ public class FindCategoryByIdCommand implements Command {
     public CommandResponse execute(CommandRequest request) {
         final Long id = Long.parseLong(request.getParameter(PARAM_ID));
         final Optional<Category> category;
-        final List<Category> categoriesALL;
         try {
             category = service.findId(id);
-            categoriesALL = service.findAll();
-            request.addAttributeToJsp(CATEGORIES_ATTRIBUTE_NAME, categoriesALL);
-            request.addAttributeToJsp(CATEGORIES_ATTRIBUTE_NAME_RESULT, category);
+            request.addAttributeToJsp(CATEGORIES_ATTRIBUTE_NAME, category);
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
         }

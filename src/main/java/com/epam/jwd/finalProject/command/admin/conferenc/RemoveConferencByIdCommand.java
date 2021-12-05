@@ -1,19 +1,15 @@
 package com.epam.jwd.finalProject.command.admin.conferenc;
 
-import com.epam.jwd.finalProject.command.admin.application.RemoveApplicationByIdCommand;
 import com.epam.jwd.finalProject.command.factory.Command;
 import com.epam.jwd.finalProject.command.factory.CommandRequest;
 import com.epam.jwd.finalProject.command.factory.CommandResponse;
 import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
-import com.epam.jwd.finalProject.model.Conferenc;
 import com.epam.jwd.finalProject.service.api.ConferencService;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
 import com.epam.jwd.finalProject.service.factory.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.List;
 
 public class RemoveConferencByIdCommand implements Command {
     private final ConferencService service;
@@ -21,8 +17,9 @@ public class RemoveConferencByIdCommand implements Command {
     private final PropertyContext propertyContext;
     private static final String PARAM_ID = "id";
     private static final String CONFERENCES_ATTRIBUTE_NAME_RESULT_REMOVE = "result";
-    private static final String CONFERENCES_ATTRIBUTE_NAME = "conferences";
-    private static final String CONFERENCES_PAGE = "page.conferences";
+    private static final String OPERATION_WAS_UNSUCCSESFUL = "The operation was unsuccsesful";
+    private static final String CONFERENC_ADMIN_PANEL_PAGE = "page.adminPanelConferenc";
+    private static final String CONFERENCES_PAGE = "/controller?command=show_conferences";
     private static final Logger LOG = LogManager.getLogger(RemoveConferencByIdCommand.class);
 
     RemoveConferencByIdCommand(ConferencService service, RequestFactory requestFactory, PropertyContext propertyContext) {
@@ -34,22 +31,18 @@ public class RemoveConferencByIdCommand implements Command {
     @Override
     public CommandResponse execute(CommandRequest request) {
         final Long id = Long.parseLong(request.getParameter(PARAM_ID));
-        final boolean resultRemove;
-        try {LOG.info("11111");
+        boolean resultRemove = false;
+        try {
             resultRemove = service.remove(id);
-            LOG.info("222222");
-            final List<Conferenc> conferencesAll = service.findAll();
-            LOG.info("33333");
-            String result;
-            if (!resultRemove){
-                result="Successful remove";
-            }else{result="Unsuccessful remove";}
-            request.addAttributeToJsp(CONFERENCES_ATTRIBUTE_NAME, conferencesAll);
-            request.addAttributeToJsp(CONFERENCES_ATTRIBUTE_NAME_RESULT_REMOVE, result);
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
         }
-        return requestFactory.createForwardResponse(propertyContext.get(CONFERENCES_PAGE));
+        if (!resultRemove) {
+            request.addAttributeToJsp(CONFERENCES_ATTRIBUTE_NAME_RESULT_REMOVE, OPERATION_WAS_UNSUCCSESFUL);
+            return requestFactory.createForwardResponse(propertyContext.get(CONFERENC_ADMIN_PANEL_PAGE));
+        } else {
+            return requestFactory.createRedirectResponse(CONFERENCES_PAGE);
+        }
     }
 
     public static RemoveConferencByIdCommand getInstance() {
@@ -58,7 +51,7 @@ public class RemoveConferencByIdCommand implements Command {
 
     private static class Holder {
         public static final RemoveConferencByIdCommand INSTANCE =
-                new RemoveConferencByIdCommand(ServiceFactory.simple().conferencService(),RequestFactory.getInstance(),
+                new RemoveConferencByIdCommand(ServiceFactory.simple().conferencService(), RequestFactory.getInstance(),
                         PropertyContext.instance());
     }
 

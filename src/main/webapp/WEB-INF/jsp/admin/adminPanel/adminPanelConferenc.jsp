@@ -18,6 +18,8 @@
 <p><a href="#searchByName" class="create">Поиск по имени конференции</a></p>
 <p><a href="${pageContext.request.contextPath}/controller?command=show_conferences" class="create">Просмотр конференций</a></p>
 <p><a href="${pageContext.request.contextPath}/controller?command=show_categories" class="create">Просмотр категорий</a></p>
+<p>${requestScope.result}</p>
+<p>${requestScope.conferenc}</p>
 <p><a name="create"></a></p>
 <p class="bolt">Создание конференции
     <br>
@@ -43,7 +45,7 @@
 <form name="updateDescriptionByConferenc-form" action="/controller?command=update_description_in_conferenc"
       method="post">
     <label for="idUpdate-input" class="bolt">ID:</label>
-    <input id="idUpdate-input" type="text" name="id" value=""required pattern="#^[0-9]+$#"/>
+    <input id="idUpdate-input" type="text" name="id" value=""required pattern="^[0-9]+$"/>
     <br>
     <label for="descriprionConferenc-input" class="bolt">Description:</label>
     <input id="descriprionConferenc-input" type="text" name="description" value=""required pattern="^[A-Za-z]+((\s)?((\'|\-|\.|\,)?([A-Za-z])+))*$"/>
@@ -58,7 +60,7 @@
 </p>
 <form name="removeConferenc-form" action="/controller?command=remove_conferenc_by_id" method="post">
     <label for="idForm-input" class="bolt">ID conferenc:</label>
-    <input id="idForm-input" type="text" name="id" value=""required pattern="#^[0-9]+$#"/>
+    <input id="idForm-input" type="text" name="id" value=""required pattern="^[0-9]+$"/>
     <button type="submit" class="create">Remove</button>
 </form>
 <br>
@@ -69,9 +71,10 @@
 </p>
 <form name="findConferencById-form" action="/controller?command=find_conferenc_by_id" method="post">
     <label for="idConferenc-input" class="bolt">ID conferenc:</label>
-    <input id="idConferenc-input" type="text" name="id" value=""required pattern="#^[0-9]+$#"/>
+    <input id="idConferenc-input" type="text" name="id" value=""required pattern="^[0-9]+$"/>
     <button type="submit" class="create">Search</button>
 </form>
+<p>${requestScope.result}</p>
 <br>
 <p><a name="searchByName"></a></p>
 <p class="bolt">Find conferenc by name
@@ -79,10 +82,11 @@
     Поиск конференции по имнеи.
 </p>
 <form name="findConferencByName-form" action="/controller?command=find_conferences_by_name" method="post">
-    <label for="searchNameConferenc-input" class="bolt">ID conferenc:</label>
+    <label for="searchNameConferenc-input" class="bolt">Name conferenc:</label>
     <input id="searchNameConferenc-input" type="text" name="name" value=""required pattern="^[A-Za-z]+((\s)?((\'|\-|\.|\,)?([A-Za-z])+))*$"/>
     <button type="submit" class="create">Search</button>
 </form>
+
 <%@include file="/WEB-INF/jsp/common/footer.jsp" %>
 </body>
 </html>

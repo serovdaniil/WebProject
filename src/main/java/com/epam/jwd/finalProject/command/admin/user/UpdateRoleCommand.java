@@ -33,8 +33,9 @@ public class UpdateRoleCommand implements Command {
     public CommandResponse execute(CommandRequest request) {
         final Long idAccount = Long.parseLong(request.getParameter(FIND_PARAM_ID_ACCOUNT));
         final String nameRole = request.getParameter(FIND_PARAM_ID_ROLE);
+        final Optional<User> user;
         try {
-            final Optional<User> user = service.updateRole(idAccount, nameRole);
+            user = service.updateRole(idAccount, nameRole);
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
         }

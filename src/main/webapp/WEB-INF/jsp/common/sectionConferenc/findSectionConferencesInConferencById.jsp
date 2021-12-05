@@ -8,7 +8,6 @@
 
 <style>
     <%@include file="/WEB-INF/css/dataListStyle.css"%>
-    <%@include file="/WEB-INF/css/text.css"%>
 </style>
 <%@include file="/WEB-INF/jsp/common/header.jsp" %>
 <h2>add information if cinferenc</h2>

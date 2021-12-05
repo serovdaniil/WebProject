@@ -1,6 +1,5 @@
 package com.epam.jwd.finalProject.command.common.sectionConferenc;
 
-import com.epam.jwd.finalProject.command.admin.sectionConferenc.RemoveSectionConferencByIdCommand;
 import com.epam.jwd.finalProject.command.factory.Command;
 import com.epam.jwd.finalProject.command.factory.CommandRequest;
 import com.epam.jwd.finalProject.command.factory.CommandResponse;
@@ -20,8 +19,8 @@ public class FindSectionConferencByNameCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
     private static final String FIND_PARAM_NAME = "name";
-    private static final String CONFERENCES_ATTRIBUTE_NAME = "conferences";
-    private static final String FIND_SECTION_CONFERENCES_BY_NAME_PAGE = "page.findSectionConferencesByName";
+    private static final String SECTION_CONFERENCES_ATTRIBUTE_NAME = "sectionConferenc";
+    private static final String SECTION_CONFERENCES_PAGE = "page.adminPanelSectionConferenc";
     private static final Logger LOG = LogManager.getLogger(FindSectionConferencByNameCommand.class);
 
     FindSectionConferencByNameCommand(SectionConferencService service, RequestFactory requestFactory, PropertyContext propertyContext) {
@@ -36,11 +35,11 @@ public class FindSectionConferencByNameCommand implements Command {
         final List<SectionConferenc> conferencesAll;
         try {
             conferencesAll = service.findByName(name);
-            request.addAttributeToJsp(CONFERENCES_ATTRIBUTE_NAME, conferencesAll);
+            request.addAttributeToJsp(SECTION_CONFERENCES_ATTRIBUTE_NAME, conferencesAll);
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
         }
-        return requestFactory.createForwardResponse(propertyContext.get(FIND_SECTION_CONFERENCES_BY_NAME_PAGE));
+        return requestFactory.createForwardResponse(propertyContext.get(SECTION_CONFERENCES_PAGE));
     }
 
     public static FindSectionConferencByNameCommand getInstance() {
