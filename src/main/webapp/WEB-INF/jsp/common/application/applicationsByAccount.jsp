@@ -7,6 +7,7 @@
 <body>
 <style>
     <%@include file="/WEB-INF/css/tableStyle.css"%>
+    <%@include file="/WEB-INF/css/text.css"%>
 </style>
 <%@include file="/WEB-INF/jsp/common/header.jsp" %>
 <h2>Ваши заявки на обучение</h2>
@@ -26,15 +27,15 @@
                     <input class="container" type="text" name="id" readonly value="${application.id}"/>
                 </td>
                 <td>
-                    <input class="container" type="text" name="id" readonly
+                    <input class="container" type="text" name="name" readonly
                            value="${application.sectionConferenc.name}"/>
                 </td>
                 <td>
-                    <input class="container" type="text" name="id" readonly
+                    <input class="container" type="text" name="sectionConferec" readonly
                            value="${application.sectionConferenc.conferenc.name}"/>
                 </td>
                 <td>
-                    <input class="container" type="text" name="id" readonly
+                    <input class="container" type="text" name="result" readonly
                            value="${application.result.result}"/>
                 </td>
                 <td>

@@ -158,7 +158,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     private Long resultSection(String resultSection) {
         final Long idResult;
         switch (resultSection) {
-            case "Open": {
+            case "Activate": {
                 idResult = (long) 1;
                 break;
             }

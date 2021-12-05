@@ -23,8 +23,7 @@ public class CreateConferencCommand implements Command {
     private static final String PARAM_DESCRIPTION = "description";
     private static final String PARAM_ID_CATEGORY = "idCategory";
     private static final String CONFERENCES_ATTRIBUTE_NAME_RESULT_CREATE = "result";
-    private static final String CONFERENCES_ATTRIBUTE_NAME = "conferences";
-    private static final String CONFERENCES_PAGE = "page.conferences";
+    private static final String CONFERENCES_PAGE = "page.adminPanelConferenc";
     private static final Logger LOG = LogManager.getLogger(FindConferencByIdCommand.class);
 
     CreateConferencCommand(ConferencService service, RequestFactory requestFactory, PropertyContext propertyContext) {
@@ -41,14 +40,12 @@ public class CreateConferencCommand implements Command {
         final boolean resultCreate;
         try {
             resultCreate = service.create(name,description,id);
-            final List<Conferenc> conferencesAll = service.findAll();
             String result;
             if (!resultCreate) {
                 result = "Unsuccessful create";
             } else {
                 result = "Successful create";
             }
-            request.addAttributeToJsp(CONFERENCES_ATTRIBUTE_NAME, conferencesAll);
             request.addAttributeToJsp(CONFERENCES_ATTRIBUTE_NAME_RESULT_CREATE, result);
         }catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);

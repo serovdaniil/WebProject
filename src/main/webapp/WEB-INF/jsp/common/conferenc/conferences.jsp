@@ -9,53 +9,10 @@
 <body>
 <style>
     <%@include file="/WEB-INF/css/dataListStyle.css"%>
+    <%@include file="/WEB-INF/css/text.css"%>
 </style>
 <%@include file="/WEB-INF/jsp/common/header.jsp" %>
-<h3>НАЙТИ ТЕКСТ! Инфа о наших конференциях, которые мы проводим.</h3>
-<c:if test="${not empty sessionScope.user && sessionScope.user.role eq Role.ADMIN}">
-    <h3>Admin panel for administrator</h3>
-    <br>
-    <h4>Remove conferenc</h4>
-    <form name="removeConferenc-form" action="/controller?command=remove_conferenc_by_id" method="post">
-        <label for="idForm-input">ID conferenc:</label>
-        <input id="idForm-input" type="text" name="id" value=""/>
-        <input type="submit" value="Remove"/>
-    </form>
-    <h4>Update description conferenc</h4>
-    <form name="updateDescriptionByConferenc-form" action="/controller?command=update_description_in_conferenc"
-          method="post">
-        <label for="idUpdate-input">ID:</label>
-        <input id="idUpdate-input" type="text" name="id" value=""/>
-        <br>
-        <label for="descriprionConferenc-input">Description:</label>
-        <input id="descriprionConferenc-input" type="text" name="description" value=""/>
-        <input type="submit" value="Update description"/>
-        <br/>
-    </form>
-    <h4>Create conferenc</h4>
-    <form name="createConferenc-form" action="/controller?command=create_conferenc" method="post">
-        <label for="nameConferenc-input">Name Conferenc:</label>
-        <input id="nameConferenc-input" type="text" name="name" value=""/>
-        <br>
-        <label for="description-input">Descriprion Conferenc:</label>
-        <input id="description-input" type="text" name="description" value=""/>
-        <br>
-        <label for="idCategory-input">ID category:</label>
-        <input id="idCategory-input" type="text" name="idCategory" value=""/>
-        <input type="submit" value="Create conferenc"/>
-        <br/>
-    </form>
-    <h4>Find conferenc by ID</h4>
-    <form name="findConferencById-form" action="/controller?command=find_conferenc_by_id" method="post">
-        <label for="idConferenc-input">ID conferenc:</label>
-        <input id="idConferenc-input" type="text" name="id" value=""/>
-        <input type="submit" value="Search"/>
-    </form>
-    <br>
-    <h4>${requestScope.conferenc}</h4>
-    <h4> Result: ${requestScope.result}</h4>
-    </br>
-</c:if>
+<h2>НАЙТИ ТЕКСТ! Инфа о наших конференциях, которые мы проводим.</h2>
 <br>
 <a href="/controller?command=show_find_section_conferences_by_name">find SectionConferences by name</a>
 <br>

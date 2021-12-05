@@ -27,26 +27,6 @@
 <br>
 <br>
 <h1>${helloMessage}</h1>
-<c:if test="${not empty sessionScope.user}">
-    <p>Hello, ${sessionScope.user.firstName}</p>
-    <p>${sessionScope.user.role}</p>
-</c:if>
-
-<a href="/controller?command=show_find_conferences_by_name">find Conferences by name</a>
-<br>
-<br>
-<a href="/controller?command=show_all_conferences_in_category">conferences in category</a>
-<br>
-<a href="/controller?command=show_all_section_conferences_in_category">section conferences in category</a>
-<br>
-<br>
-<a href="/controller?command=show_find_section_conferences_in_conferenc_by_id">sec----- conferences in category</a>
-<br>
-<form name="removeConferenc-form" action="/controller?command=remove_conferenc_by_id" method="post">
-    <label for="id-input">ID conferenc:</label>
-    <input id="id-input" type="text" name="id" value=""/>
-    <input type="submit" value="Remove"/>
-</form>
 <%@include file="/WEB-INF/jsp/common/footer.jsp" %>
 </body>
 </html>

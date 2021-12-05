@@ -8,6 +8,7 @@
 <body>
 <style>
     <%@include file="/WEB-INF/css/styleForObject.css"%>
+    <%@include file="/WEB-INF/css/text.css"%>
 </style>
 <%@include file="/WEB-INF/jsp/common/header.jsp" %>
 <h2> Заявка от пользователя ${requestScope.application.user.firstName} ${requestScope.application.user.lastName}</h2>

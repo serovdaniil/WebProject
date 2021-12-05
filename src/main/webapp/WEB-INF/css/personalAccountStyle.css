@@ -23,19 +23,18 @@ body {
     padding: 16px;
     border-radius: 30px;
 }
-#container-center {
+#container-three {
     margin-top: 25px;
-    height: 270px;
-    width: 35%;
-    margin-right: 33%;
-    margin-left: 33%;
+    height: 300px;
+    width: 22%;
+    margin-right: 7.5%;
     float: right;
     border: 3px solid #4CAF50;
     padding: 16px;
     border-radius: 30px;
 }
 #block {
-    height: 1020px;
+    height: 1050px;
 }
 p{
     text-align: center;

@@ -8,6 +8,7 @@
 <body>
 <style>
     <%@include file="/WEB-INF/css/styleForObject.css"%>
+    <%@include file="/WEB-INF/css/text.css"%>
 </style>
 <%@include file="/WEB-INF/jsp/common/header.jsp" %>
 <h2>Вопрос: ${requestScope.question.question}, от пользователя ${requestScope.question.user.firstName} ${requestScope.question.user.lastName}</h2>

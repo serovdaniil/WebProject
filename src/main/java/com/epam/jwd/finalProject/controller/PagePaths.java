@@ -8,6 +8,10 @@ public enum PagePaths {
     SECTIONCONFERENCES("/WEB-INF/jsp/common/sectionConferenc/sectionConferences.jsp"),
     FINDSECTIONCONFERENCESBYNAME("/WEB-INF/jsp/common/sectionConferenc/findSectionConferencesByName.jsp"),
     FINDSECTIONCONFERENCESINCONFERENCBYID("/WEB-INF/jsp/common/sectionConferenc/findSectionConferencesInConferencById.jsp"),
+    ADMINPANELCONFERENC("/WEB-INF/jsp/admin/adminPanel/adminPanelConferenc.jsp"),
+    ADMINPANELSECTIONCONFERENC("/WEB-INF/jsp/admin/adminPanel/adminPanelSectionConferenc.jsp"),
+    ADMINPANELCATEGORY("/WEB-INF/jsp/admin/adminPanel/adminPanelCategory.jsp"),
+
     CATEGORIES("/WEB-INF/jsp/common/category/categories.jsp"),
     ALLCONFERENCESINCATEGORY("/WEB-INF/jsp/common/category/allConferencesInCategory.jsp"),
     ALLSECTIONCONFERENCESINCATEGORY("/WEB-INF/jsp/common/category/allSectionConferencesInCategory.jsp"),
@@ -25,7 +29,7 @@ public enum PagePaths {
     FINDQUESTIONBYID("/WEB-INF/jsp/common/question/questionById.jsp"),
     APPLICATIONBYID("/WEB-INF/jsp/common/application/applicationById.jsp"),
     CONTACT("/WEB-INF/jsp/personalAccount/contact.jsp"),
-    ERROR("/WEB-INF/jsp/common/error.jsp");
+    ERROR("/WEB-INF/jsp/error/error.jsp");
 
     private final String path;
 

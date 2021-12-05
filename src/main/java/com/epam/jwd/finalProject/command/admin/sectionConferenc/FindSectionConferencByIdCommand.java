@@ -1,6 +1,5 @@
 package com.epam.jwd.finalProject.command.admin.sectionConferenc;
 
-import com.epam.jwd.finalProject.command.admin.user.ReadUserByIdCommand;
 import com.epam.jwd.finalProject.command.factory.Command;
 import com.epam.jwd.finalProject.command.factory.CommandRequest;
 import com.epam.jwd.finalProject.command.factory.CommandResponse;

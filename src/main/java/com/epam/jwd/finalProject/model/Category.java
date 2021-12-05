@@ -23,10 +23,9 @@ public class Category implements Entity{
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Category)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Category category = (Category) o;
-        return Objects.equals(id, category.id) &&
-                Objects.equals(name, category.name);
+        return Objects.equals(id, category.id) && Objects.equals(name, category.name);
     }
 
     @Override

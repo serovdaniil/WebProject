@@ -24,7 +24,7 @@ public class CreateSectionConferencCommand implements Command {
     private static final String PARAM_ID_CONFERENC = "idConferenc";
     private static final String SECTIOM_CONFERENCES_ATTRIBUTE_NAME = "result";
     private static final String SECTION_CONFERENCES_ATTRIBUTE_NAME_ALL = "sectionConferences";
-    private static final String SECTION_CONFERENCES_PAGE = "page.sectionConferences";
+    private static final String SECTION_CONFERENCES_PAGE = "/WEB-INF/jsp/admin/adminPanel/adminPanelCategory.jsp";
     private static final Logger LOG = LogManager.getLogger(CreateSectionConferencCommand.class);
 
     CreateSectionConferencCommand(SectionConferencService service, RequestFactory requestFactory, PropertyContext propertyContext) {
@@ -54,7 +54,7 @@ public class CreateSectionConferencCommand implements Command {
             LOG.error("The entered data is not correct!" + e);
         }
 
-        return requestFactory.createForwardResponse(propertyContext.get(SECTION_CONFERENCES_PAGE));
+        return requestFactory.createRedirectResponse(SECTION_CONFERENCES_PAGE);
     }
 
     public static CreateSectionConferencCommand getInstance() {

@@ -7,8 +7,12 @@
 <body>
 <style>
     <%@include file="/WEB-INF/css/styleForObject.css"%>
+    <%@include file="/WEB-INF/css/text.css"%>
 </style>
 <%@include file="/WEB-INF/jsp/common/header.jsp" %>
+<h2>Поиск пользователя по id</h2>
+<p>Страница для детального просмотра пользователя по id.</p>
+
 <h2> Пользователь, ${requestScope.user.firstName} ${requestScope.user.lastName}</h2>
 <form name="question-form" action="${pageContext.request.contextPath}/controller?command=update_role_by_user" method="post">
     <label for="id-input">Уникальный номер:</label>

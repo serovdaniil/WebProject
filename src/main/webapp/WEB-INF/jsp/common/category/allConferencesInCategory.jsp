@@ -5,10 +5,13 @@
     <title>Show all conferences in category</title>
 </head>
 <body>
-<c:if test="${not empty sessionScope.user}">
-    <p>Hello, ${sessionScope.user.firstName}</p>
-</c:if>
-<h3>avdsvas</h3>
+<style>
+    <%@include file="/WEB-INF/css/tableStyle.css"%>
+    <%@include file="/WEB-INF/css/text.css"%>
+</style>
+<%@include file="/WEB-INF/jsp/common/header.jsp" %>
+<h2>advasd</h2>
+<p>qwerqwfasdf</p>
 <form name="findConferencesInCategory-form" action="/controller?command=all_conferences_in_category" method="post">
     <label for="login-input">Name:</label>
     <input id="login-input" type="text" name="id" value=""/>
@@ -30,5 +33,6 @@
         </tr>
     </c:forEach>
 </table>
+<%@include file="/WEB-INF/jsp/common/footer.jsp" %>
 </body>
 </html>

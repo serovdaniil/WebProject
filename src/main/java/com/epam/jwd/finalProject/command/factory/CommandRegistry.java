@@ -1,5 +1,8 @@
 package com.epam.jwd.finalProject.command.factory;
 
+import com.epam.jwd.finalProject.command.admin.adminPanel.ShowAdminPanelCategoryPageCommand;
+import com.epam.jwd.finalProject.command.admin.adminPanel.ShowAdminPanelConferencPageCommand;
+import com.epam.jwd.finalProject.command.admin.adminPanel.ShowAdminPanelSectionConferencPageCommand;
 import com.epam.jwd.finalProject.command.admin.application.*;
 import com.epam.jwd.finalProject.command.admin.category.*;
 import com.epam.jwd.finalProject.command.admin.conferenc.*;
@@ -69,7 +72,6 @@ public enum CommandRegistry {
     FIND_QUESTIONS_BY_ID_ACCOUNT(FindQuestionByIdAccountCommand.getInstance(), "find_questions_by_id_account", USER, ADMIN),
     FIND_QUESTION_BY_ID(FindQuestionByIdCommand.getInstance(), "find_question_by_id", USER, ADMIN),
     REMOVE_QUESTION_BY_ID(RemoveQuestionByIdCommand.getInstance(), "remove_question_by_id", USER, ADMIN),
-
     //User
     SHOW_USERS(ShowUsersPageCommand.getInstance(), "show_users", ADMIN),
     UPDATE_PASSWORD_BY_USER(UpdatePasswordCommand.getInstance(), "update_password_by_user", USER, ADMIN),
@@ -79,7 +81,7 @@ public enum CommandRegistry {
     UPDATE_ROLE_BY_USER(UpdateRoleCommand.getInstance(), "update_role_by_user", ADMIN),
     READ_USER_BY_ID(ReadUserByIdCommand.getInstance(), "read_user_by_id", ADMIN),
     SHOW_READ_USER_BY_ID(ShowReadUserByIdPageCommand.getInstance(), "show_read_user_by_id", ADMIN),
-    SHOW_UPDATE_PASSWORD_BY_USER(ShowPerosnalInformationCommand.getInstance(), "show_personal_infomation", USER, ADMIN),
+    SHOW_PERSONAL_INFORMATION_BY_USER(ShowPerosnalInformationCommand.getInstance(), "show_personal_infomation", USER, ADMIN),
     //application
     SHOW_APPLICATION(ShowApplicationPageCommand.getInstance(), "show_applications", ADMIN),
     SHOW_APPLICATIONS_BY_ACCOUNT(FindAccountIdByApplicationCommand.getInstance(), "show_applications_by_account", USER, ADMIN),
@@ -88,7 +90,11 @@ public enum CommandRegistry {
     REMOVE_APPLICATION(RemoveApplicationByIdCommand.getInstance(), "remove_application", USER, ADMIN),
     CREATE_APPLICATION(CreateApplicationCommand.getInstance(), "create_application", USER, ADMIN),
     FIND_APPLICATION_BY_ID(FindApplicationByIdCommand.getInstance(), "find_application_by_id", USER, ADMIN),
-    UPDATE_STATUS_RESULT_APPLICATION_BY_ID(UpdateStatusResultByIdApplicationCommand.getInstance(), "update_status_result_application", ADMIN),
+    UPDATE_STATUS_RESULT_APPLICATION_BY_ID(UpdateStatusResultByIdApplicationCommand.getInstance(), "update_status_result_application", USER, ADMIN),
+    //ADMIN PANEL
+    SHOW_ADMIN_PANEL_CONFERENC(ShowAdminPanelConferencPageCommand.getInstance(), "show_admin_panel_conferenc", ADMIN),
+    SHOW_ADMIN_PANEL_SECTIONCONFERENC(ShowAdminPanelSectionConferencPageCommand.getInstance(),"show_admin_panel_section_conferenc", ADMIN),
+    SHOW_ADMIN_PANEL_CATEGORY(ShowAdminPanelCategoryPageCommand.getInstance(),"show_admin_panel_category", ADMIN),
 
     SHOW_PESONAL_ACCOUNT(ShowPersonalAccountPageCommand.getInstance(), "show_personal_account", USER, ADMIN),
     CONTACT(ShowContactPageCommand.getInstance(), "show_contact"),

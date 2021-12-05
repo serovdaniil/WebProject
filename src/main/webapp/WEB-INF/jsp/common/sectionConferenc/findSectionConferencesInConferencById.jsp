@@ -8,10 +8,11 @@
 
 <style>
     <%@include file="/WEB-INF/css/dataListStyle.css"%>
+    <%@include file="/WEB-INF/css/text.css"%>
 </style>
 <%@include file="/WEB-INF/jsp/common/header.jsp" %>
-<h3>add information if cinferenc</h3>
-<h3>Find SectionConferenc by name</h3>
+<h2>add information if cinferenc</h2>
+<h2>Find SectionConferenc by name</h2>
 
 <form name="findConferencByName-form" action="/controller?command=find_section_conferences_in_conferenc_by_id"
       method="post">

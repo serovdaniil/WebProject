@@ -38,7 +38,7 @@
           action="/controller?command=update_first_name_by_user" method="post">
         <label for="firstName-input">${firstName}:</label>
         <input id="firstName-input" type="text" name="firstName" min="1" max="45" required
-               pattern="^[A-ZА-Яa-zа-я]+((\s)?((\'|\-|\.)?([A-ZА-Яa-zа-я])+))*$"
+               pattern="^[A-zА-Я]*$|^[A-zА-я]+\s[A-zА-Я]*$"
                value="${sessionScope.user.firstName}"/>
         <button type="submit" class="cancelbtn">${firstName}</button>
     </form>

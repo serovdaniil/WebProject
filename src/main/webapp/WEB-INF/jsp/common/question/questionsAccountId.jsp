@@ -8,6 +8,7 @@
 <body>
 <style>
     <%@include file="/WEB-INF/css/tableStyle.css"%>
+    <%@include file="/WEB-INF/css/text.css"%>
 </style>
 <%@include file="/WEB-INF/jsp/common/header.jsp" %>
 <h2>Ваши вопросы</h2>

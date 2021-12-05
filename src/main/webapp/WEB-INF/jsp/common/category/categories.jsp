@@ -7,9 +7,11 @@
     <title>Show all categories</title>
 </head>
 <body>
-<c:if test="${not empty sessionScope.user}">
-    <p>Hello, ${sessionScope.user.firstName}</p>
-</c:if>
+<style>
+    <%@include file="/WEB-INF/css/dataListStyle.css"%>
+    <%@include file="/WEB-INF/css/text.css"%>
+</style>
+<%@include file="/WEB-INF/jsp/common/header.jsp" %>
 <c:if test="${not empty sessionScope.user && sessionScope.user.role eq Role.ADMIN}">
     <h4>Change name category</h4>
     <form name="changeNameCategory-form" action="/controller?command=change_name_category" method="post">
@@ -48,18 +50,22 @@
 <br>
 <a href="/controller?command=show_all_section_conferences_in_category">Show section conferences in category</a>
 <br>
-
-<table>
-    <tr>
-        <th>ID</th>
-        <th>NAME</th>
-    </tr>
+<ul class="list3a">
     <c:forEach var="category" items="${requestScope.categories}">
-        <tr>
-            <td>${category.id}</td>
-            <td>${category.name}</td>
-        </tr>
+        <form name="conferenc-form" action="/controller?command=all_conferences_in_category"
+              method="post">
+            <li>
+                <label for="categoryId-input">Уникальный номер:</label>
+                <input id="categoryId-input" class="container" type="text" name="id" readonly
+                       value="${category.id}"/>
+                <label for="categoryName-input">Название:</label>
+                <input id="categoryName-input" class="container" type="text" name="id" readonly
+                       value="${category.name}"/>
+                <button type="submit" class="button">Конференции в данной категории</button>
+            </li>
+        </form>
     </c:forEach>
-</table>
+</ul>
+<%@include file="/WEB-INF/jsp/common/footer.jsp" %>
 </body>
 </html>

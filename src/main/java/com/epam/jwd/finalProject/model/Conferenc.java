@@ -35,12 +35,9 @@ public class Conferenc implements Entity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Conferenc)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Conferenc conferenc = (Conferenc) o;
-        return Objects.equals(id, conferenc.id) &&
-                Objects.equals(name, conferenc.name) &&
-                Objects.equals(description, conferenc.description) &&
-                Objects.equals(category, conferenc.category);
+        return Objects.equals(id, conferenc.id) && Objects.equals(name, conferenc.name) && Objects.equals(description, conferenc.description) && Objects.equals(category, conferenc.category);
     }
 
     @Override
