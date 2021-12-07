@@ -11,7 +11,7 @@ public enum PagePaths {
     ADMINPANELCONFERENC("/WEB-INF/jsp/admin/adminPanel/adminPanelConferenc.jsp"),
     ADMINPANELSECTIONCONFERENC("/WEB-INF/jsp/admin/adminPanel/adminPanelSectionConferenc.jsp"),
     ADMINPANELCATEGORY("/WEB-INF/jsp/admin/adminPanel/adminPanelCategory.jsp"),
-
+    ABOUT("/WEB-INF/jsp/common/about.jsp"),
     CATEGORIES("/WEB-INF/jsp/common/category/categories.jsp"),
     ALLCONFERENCESINCATEGORY("/WEB-INF/jsp/common/category/allConferencesInCategory.jsp"),
     ALLSECTIONCONFERENCESINCATEGORY("/WEB-INF/jsp/common/category/allSectionConferencesInCategory.jsp"),

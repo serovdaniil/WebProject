@@ -34,6 +34,7 @@ public class FindConferencByNameCommand implements Command {
     public CommandResponse execute(CommandRequest request) {
         final String name = request.getParameter(FIND_PARAM_NAME);
         final List<Conferenc> conferencesAll;
+        LOG.info(name);
         try {
             conferencesAll = service.findByName(name);
             request.addAttributeToJsp(CONFERENCES_ATTRIBUTE_NAME, conferencesAll);

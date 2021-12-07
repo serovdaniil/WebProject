@@ -2,6 +2,7 @@ package com.epam.jwd.finalProject.command.factory;
 
 import com.epam.jwd.finalProject.model.User;
 
+import javax.servlet.http.Cookie;
 import java.util.Optional;
 
 public interface CommandRequest {

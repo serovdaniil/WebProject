@@ -18,9 +18,13 @@ public class UpdateRoleCommand implements Command {
     private final UserService service;
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
+    private static final String USER_SESSION_ATTRIBUTE_NAME = "user";
     private static final String FIND_PARAM_ID_ROLE = "roleNew";
     private static final String FIND_PARAM_ID_ACCOUNT = "id";
     private static final String URL_UPDATE_ROLE_USER_PAGE = "/controller?command=show_users";
+    private static final String RESULT_ATTRIBUTE_NAME = "result";
+    private static final String OPERATION_WAS_UNSUCCSESFUL = "The operation was unsuccsesful";
+    private static final String SHOW_USERS_PAGE = "page.show_users";
     private static final Logger LOG = LogManager.getLogger(UpdateRoleCommand.class);
 
     UpdateRoleCommand(UserService service, RequestFactory requestFactory, PropertyContext propertyContext) {
@@ -33,13 +37,21 @@ public class UpdateRoleCommand implements Command {
     public CommandResponse execute(CommandRequest request) {
         final Long idAccount = Long.parseLong(request.getParameter(FIND_PARAM_ID_ACCOUNT));
         final String nameRole = request.getParameter(FIND_PARAM_ID_ROLE);
-        final Optional<User> user;
+        Optional<User> user = Optional.empty();
         try {
             user = service.updateRole(idAccount, nameRole);
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
         }
-        return requestFactory.createRedirectResponse(URL_UPDATE_ROLE_USER_PAGE);
+        if (user.get().equals(Optional.empty())){
+            request.addAttributeToJsp(RESULT_ATTRIBUTE_NAME, OPERATION_WAS_UNSUCCSESFUL);
+            return requestFactory.createForwardResponse(propertyContext.get(SHOW_USERS_PAGE));
+        }else{
+            request.clearSession();
+            request.createSession();
+            request.addToSession(USER_SESSION_ATTRIBUTE_NAME, user.get());
+            return requestFactory.createRedirectResponse(URL_UPDATE_ROLE_USER_PAGE);
+        }
     }
 
     public static UpdateRoleCommand getInstance() {

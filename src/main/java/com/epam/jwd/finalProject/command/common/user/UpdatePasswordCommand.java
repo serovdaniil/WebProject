@@ -20,10 +20,10 @@ public class UpdatePasswordCommand implements Command {
     private final PropertyContext propertyContext;
     private static final String USER_SESSION_ATTRIBUTE_NAME = "user";
     private static final String FIND_PARAM_PASSWORD = "password";
-    private static final String USERS_ATTRIBUTE_NAME = "user";
+    private static final String RESULT_ATTRIBUTE_NAME = "result";
     private static final String URL_ACCOUNT_PAGE = "/controller?command=show_personal_infomation";
-    private static final String SUCCESSFUL_RESULT_UPDATE_INFORMATION = "Successful updating of personal information";
-    private static final String UNSUCCESSFUL_UPDATE_PASSWORD_USER_PAGE = "Unsuccessful updating of personal information";
+    private static final String ACCOUNT_PAGE = "page.personalInformation";
+    private static final String UNSUCCESSFUL_RESULT_UPDATE_INFORMATION = "Unsuccessful updating of personal information";
     private static final Logger LOG = LogManager.getLogger(UpdatePasswordCommand.class);
 
     UpdatePasswordCommand(UserService service, RequestFactory requestFactory, PropertyContext propertyContext) {
@@ -37,22 +37,21 @@ public class UpdatePasswordCommand implements Command {
         final Optional<User> userOptional = request.retrieveFromSession(USER_SESSION_ATTRIBUTE_NAME);
         final String login = userOptional.get().getLogin();
         final String password = request.getParameter(FIND_PARAM_PASSWORD);
-        final Optional<User> user;
+        Optional<User> user=Optional.empty();
         try {
             user = service.updatePasswordByLogin(login, password);
-            if (password.equals(user.get().getPassword())) {
-                request.addAttributeToJsp(USERS_ATTRIBUTE_NAME, UNSUCCESSFUL_UPDATE_PASSWORD_USER_PAGE);
-            } else {
-                request.addAttributeToJsp(USERS_ATTRIBUTE_NAME, SUCCESSFUL_RESULT_UPDATE_INFORMATION);
-            }
-            request.clearSession();
-            request.createSession();
-            request.addToSession(USER_SESSION_ATTRIBUTE_NAME, user.get());
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
         }
-        return requestFactory.createRedirectResponse(URL_ACCOUNT_PAGE);
-
+        if (password.equals(user.get().getPassword())) {
+            request.clearSession();
+            request.createSession();
+            request.addToSession(USER_SESSION_ATTRIBUTE_NAME, user.get());
+            return requestFactory.createRedirectResponse(URL_ACCOUNT_PAGE);
+        } else {
+            request.addAttributeToJsp(RESULT_ATTRIBUTE_NAME, UNSUCCESSFUL_RESULT_UPDATE_INFORMATION);
+            return requestFactory.createForwardResponse(propertyContext.get(ACCOUNT_PAGE));
+        }
     }
 
     public static UpdatePasswordCommand getInstance() {

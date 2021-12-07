@@ -1,49 +1,73 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page import="com.epam.jwd.finalProject.model.Role" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="jwds" uri="jwd.epam.com" %>
 <fmt:setLocale value="${cookie.lang.value}"/>
 <fmt:setBundle basename="l10n.page.main" var="loc"/>
-<fmt:message bundle="${loc}" key="label.link.home" var="homeLink"/>
-<fmt:message bundle="${loc}" key="label.link.conferences" var="conferencesLink"/>
-<fmt:message bundle="${loc}" key="label.link.sectionConferences" var="sectionConferencesLink"/>
-<fmt:message bundle="${loc}" key="label.link.category" var="categoryLink"/>
-<fmt:message bundle="${loc}" key="label.link.contacts" var="contactsLink"/>
-<fmt:message bundle="${loc}" key="label.link.login" var="loginLink"/>
-<fmt:message bundle="${loc}" key="label.link.logout" var="logoutLink"/>
-<fmt:message bundle="${loc}" key="label.link.personalAccount" var="personalAccountLink"/>
-<fmt:message bundle="${loc}" key="label.link.registration" var="registrationLink"/>
+<fmt:message bundle="${loc}" key="label.header.home" var="main"/>
+<fmt:message bundle="${loc}" key="label.header.conferences" var="conferences"/>
+<fmt:message bundle="${loc}" key="label.header.about" var="about"/>
+<fmt:message bundle="${loc}" key="label.header.categories" var="category"/>
+<fmt:message bundle="${loc}" key="label.header.contacts" var="contacts"/>
+<fmt:message bundle="${loc}" key="label.header.registration" var="registration"/>
+<fmt:message bundle="${loc}" key="label.header.personalAccount" var="personalAccount"/>
+<fmt:message bundle="${loc}" key="label.header.login" var="login"/>
+<fmt:message bundle="${loc}" key="label.header.logout" var="logout"/>
 <html>
 <head>
 </head>
+<body>
 <style>
     <%@include file="/WEB-INF/css/headerStyle.css"%>
 </style>
-<ul id="menuRight">
+<jwds:welcomeUser text="adv"/>
+<%--<ul id="menuRight">
     <li><c:choose>
         <c:when test="${not empty sessionScope.user}">
-            <a class="personal" href="/controller?command=logout">${logoutLink}</a>
+            <a class="personal" href="${pageContext.request.contextPath}/controller?command=logout">${logout}</a>
         </c:when>
         <c:otherwise>
-            <a class="personal" href="/controller?command=show_login">${loginLink}</a>
+            <a class="personal" href="${pageContext.request.contextPath}/controller?command=show_login">${login}</a>
         </c:otherwise>
     </c:choose></li>
     <c:choose> <c:when test="${not empty sessionScope.user}">
-        <li><a class="personal" href="/controller?command=show_personal_account">${personalAccountLink}</a>
+        <li><a class="personal"
+               href="${pageContext.request.contextPath}/controller?command=show_personal_account">${personalAccount}</a>
         </li>
     </c:when>
         <c:otherwise>
             <li><a class="personal"
-                   href="/controller?command=show_create_an_account">${registrationLink}</a></li>
+                   href="${pageContext.request.contextPath}/controller?command=show_create_an_account">${registration}</a>
+            </li>
         </c:otherwise>
     </c:choose>
-</ul>
+</ul>--%>
 <ul id="menu">
-    <li><a href="${pageContext.request.contextPath}/controller?command=">Home</a></li>
-    <li><a href="">About</a></li>
-    <li><a href="${pageContext.request.contextPath}/controller?command=show_conferences">Conferenc</a></li>
-    <li><a href="${pageContext.request.contextPath}/controller?command=show_categories">Category</a></li>
-    <li><a href="${pageContext.request.contextPath}/controller?command=show_contact">Сontacts</a></li>
+    <li><a href="${pageContext.request.contextPath}/controller?command=">${main}</a></li>
+    <li><a href="${pageContext.request.contextPath}/show_about_page">${about}</a></li>
+    <li><a href="${pageContext.request.contextPath}/controller?command=show_conferences">${conferences}</a></li>
+    <li><a href="${pageContext.request.contextPath}/controller?command=show_categories">${category}</a></li>
+    <li><a href="${pageContext.request.contextPath}/controller?command=show_contact">${contacts}</a></li>
+   <li></li>
+    <li><c:choose>
+        <c:when test="${not empty sessionScope.user}">
+            <a class="personal" href="${pageContext.request.contextPath}/controller?command=logout">${logout}</a>
+        </c:when>
+        <c:otherwise>
+            <a class="personal" href="${pageContext.request.contextPath}/controller?command=show_login">${login}</a>
+        </c:otherwise>
+    </c:choose></li>
+    <c:choose> <c:when test="${not empty sessionScope.user}">
+        <li><a class="personal"
+               href="${pageContext.request.contextPath}/controller?command=show_personal_account">${personalAccount}</a>
+        </li>
+    </c:when>
+        <c:otherwise>
+            <li><a class="personal"
+                   href="${pageContext.request.contextPath}/controller?command=show_create_an_account">${registration}</a>
+            </li>
+        </c:otherwise>
+    </c:choose>
 </ul>
 </body>
 </html>

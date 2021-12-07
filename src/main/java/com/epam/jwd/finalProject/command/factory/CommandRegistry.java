@@ -95,7 +95,7 @@ public enum CommandRegistry {
     SHOW_ADMIN_PANEL_CONFERENC(ShowAdminPanelConferencPageCommand.getInstance(), "show_admin_panel_conferenc", ADMIN),
     SHOW_ADMIN_PANEL_SECTIONCONFERENC(ShowAdminPanelSectionConferencPageCommand.getInstance(),"show_admin_panel_section_conferenc", ADMIN),
     SHOW_ADMIN_PANEL_CATEGORY(ShowAdminPanelCategoryPageCommand.getInstance(),"show_admin_panel_category", ADMIN),
-
+ABOUT(ShowAboutPageCommand.getInstance(),"show_about_page",UNAUTHORIZED, USER, ADMIN),
     SHOW_PESONAL_ACCOUNT(ShowPersonalAccountPageCommand.getInstance(), "show_personal_account", USER, ADMIN),
     CONTACT(ShowContactPageCommand.getInstance(), "show_contact"),
     ERROR(ShowErrorPageCommand.getInstance(), "show_error"),

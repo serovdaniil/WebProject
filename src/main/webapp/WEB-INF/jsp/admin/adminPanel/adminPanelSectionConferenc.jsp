@@ -1,7 +1,37 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie.lang.value}"/>
+<fmt:setBundle basename="l10n.page.main" var="loc"/>
+<fmt:message bundle="${loc}" key="label.title.adminPanelSectionConferenc" var="pageTitle"/>
+<fmt:message bundle="${loc}" key="label.panelSectionConferenc.boxDescriptionSection" var="boxDescription"/>
+<fmt:message bundle="${loc}" key="label.panelSectionConferenc.boxIdConferenc" var="boxIdConferenc"/>
+<fmt:message bundle="${loc}" key="label.panelSectionConferenc.boxNameSection" var="boxNameSection"/>
+<fmt:message bundle="${loc}" key="label.panelSectionConferenc.button.createSectionConferenc" var="buttonCreate"/>
+<fmt:message bundle="${loc}" key="label.panelSectionConferenc.button.findSectionConferenc" var="buttonFindSectionConferenc"/>
+<fmt:message bundle="${loc}" key="label.panelSectionConferenc.button.removeSectionConferenc" var="buttonRemoveSectionConferenc"/>
+<fmt:message bundle="${loc}" key="label.panelSectionConferenc.button.updateSectionConferenc" var="buttonUpdateSectionConferenc"/>
+<fmt:message bundle="${loc}" key="label.panelSectionConferenc.menu.create" var="menuCreate"/>
+<fmt:message bundle="${loc}" key="label.panelSectionConferenc.menu.readCategory" var="menuReadCategory"/>
+<fmt:message bundle="${loc}" key="label.panelSectionConferenc.menu.readConferenc" var="menuReadConferenc"/>
+<fmt:message bundle="${loc}" key="label.panelSectionConferenc.menu.remove" var="menuRemove"/>
+<fmt:message bundle="${loc}" key="label.panelSectionConferenc.menu.searchId" var="menuSearchById"/>
+<fmt:message bundle="${loc}" key="label.panelSectionConferenc.menu.updateDescription" var="menuUpdateDescription"/>
+<fmt:message bundle="${loc}" key="label.panelSectionConferenc.text" var="text"/>
+<fmt:message bundle="${loc}" key="label.panelSectionConferenc.textMain" var="textMain"/>
+<fmt:message bundle="${loc}" key="label.panelSectionConferenc.textAfterCreate" var="textAfterCreate"/>
+<fmt:message bundle="${loc}" key="label.panelSectionConferenc.textAfterFindId" var="textAfterFindId"/>
+<fmt:message bundle="${loc}" key="label.panelSectionConferenc.textAfterFindName" var="textAfterFindName"/>
+<fmt:message bundle="${loc}" key="label.panelSectionConferenc.textAfterRemove" var="textAfterRemove"/>
+<fmt:message bundle="${loc}" key="label.panelSectionConferenc.textAfterUpdate" var="textAfterUpdate"/>
+<fmt:message bundle="${loc}" key="label.panelSectionConferenc.textCreate" var="textCreate"/>
+<fmt:message bundle="${loc}" key="label.panelSectionConferenc.textFindId" var="textFindId"/>
+<fmt:message bundle="${loc}" key="label.panelSectionConferenc.textFindName" var="textFindName"/>
+<fmt:message bundle="${loc}" key="label.panelSectionConferenc.textRemove" var="textRemove"/>
+<fmt:message bundle="${loc}" key="label.panelSectionConferenc.textUpdate" var="textUpdate"/>
+<fmt:message bundle="${loc}" key="label.panelSectionConferenc.boxIdSectionConferenc" var="boxIdSectionConferenc"/>
 <html>
 <head>
-    <title>Admin panel section conferenc</title>
+    <title>${pageTitle}</title>
 </head>
 <body>
 <style>
@@ -9,81 +39,80 @@
     <%@include file="/WEB-INF/css/text.css"%>
 </style>
 <%@include file="/WEB-INF/jsp/common/header.jsp" %>
-<h2>Панель администрирования секций конференции</h2>
-<p>Данный раздел представляет собой панель управления. На странице представлены операции, который доступны для Вас.</p>
-<p><a href="#create" class="create">Перейти к созданию</a></p>
-<p><a href="#update" class="create">Обновить описание</a></p>
-<p><a href="#remove" class="create">Удаление секции конференции</a></p>
-<p><a href="#searchById" class="create">Поиск по id секции конференции</a></p>
-<p><a href="${pageContext.request.contextPath}/controller?command=show_conferences" class="create">Просмотр секций конференций</a></p>
-<p><a href="${pageContext.request.contextPath}/controller?command=show_categories" class="create">Просмотр категорий</a></p>
+<h2>${textMain}</h2>
+<p>${text}</p>
+<p><a href="#create" class="create">${menuCreate}</a></p>
+<p><a href="#update" class="create">${menuUpdateDescription}</a></p>
+<p><a href="#remove" class="create">${menuRemove}</a></p>
+<p><a href="#searchById" class="create">${menuSearchById}</a></p>
+<p><a href="${pageContext.request.contextPath}/controller?command=show_conferences" class="create">${menuReadConferenc}</a></p>
+<p><a href="${pageContext.request.contextPath}/controller?command=show_categories" class="create">${menuReadCategory}</a></p>
 <p>${requestScope.result}</p>
 <p>${requestScope.sectionConferenc}</p>
 <p><a name="create"></a></p>
-<p class="bolt">Создание секции конференции
+<p class="bolt">${textCreate}
     <br>
-    Заполните соответствующие поля ниже для создания секции конференции.
+   ${textAfterCreate}
 </p>
-<form name="createConferenc-form" action="/controller?command=create_section_conferenc" method="post">
-    <label for="nameConferenc-input" class="bolt">Name section conferenc:</label>
-    <input id="nameConferenc-input" type="text" name="name" value="" required pattern="(^[A-Za-z]+((\s)?((\'|\-|\.|\,)?([A-Za-z])+))*$)"/>
+<form name="createSectionConferenc-form" action="${pageContext.request.contextPath}/controller?command=create_section_conferenc" method="post">
+    <label for="nameSectionConferenc-input" class="bolt">${boxNameSection}</label>
+    <input id="nameSectionConferenc-input" type="text" name="name" value="" required pattern="(^[A-Za-z]+((\s)?((\'|\-|\.|\,)?([A-Za-z])+))*$)"/>
     <br>
-    <label for="description-input" class="bolt">Descriprion section conferenc:</label>
+    <label for="description-input" class="bolt">${boxDescription}</label>
     <input id="description-input" type="text" name="description" value="" required pattern="^[A-Za-z]+((\s)?((\'|\-|\.|\,)?([A-Za-z])+))*$"/>
     <br>
-    <label for="idCategory-input" class="bolt">ID conferenc:</label>
+    <label for="idCategory-input" class="bolt">${boxIdConferenc}</label>
     <input id="idCategory-input" type="text" name="idConferenc" required pattern="^[0-9]+$" value=""/>
     <button type="submit" class="create"> Create section conferenc</button>
     <br>
 </form>
 <br>
 <p><a name="update"></a></p>
-<p class="bolt">Update description section conferenc
+<p class="bolt">${textUpdate}
     <br>
-    Обновление описания для секции конференции.</p>
-<form name="updateDescriptionByConferenc-form" action="/controller?command=update_description_in_section_conferenc"
+    ${textAfterUpdate}</p>
+<form name="updateDescriptionBySectionConferenc-form" action="${pageContext.request.contextPath}/controller?command=update_description_in_section_conferenc"
       method="post">
-    <label for="idUpdate-input" class="bolt">ID:</label>
-    <input id="idUpdate-input" type="text" name="id" value=""required pattern="^[0-9]+$"/>
+    <label for="idUpdateSection-input" class="bolt">${boxIdSectionConferenc}</label>
+    <input id="idUpdateSection-input" type="text" name="id" value=""required pattern="^[0-9]+$"/>
     <br>
-    <label for="descriprionConferenc-input" class="bolt">Description:</label>
-    <input id="descriprionConferenc-input" type="text" name="description" value=""required pattern="^[A-Za-z]+((\s)?((\'|\-|\.|\,)?([A-Za-z])+))*$"/>
-    <button type="submit" class="create">Update description</button>
+    <label for="descriprionSectionConferenc-input" class="bolt">${boxDescription}</label>
+    <input id="descriprionSectionConferenc-input" type="text" name="description" value=""required pattern="^[A-Za-z]+((\s)?((\'|\-|\.|\,)?([A-Za-z])+))*$"/>
+    <button type="submit" class="create">${buttonUpdateSectionConferenc}</button>
     <br>
 </form>
 <br>
 <p><a name="remove"></a></p>
-<p class="bolt">Remove section conferenc
+<p class="bolt">${textRemove}
     <br>
-    Для удаления секции конференции Вам неоьбходимо ввести ее id.
+    ${textAfterRemove}
 </p>
-<form name="removeConferenc-form" action="/controller?command=remove_section_conferenc_by_id" method="post">
-    <label for="idForm-input" class="bolt">ID conferenc:</label>
-    <input id="idForm-input" type="text" name="id" value=""required pattern="^[0-9]+$"/>
-    <button type="submit" class="create">Remove</button>
+<form name="removeSectionConferenc-form" action="${pageContext.request.contextPath}/controller?command=remove_section_conferenc_by_id" method="post">
+    <label for="idSection-input" class="bolt">${boxIdSectionConferenc}</label>
+    <input id="idSection-input" type="text" name="id" value=""required pattern="^[0-9]+$"/>
+    <button type="submit" class="create">${buttonRemoveSectionConferenc}</button>
 </form>
 
 <br>
 <p><a name="searchById"></a></p>
-<p class="bolt">Find section conferenc by ID
+<p class="bolt">${textFindId}
     <br>
-    Поиск секции конференции по id.
+    ${textAfterFindId}
 </p>
-<form name="findConferencById-form" action="/controller?command=find_section_conferenc_by_id" method="post">
-    <label for="idConferenc-input" class="bolt">ID conferenc:</label>
-    <input id="idConferenc-input" type="text" name="id" value=""required pattern="^[0-9]+$"/>
-    <button type="submit" class="create">Search</button>
+<form name="findSectionConferencById-form" action="${pageContext.request.contextPath}/controller?command=find_section_conferenc_by_id" method="post">
+    <label for="idSectionConferenc-input" class="bolt">${boxIdSectionConferenc}</label>
+    <input id="idSectionConferenc-input" type="text" name="id" value=""required pattern="^[0-9]+$"/>
+    <button type="submit" class="create">${buttonFindSectionConferenc}</button>
 </form>
 <br>
 <p><a name="searchByName"></a></p>
-<p class="bolt">Find conferenc by name
-    <br>
-    Поиск секции конференции по имени.
+<p class="bolt">${textFindName}
+    <br>${textAfterFindName}
 </p>
-<form name="findConferencByName-form" action="/controller?command=find_section_conferences_by_name" method="post">
-    <label for="searchNameConferenc-input" class="bolt">ID conferenc:</label>
-    <input id="searchNameConferenc-input" type="text" name="name" value=""required pattern="^[A-Za-z]+((\s)?((\'|\-|\.|\,)?([A-Za-z])+))*$"/>
-    <button type="submit" class="create">Search</button>
+<form name="findSectionConferencByName-form" action="${pageContext.request.contextPath}/controller?command=find_section_conferences_by_name" method="post">
+    <label for="searchNameSectionConferenc-input" class="bolt">${boxIdSectionConferenc}</label>
+    <input id="searchNameSectionConferenc-input" type="text" name="name" value=""required pattern="^[A-Za-z]+((\s)?((\'|\-|\.|\,)?([A-Za-z])+))*$"/>
+    <button type="submit" class="create">${buttonFindSectionConferenc}</button>
 </form>
 <%@include file="/WEB-INF/jsp/common/footer.jsp" %>
 </body>

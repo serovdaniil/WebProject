@@ -1,8 +1,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie.lang.value}"/>
+<fmt:setBundle basename="l10n.page.main" var="loc"/>
+<fmt:message bundle="${loc}" key="label.title.applicationsForUser" var="pageTitle"/>
+<fmt:message bundle="${loc}" key="label.applicationByAccount.textMain" var="textMain"/>
+<fmt:message bundle="${loc}" key="label.applicationByAccount.text" var="text"/>
+<fmt:message bundle="${loc}" key="label.applicationByAccount.boxId" var="id"/>
+<fmt:message bundle="${loc}" key="label.applicationByAccount.boxNameConferenc" var="nameConferenc"/>
+<fmt:message bundle="${loc}" key="label.applicationByAccount.boxNameSection" var="nameSection"/>
+<fmt:message bundle="${loc}" key="label.applicationByAccount.boxResult" var="result"/>
+<fmt:message bundle="${loc}" key="label.applicationByAccount.button.remove" var="remove"/>
 <html>
 <head>
-    <title>Applications by account</title>
+    <title>${pageTitle}</title>
 </head>
 <body>
 <style>
@@ -10,18 +21,18 @@
     <%@include file="/WEB-INF/css/text.css"%>
 </style>
 <%@include file="/WEB-INF/jsp/common/header.jsp" %>
-<h2>Ваши заявки на обучение</h2>
-<p>Вы можете ознакомиться с Вашими заявками, а также их статусом.</p>
+<h2>${textMain}</h2>
+<p>${text}</p>
 <table>
     <tr>
-        <th>ID</th>
-        <th>SECTION CONFERENC ID</th>
-        <th>SECTION CONFERENC NAME</th>
-        <th>RESULT</th>
+        <th>${id}</th>
+        <th>${nameSection}</th>
+        <th>${nameConferenc}</th>
+        <th>${result}</th>
         <th></th>
     </tr>
     <c:forEach var="application" items="${requestScope.applications}">
-        <form name="application-form" action="/controller?command=remove_application" method="post">
+        <form name="application-form" action="${pageContext.request.contextPath}/controller?command=remove_application" method="post">
             <tr>
                 <td>
                     <input class="container" type="text" name="id" readonly value="${application.id}"/>
@@ -39,7 +50,7 @@
                            value="${application.result.result}"/>
                 </td>
                 <td>
-                    <button type="submit" class="button">Удалить заявку</button>
+                    <button type="submit" class="button">${remove}</button>
                 </td>
             </tr>
         </form>

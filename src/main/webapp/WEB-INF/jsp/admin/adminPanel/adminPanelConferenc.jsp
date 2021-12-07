@@ -1,90 +1,120 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie.lang.value}"/>
+<fmt:setBundle basename="l10n.page.main" var="loc"/>
+<fmt:message bundle="${loc}" key="label.title.adminPanelConferenc" var="pageTitle"/>
+<fmt:message bundle="${loc}" key="label.panelConferenc.textMain" var="textMain"/>
+<fmt:message bundle="${loc}" key="label.panelConferenc.text" var="text"/>
+<fmt:message bundle="${loc}" key="label.panelConferenc.textCreate" var="textCreate"/>
+<fmt:message bundle="${loc}" key="label.panelConferenc.textAfterCreate" var="textAfterCreate"/>
+<fmt:message bundle="${loc}" key="label.panelConferenc.textUpdate" var="textUpdate"/>
+<fmt:message bundle="${loc}" key="label.panelConferenc.textAfterUpdate" var="textAfterUpdate"/>
+<fmt:message bundle="${loc}" key="label.panelConferenc.textRemove" var="textRemove"/>
+<fmt:message bundle="${loc}" key="label.panelConferenc.textAfterRemove" var="textAfterRemove"/>
+<fmt:message bundle="${loc}" key="label.panelConferenc.textFindId" var="textFindId"/>
+<fmt:message bundle="${loc}" key="label.panelConferenc.textAfterFindId" var="textAfterFindId"/>
+<fmt:message bundle="${loc}" key="label.panelConferenc.textFindName" var="textFindName"/>
+<fmt:message bundle="${loc}" key="label.panelConferenc.textAfterFindName" var="textAfterFindName"/>
+<fmt:message bundle="${loc}" key="label.panelConferenc.button.create" var="buttonCreate"/>
+<fmt:message bundle="${loc}" key="label.panelConferenc.button.update" var="buttonUpdate"/>
+<fmt:message bundle="${loc}" key="label.panelConferenc.button.remove" var="buttonRemove"/>
+<fmt:message bundle="${loc}" key="label.panelConferenc.button.search" var="buttonSearch"/>
+<fmt:message bundle="${loc}" key="label.panelConferenc.boxDescriptionConferenc" var="boxDescriptionConferenc"/>
+<fmt:message bundle="${loc}" key="label.panelConferenc.boxIdCategory" var="boxIdCategory"/>
+<fmt:message bundle="${loc}" key="label.panelConferenc.boxIdConferenc" var="boxIdConferenc"/>
+<fmt:message bundle="${loc}" key="label.panelConferenc.boxNameConferenc" var="boxNameConferenc"/>
+<fmt:message bundle="${loc}" key="label.panelConferenc.menu.create" var="menuCreate"/>
+<fmt:message bundle="${loc}" key="label.panelConferenc.menu.readCategory" var="menuReadCategory"/>
+<fmt:message bundle="${loc}" key="label.panelConferenc.menu.readConferenc" var="menuReadConferenc"/>
+<fmt:message bundle="${loc}" key="label.panelConferenc.menu.remove" var="menuRemove"/>
+<fmt:message bundle="${loc}" key="label.panelConferenc.menu.searchId" var="menuSearchId"/>
+<fmt:message bundle="${loc}" key="label.panelConferenc.menu.searchName" var="menuSearchName"/>
+<fmt:message bundle="${loc}" key="label.panelConferenc.menu.update" var="menuUpdate"/>
 <html>
 <head>
-    <title>Admin panel conferenc</title>
+    <title>${pageTitle}</title>
 </head>
 <body>
 <style>
     <%@include file="/WEB-INF/css/tableStyle.css"%>
     <%@include file="/WEB-INF/css/text.css"%>
 </style>
-<%@include file="/WEB-INF/jsp/common/header.jsp" %>
-<h2>Панель администрирования конферений</h2>
-<p>Данный раздел представляет собой панель управления. На странице представлены операции, который доступны для Вас.</p>
-<p><a href="#create" class="create">Перейти к созданию</a></p>
-<p><a href="#update" class="create">Обновить описание</a></p>
-<p><a href="#remove" class="create">Удаление конференции</a></p>
-<p><a href="#searchById" class="create">Поиск по id конференции</a></p>
-<p><a href="#searchByName" class="create">Поиск по имени конференции</a></p>
-<p><a href="${pageContext.request.contextPath}/controller?command=show_conferences" class="create">Просмотр конференций</a></p>
-<p><a href="${pageContext.request.contextPath}/controller?command=show_categories" class="create">Просмотр категорий</a></p>
+<%@include file="/WEB-INF/jsp/common/header.jsp"%>
+<h2>${textMain}</h2>
+<p>${text}</p>
+<p><a href="#create" class="create">${menuCreate}</a></p>
+<p><a href="#update" class="create">${menuUpdate}</a></p>
+<p><a href="#remove" class="create">${menuRemove}</a></p>
+<p><a href="#searchById" class="create">${menuSearchId}</a></p>
+<p><a href="#searchByName" class="create">${menuSearchName}</a></p>
+<p><a href="${pageContext.request.contextPath}/controller?command=show_conferences" class="create">${menuReadConferenc}</a></p>
+<p><a href="${pageContext.request.contextPath}/controller?command=show_categories" class="create">${menuReadCategory}</a></p>
 <p>${requestScope.result}</p>
 <p>${requestScope.conferenc}</p>
 <p><a name="create"></a></p>
-<p class="bolt">Создание конференции
+<p class="bolt">${textCreate}
     <br>
-    Заполните соответствующие поля ниже для создания конференции.
+    ${textAfterCreate}
 </p>
-<form name="createConferenc-form" action="/controller?command=create_conferenc" method="post">
-    <label for="nameConferenc-input" class="bolt">Name Conferenc:</label>
+<form name="createConferenc-form" action="${pageContext.request.contextPath}/controller?command=create_conferenc" method="post">
+    <label for="nameConferenc-input" class="bolt">${boxNameConferenc}</label>
     <input id="nameConferenc-input" type="text" name="name" value="" required pattern="(^[A-Za-z]+((\s)?((\'|\-|\.|\,)?([A-Za-z])+))*$)"/>
     <br>
-    <label for="description-input" class="bolt">Descriprion Conferenc:</label>
+    <label for="description-input" class="bolt">${boxDescriptionConferenc}</label>
     <input id="description-input" type="text" name="description" required pattern="^[A-Za-z]+((\s)?((\'|\-|\.|\,)?([A-Za-z])+))*$"/>
     <br>
-    <label for="idCategory-input" class="bolt">ID category:</label>
+    <label for="idCategory-input" class="bolt">${boxIdCategory}</label>
     <input id="idCategory-input" type="text" name="idCategory" required pattern="^[0-9]+$" value=""/>
-    <button type="submit" class="create"> Create conferenc</button>
+    <button type="submit" class="create">${buttonCreate}</button>
     <br>
 </form>
 <br>
 <p><a name="update"></a></p>
-<p class="bolt">Update description conferenc
+<p class="bolt">${textUpdate}
     <br>
-    Обновление описания для конференции.</p>
-<form name="updateDescriptionByConferenc-form" action="/controller?command=update_description_in_conferenc"
+    ${textAfterUpdate}</p>
+<form name="updateDescriptionByConferenc-form" action="${pageContext.request.contextPath}/controller?command=update_description_in_conferenc"
       method="post">
-    <label for="idUpdate-input" class="bolt">ID:</label>
+    <label for="idUpdate-input" class="bolt">${boxIdConferenc}</label>
     <input id="idUpdate-input" type="text" name="id" value=""required pattern="^[0-9]+$"/>
     <br>
-    <label for="descriprionConferenc-input" class="bolt">Description:</label>
+    <label for="descriprionConferenc-input" class="bolt">${boxDescriptionConferenc}</label>
     <input id="descriprionConferenc-input" type="text" name="description" value=""required pattern="^[A-Za-z]+((\s)?((\'|\-|\.|\,)?([A-Za-z])+))*$"/>
-    <button type="submit" class="create">Update description</button>
-    <br>
+    <button type="submit" class="create">${buttonUpdate}
 </form>
 <br>
 <p><a name="remove"></a></p>
-<p class="bolt">Remove conferenc
+<p class="bolt">${textRemove}
     <br>
-    Для удаления конференции Вам неоьбходимо ввести ее id.
+   ${textAfterRemove}
 </p>
-<form name="removeConferenc-form" action="/controller?command=remove_conferenc_by_id" method="post">
-    <label for="idForm-input" class="bolt">ID conferenc:</label>
+<form name="removeConferenc-form" action="${pageContext.request.contextPath}/controller?command=remove_conferenc_by_id" method="post">
+    <label for="idForm-input" class="bolt">${boxIdConferenc}</label>
     <input id="idForm-input" type="text" name="id" value=""required pattern="^[0-9]+$"/>
-    <button type="submit" class="create">Remove</button>
+    <button type="submit" class="create">${buttonRemove}</button>
 </form>
 <br>
 <p><a name="searchById"></a></p>
-<p class="bolt">Find conferenc by ID
+<p class="bolt">${textFindId}
     <br>
-    Поиск конференции по id.
+    ${textAfterFindId}
 </p>
-<form name="findConferencById-form" action="/controller?command=find_conferenc_by_id" method="post">
-    <label for="idConferenc-input" class="bolt">ID conferenc:</label>
+<form name="findConferencById-form" action="${pageContext.request.contextPath}/controller?command=find_conferenc_by_id" method="post">
+    <label for="idConferenc-input" class="bolt">${boxIdConferenc}</label>
     <input id="idConferenc-input" type="text" name="id" value=""required pattern="^[0-9]+$"/>
-    <button type="submit" class="create">Search</button>
+    <button type="submit" class="create">${buttonSearch}</button>
 </form>
 <p>${requestScope.result}</p>
 <br>
 <p><a name="searchByName"></a></p>
-<p class="bolt">Find conferenc by name
+<p class="bolt">${textFindName}
     <br>
-    Поиск конференции по имнеи.
+   ${textAfterFindName}
 </p>
-<form name="findConferencByName-form" action="/controller?command=find_conferences_by_name" method="post">
-    <label for="searchNameConferenc-input" class="bolt">Name conferenc:</label>
+<form name="findConferencByName-form" action="${pageContext.request.contextPath}/controller?command=find_conferences_by_name" method="post">
+    <label for="searchNameConferenc-input" class="bolt">${boxNameConferenc}</label>
     <input id="searchNameConferenc-input" type="text" name="name" value=""required pattern="^[A-Za-z]+((\s)?((\'|\-|\.|\,)?([A-Za-z])+))*$"/>
-    <button type="submit" class="create">Search</button>
+    <button type="submit" class="create">${buttonSearch}</button>
 </form>
 
 <%@include file="/WEB-INF/jsp/common/footer.jsp" %>

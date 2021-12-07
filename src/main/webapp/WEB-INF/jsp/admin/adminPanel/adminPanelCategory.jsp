@@ -1,7 +1,32 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie.lang.value}"/>
+<fmt:setBundle basename="l10n.page.main" var="loc"/>
+<fmt:message bundle="${loc}" key="label.title.adminPanelCategory" var="pageTitle"/>
+<fmt:message bundle="${loc}" key="label.panelCategory.boxIdCategory" var="boxIdCategory"/>
+<fmt:message bundle="${loc}" key="label.panelCategory.boxNameCategory" var="boxNameCategory"/>
+<fmt:message bundle="${loc}" key="label.panelCategory.button.creare" var="buttonCreate"/>
+<fmt:message bundle="${loc}" key="label.panelCategory.button.remove" var="buttonRemove"/>
+<fmt:message bundle="${loc}" key="label.panelCategory.button.search" var="buttonSearch"/>
+<fmt:message bundle="${loc}" key="label.panelCategory.button.updateName" var="buttonUpdateName"/>
+<fmt:message bundle="${loc}" key="label.panelCategory.menu.create" var="menuCreate"/>
+<fmt:message bundle="${loc}" key="label.panelCategory.menu.finfById" var="menuFinfById"/>
+<fmt:message bundle="${loc}" key="label.panelCategory.menu.readCategories" var="menuReadCategories"/>
+<fmt:message bundle="${loc}" key="label.panelCategory.menu.remove" var="menuRemove"/>
+<fmt:message bundle="${loc}" key="label.panelCategory.menu.update" var="menuUpdate"/>
+<fmt:message bundle="${loc}" key="label.panelCategory.text" var="text"/>
+<fmt:message bundle="${loc}" key="label.panelCategory.textAfterCreate" var="textAfterCreate"/>
+<fmt:message bundle="${loc}" key="label.panelCategory.textAfterFindId" var="textAfterFindId"/>
+<fmt:message bundle="${loc}" key="label.panelCategory.textAfterRemove" var="textAfterRemove"/>
+<fmt:message bundle="${loc}" key="label.panelCategory.textAfterUpdate" var="textAfterUpdate"/>
+<fmt:message bundle="${loc}" key="label.panelCategory.textCreate" var="textCreate"/>
+<fmt:message bundle="${loc}" key="label.panelCategory.textFindId" var="textFindId"/>
+<fmt:message bundle="${loc}" key="label.panelCategory.textRemove" var="textRemove"/>
+<fmt:message bundle="${loc}" key="label.panelCategory.textUpdate" var="textUpdate"/>
+<fmt:message bundle="${loc}" key="label.panelCategory.textMain" var="textMain"/>
 <html>
 <head>
-    <title>Admin panel category</title>
+    <title>${pageTitle}</title>
 </head>
 <body>
 <style>
@@ -9,62 +34,62 @@
     <%@include file="/WEB-INF/css/text.css"%>
 </style>
 <%@include file="/WEB-INF/jsp/common/header.jsp" %>
-<h2>Панель администрирования категорий</h2>
-<p>Данный раздел представляет собой панель управления. На странице представлены операции, который доступны для Вас.</p>
-<p><a href="#create" class="create">Перейти к созданию</a></p>
-<p><a href="#update" class="create">Обновить название</a></p>
-<p><a href="#remove" class="create">Удалить категорию</a></p>
-<p><a href="#searchById" class="create">Поиск по id категории</a></p>
-<p><a href="${pageContext.request.contextPath}/controller?command=show_categories" class="create">Просмотр категорий</a></p>
+<h2>${textMain}</h2>
+<p>${text}</p>
+<p><a href="#create" class="create">${menuCreate}</a></p>
+<p><a href="#update" class="create">${menuUpdate}</a></p>
+<p><a href="#remove" class="create">${menuRemove}</a></p>
+<p><a href="#searchById" class="create">${menuFinfById}</a></p>
+<p><a href="${pageContext.request.contextPath}/controller?command=show_categories" class="create">${menuReadCategories}</a></p>
 <p>${requestScope.result}</p>
 <p>${requestScope.category}</p>
 <p><a name="create"></a></p>
-<p class="bolt">Создание конференции
+<p class="bolt">${textCreate}
     <br>
-    Заполните соответствующие поля ниже для создания конференции.
+   ${textAfterCreate}
 </p>
-<form name="createCategory-form" action="/controller?command=create_category" method="post">
-    <label for="nameConferenc-input" class="bolt">Name category:</label>
-    <input id="nameConferenc-input" type="text" name="name" value="" required pattern="(^[A-Za-z]+((\s)?((\'|\-|\.|\,)?([A-Za-z])+))*$)"/>
-   <button type="submit" class="create"> Create conferenc</button>
+<form name="createCategory-form" action="${pageContext.request.contextPath}/controller?command=create_category" method="post">
+    <label for="nameCategory-input" class="bolt">${boxNameCategory}</label>
+    <input id="nameCategory-input" type="text" name="name" value="" required pattern="(^[A-Za-z]+((\s)?((\'|\-|\.|\,)?([A-Za-z])+))*$)"/>
+   <button type="submit" class="create"> ${buttonCreate}</button>
     <br>
 </form>
 <br>
 <p><a name="update"></a></p>
-<p class="bolt">Update name category
+<p class="bolt">${textUpdate}
     <br>
-    Обновление названия категории.</p>
-<form name="updateNameCategory-form" action="/controller?command=change_name_category"
+    ${textAfterUpdate}</p>
+<form name="updateNameCategory-form" action="${pageContext.request.contextPath}/controller?command=change_name_category"
       method="post">
-    <label for="idUpdate-input" class="bolt">ID:</label>
+    <label for="idUpdate-input" class="bolt">${boxIdCategory}</label>
     <input id="idUpdate-input" type="text" name="id" value=""required pattern="^[0-9]+$"/>
     <br>
-    <label for="descriprionConferenc-input" class="bolt">New name:</label>
-    <input id="descriprionConferenc-input" type="text" name="name" value=""required pattern="^[A-Za-z]+((\s)?((\'|\-|\.|\,)?([A-Za-z])+))*$"/>
-    <button type="submit" class="create">Update name</button>
+    <label for="nameCategory-input" class="bolt">${boxNameCategory}</label>
+    <input id="nameCategory-input" type="text" name="name" value=""required pattern="^[A-Za-z]+((\s)?((\'|\-|\.|\,)?([A-Za-z])+))*$"/>
+    <button type="submit" class="create">${buttonUpdateName}</button>
     <br>
 </form>
 <br>
 <p><a name="remove"></a></p>
-<p class="bolt">Remove category
+<p class="bolt">${textRemove}
     <br>
-    Для удаления конференции Вам неоьбходимо ввести ее id.
+   ${textAfterRemove}
 </p>
-<form name="removeCategory-form" action="/controller?command=remove_category_by_id" method="post">
-    <label for="idForm-input" class="bolt">ID conferenc:</label>
+<form name="removeCategory-form" action="${pageContext.request.contextPath}/controller?command=remove_category_by_id" method="post">
+    <label for="idForm-input" class="bolt">${boxIdCategory}</label>
     <input id="idForm-input" type="text" name="id" value=""required pattern="^[0-9]+$"/>
-    <button type="submit" class="create">Remove</button>
+    <button type="submit" class="create">${buttonRemove}</button>
 </form>
 <br>
 <p><a name="searchById"></a></p>
-<p class="bolt">Find conferenc by ID
+<p class="bolt">${textFindId}
     <br>
-    Поиск конференции по id.
+    ${textAfterFindId}
 </p>
-<form name="findCategoryById-form" action="/controller?command=id_category" method="post">
-    <label for="idConferenc-input" class="bolt">ID conferenc:</label>
-    <input id="idConferenc-input" type="text" name="id" value=""required pattern="^[0-9]+$"/>
-    <button type="submit" class="create">Search</button>
+<form name="findCategoryById-form" action="${pageContext.request.contextPath}/controller?command=id_category" method="post">
+    <label for="idCategory-input" class="bolt">${boxIdCategory}</label>
+    <input id="idCategory-input" type="text" name="id" value=""required pattern="^[0-9]+$"/>
+    <button type="submit" class="create">${buttonSearch}</button>
 </form>
 
 <%@include file="/WEB-INF/jsp/common/footer.jsp" %>

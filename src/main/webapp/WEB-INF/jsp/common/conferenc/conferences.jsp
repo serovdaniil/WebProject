@@ -1,40 +1,46 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page import="com.epam.jwd.finalProject.model.Role" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<fmt:setLocale value="${cookie.lang.value}"/>
+<fmt:setBundle basename="l10n.page.main" var="loc"/>
+<fmt:message bundle="${loc}" key="label.title.conferences" var="pageTitle"/>
+<fmt:message bundle="${loc}" key="label.conferences.boxCategory" var="category"/>
+<fmt:message bundle="${loc}" key="label.conferences.boxDescription" var="description"/>
+<fmt:message bundle="${loc}" key="label.conferences.boxId" var="id"/>
+<fmt:message bundle="${loc}" key="label.conferences.boxName" var="name"/>
+<fmt:message bundle="${loc}" key="label.conferences.more" var="more"/>
+<fmt:message bundle="${loc}" key="label.conferences.textMain" var="textMain"/>
 <html>
 <head>
-    <title>Show conferences</title>
+    <title>${pageTitle}</title>
 </head>
 <body>
 <style>
     <%@include file="/WEB-INF/css/dataListStyle.css"%>
-
 </style>
 <%@include file="/WEB-INF/jsp/common/header.jsp" %>
-<h2>НАЙТИ ТЕКСТ! Инфа о наших конференциях, которые мы проводим.</h2>
+<h2>${textMain}</h2>
 <br>
-<a href="/controller?command=show_find_section_conferences_by_name">find SectionConferences by name</a>
+<a href="${pageContext.request.contextPath}/controller?command=show_find_section_conferences_by_name">find SectionConferences by name</a>
 <br>
 <ul class="list3a">
     <c:forEach var="conferenc" items="${requestScope.conferences}">
-        <form name="conferenc-form" action="/controller?command=find_section_conferences_in_conferenc_by_id"
+        <form name="conferenc-form" action="${pageContext.request.contextPath}/controller?command=find_section_conferences_in_conferenc_by_id"
               method="post">
-            <li><label for="id-input">Уникальный номер:</label>
+            <li><label for="id-input">${id}</label>
                 <input id="id-input" class="container" type="text" name="id" readonly
                        value="${conferenc.id}"/>
-                <label for="name-input">Название:</label>
+                <label for="name-input">${name}</label>
                 <input id="name-input" class="container" type="text" name="name" readonly value="${conferenc.name}"/>
-                <label for="category-input">Категория:</label>
+                <label for="category-input">${category}</label>
                 <input id="category-input" class="container" type="text" name="categoryName" readonly
                        value="${conferenc.category.name}"/>
                 <br>
-                <label for="descriprion-input">Описание:</label>
+                <label for="descriprion-input">${description}:</label>
                 <input id="descriprion-input" class="container" type="text" name="conferencName" readonly
                        value="${conferenc.description}"/>
                 <br>
-                <button type="submit" class="button">Подробнее о конференции</button>
-                    <%-- <span class="psw">Forgot <a href="#">password?</a></span>--%>
+                <button type="submit" class="button">${more}</button>
             </li>
         </form>
     </c:forEach>
