@@ -1,18 +1,20 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<fmt:setLocale value="${cookie.lang.value}"/>
+<fmt:setBundle basename="l10n.page.main" var="loc"/>
+<fmt:message bundle="${loc}" key="label.title.conferencesByName" var="pageTitle"/>
 <html>
 <head>
-    <title>Find conferences by name</title>
+    <title>${pageTitle}</title>
 </head>
 <body>
+<style>
+    <%@include file="/WEB-INF/css/tableStyle.css"%>
+    <%@include file="/WEB-INF/css/text.css"%>
+</style>
+<%@include file="/WEB-INF/jsp/common/header.jsp" %>
 <h3>Find Conferenc by name</h3>
-
-<form name="findConferencByName-form" action="/controller?command=find_conferences_by_name" method="post">
-    <label for="login-input">Name:</label>
-    <input id="login-input" type="text" name="name" value=""/>
-    <input type="submit" value="Log in"/>
-</form>
-
 <table>
     <tr>
         <th>ID</th>
@@ -27,9 +29,10 @@
             <td>${conferenc.name}</td>
 
             <td>${conferenc.description}</td>
-            <td>${conferenc.category}</td>
+            <td>${conferenc.category.name}</td>
         </tr>
     </c:forEach>
 </table>
+<%@include file="/WEB-INF/jsp/common/footer.jsp" %>
 </body>
 </html>

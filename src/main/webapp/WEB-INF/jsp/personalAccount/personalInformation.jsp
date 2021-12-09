@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="jwds" uri="jwd.epam.com" %>
 <fmt:setLocale value="${cookie.lang.value}"/>
 <fmt:setBundle basename="l10n.page.main" var="loc"/>
 <fmt:message bundle="${loc}" key="label.title.informationalAccount" var="pageTitle"/>
@@ -42,7 +43,7 @@
           action="${pageContext.request.contextPath}/controller?command=update_first_name_by_user" method="post">
         <label for="firstName-input">${firstName}:</label>
         <input id="firstName-input" type="text" name="firstName" min="1" max="45" required
-               pattern="^[A-zА-Я]*$|^[A-zА-я]+\s[A-zА-Я]*$"
+               pattern="(^[A-Z][a-z]{0,35}(-[A-Z])*[a-z]{0,22}$)|(^[А-Я][а-я]{0,22}(-[А-Я])*[а-я]{0,22}$)|(^[A-Z][a-z]{0,45}$)|(^[А-Я][а-я]{0,45}$)"
                value="${sessionScope.user.firstName}"/>
         <button type="submit" class="cancelbtn">${buttonFirstName}</button>
     </form>
@@ -51,27 +52,27 @@
           action="${pageContext.request.contextPath}/controller?command=update_last_name_by_user" method="post">
         <label for="lastName-input">${lastName}:</label>
         <input id="lastName-input" type="text" name="lastName" min="1" max="45" required
-               pattern="^[A-ZА-Яa-zа-я]+((\s)?((\'|\-|\.)?([A-ZА-Яa-zа-я])+))*$" value="${sessionScope.user.lastName}"/>
+               pattern="(^[A-Z][a-z]{0,35}(-[A-Z])*[a-z]{0,22}$)|(^[А-Я][а-я]{0,22}(-[А-Я])*[а-я]{0,22}$)|(^[A-Z][a-z]{0,45}$)|(^[А-Я][а-я]{0,45}$)" value="${sessionScope.user.lastName}"/>
         <button type="submit" class="cancelbtn">${buttonLastName}</button>
     </form>
     <form name="updatePassword-form"
           action="${pageContext.request.contextPath}/controller?command=update_password_by_user" method="post">
         <label for="password-input">${password}:</label>
-        <input id="password-input" type="password" name="password" required
+        <input id="password-input" type="password" min="2" max="15" name="password" required
                pattern="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,15})$" placeholder="${password}"/>
         <button type="submit" class="cancelbtn">${buttonPassword}</button>
     </form>
     <form name="updateEmail-form"
           action="${pageContext.request.contextPath}/controller?command=update_email_by_user" method="post">
         <label for="email-input">${email}:</label>
-        <input id="email-input" type="text" name="email"
+        <input id="email-input" type="text" name="email" min="2" max="45"
                requiredpattern="^([A-Za-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$"
                value="${sessionScope.user.email}"/>
         <button type="submit" class="cancelbtn">${buttonEmail}</button>
     </form>
 </div>
 <br>
-<h3> ${result}: ${requestScope.result}</h3>
+<h3>${requestScope.result}</h3>
 </br>
 <%@include file="/WEB-INF/jsp/common/footer.jsp" %>
 </body>

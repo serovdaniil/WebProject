@@ -19,8 +19,6 @@
 </style>
 <%@include file="/WEB-INF/jsp/common/header.jsp" %>
 <h2>${textMain}</h2>
-<a href="/controller?command=show_all_section_conferences_in_category">Show section conferences in category</a>
-<br>
 <ul class="list3a">
     <c:forEach var="category" items="${requestScope.categories}">
         <form name="conferenc-form" action="${pageContext.request.contextPath}/controller?command=all_conferences_in_category"

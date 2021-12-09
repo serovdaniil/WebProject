@@ -4,8 +4,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SectionConferencDataValidator {
-    private static final String REGEX_NAME = "^[A-zА-Я]*$|^[A-zА-я]+\\s[A-zА-Я]*$";
-    private static final String REGEX_DESCRIPTION = "^[A-zА-Я]*$|^[A-zА-я]+\\s[A-zА-Я]*$";
+    private static final String REGEX_NAME = "^.{2,400}$";
+    private static final String REGEX_DESCRIPTION = "^.{0,1000}$";
 
     private Pattern pattern;
     private Matcher matcher;
@@ -17,7 +17,7 @@ public class SectionConferencDataValidator {
         return true;
     }
     public boolean isNameValid(String name) {
-        if (name.equals("")) {
+        if (name.isEmpty()) {
             return false;
         }
         pattern = Pattern.compile(REGEX_NAME);
@@ -25,7 +25,7 @@ public class SectionConferencDataValidator {
         return matcher.matches();
     }
     public boolean isDescriptionValid(String description) {
-        if (description.equals("")) {
+        if (description.isEmpty()) {
             return false;
         }
         pattern = Pattern.compile(REGEX_DESCRIPTION);

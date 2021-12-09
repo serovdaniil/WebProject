@@ -9,7 +9,8 @@ import com.epam.jwd.finalProject.service.validator.QuestionDataValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Date;
+import java.util.Date;
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -57,12 +58,14 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public boolean create(String name, Date date, Long idUser) throws ValidationException { //todo:update date
+    public boolean create(String name, Long idUser) throws ValidationException {
         LOG.debug("Service: Creating question started.");
         if (!questionDataValidator.isIdValid(idUser)||!questionDataValidator.isNameValid(name)) {
             LOG.error("The entered data is not correct!");
             throw new ValidationException("The entered data is not correct!");
         }
+        LocalDate localDate = LocalDate.now();
+        Date date = java.sql.Date.valueOf(localDate);
         LOG.debug("Service: Creating questionc finished.");
         return questionDao.create(name, date, idUser);
     }
@@ -79,11 +82,6 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public boolean updateQuestion(Long id, String question) {
-        return false;
-    }
-
-    @Override
     public List<Question> findAccountIdByQuestion(Long id) throws ValidationException {
         LOG.debug("Service: Finding questions by id user started.");
         if (!questionDataValidator.isIdValid(id)) {
@@ -92,30 +90,5 @@ public class QuestionServiceImpl implements QuestionService {
         }
         LOG.debug("Service: Finding questions by id user finished.");
         return questionDao.findAccountIdByQuestion(id);
-    }
-
-    @Override
-    public List<Question> findByFirstName(String firstName) {
-        return null;
-    }
-
-    @Override
-    public List<Question> findByLastName(String lastName) {
-        return null;
-    }
-
-    @Override
-    public List<Question> findByEmail(String email) {
-        return null;
-    }
-
-    @Override
-    public List<Question> findByLogin(String login) {
-        return null;
-    }
-
-    @Override
-    public List<Question> findByAnswer(String answer) {
-        return null;
     }
 }

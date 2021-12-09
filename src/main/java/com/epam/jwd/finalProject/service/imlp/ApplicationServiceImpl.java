@@ -9,6 +9,8 @@ import com.epam.jwd.finalProject.service.validator.ApplicationDataValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +33,10 @@ public class ApplicationServiceImpl implements ApplicationService {
             LOG.error("The entered data is not correct!");
             throw new ValidationException("The entered data is not correct!");
         }
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu/MM/dd");
+        LocalDate localDate = LocalDate.now();
+        LOG.info(dtf.format(localDate));    // 2021/03/22
+
         LOG.debug("Service: Creating application finished.");
         return applicationDao.create(idUser, idSectionConferenc, idResultSection);
     }
@@ -60,26 +66,6 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public List<Application> findByFirstName(String firstName) {
-        return null;
-    }
-
-    @Override
-    public List<Application> findByLastName(String lastName) {
-        return null;
-    }
-
-    @Override
-    public List<Application> findByEmail(String email) {
-        return null;
-    }
-
-    @Override
-    public List<Application> findByLogin(String login) {
-        return null;
-    }
-
-    @Override
     public List<Application> findByStatusResult(String nameStatus) throws ValidationException {
         LOG.debug("Service: Find applications by id status result started.");
         final Long idStatus = resultSection(nameStatus);
@@ -89,36 +75,6 @@ public class ApplicationServiceImpl implements ApplicationService {
         }
         LOG.debug("Service: Find applications by id status result finished.");
         return applicationDao.findByStatusResult(idStatus);
-    }
-
-    @Override
-    public List<Application> findByConferencId(Long idConferenc) {
-        return null;
-    }
-
-    @Override
-    public List<Application> findByConferencName(String nameConferenc) {
-        return null;
-    }
-
-    @Override
-    public List<Application> findBySectionConferencId(Long idSectionConferenc) {
-        return null;
-    }
-
-    @Override
-    public List<Application> findBySectionConferencName(String nameSectionConferenc) {
-        return null;
-    }
-
-    @Override
-    public List<Application> findByCategoryId(Long idCategory) {
-        return null;
-    }
-
-    @Override
-    public List<Application> findByCategoryName(String nameCategory) {
-        return null;
     }
 
     @Override
@@ -156,24 +112,18 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     private Long resultSection(String resultSection) {
-        final Long idResult;
-        switch (resultSection) {
-            case "Activate": {
-                idResult = (long) 1;
-                break;
-            }
-            case "Waiting": {
-                idResult = (long) 2;
-                break;
-            }
-            case "Completed": {
-                idResult = (long) 3;
-                break;
-            }
-            default: {
-                idResult = (long) 4;
-                break;
-            }
+        Long idResult = null;
+        if ((resultSection.equals("Activate")) || (resultSection.equals("Создана")) || (resultSection.equals("Créé"))) {
+            idResult = (long) 1;
+        }
+        if ((resultSection.equals("Waiting")) || (resultSection.equals("В ожидании")) || (resultSection.equals("En attendant"))) {
+            idResult = (long) 2;
+        }
+        if ((resultSection.equals("Completed")) || (resultSection.equals("Завершена")) || (resultSection.equals("Achevé"))) {
+            idResult = (long) 3;
+        }
+        if ((resultSection.equals("Deleted")) || (resultSection.equals("Удалена")) || (resultSection.equals("Distant"))) {
+            idResult = (long) 4;
         }
         return idResult;
     }

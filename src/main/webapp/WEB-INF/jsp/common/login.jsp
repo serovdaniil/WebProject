@@ -22,12 +22,12 @@
 <form name="login-form" action="${pageContext.request.contextPath}/controller?command=login" method="post">
     <div class="container">
         <label for="login-input">${boxLogin}:</label>
-        <input id="login-input" type="email" min="1" max="40" required
+        <input id="login-input" type="email" min="1" max="45" required
                pattern="^([A-Za-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$" name="login"
                value=""/>
         <br>
         <label for="password-input">${boxPassword}:</label>
-        <input id="password-input" type="password" required pattern="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,15})$"
+        <input id="password-input" type="password" min="2" max="15" required pattern="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,15})$"
                name="password" value=""/>
         <br/>
         <c:if test="${not empty requestScope.errorLoginPassMessage}">

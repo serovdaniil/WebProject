@@ -4,8 +4,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class UserDataValidator {
-    private static final String REGEX_FIRST_NAME = "^[A-zА-Я]*$|^[A-zА-я]+\\s[A-zА-Я]*$";
-    private static final String REGEX_LAST_NAME = "^[A-ZА-Яa-zа-я]+((\\s)?((\\'|\\-|\\.)?([A-ZА-Яa-zа-я])+))*$";
+    private static final String REGEX_FIRST_NAME = "(^[A-Z][a-z]{0,35}(-[A-Z])*[a-z]{0,22}$)|(^[А-Я][а-я]{0,22}(-[А-Я])*[а-я]{0,22}$)|(^[A-Z][a-z]{0,45}$)|(^[А-Я][а-я]{0,45}$)";
+    private static final String REGEX_LAST_NAME = "(^[A-Z][a-z]{0,35}(-[A-Z])*[a-z]{0,22}$)|(^[А-Я][а-я]{0,22}(-[А-Я])*[а-я]{0,22}$)|(^[A-Z][a-z]{0,45}$)|(^[А-Я][а-я]{0,45}$)";
     private static final String REGEX_EMAIL = "^([A-Za-z0-9_-]+\\.)*[a-z0-9_-]+@[a-z0-9_-]+(\\.[a-z0-9_-]+)*\\.[a-z]{2,6}$";
     private static final String REGEX_LOGIN = "^([A-Za-z0-9_-]+\\.)*[a-z0-9_-]+@[a-z0-9_-]+(\\.[a-z0-9_-]+)*\\.[a-z]{2,6}$";
     private static final String REGEX_PASSWORD = "(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,15})$";
@@ -14,7 +14,7 @@ public class UserDataValidator {
     private Matcher matcher;
 
     public boolean isFirstNameValid(String firstName) {
-        if (firstName.equals("")) {
+        if (firstName.isEmpty()) {
             return false;
         }
         pattern = Pattern.compile(REGEX_FIRST_NAME, Pattern.UNICODE_CHARACTER_CLASS);
@@ -23,7 +23,7 @@ public class UserDataValidator {
     }
 
     public boolean isLastNameValid(String lastName) {
-        if (lastName.equals("")) {
+        if (lastName.isEmpty()) {
             return false;
         }
         pattern = Pattern.compile(REGEX_LAST_NAME);
@@ -32,7 +32,7 @@ public class UserDataValidator {
     }
 
     public boolean isEmailValid(String email) {
-        if (email.equals("")) {
+        if (email.isEmpty()) {
             return false;
         }
         pattern = Pattern.compile(REGEX_EMAIL);
@@ -41,7 +41,7 @@ public class UserDataValidator {
     }
 
     public boolean isPasswordValid(String password) {
-        if (password.equals("")) {
+        if (password.isEmpty()) {
             return false;
         }
         pattern = Pattern.compile(REGEX_PASSWORD);
@@ -50,7 +50,7 @@ public class UserDataValidator {
     }
 
     public boolean isLoginValid(String login) {
-        if (login.equals("")) {
+        if (login.isEmpty()) {
             return false;
         }
         pattern = Pattern.compile(REGEX_LOGIN);

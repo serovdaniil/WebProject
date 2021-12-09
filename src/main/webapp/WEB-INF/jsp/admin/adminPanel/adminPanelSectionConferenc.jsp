@@ -56,10 +56,10 @@
 </p>
 <form name="createSectionConferenc-form" action="${pageContext.request.contextPath}/controller?command=create_section_conferenc" method="post">
     <label for="nameSectionConferenc-input" class="bolt">${boxNameSection}</label>
-    <input id="nameSectionConferenc-input" type="text" name="name" value="" required pattern="(^[A-Za-z]+((\s)?((\'|\-|\.|\,)?([A-Za-z])+))*$)"/>
+    <input id="nameSectionConferenc-input" type="text" name="name" min="2" max="400" value="" required pattern="^.{0,1000}$"/>
     <br>
     <label for="description-input" class="bolt">${boxDescription}</label>
-    <input id="description-input" type="text" name="description" value="" required pattern="^[A-Za-z]+((\s)?((\'|\-|\.|\,)?([A-Za-z])+))*$"/>
+    <input id="description-input" type="text" name="description" min="2" max="1000" value="" required pattern="^.{0,1000}$"/>
     <br>
     <label for="idCategory-input" class="bolt">${boxIdConferenc}</label>
     <input id="idCategory-input" type="text" name="idConferenc" required pattern="^[0-9]+$" value=""/>
@@ -77,7 +77,7 @@
     <input id="idUpdateSection-input" type="text" name="id" value=""required pattern="^[0-9]+$"/>
     <br>
     <label for="descriprionSectionConferenc-input" class="bolt">${boxDescription}</label>
-    <input id="descriprionSectionConferenc-input" type="text" name="description" value=""required pattern="^[A-Za-z]+((\s)?((\'|\-|\.|\,)?([A-Za-z])+))*$"/>
+    <input id="descriprionSectionConferenc-input" type="text" name="description" min="2" max="1000" value=""required pattern="^.{0,1000}$"/>
     <button type="submit" class="create">${buttonUpdateSectionConferenc}</button>
     <br>
 </form>
@@ -89,7 +89,7 @@
 </p>
 <form name="removeSectionConferenc-form" action="${pageContext.request.contextPath}/controller?command=remove_section_conferenc_by_id" method="post">
     <label for="idSection-input" class="bolt">${boxIdSectionConferenc}</label>
-    <input id="idSection-input" type="text" name="id" value=""required pattern="^[0-9]+$"/>
+    <input id="idSection-input" type="text" name="id" value="" required pattern="^[0-9]+$"/>
     <button type="submit" class="create">${buttonRemoveSectionConferenc}</button>
 </form>
 
@@ -111,7 +111,7 @@
 </p>
 <form name="findSectionConferencByName-form" action="${pageContext.request.contextPath}/controller?command=find_section_conferences_by_name" method="post">
     <label for="searchNameSectionConferenc-input" class="bolt">${boxIdSectionConferenc}</label>
-    <input id="searchNameSectionConferenc-input" type="text" name="name" value=""required pattern="^[A-Za-z]+((\s)?((\'|\-|\.|\,)?([A-Za-z])+))*$"/>
+    <input id="searchNameSectionConferenc-input" type="text" name="name" min="2" max="400" value=""required pattern="^.{2,1000}$"/>
     <button type="submit" class="create">${buttonFindSectionConferenc}</button>
 </form>
 <%@include file="/WEB-INF/jsp/common/footer.jsp" %>

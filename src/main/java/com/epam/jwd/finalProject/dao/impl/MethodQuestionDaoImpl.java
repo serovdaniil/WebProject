@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,14 +26,14 @@ public class MethodQuestionDaoImpl implements QuestionDao {
     private static final Logger LOG = LogManager.getLogger(MethodQuestionDaoImpl.class);
 
     @Override
-    public boolean create(String name,  Date date, Long idUser) {
+    public boolean create(String name, Date date, Long idUser) {
         boolean result = false;
         LOG.info("Start create and add new question");
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.CREATE_QUESTION)) {
             statement.setString(1, name);
             statement.setString(2, "");
-            statement.setDate(3, date);
+            statement.setDate(3, (java.sql.Date) date);
             statement.setLong(4, idUser);
             int rowCount = statement.executeUpdate();
             if (rowCount != 0) {

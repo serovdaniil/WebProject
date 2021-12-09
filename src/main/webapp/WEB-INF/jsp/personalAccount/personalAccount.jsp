@@ -5,6 +5,7 @@
 <fmt:setLocale value="${cookie.lang.value}"/>
 <fmt:setBundle basename="l10n.page.main" var="loc"/>
 <fmt:message bundle="${loc}" key="label.title.personalAccount" var="pageTitle"/>
+<fmt:message bundle="${loc}" key="label.header.welcome" var="welcome"/>
 <fmt:message bundle="${loc}" key="label.personalAccount.blockUsers.title" var="blockUsersTitle"/>
 <fmt:message bundle="${loc}" key="label.personalAccount.blockUsers.button" var="blockUsersButton"/>
 <fmt:message bundle="${loc}" key="label.personalAccount.blockUsers.text" var="blockUsersText"/>
@@ -39,6 +40,7 @@
     <%@include file="/WEB-INF/css/personalAccountStyle.css"%>
 </style>
 <%@include file="/WEB-INF/jsp/common/header.jsp" %>
+<jwds:welcomeUser text="${welcome}"/>
 <div id="block">
     <c:if test="${not empty sessionScope.user && sessionScope.user.role eq Role.ADMIN}">
         <div id="container-right">

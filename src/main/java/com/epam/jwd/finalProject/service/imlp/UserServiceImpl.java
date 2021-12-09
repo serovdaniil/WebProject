@@ -151,7 +151,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> updateRole(Long idAccount, String nameRole) throws ValidationException {
         LOG.debug("Service: Updating role for user started.");
-       final Long idRole=role(nameRole);
+        final Long idRole = role(nameRole);
         if (!userDataValidator.isIdValid(idAccount) || !userDataValidator.isIdValid(idRole)) {
             LOG.error("The entered data is not correct!");
             throw new ValidationException("The entered data is not correct!");
@@ -159,21 +159,14 @@ public class UserServiceImpl implements UserService {
         LOG.debug("Service: Updating role for user finished.");
         return userDao.updateRole(idAccount, idRole);
     }
+
     private Long role(String nameRole) {
-        final Long idResult;
-        switch (nameRole) {
-            case "USER": {
-                idResult = (long) 1;
-                break;
-            }
-            case "ADMIN": {
-                idResult = (long) 2;
-                break;
-            }
-            default: {
-                idResult = (long) 3;
-                break;
-            }
+        Long idResult = null;
+        if ((nameRole.equals("User")) || (nameRole.equals("Юзер")) || (nameRole.equals("Uzer"))) {
+            idResult = (long) 1;
+        }
+        if ((nameRole.equals("Admin")) || (nameRole.equals("Админ")) || (nameRole.equals("Admin"))) {
+            idResult = (long) 2;
         }
         return idResult;
     }

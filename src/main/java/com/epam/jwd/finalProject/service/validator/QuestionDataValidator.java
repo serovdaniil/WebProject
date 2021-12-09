@@ -4,9 +4,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class QuestionDataValidator {
-    private static final String REGEX_NAME = "^[A-ZА-Яa-zа-я]+((\\s)?((\\'|\\-|\\.|\\,)?([A-ZА-Яa-zа-я])+))*$";
-    private static final String REGEX_ANSWER = "^[A-ZА-Яa-zа-я]+((\\s)?((\\'|\\-|\\.|\\,)?([A-ZА-Яa-zа-я])+))*$";
-
+    private static final String REGEX_NAME = "^.{2,1000}$";
+    private static final String REGEX_ANSWER = "^.{0,1000}$";
     private Pattern pattern;
     private Matcher matcher;
 
@@ -17,7 +16,7 @@ public class QuestionDataValidator {
         return true;
     }
     public boolean isNameValid(String name) {
-        if (name.equals("")) {
+        if (name.isEmpty()) {
             return false;
         }
         pattern = Pattern.compile(REGEX_NAME);
@@ -25,7 +24,7 @@ public class QuestionDataValidator {
         return matcher.matches();
     }
     public boolean isAnswerValid(String answer) {
-        if (answer.equals("")) {
+        if (answer.isEmpty()) {
             return false;
         }
         pattern = Pattern.compile(REGEX_ANSWER);

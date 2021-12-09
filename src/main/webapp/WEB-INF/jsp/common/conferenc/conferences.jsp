@@ -20,9 +20,6 @@
 </style>
 <%@include file="/WEB-INF/jsp/common/header.jsp" %>
 <h2>${textMain}</h2>
-<br>
-<a href="${pageContext.request.contextPath}/controller?command=show_find_section_conferences_by_name">find SectionConferences by name</a>
-<br>
 <ul class="list3a">
     <c:forEach var="conferenc" items="${requestScope.conferences}">
         <form name="conferenc-form" action="${pageContext.request.contextPath}/controller?command=find_section_conferences_in_conferenc_by_id"

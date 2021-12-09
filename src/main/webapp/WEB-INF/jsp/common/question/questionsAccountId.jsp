@@ -67,8 +67,8 @@
 <form name="createQuestion-form" action="${pageContext.request.contextPath}/controller?command=create_question"
       method="post">
     <label for="nameNewQuestionLogin-input">${newQuestion}</label>
-    <input id="nameNewQuestionLogin-input" type="text" required name="name"
-           pattern="^[A-ZА-Яa-zа-я]+((\s)?((\'|\-|\.|\,)?([A-ZА-Яa-zа-я])?[^0-9]+))*$" value=""/>
+    <input id="nameNewQuestionLogin-input" type="text" required min="2" max="1000" name="name"
+           pattern="^.{2,1000}$" value=""/>
     <button type="submit" class="create">${create}</button>
 </form>
 <%@include file="/WEB-INF/jsp/common/footer.jsp" %>

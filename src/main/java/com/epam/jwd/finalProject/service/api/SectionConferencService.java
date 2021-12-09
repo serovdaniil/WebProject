@@ -1,6 +1,5 @@
 package com.epam.jwd.finalProject.service.api;
 
-import com.epam.jwd.finalProject.model.Conferenc;
 import com.epam.jwd.finalProject.model.SectionConferenc;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
 

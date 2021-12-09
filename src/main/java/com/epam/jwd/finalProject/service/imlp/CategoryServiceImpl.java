@@ -18,7 +18,7 @@ import java.util.Optional;
 public class CategoryServiceImpl implements CategoryService {
     private final MethodCategoryDaoImpl categoryDao;
     private static final Logger LOG = LogManager.getLogger(CategoryServiceImpl.class);
-    private final CategoryDataValidator categoryDataValidator = new CategoryDataValidator().getInstance();
+    private final CategoryDataValidator categoryDataValidator=new CategoryDataValidator().getInstance();
 
     public CategoryServiceImpl(MethodCategoryDaoImpl categoryDao) {
         this.categoryDao = categoryDao.getInstance();
@@ -58,11 +58,6 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<Conferenc> findConferencInNameCategory(String name) {
-        return null;
-    }
-
-    @Override
     public List<SectionConferenc> findSectionConferencInIdCategory(Long id) throws ValidationException {
         LOG.debug("Service: Search for categories in section conferences started.");
         if (!categoryDataValidator.isIdValid(id)) {
@@ -71,11 +66,6 @@ public class CategoryServiceImpl implements CategoryService {
         }
         LOG.debug("Service: Search for categories in section conferences finished.");
         return categoryDao.findSectionConferencInIdCategory(id);
-    }
-
-    @Override
-    public List<SectionConferenc> findSectionConferencInNameCategory(String Name) {
-        return null;
     }
 
     @Override

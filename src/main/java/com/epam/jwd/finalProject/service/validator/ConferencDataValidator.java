@@ -1,15 +1,11 @@
 package com.epam.jwd.finalProject.service.validator;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ConferencDataValidator {
-    private static final String REGEX_NAME = "^[A-zА-Я]*$|^[A-zА-я]+\\s[A-zА-Я]*$";
-    private static final String REGEX_DESCRIPTION = "^[A-zА-Я]*$|^[A-zА-я]+\\s[A-zА-Я]*$";
-    private static final Logger LOG = LogManager.getLogger(ConferencDataValidator.class);
+    private static final String REGEX_NAME = "^.{2,400}$";
+    private static final String REGEX_DESCRIPTION = "^.{0,1000}$";
 
     private Pattern pattern;
     private Matcher matcher;
@@ -21,7 +17,7 @@ public class ConferencDataValidator {
         return true;
     }
     public boolean isNameValid(String name) {
-        if (name.equals("")) {
+        if (name.isEmpty()) {
             return false;
         }
         pattern = Pattern.compile(REGEX_NAME);
@@ -29,7 +25,7 @@ public class ConferencDataValidator {
         return matcher.matches();
     }
     public boolean isDescriptionValid(String description) {
-        if (description.equals("")) {
+        if (description.isEmpty()) {
             return false;
         }
         pattern = Pattern.compile(REGEX_DESCRIPTION);

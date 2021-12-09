@@ -28,8 +28,7 @@
     <c:forEach var="sectionConferenc" items="${requestScope.conferences}">
         <form name="conferenc-form" action="${pageContext.request.contextPath}/controller?command=create_application"
               method="post">
-            <li><label for="id-input">${id
-            }</label>
+            <li><label for="id-input">${id}</label>
                 <input id="id-input" class="container" type="text" name="id" readonly
                        value="${sectionConferenc.id}"/>
                 <label for="name-input">${name}</label>
@@ -47,7 +46,8 @@
                     <button type="submit" class="button">${add}</button>
                 </c:if>
                 <c:if test="${empty sessionScope.user }">
-                    <a class="loginbutton" href="${pageContext.request.contextPath}/controller?command=show_login">${login}</a>
+                    <a class="loginbutton"
+                       href="${pageContext.request.contextPath}/controller?command=show_login">${login}</a>
                 </c:if>
             </
             >

@@ -58,6 +58,9 @@ public class SectionConferencServiceImpl implements SectionConferencService {
     @Override
     public boolean create(String name, String description, Long idConferenc) throws ValidationException {
         LOG.debug("Service: Creating section conferenc started.");
+        LOG.info(name);
+        LOG.info(description);
+        LOG.info(idConferenc);
         if (!sectionConferencDataValidator.isIdValid(idConferenc) || !sectionConferencDataValidator.isNameValid(name) ||
                 !sectionConferencDataValidator.isDescriptionValid(description)) {
             LOG.error("The entered data is not correct!");

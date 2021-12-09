@@ -58,10 +58,10 @@
 </p>
 <form name="createConferenc-form" action="${pageContext.request.contextPath}/controller?command=create_conferenc" method="post">
     <label for="nameConferenc-input" class="bolt">${boxNameConferenc}</label>
-    <input id="nameConferenc-input" type="text" name="name" value="" required pattern="(^[A-Za-z]+((\s)?((\'|\-|\.|\,)?([A-Za-z])+))*$)"/>
+    <input id="nameConferenc-input" type="text" name="name" required min="2" max="400" pattern="^.{2,400}$"value="" />
     <br>
     <label for="description-input" class="bolt">${boxDescriptionConferenc}</label>
-    <input id="description-input" type="text" name="description" required pattern="^[A-Za-z]+((\s)?((\'|\-|\.|\,)?([A-Za-z])+))*$"/>
+    <input id="description-input" type="text" name="description" required max="1000" pattern="^.{0,1000}$"value="" />
     <br>
     <label for="idCategory-input" class="bolt">${boxIdCategory}</label>
     <input id="idCategory-input" type="text" name="idCategory" required pattern="^[0-9]+$" value=""/>
@@ -79,8 +79,8 @@
     <input id="idUpdate-input" type="text" name="id" value=""required pattern="^[0-9]+$"/>
     <br>
     <label for="descriprionConferenc-input" class="bolt">${boxDescriptionConferenc}</label>
-    <input id="descriprionConferenc-input" type="text" name="description" value=""required pattern="^[A-Za-z]+((\s)?((\'|\-|\.|\,)?([A-Za-z])+))*$"/>
-    <button type="submit" class="create">${buttonUpdate}
+    <input id="descriprionConferenc-input" type="text" name="description" value="" max="255" required pattern="^[A-ZА-Яa-zа-я]+((\s)?((\'|\-|\.|\,)?([A-ZА-Яa-zа-я])+))*$"/>
+    <button type="submit" class="create">${buttonUpdate}</button>
 </form>
 <br>
 <p><a name="remove"></a></p>
@@ -113,7 +113,7 @@
 </p>
 <form name="findConferencByName-form" action="${pageContext.request.contextPath}/controller?command=find_conferences_by_name" method="post">
     <label for="searchNameConferenc-input" class="bolt">${boxNameConferenc}</label>
-    <input id="searchNameConferenc-input" type="text" name="name" value=""required pattern="^[A-Za-z]+((\s)?((\'|\-|\.|\,)?([A-Za-z])+))*$"/>
+    <input id="searchNameConferenc-input" type="text" name="name" min="2" max="255" value=""required pattern="^[A-ZА-Яa-zа-я]+((\s)?((\'|\-|\.|\,)?([A-ZА-Яa-zа-я])+))*$"/>
     <button type="submit" class="create">${buttonSearch}</button>
 </form>
 

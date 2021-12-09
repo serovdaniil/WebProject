@@ -13,13 +13,20 @@
 <body>
 <style>
     <%@include file="/WEB-INF/css/loginStyle.css"%>
+    <%@include file="/WEB-INF/css/dataListStyle.css"%>
 </style>
 <%@include file="/WEB-INF/jsp/common/header.jsp" %>
 <h3>${title}</h3>
 <form name="createQuestion-form" action="${pageContext.request.contextPath}/controller?command=create_question" method="post">
     <label for="name-input">${boxQuestion}:</label>
-    <input id="name-input" type="text" name="name" pattern="^[A-ZА-Яa-zа-я]+((\s)?((\'|\-|\.|\,)?([A-ZА-Яa-zа-я])+))*$" value=""/>
+    <input id="name-input" type="text" name="name" min="2" max="1000" pattern="^.{2,1000}$" value=""/>
+    <c:if test="${not empty sessionScope.user}">
     <button type="submit">${button}</button>
+    </c:if>
+    <c:if test="${empty sessionScope.user }">
+        <a class="loginbutton"
+           href="${pageContext.request.contextPath}/controller?command=show_login">${login}</a>
+    </c:if>
 </form>
 <%@include file="/WEB-INF/jsp/common/footer.jsp" %>
 </body>

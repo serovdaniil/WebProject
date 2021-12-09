@@ -20,8 +20,8 @@ public class FindConferencByNameCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
     private static final String FIND_PARAM_NAME = "name";
-    private static final String CONFERENCES_ATTRIBUTE_NAME = "conferenc";
-    private static final String FIND_CONFERENCES_BY_NAME_PAGE = "page.adminPanelSectionConferenc";
+    private static final String CONFERENCES_ATTRIBUTE_NAME = "conferences";
+    private static final String FIND_CONFERENCES_BY_NAME_PAGE = "page.findConferencesByName";
     private static final Logger LOG = LogManager.getLogger(RemoveConferencByIdCommand.class);
 
     FindConferencByNameCommand(ConferencService service, RequestFactory requestFactory, PropertyContext propertyContext) {

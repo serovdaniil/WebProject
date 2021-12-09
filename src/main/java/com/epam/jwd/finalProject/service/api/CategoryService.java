@@ -1,13 +1,11 @@
 package com.epam.jwd.finalProject.service.api;
 
-import com.epam.jwd.finalProject.dao.exception.EntityExtractionFailedException;
 import com.epam.jwd.finalProject.model.Category;
 import com.epam.jwd.finalProject.model.Conferenc;
 import com.epam.jwd.finalProject.model.SectionConferenc;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface CategoryService extends EntityService<Category> {
     boolean create(String name) throws ValidationException;
@@ -16,9 +14,6 @@ public interface CategoryService extends EntityService<Category> {
 
     List<Conferenc> findConferencInIdCategory(Long id) throws ValidationException;
 
-    List<Conferenc> findConferencInNameCategory(String name);
-
     List<SectionConferenc> findSectionConferencInIdCategory(Long id) throws ValidationException;
 
-    List<SectionConferenc> findSectionConferencInNameCategory(String Name);
 }

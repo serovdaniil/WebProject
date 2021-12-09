@@ -39,11 +39,10 @@ public class CreateQuestionCommand implements Command {
         final Optional<User> userOptional = request.retrieveFromSession(USER_SESSION_ATTRIBUTE_NAME);
         final Long idAccount = userOptional.get().getId();
         final String name = request.getParameter(FIND_PARAM_NAME);
-        final Date date=new Date(981684);
         final boolean result;
         final List<Question> questionList;
         try {
-            result = service.create(name,date,idAccount);
+            result = service.create(name,idAccount);
             questionList = service.findAccountIdByQuestion(idAccount);
             request.addAttributeToJsp(QUESTION_ATTRIBUTE_NAME, questionList);
             request.addAttributeToJsp(QUESTION_ATTRIBUTE_NAME_RESULT, result);

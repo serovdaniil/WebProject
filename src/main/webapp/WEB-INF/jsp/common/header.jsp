@@ -1,10 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="jwds" uri="jwd.epam.com" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <fmt:setLocale value="${cookie.lang.value}"/>
 <fmt:setBundle basename="l10n.page.main" var="loc"/>
 <fmt:message bundle="${loc}" key="label.header.home" var="main"/>
+<fmt:message bundle="${loc}" key="label.header.welcome" var="welcome"/>
 <fmt:message bundle="${loc}" key="label.header.conferences" var="conferences"/>
 <fmt:message bundle="${loc}" key="label.header.about" var="about"/>
 <fmt:message bundle="${loc}" key="label.header.categories" var="category"/>
@@ -20,7 +21,6 @@
 <style>
     <%@include file="/WEB-INF/css/headerStyle.css"%>
 </style>
-<jwds:welcomeUser text="adv"/>
 <%--<ul id="menuRight">
     <li><c:choose>
         <c:when test="${not empty sessionScope.user}">
@@ -44,11 +44,19 @@
 </ul>--%>
 <ul id="menu">
     <li><a href="${pageContext.request.contextPath}/controller?command=">${main}</a></li>
-    <li><a href="${pageContext.request.contextPath}/show_about_page">${about}</a></li>
+    <li><a href="${pageContext.request.contextPath}/controller?command=show_about_page">${about}</a></li>
     <li><a href="${pageContext.request.contextPath}/controller?command=show_conferences">${conferences}</a></li>
     <li><a href="${pageContext.request.contextPath}/controller?command=show_categories">${category}</a></li>
     <li><a href="${pageContext.request.contextPath}/controller?command=show_contact">${contacts}</a></li>
-   <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>   <li></li>
+    <li></li>   <li></li>
+    <li></li>   <li></li>
+    <li></li>
     <li><c:choose>
         <c:when test="${not empty sessionScope.user}">
             <a class="personal" href="${pageContext.request.contextPath}/controller?command=logout">${logout}</a>

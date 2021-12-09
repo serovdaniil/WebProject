@@ -4,7 +4,6 @@ import com.epam.jwd.finalProject.model.Conferenc;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ConferencService extends EntityService<Conferenc> {
     boolean create(String name, String description,Long idCategory) throws ValidationException;

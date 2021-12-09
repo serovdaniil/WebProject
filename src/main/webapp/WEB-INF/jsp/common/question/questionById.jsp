@@ -37,8 +37,8 @@
     <input id="date-input" class="container" type="text" name="date_question" readonly
            value="${requestScope.question.date}"/>
     <label for="answer-input">${newAnswer}</label>
-    <input id="answer-input" class="container" type="text" name="answer" required
-           pattern="^[A-ZА-Яa-zа-я]+((\s)?((\'|\-|\.|\,)?([A-ZА-Яa-zа-я])+))*$"
+    <input id="answer-input" class="container" type="text" name="answer" min="2" max="1000" required
+           pattern="^.{0,1000}$"
            value=""/>
     <button type="submit" class="button">${addNewAnswer}</button>
 </form>

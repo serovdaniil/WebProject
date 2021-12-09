@@ -1,6 +1,5 @@
 package com.epam.jwd.finalProject.command.common;
 
-import com.epam.jwd.finalProject.command.common.user.UpdatePasswordCommand;
 import com.epam.jwd.finalProject.command.factory.Command;
 import com.epam.jwd.finalProject.command.factory.CommandRequest;
 import com.epam.jwd.finalProject.command.factory.CommandResponse;

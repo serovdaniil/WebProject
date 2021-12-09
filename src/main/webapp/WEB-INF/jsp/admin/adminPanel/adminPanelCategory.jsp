@@ -11,7 +11,7 @@
 <fmt:message bundle="${loc}" key="label.panelCategory.button.updateName" var="buttonUpdateName"/>
 <fmt:message bundle="${loc}" key="label.panelCategory.menu.create" var="menuCreate"/>
 <fmt:message bundle="${loc}" key="label.panelCategory.menu.finfById" var="menuFinfById"/>
-<fmt:message bundle="${loc}" key="label.panelCategory.menu.readCategories" var="menuReadCategories"/>
+<fmt:message bundle="${loc}" key="label.panelCategory.menu.readcategories" var="menuReadCategories"/>
 <fmt:message bundle="${loc}" key="label.panelCategory.menu.remove" var="menuRemove"/>
 <fmt:message bundle="${loc}" key="label.panelCategory.menu.update" var="menuUpdate"/>
 <fmt:message bundle="${loc}" key="label.panelCategory.text" var="text"/>
@@ -49,8 +49,8 @@
    ${textAfterCreate}
 </p>
 <form name="createCategory-form" action="${pageContext.request.contextPath}/controller?command=create_category" method="post">
-    <label for="nameCategory-input" class="bolt">${boxNameCategory}</label>
-    <input id="nameCategory-input" type="text" name="name" value="" required pattern="(^[A-Za-z]+((\s)?((\'|\-|\.|\,)?([A-Za-z])+))*$)"/>
+    <label for="name-input" class="bolt">${boxNameCategory}</label>
+    <input id="name-input" type="text" name="name" min="2" max="50" value="" required pattern="^.{2,50}$"/>
    <button type="submit" class="create"> ${buttonCreate}</button>
     <br>
 </form>
@@ -65,7 +65,7 @@
     <input id="idUpdate-input" type="text" name="id" value=""required pattern="^[0-9]+$"/>
     <br>
     <label for="nameCategory-input" class="bolt">${boxNameCategory}</label>
-    <input id="nameCategory-input" type="text" name="name" value=""required pattern="^[A-Za-z]+((\s)?((\'|\-|\.|\,)?([A-Za-z])+))*$"/>
+    <input id="nameCategory-input" type="text" name="name" min="2" max="45" value=""required pattern="^[A-ZА-Яa-zа-я]+((\s)?((\'|\-|\.|\,)?([A-ZА-Яa-zа-я])+))*$"/>
     <button type="submit" class="create">${buttonUpdateName}</button>
     <br>
 </form>

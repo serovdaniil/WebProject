@@ -47,9 +47,6 @@ public class UpdateRoleCommand implements Command {
             request.addAttributeToJsp(RESULT_ATTRIBUTE_NAME, OPERATION_WAS_UNSUCCSESFUL);
             return requestFactory.createForwardResponse(propertyContext.get(SHOW_USERS_PAGE));
         }else{
-            request.clearSession();
-            request.createSession();
-            request.addToSession(USER_SESSION_ATTRIBUTE_NAME, user.get());
             return requestFactory.createRedirectResponse(URL_UPDATE_ROLE_USER_PAGE);
         }
     }
