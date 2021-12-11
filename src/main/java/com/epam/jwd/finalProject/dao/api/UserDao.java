@@ -1,7 +1,6 @@
 package com.epam.jwd.finalProject.dao.api;
 
 import com.epam.jwd.finalProject.dao.exception.EntityExtractionFailedException;
-import com.epam.jwd.finalProject.dao.impl.MethodApplicationDaoImpl;
 import com.epam.jwd.finalProject.dao.impl.MethodUserDaoImpl;
 import com.epam.jwd.finalProject.model.User;
 

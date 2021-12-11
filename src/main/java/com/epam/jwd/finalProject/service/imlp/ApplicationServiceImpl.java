@@ -78,7 +78,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public List findAll() {
+    public List<Application>  findAll() {
         LOG.debug("Service: Reading all applications started.");
         try {
             return applicationDao.readAll();
@@ -90,7 +90,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public Optional findId(Long id) throws ValidationException {
+    public Optional<Application>  findId(Long id) throws ValidationException {
         LOG.debug("Service: Finding application by id started.");
         if (!applicationDataValidator.isIdValid(id)) {
             LOG.error("The entered data is not correct!");
