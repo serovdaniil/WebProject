@@ -50,6 +50,7 @@
         </li>
     </lu>
     <br>
+    <br>
     <a class="button"
        href="${pageContext.request.contextPath}/controller?command=show_conferences">${buttonConferenc}</a>
 </div>

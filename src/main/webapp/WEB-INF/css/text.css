@@ -62,7 +62,8 @@ a.button {
     padding: 10px 18px;
     background-color: #4CAF50;
     display:block;
-    margin:auto;
+    margin-top:20px;
+    margin-left: 40%;
     text-align: center;
 }
 input[type=text], input[type=password] {
