@@ -2,12 +2,16 @@ package com.epam.jwd.finalProject.command.factory;
 
 import com.epam.jwd.finalProject.model.User;
 
-import javax.servlet.http.Cookie;
 import java.util.Optional;
 
+/**
+ * The interface request
+ *
+ * @author Daniil Serov
+ */
 public interface CommandRequest {
 
-    void addAttributeToJsp(String name, Object attribute); //todo: make adding to jsp better
+    void addAttributeToJsp(String name, Object attribute);
 
     String getParameter(String name);
 

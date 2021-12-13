@@ -12,15 +12,41 @@ import org.apache.logging.log4j.Logger;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
+/**
+ * @author Daniil Serov
+ * @see MethodSectionConferencDaoImpl
+ */
 public class SectionConferencServiceImpl implements SectionConferencService {
+    /**
+     * Logger for this service
+     */
     private static final Logger LOG = LogManager.getLogger(SectionConferencServiceImpl.class);
+    /**
+     * Dao for this service
+     */
     private final MethodSectionConferencDaoImpl sectionConferencDao;
+    /**
+     * Validator for this service
+     */
     private final SectionConferencDataValidator sectionConferencDataValidator = new SectionConferencDataValidator().getInstance();
+
+    /**
+     * Constructor - creating a new object
+     *
+     * @param sectionConferencDao dao for this service
+     */
     public SectionConferencServiceImpl(MethodSectionConferencDaoImpl sectionConferencDao) {
         this.sectionConferencDao = sectionConferencDao.getInstance();
     }
 
+    /**
+     * Change status section conferenc by id
+     *
+     * @param idSectionConferenc id section conferenc
+     * @param nameStatus  name status
+     * @return boolean
+     * @throws ValidationException if there are validation problems
+     */
     @Override
     public boolean changeStatus(Long idSectionConferenc, String nameStatus) throws ValidationException {
         LOG.debug("Service: Change status conferenc  started.");
@@ -34,6 +60,13 @@ public class SectionConferencServiceImpl implements SectionConferencService {
         return sectionConferencDao.changeStatus(idSectionConferenc,idStatus);
     }
 
+    /**
+     * Change status auto after update status conferenc
+     *
+     * @param idConferenc id conferenc
+     * @return boolean
+     * @throws ValidationException if there are validation problems
+     */
     @Override
     public boolean changeStatusAfterUpdateConferenc(Long idConferenc) throws ValidationException {
         LOG.debug("Service: Change status after update status conferenc started.");
@@ -45,6 +78,11 @@ public class SectionConferencServiceImpl implements SectionConferencService {
         return sectionConferencDao.changeStatusAfterUpdateConferenc(idConferenc);
     }
 
+    /**
+     * Find all section conferences
+     *
+     * @return List section conferences
+     */
     @Override
     public List<SectionConferenc> findAll() {
         LOG.debug("Service: Reading all section conferences started.");
@@ -57,6 +95,13 @@ public class SectionConferencServiceImpl implements SectionConferencService {
         return Collections.emptyList();
     }
 
+    /**
+     * Find section conferenc by id
+     *
+     * @param id id section conferenc
+     * @return Section conferenc
+     * @throws ValidationException if there are validation problems
+     */
     @Override
     public Optional<SectionConferenc> findId(Long id) throws ValidationException {
         LOG.debug("Service: Reading section conferenc started.");
@@ -68,6 +113,13 @@ public class SectionConferencServiceImpl implements SectionConferencService {
         return sectionConferencDao.readById(id);
     }
 
+    /**
+     * Remove section conferenc by id
+     *
+     * @param id id section conferenc
+     * @return Boolean
+     * @throws ValidationException if there are validation problems
+     */
     @Override
     public boolean remove(Long id) throws ValidationException {
         LOG.debug("Service: Removing section conferenc started.");
@@ -79,6 +131,15 @@ public class SectionConferencServiceImpl implements SectionConferencService {
         return sectionConferencDao.delete(id);
     }
 
+    /**
+     * Create section conferenc by id
+     *
+     * @param name name section conferenc
+     * @param description description section conferenc
+     * @param idConferenc id conferenc
+     * @return Boolean
+     * @throws ValidationException if there are validation problems
+     */
     @Override
     public boolean create(String name, String description, Long idConferenc) throws ValidationException {
         LOG.debug("Service: Creating section conferenc started.");
@@ -94,6 +155,14 @@ public class SectionConferencServiceImpl implements SectionConferencService {
         return sectionConferencDao.create(name,description,idConferenc);
     }
 
+    /**
+     * Update description section conferenc by id
+     *
+     * @param id id section conferenc
+     * @param description description conferenc
+     * @return Boolean
+     * @throws ValidationException if there are validation problems
+     */
     @Override
     public boolean updateDescription(Long id, String description) throws ValidationException {
         LOG.debug("Service: Updating description in section conferenc started.");
@@ -105,6 +174,13 @@ public class SectionConferencServiceImpl implements SectionConferencService {
         return sectionConferencDao.updateDescription(id,description);
     }
 
+    /**
+     * Find section conferenc by name
+     *
+     * @param name name section conferenc
+     * @return List section conferenc
+     * @throws ValidationException if there are validation problems
+     */
     @Override
     public List<SectionConferenc> findByName(String name) throws ValidationException {
         LOG.debug("Service: Find section conferenc of name started.");
@@ -116,6 +192,13 @@ public class SectionConferencServiceImpl implements SectionConferencService {
         return sectionConferencDao.findByName(name);
     }
 
+    /**
+     * Find section conferenc in conferenc by id conferenc
+     *
+     * @param id id conferenc
+     * @return List section conferenc
+     * @throws ValidationException if there are validation problems
+     */
     @Override
     public List<SectionConferenc> findSectionConferencesInConferencById(Long id) throws ValidationException {
         LOG.debug("Service: Find section conferenc of id started.");
@@ -127,6 +210,12 @@ public class SectionConferencServiceImpl implements SectionConferencService {
         return sectionConferencDao.findSectionConferencesInConferencById(id);
     }
 
+    /**
+     * Check result section
+     *
+     * @param resultSection name result section
+     * @return Long id
+     */
     private Long resultSection(String resultSection) {
         Long idResult = null;
 

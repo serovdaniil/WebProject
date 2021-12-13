@@ -9,25 +9,73 @@ import com.epam.jwd.finalProject.model.SectionConferenc;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The interface category dao
+ *
+ * @author Daniil Serov
+ */
 public interface CategoryDao {
+
+    /**
+     * Create category
+     *
+     * @param name name for new category
+     * @return boolean result of operation
+     */
     boolean create(String name);
 
+    /**
+     * Change name for category
+     *
+     * @param id id category
+     * @param name new name for category
+     * @return boolean result of operation
+     */
     boolean changeName(Long id, String name);
 
-    List<Category> readAll() throws EntityExtractionFailedException;
+    /**
+     * Find all categories
+     *
+     * @return List category
+     */
+    List<Category> findAll() throws EntityExtractionFailedException;
 
-    Optional<Category> readById(Long id);
+    /**
+     * Find category by id
+     *
+     * @param id id category
+     * @return Category
+     */
+    Optional<Category> findById(Long id);
 
+    /**
+     * Find conferences by id category
+     *
+     * @param id id category
+     * @return List conferences
+     */
     List<Conferenc> findConferencInIdCategory(Long id);
 
-    List<Conferenc> findConferencInNameCategory(String name);
-
+    /**
+     * Find section conferences by id category
+     *
+     * @param id id category
+     * @return List section conferences
+     */
     List<SectionConferenc> findSectionConferencInIdCategory(Long id);
 
-    List<SectionConferenc> findSectionConferencInNameCategory(String Name);
-
+    /**
+     * Remove category by id
+     *
+     * @param id id category
+     * @return boolean result of operation
+     */
     boolean delete(Long id);
-
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     static CategoryDao instance() {
         return MethodCategoryDaoImpl.getInstance();
     }

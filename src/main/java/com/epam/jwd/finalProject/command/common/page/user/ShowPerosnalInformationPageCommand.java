@@ -5,7 +5,11 @@ import com.epam.jwd.finalProject.command.factory.CommandRequest;
 import com.epam.jwd.finalProject.command.factory.CommandResponse;
 import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
-
+/**
+ * The personal informational page
+ *
+ * @author Daniil Serov
+ */
 public class ShowPerosnalInformationPageCommand implements Command {
     private static final String CREATE_AN_ACCOUNT_PAGE = "page.personalInformation";
 

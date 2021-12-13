@@ -14,6 +14,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Optional;
 
+/**
+ * This command is for updating the first name
+ *
+ * @author Daniil Serov
+ */
 public class UpdateFirstNameCommand implements Command {
     private final UserService service;
     private final RequestFactory requestFactory;

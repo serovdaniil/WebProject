@@ -23,6 +23,11 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * Filter for roles
+ *
+ * @author Daniil Serov
+ */
 @WebFilter(urlPatterns = "/*")
 public class RoleFilter implements Filter {
 

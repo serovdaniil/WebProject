@@ -11,6 +11,11 @@ import java.util.Optional;
 
 import static java.lang.String.format;
 
+/**
+ * The tag
+ *
+ * @author Daniil Serov
+ */
 public class WelcomeUserTag extends TagSupport {
     private static final long serialVersionUID = -5020029415387643046L;
 

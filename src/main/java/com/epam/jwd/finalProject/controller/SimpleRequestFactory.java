@@ -7,7 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public enum SimpleRequestFactory implements RequestFactory{
+/**
+ * @author Daniil Serov
+ */
+public enum SimpleRequestFactory implements RequestFactory {
     INSTANCE;
 
     private final Map<String, CommandResponse> forwardResponseCache = new ConcurrentHashMap<>();

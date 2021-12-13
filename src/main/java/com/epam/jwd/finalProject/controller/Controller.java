@@ -13,7 +13,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
+/**
+ * Controller for queries from client
+ *
+ * @author Daniil Serov
+ */
 @WebServlet("/controller")
 public class Controller extends HttpServlet {
     private static final long serialVersionUID = 7792798972556410954L;

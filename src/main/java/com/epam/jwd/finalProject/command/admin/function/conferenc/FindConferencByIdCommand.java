@@ -14,6 +14,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Optional;
 
+/**
+ * This command is for detailed display of the conference
+ *
+ * @author Daniil Serov
+ */
 public class FindConferencByIdCommand implements Command {
     private final ConferencService service;
     private final RequestFactory requestFactory;

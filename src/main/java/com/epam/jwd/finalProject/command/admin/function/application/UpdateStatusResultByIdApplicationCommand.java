@@ -13,6 +13,11 @@ import com.epam.jwd.finalProject.service.factory.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * This command is for updating the status of the application for training
+ *
+ * @author Daniil Serov
+ */
 public class UpdateStatusResultByIdApplicationCommand implements Command {
     private static final String PARAM_ID = "id";
     private static final String PARAM_RESULT = "resultNew";

@@ -11,6 +11,11 @@ import com.epam.jwd.finalProject.service.factory.ServiceFactory;
 
 import java.util.List;
 
+/**
+ * This command displays all applications for training
+ *
+ * @author Daniil Serov
+ */
 public class ShowApplicationPageCommand implements Command {
     private static final String APPLICATIONS_ATTRIBUTE_NAME = "applications";
     private static final String APPLICATIONS_PAGE = "page.applications";

@@ -15,6 +15,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * This command is for adding an answer to a question
+ *
+ * @author Daniil Serov
+ */
 public class AddAnswerToQuestionCommand implements Command {
     private static final String PARAM_ID = "id";
     private static final String PARAM_ANSWER = "answer";

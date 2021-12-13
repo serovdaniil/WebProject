@@ -16,21 +16,53 @@ import java.util.List;
 import java.util.Optional;
 
 import static at.favre.lib.crypto.bcrypt.BCrypt.MIN_COST;
-
+/**
+ * @author Daniil Serov
+ * @see MethodUserDaoImpl
+ */
 public class UserServiceImpl implements UserService {
+    /**
+     * Logger for this service
+     */
     private static final Logger LOG = LogManager.getLogger(UserServiceImpl.class);
+
+    /**
+     * Get bytes password
+     */
     private static final byte[] DUMMY_PASSWORD = "password".getBytes(StandardCharsets.UTF_8);
+    /**
+     * Dao for this service
+     */
     private final MethodUserDaoImpl userDao;
+
+    /**
+     * BCrypt for password
+     */
     private final BCrypt.Hasher hasher;
     private final BCrypt.Verifyer verifier;
+    /**
+     * Validator for this service
+     */
     private final UserDataValidator userDataValidator = new UserDataValidator().getInstance();
 
+    /**
+     * Constructor - creating a new object
+     *
+     * @param userDao dao for this service
+     * @param hasher for this password
+     * @param verifier for this password
+     */
     public UserServiceImpl(MethodUserDaoImpl userDao, BCrypt.Hasher hasher, BCrypt.Verifyer verifier) {
         this.userDao = userDao.getInstance();
         this.hasher = hasher;
         this.verifier = verifier;
     }
 
+    /**
+     * Find all users
+     *
+     * @return List user
+     */
     @Override
     public List<User> findAll() {
         LOG.debug("Service: Reading all users started.");
@@ -43,6 +75,13 @@ public class UserServiceImpl implements UserService {
         return Collections.emptyList();
     }
 
+    /**
+     * Find user by id
+     *
+     * @param id id user
+     * @return User
+     * @throws ValidationException if there are validation problems
+     */
     @Override
     public Optional<User> findId(Long id) throws ValidationException {
         LOG.debug("Service: Reading user started.");
@@ -59,6 +98,14 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
+    /**
+     * Authenticate user
+     *
+     * @param login login for user
+     * @param password password for user
+     * @return User
+     * @throws ValidationException if there are validation problems
+     */
     @Override
     public Optional<User> authenticate(String login, String password) throws ValidationException {
         if (!userDataValidator.isLoginValid(login) || !userDataValidator.isPasswordValid(password)) {
@@ -83,10 +130,21 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    /**
+     * Password
+     */
     private void protectFromTimingAttack(byte[] enteredPassword) {
         verifier.verify(enteredPassword, DUMMY_PASSWORD);
     }
 
+    /**
+     * Registration user
+     *
+     * @param email email for user
+     * @param password password for user
+     * @return User
+     * @throws ValidationException if there are validation problems
+     */
     @Override
     public Optional<User> registration(String email, String password) throws ValidationException {
         LOG.debug("Service: Registration started.");
@@ -101,6 +159,14 @@ public class UserServiceImpl implements UserService {
         return userDao.create(email, hashedPassword);
     }
 
+    /**
+     * Update password by login
+     *
+     * @param login login for user
+     * @param password password for user
+     * @return User
+     * @throws ValidationException if there are validation problems
+     */
     @Override
     public Optional<User> updatePasswordByLogin(String login, String password) throws ValidationException {
         LOG.debug("Service: Updating password started.");
@@ -115,6 +181,14 @@ public class UserServiceImpl implements UserService {
         return readUser;
     }
 
+    /**
+     * Update email for user
+     *
+     * @param id id user
+     * @param email email for user
+     * @return User
+     * @throws ValidationException if there are validation problems
+     */
     @Override
     public Optional<User> updateEmail(Long id, String email) throws ValidationException {
         LOG.debug("Service: Updating email started.");
@@ -126,6 +200,14 @@ public class UserServiceImpl implements UserService {
         return userDao.updateEmail(id, email);
     }
 
+    /**
+     * Update first name for user
+     *
+     * @param id id user
+     * @param firstName first name for user
+     * @return User
+     * @throws ValidationException if there are validation problems
+     */
     @Override
     public Optional<User> updateFirstName(Long id, String firstName) throws ValidationException {
         LOG.debug("Service: Updating first name started.");
@@ -137,6 +219,14 @@ public class UserServiceImpl implements UserService {
         return userDao.updateFirstName(id, firstName);
     }
 
+    /**
+     * Update last name for user
+     *
+     * @param id id user
+     * @param lastName last name for user
+     * @return User
+     * @throws ValidationException if there are validation problems
+     */
     @Override
     public Optional<User> updateLastName(Long id, String lastName) throws ValidationException {
         LOG.debug("Service: Updating last name started.");
@@ -148,6 +238,14 @@ public class UserServiceImpl implements UserService {
         return userDao.updateLastName(id, lastName);
     }
 
+    /**
+     * Update role for user
+     *
+     * @param idAccount id user
+     * @param nameRole role for user
+     * @return User
+     * @throws ValidationException if there are validation problems
+     */
     @Override
     public Optional<User> updateRole(Long idAccount, String nameRole) throws ValidationException {
         LOG.debug("Service: Updating role for user started.");
@@ -160,6 +258,12 @@ public class UserServiceImpl implements UserService {
         return userDao.updateRole(idAccount, idRole);
     }
 
+    /**
+     * Check result section
+     *
+     * @param nameRole role name
+     * @return Long idRole
+     */
     private Long role(String nameRole) {
         Long idResult = null;
         if ((nameRole.equals("User")) || (nameRole.equals("Юзер")) || (nameRole.equals("Uzer")) || (nameRole.equals("Юзэр"))) {

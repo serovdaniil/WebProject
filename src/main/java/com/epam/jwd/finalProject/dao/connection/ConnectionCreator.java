@@ -12,10 +12,10 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 /**
+ * Create connection for pool connection
+ *
  * @author Daniil Serov
  */
-
-
 public class ConnectionCreator {
     private static final Logger LOG = LogManager.getLogger(LockingConnectionPool.class);
     private static final Properties properties = new Properties();
@@ -24,10 +24,10 @@ public class ConnectionCreator {
     private static final String PROPERTY_PASSWORD = "db.password";
     private static final String PROPERTY_USER = "db.user";
     private static final String PROPERTY_DRIVER = "db.driver";
-    private static String DATABASE_URL;
-    private static String DATABASE_PASSWORD;
-    private static String DATABASE_USER;
-    private static String DATABASE_DRIVER;
+    private static final String DATABASE_URL;
+    private static final String DATABASE_PASSWORD;
+    private static final String DATABASE_USER;
+    private static final String DATABASE_DRIVER;
 
     static {
         try (InputStream inputStream = ConnectionCreator.class.getClassLoader()

@@ -17,6 +17,11 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * This command is used to display all user requests
+ *
+ * @author Daniil Serov
+ */
 public class FindAccountIdByApplicationCommand implements Command {
     private static final String USER_SESSION_ATTRIBUTE_NAME = "user";
     private static final String APPLICATIONS_ATTRIBUTE_NAME = "applications";

@@ -16,6 +16,11 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * This command is for displaying questions of a specific user
+ *
+ * @author Daniil Serov
+ */
 public class FindQuestionByIdAccountCommand implements Command {
     private final QuestionService service;
     private final RequestFactory requestFactory;

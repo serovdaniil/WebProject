@@ -1,6 +1,9 @@
 package com.epam.jwd.finalProject.service.exception;
 
-public class ValidationException extends Exception{
+/**
+ * @author Daniil Serov
+ */
+public class ValidationException extends Exception {
     public ValidationException() {
     }
 

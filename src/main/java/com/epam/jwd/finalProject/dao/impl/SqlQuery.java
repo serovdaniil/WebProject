@@ -3,7 +3,6 @@ package com.epam.jwd.finalProject.dao.impl;
 public class SqlQuery {
 
     // MethodApplicationDaoImpl
-
     protected static final String FIND_ALL_APPLICATION = "SELECT * FROM application JOIN final_task.user ON user_id=id_user " +
             "JOIN final_task.role ON role_id=id_role JOIN section_result " +
             "ON section_result_id=id_section_result JOIN section_conferenc ON section_id=id_section_conferenc JOIN status ON section_conferenc_status_id=id_status " +
@@ -14,65 +13,15 @@ public class SqlQuery {
             "ON section_result_id=id_section_result JOIN section_conferenc ON section_id=id_section_conferenc JOIN status ON section_conferenc_status_id=id_status " +
             "JOIN conferenc ON conferenc_id=id_conferenc JOIN category ON category_id=id_category WHERE id_application=?";
 
-    protected static final String FIND_ID_SECTION_CONFERENC_BY_CAPPLICATION = "SELECT * FROM application JOIN final_task.user " +
-            "ON user_id=id_user JOIN final_task.role ON role_id=id_role JOIN section_result " +
-            "ON section_result_id=id_section_result JOIN section_conferenc ON section_id=id_section_conferenc JOIN status ON section_conferenc_status_id=id_status " +
-            "JOIN conferenc ON conferenc_id=id_conferenc JOIN category ON category_id=id_category WHERE id_section_conferenc=?";
-
-    protected static final String FIND_NAME_SECTION_CONFERENC_BY_CAPPLICATION = "SELECT * FROM application JOIN " +
-            "final_task.user ON user_id=id_user JOIN final_task.role ON role_id=id_role JOIN section_result " +
-            "ON section_result_id=id_section_result JOIN section_conferenc ON section_id=id_section_conferenc JOIN status ON section_conferenc_status_id=id_status " +
-            "JOIN conferenc ON conferenc_id=id_conferenc JOIN category ON category_id=id_category WHERE section_conferenc.name=?";
-
     protected static final String FIND_ID_ACCOUNT_BY_CAPPLICATION = "SELECT * FROM application JOIN final_task.user " +
             "ON user_id=id_user JOIN final_task.role ON role_id=id_role JOIN section_result " +
             "ON section_result_id=id_section_result JOIN section_conferenc ON section_id=id_section_conferenc JOIN status ON section_conferenc_status_id=id_status " +
             "JOIN conferenc ON conferenc_id=id_conferenc JOIN category ON category_id=id_category WHERE id_user=?";
 
-    protected static final String FIND_FIRSTNAME_ACCOUNT_BY_CAPPLICATION = "SELECT * FROM application JOIN final_task.user " +
-            "ON user_id=id_user JOIN final_task.role ON role_id=id_role JOIN section_result " +
-            "ON section_result_id=id_section_result JOIN section_conferenc ON section_id=id_section_conferenc JOIN status ON section_conferenc_status_id=id_status " +
-            "JOIN conferenc ON conferenc_id=id_conferenc JOIN category ON category_id=id_category WHERE first_name=?";
-
-    protected static final String FIND_LASTNAME_ACCOUNT_BY_CAPPLICATION = "SELECT * FROM application JOIN final_task.user " +
-            "ON user_id=id_user JOIN final_task.role ON role_id=id_role JOIN section_result " +
-            "ON section_result_id=id_section_result JOIN section_conferenc ON section_id=id_section_conferenc JOIN status ON section_conferenc_status_id=id_status " +
-            "JOIN conferenc ON conferenc_id=id_conferenc JOIN category ON category_id=id_category WHERE last_name=?";
-
-    protected static final String FIND_EMAIL_ACCOUNT_BY_CAPPLICATION = "SELECT * FROM application JOIN final_task.user " +
-            "ON user_id=id_user JOIN final_task.role ON role_id=id_role JOIN section_result " +
-            "ON section_result_id=id_section_result JOIN section_conferenc ON section_id=id_section_conferenc JOIN status ON section_conferenc_status_id=id_status " +
-            "JOIN conferenc ON conferenc_id=id_conferenc JOIN category ON category_id=id_category WHERE email=?";
-
-    protected static final String FIND_LOGIN_ACCOUNT_BY_CAPPLICATION = "SELECT * FROM application JOIN final_task.user " +
-            "ON user_id=id_user JOIN final_task.role ON role_id=id_role JOIN section_result " +
-            "ON section_result_id=id_section_result JOIN section_conferenc ON section_id=id_section_conferenc JOIN status ON section_conferenc_status_id=id_status " +
-            "JOIN conferenc ON conferenc_id=id_conferenc JOIN category ON category_id=id_category WHERE login=?";
-
     protected static final String FIND_ID_SECTION_RESULT_BY_CAPPLICATION = "SELECT * FROM application JOIN final_task.user " +
             "ON user_id=id_user JOIN final_task.role ON role_id=id_role JOIN section_result " +
             "ON section_result_id=id_section_result JOIN section_conferenc ON section_id=id_section_conferenc JOIN status ON section_conferenc_status_id=id_status " +
             "JOIN conferenc ON conferenc_id=id_conferenc JOIN category ON category_id=id_category WHERE id_section_result=?";
-
-    protected static final String FIND_ID_CONFERENC_BY_CAPPLICATION = "SELECT * FROM application JOIN final_task.user " +
-            "ON user_id=id_user JOIN final_task.role ON role_id=id_role JOIN section_result " +
-            "ON section_result_id=id_section_result JOIN section_conferenc ON section_id=id_section_conferenc JOIN status ON section_conferenc_status_id=id_status " +
-            "JOIN conferenc ON conferenc_id=id_conferenc JOIN category ON category_id=id_category WHERE id_conferenc=?";
-
-    protected static final String FIND_NAME_CONFERENC_BY_CAPPLICATION = "SELECT * FROM application JOIN final_task.user " +
-            "ON user_id=id_user JOIN final_task.role ON role_id=id_role JOIN section_result " +
-            "ON section_result_id=id_section_result JOIN section_conferenc ON section_id=id_section_conferenc JOIN status ON section_conferenc_status_id=id_status " +
-            "JOIN conferenc ON conferenc_id=id_conferenc JOIN category ON category_id=id_category WHERE conferenc.name=?";
-
-    protected static final String FIND_ID_CATEGORY_BY_CAPPLICATION = "SELECT * FROM application JOIN final_task.user " +
-            "ON user_id=id_user JOIN final_task.role ON role_id=id_role JOIN section_result " +
-            "ON section_result_id=id_section_result JOIN section_conferenc ON section_id=id_section_conferenc JOIN status ON section_conferenc_status_id=id_status " +
-            "JOIN conferenc ON conferenc_id=id_conferenc JOIN category ON category_id=id_category WHERE id_category=?";
-
-    protected static final String FIND_NAME_CATEGORY_BY_CAPPLICATION = "SELECT * FROM application JOIN final_task.user " +
-            "ON user_id=id_user JOIN final_task.role ON role_id=id_role JOIN section_result " +
-            "ON section_result_id=id_section_result JOIN section_conferenc ON section_id=id_section_conferenc JOIN status ON section_conferenc_status_id=id_status " +
-            "JOIN conferenc ON conferenc_id=id_conferenc JOIN category ON category_id=id_category WHERE name_category=?";
 
     protected static final String APPLICATION_DELETE = "DELETE FROM application WHERE id_application=?";
 
@@ -95,14 +44,8 @@ public class SqlQuery {
     protected static final String FIND_BY_ID_CONFERENC_IN_CATEGORY = "SELECT * FROM conferenc JOIN category " +
             "ON category_id=id_category JOIN status ON conferenc_status_id=id_status WHERE id_category=?";
 
-    protected static final String FIND_BY_NAME_CONFERENC_IN_CATEGORY = "SELECT * FROM conferenc JOIN category " +
-            "ON category_id=id_category JOIN status ON conferenc_status_id=id_status WHERE name_category=?";
-
     protected static final String FIND_BY_ID_SECTIONCONFERENC_IN_CATEGORY = "SELECT * FROM section_conferenc JOIN conferenc " +
             "ON conferenc_id=id_conferenc JOIN category ON category_id=id_category JOIN status ON conferenc_status_id=id_status WHERE id_category=?";
-
-    protected static final String FIND_BY_NAME_SECTIONCONFERENC_IN_CATEGORY = "SELECT * FROM section_conferenc JOIN conferenc " +
-            "ON conferenc_id=id_conferenc JOIN category ON category_id=id_category JOIN status ON conferenc_status_id=id_status WHERE name_category=?";
 
     protected static final String CATEGORY_DELETE = "DELETE FROM category WHERE id_category=?";
 
@@ -110,9 +53,6 @@ public class SqlQuery {
     protected static final String CREATE_USER = "INSERT INTO user (login,email,password, role_id) values(?,?,?,?)";
 
     protected static final String UPDATE_PASSWORD_BY_LOGIN_ACCOUNT = "UPDATE user JOIN role ON role_id=id_role SET password=? WHERE login = ?";
-
-    protected static final String UPDATE_LOGIN_BY_ID_ACCOUNT = "UPDATE user JOIN role ON role_id=id_role  " +
-            "SET login=? WHERE id_user = ?";
 
     protected static final String UPDATE_EMAIL_BY_ID_ACCOUNT = "UPDATE user JOIN role ON role_id=id_role  " +
             "SET email=? WHERE id_user = ?";
@@ -128,10 +68,6 @@ public class SqlQuery {
     protected static final String FIND_ALL_ACCOUNT = "SELECT * FROM final_task.user JOIN final_task.role ON role_id=id_role";
 
     protected static final String FIND_ID_USER = "SELECT * FROM user JOIN role ON role_id=id_role WHERE id_user=?";
-
-    protected static final String FIND_FIRSTNAME_BY_ACCOUNT = "SELECT * FROM user JOIN role ON role_id=id_role WHERE first_name=?";
-
-    protected static final String FIND_LASTNAME_BY_ACCOUNT = "SELECT * FROM user JOIN role ON role_id=id_role WHERE last_name=?";
 
     protected static final String FIND_EMAIL_BY_ACCOUNT = "SELECT * FROM user JOIN role ON role_id=id_role WHERE email=?";
 
@@ -160,23 +96,12 @@ public class SqlQuery {
 
     protected static final String CREATE_QUESTION = "INSERT INTO final_task.question (question,answer,date,user_id) values(?,?,?,?)";
     protected static final String ADD_ANSWER = "UPDATE final_task.question SET final_task.question.answer = ? WHERE final_task.question.id = ?";
-    protected static final String UPDATE_QUESTION = "UPDATE final_task.question SET final_task.question.question = ? WHERE final_task.question.id = ?";
     protected static final String FIND_ALL_QUESTION = "SELECT * FROM final_task.question JOIN final_task.user ON user_id=id_user " +
             "JOIN final_task.role ON role_id=id_role";
     protected static final String FIND_ID_QUESTION = "SELECT * FROM final_task.question JOIN final_task.user ON user_id=id_user " +
             "JOIN final_task.role ON role_id=id_role WHERE final_task.question.id = ?";
     protected static final String FIND_ACCOUNT_ID_BY_QUESTION = "SELECT * FROM final_task.question JOIN final_task.user ON user_id=id_user " +
             "JOIN final_task.role ON role_id=id_role WHERE final_task.question.user_id = ?";
-    protected static final String FIND_QUESTION_BY_ACCOUNT_FIRSTNAME = "SELECT * FROM final_task.question JOIN final_task.user ON user_id=id_user " +
-            "JOIN final_task.role ON role_id=id_role WHERE final_task.user.first_name = ?";
-    protected static final String FIND_QUESTION_BY_ACCOUNT_LASTNAME = "SELECT * FROM final_task.question JOIN final_task.user ON user_id=id_user " +
-            "JOIN final_task.role ON role_id=id_role WHERE final_task.user.last_name = ?";
-    protected static final String FIND_QUESTION_BY_ACCOUNT_EMAIL = "SELECT * FROM final_task.question JOIN final_task.user ON user_id=id_user " +
-            "JOIN final_task.role ON role_id=id_role WHERE final_task.user.email = ?";
-    protected static final String FIND_QUESTION_BY_ACCOUNT_LOGIN = "SELECT * FROM final_task.question JOIN final_task.user ON user_id=id_user " +
-            "JOIN final_task.role ON role_id=id_role WHERE final_task.user.login = ?";
-    protected static final String FIND_QUESTION_BY_ACCOUNT_ANSWER = "SELECT * FROM final_task.question JOIN final_task.user ON user_id=id_user " +
-            "JOIN final_task.role ON role_id=id_role WHERE final_task.question.answer = ?";
     protected static final String QUESTION_DELETE = "DELETE FROM final_task.question WHERE final_task.question.id = ?";
 
     // MethodConferencDaoImpl
@@ -188,12 +113,11 @@ public class SqlQuery {
             " WHERE id_conferenc = ?";
     protected static final String FIND_ALL_CONFERENC_ACTIVE = "SELECT * FROM conferenc JOIN category " +
             "ON category_id=id_category JOIN status ON conferenc_status_id=id_status WHERE conferenc_status_id=1";
-    protected static final String FIND_ALL_CONFERENC= "SELECT * FROM conferenc JOIN category " +
+    protected static final String FIND_ALL_CONFERENC = "SELECT * FROM conferenc JOIN category " +
             "ON category_id=id_category JOIN status ON conferenc_status_id=id_status";
     protected static final String FIND_ID_CONFERENC = "SELECT * FROM conferenc JOIN category " +
             "ON category_id=id_category JOIN status ON conferenc_status_id=id_status WHERE id_conferenc=?";
     protected static final String FIND_NAME_CONFERENC = "SELECT * FROM conferenc JOIN category " +
             "ON category_id=id_category JOIN status ON conferenc_status_id=id_status WHERE conferenc.name=?";
     protected static final String CONFERENC_DELETE = "DELETE FROM conferenc WHERE id_conferenc=?";
-
 }

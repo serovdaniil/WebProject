@@ -11,6 +11,11 @@ import com.epam.jwd.finalProject.service.factory.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * This command is for updating the description of the conference section
+ *
+ * @author Daniil Serov
+ */
 public class UpdateDescriptionInSectionConferencCommand implements Command {
     private final SectionConferencService service;
     private final RequestFactory requestFactory;

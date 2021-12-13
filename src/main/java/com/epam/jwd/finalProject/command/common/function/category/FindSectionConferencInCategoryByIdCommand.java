@@ -14,6 +14,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * This command is used to search for section conferences in the category
+ *
+ * @author Daniil Serov
+ */
 public class FindSectionConferencInCategoryByIdCommand implements Command {
     private final CategoryService service;
     private final RequestFactory requestFactory;

@@ -15,6 +15,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Optional;
 
+/**
+ * This command is for detailed display of information about the application
+ *
+ * @author Daniil Serov
+ */
 public class FindApplicationByIdCommand implements Command {
     private final ApplicationService applicationService;
     private final RequestFactory requestFactory;

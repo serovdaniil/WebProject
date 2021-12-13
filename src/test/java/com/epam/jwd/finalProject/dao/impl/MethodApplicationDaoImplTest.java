@@ -50,7 +50,7 @@ public class MethodApplicationDaoImplTest extends Assert {
         application = new Application((long) 1,
                 new User((long) 1, "daniils3rov@yandex.ru", "daniils3rov@yandex.ru", "Serov231969", "Daniil", "Serov", Role.USER),
                 new SectionResult((long) 1, "Open"), new SectionConferenc((long) 1, "ART", "Name",
-                new Conferenc((long) 2, "SD", "Qwerty", new Category((long) 3, "QWE"),new Status((long)4,"Active")),new Status((long)1,"Active")));
+                new Conferenc((long) 2, "SD", "Qwerty", new Category((long) 3, "QWE"), new Status((long) 4, "Active")), new Status((long) 1, "Active")));
         applicationList = new ArrayList<>();
         applicationList.add(application);
     }
@@ -95,21 +95,6 @@ public class MethodApplicationDaoImplTest extends Assert {
         assertEquals(actualResult, expectedResult);
     }
 
-    @Test
-    public void findBySectionConferencId() {
-        List<Application> expectedResult = applicationList;
-        when(dao.findBySectionConferencId(idSectionConferenc)).thenReturn(expectedResult);
-        List<Application> actualResult = dao.findBySectionConferencId(idSectionConferenc);
-        assertEquals(actualResult, expectedResult);
-    }
-
-    @Test
-    public void findBySectionConferencName() {
-        List<Application> expectedResult = applicationList;
-        when(dao.findBySectionConferencName(sectionConferenc)).thenReturn(expectedResult);
-        List<Application> actualResult = dao.findBySectionConferencName(sectionConferenc);
-        assertEquals(actualResult, expectedResult);
-    }
 
     @Test
     public void findAccountIdByApplication() {
@@ -120,74 +105,10 @@ public class MethodApplicationDaoImplTest extends Assert {
     }
 
     @Test
-    public void findByFirstName() {
-        List<Application> expectedResult = applicationList;
-        when(dao.findByFirstName(firstName)).thenReturn(expectedResult);
-        List<Application> actualResult = dao.findByFirstName(firstName);
-        assertEquals(actualResult, expectedResult);
-    }
-
-    @Test
-    public void findByLastName() {
-        List<Application> expectedResult = applicationList;
-        when(dao.findByLastName(lastName)).thenReturn(expectedResult);
-        List<Application> actualResult = dao.findByLastName(lastName);
-        assertEquals(actualResult, expectedResult);
-    }
-
-    @Test
-    public void findByEmail() {
-        List<Application> expectedResult = applicationList;
-        when(dao.findByEmail(email)).thenReturn(expectedResult);
-        List<Application> actualResult = dao.findByEmail(email);
-        assertEquals(actualResult, expectedResult);
-    }
-
-    @Test
-    public void findByLogin() {
-        List<Application> expectedResult = applicationList;
-        when(dao.findByLogin(login)).thenReturn(expectedResult);
-        List<Application> actualResult = dao.findByLogin(login);
-        assertEquals(actualResult, expectedResult);
-    }
-
-    @Test
     public void findByStatusResult() {
         List<Application> expectedResult = applicationList;
         when(dao.findByStatusResult(idResult)).thenReturn(expectedResult);
         List<Application> actualResult = dao.findByStatusResult(idResult);
-        assertEquals(actualResult, expectedResult);
-    }
-
-    @Test
-    public void findByConferencId() {
-        List<Application> expectedResult = applicationList;
-        when(dao.findByConferencId(idConferenc)).thenReturn(expectedResult);
-        List<Application> actualResult = dao.findByConferencId(idConferenc);
-        assertEquals(actualResult, expectedResult);
-    }
-
-    @Test
-    public void findByConferencName() {
-        List<Application> expectedResult = applicationList;
-        when(dao.findByConferencName(conferenc)).thenReturn(expectedResult);
-        List<Application> actualResult = dao.findByConferencName(conferenc);
-        assertEquals(actualResult, expectedResult);
-    }
-
-    @Test
-    public void findByCategoryId() {
-        List<Application> expectedResult = applicationList;
-        when(dao.findByCategoryId(idCategory)).thenReturn(expectedResult);
-        List<Application> actualResult = dao.findByCategoryId(idCategory);
-        assertEquals(actualResult, expectedResult);
-    }
-
-    @Test
-    public void findByCategoryName() {
-        List<Application> expectedResult = applicationList;
-        when(dao.findByCategoryName(category)).thenReturn(expectedResult);
-        List<Application> actualResult = dao.findByCategoryName(category);
         assertEquals(actualResult, expectedResult);
     }
 

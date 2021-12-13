@@ -11,6 +11,11 @@ import com.epam.jwd.finalProject.service.factory.ServiceFactory;
 
 import java.util.List;
 
+/**
+ * This command displays a page with all users
+ *
+ * @author Daniil Serov
+ */
 public class ShowUsersPageCommand implements Command {
     private static final String USERS_ATTRIBUTE_NAME = "users";
     private static final String USERS_PAGE = "page.users";

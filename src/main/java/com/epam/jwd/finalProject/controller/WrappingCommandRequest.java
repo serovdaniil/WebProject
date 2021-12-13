@@ -3,11 +3,13 @@ package com.epam.jwd.finalProject.controller;
 import com.epam.jwd.finalProject.command.factory.CommandRequest;
 import com.epam.jwd.finalProject.model.User;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
+/**
+ * @author Daniil Serov
+ */
 public class WrappingCommandRequest implements CommandRequest {
     private final HttpServletRequest request;
 

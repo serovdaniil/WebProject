@@ -15,17 +15,36 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The category dao
+ *
+ * @author Daniil Serov
+ */
 public class MethodCategoryDaoImpl implements CategoryDao {
-
+    /**
+     * Logger for this dao
+     */
     private static final Logger LOG = LogManager.getLogger(MethodCategoryDaoImpl.class);
+    /**
+     * Connection pool for this dao
+     */
     private final ConnectionPool connectionPool;
 
-    //change connectionPool.locking()
+    /**
+     * Constructor - creating a new object
+     *
+     * @param connectionPool connectionPool for this dao
+     */
     public MethodCategoryDaoImpl(ConnectionPool connectionPool) {
         this.connectionPool = connectionPool;
     }
 
-
+    /**
+     * Create category
+     *
+     * @param name name for new category
+     * @return boolean result of operation
+     */
     @Override
     public boolean create(String name) {
         boolean result = false;
@@ -47,6 +66,13 @@ public class MethodCategoryDaoImpl implements CategoryDao {
         return result;
     }
 
+    /**
+     * Change name for category
+     *
+     * @param id   id category
+     * @param name new name for category
+     * @return boolean result of operation
+     */
     @Override
     public boolean changeName(Long id, String name) {
         LOG.info("START update name by ID Category");
@@ -69,8 +95,13 @@ public class MethodCategoryDaoImpl implements CategoryDao {
         return result;
     }
 
+    /**
+     * Find all categories
+     *
+     * @return List category
+     */
     @Override
-    public List<Category> readAll() throws EntityExtractionFailedException {
+    public List<Category> findAll() throws EntityExtractionFailedException {
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ALL_CATEGORY)) {
@@ -87,8 +118,14 @@ public class MethodCategoryDaoImpl implements CategoryDao {
         return Collections.emptyList();
     }
 
+    /**
+     * Find category by id
+     *
+     * @param id id category
+     * @return Category
+     */
     @Override
-    public Optional<Category> readById(Long id) {
+    public Optional<Category> findById(Long id) {
         LOG.info("Start readById category");
         Optional<Category> productOptional = Optional.empty();
         try (Connection connection = connectionPool.getConnection();
@@ -111,6 +148,12 @@ public class MethodCategoryDaoImpl implements CategoryDao {
         return productOptional;
     }
 
+    /**
+     * Find conferences by id category
+     *
+     * @param id id category
+     * @return List conferences
+     */
     @Override
     public List<Conferenc> findConferencInIdCategory(Long id) {
         LOG.info("Start find conferenc in categori by ID");
@@ -132,27 +175,12 @@ public class MethodCategoryDaoImpl implements CategoryDao {
         return Collections.emptyList();
     }
 
-    @Override
-    public List<Conferenc> findConferencInNameCategory(String name) {
-        LOG.info("Start find conferenc in categori by name");
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_BY_NAME_CONFERENC_IN_CATEGORY)) {
-            statement.setString(1, name);
-            ResultSet resultSet = statement.executeQuery();
-            ResultSetExtractor<Conferenc> extractor = MethodCategoryDaoImpl::extractConferenc;
-            LOG.info("End find conferenc in categori by name");
-            return extractor.extractAll(resultSet);
-        } catch (SQLException e) {
-            LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}", SqlQuery.FIND_BY_NAME_CONFERENC_IN_CATEGORY);
-        } catch (EntityExtractionFailedException e) {
-            LOG.error("could not extract entity", e);
-        } catch (NullPointerException e) {
-            LOG.error(e);
-        }
-        return Collections.emptyList();
-    }
-
+    /**
+     * Find section conferences by id category
+     *
+     * @param id id category
+     * @return List section conferences
+     */
     @Override
     public List<SectionConferenc> findSectionConferencInIdCategory(Long id) {
         LOG.info("Start find section conferenc in categori by ID");
@@ -174,27 +202,12 @@ public class MethodCategoryDaoImpl implements CategoryDao {
         return Collections.emptyList();
     }
 
-    @Override
-    public List<SectionConferenc> findSectionConferencInNameCategory(String name) {
-        LOG.info("Start find section conferenc in categori by Name");
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_BY_NAME_SECTIONCONFERENC_IN_CATEGORY)) {
-            statement.setString(1, name);
-            ResultSet resultSet = statement.executeQuery();
-            ResultSetExtractor<SectionConferenc> extractor = MethodCategoryDaoImpl::extractSectionConferenc;
-            LOG.info("End find section conferenc in categori by Name");
-            return extractor.extractAll(resultSet);
-        } catch (SQLException e) {
-            LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}", SqlQuery.FIND_BY_NAME_SECTIONCONFERENC_IN_CATEGORY);
-        } catch (EntityExtractionFailedException e) {
-            LOG.error("could not extract entity", e);
-        } catch (NullPointerException e) {
-            LOG.error(e);
-        }
-        return Collections.emptyList();
-    }
-
+    /**
+     * Remove category by id
+     *
+     * @param id id category
+     * @return boolean result of operation
+     */
     @Override
     public boolean delete(Long id) {
         LOG.info("Start delete category");
@@ -222,7 +235,11 @@ public class MethodCategoryDaoImpl implements CategoryDao {
             throw new EntityExtractionFailedException();
         }
     }
-
+    /**
+     * Get conferenc
+     *
+     * @return Conferenc
+     */
     private static Conferenc extractConferenc(ResultSet resultSet) throws EntityExtractionFailedException {
         try {
             return new Conferenc(
@@ -238,6 +255,11 @@ public class MethodCategoryDaoImpl implements CategoryDao {
         }
     }
 
+    /**
+     * Get section conferenc
+     *
+     * @return Section conferenc
+     */
     private static SectionConferenc extractSectionConferenc(ResultSet resultSet) throws EntityExtractionFailedException {
         try {
             return new SectionConferenc(
@@ -258,6 +280,11 @@ public class MethodCategoryDaoImpl implements CategoryDao {
         }
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static MethodCategoryDaoImpl getInstance() {
         return MethodCategoryDaoImpl.Holder.INSTANCE;
     }

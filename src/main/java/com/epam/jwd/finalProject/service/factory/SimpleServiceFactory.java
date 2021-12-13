@@ -11,7 +11,9 @@ import com.epam.jwd.finalProject.service.imlp.*;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
-
+/**
+ * @author Daniil Serov
+ */
 public enum SimpleServiceFactory implements ServiceFactory {
     INSTANCE;
 

@@ -1,7 +1,10 @@
 package com.epam.jwd.finalProject.model;
 
-import java.util.Objects;
-
+/**
+ * Entity class Object
+ *
+ * @author Daniil Serov
+ */
 public interface Entity {
     Long getId();
 }

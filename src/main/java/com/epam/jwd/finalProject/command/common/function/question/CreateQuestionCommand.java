@@ -16,6 +16,11 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * This command is for creating a question
+ *
+ * @author Daniil Serov
+ */
 public class CreateQuestionCommand implements Command {
     private final QuestionService service;
     private final RequestFactory requestFactory;

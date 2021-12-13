@@ -2,9 +2,14 @@ package com.epam.jwd.finalProject.model;
 
 import java.util.Objects;
 
-public class Category implements Entity{
-   private final Long id;
-   private final String name;
+/**
+ * Entity class Category
+ *
+ * @author Daniil Serov
+ */
+public class Category implements Entity {
+    private final Long id;
+    private final String name;
 
     public Category(Long id, String name) {
         this.id = id;

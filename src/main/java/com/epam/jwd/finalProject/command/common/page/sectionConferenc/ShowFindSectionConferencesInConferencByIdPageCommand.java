@@ -15,6 +15,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * The find section conferences in conferenc page
+ *
+ * @author Daniil Serov
+ */
 public class ShowFindSectionConferencesInConferencByIdPageCommand implements Command {
     private static final String FIND_SECTION_CONFERENCES_BY_NAME_PAGE = "page.findSectionConferencesInConferencById";
     private final SectionConferencService service;

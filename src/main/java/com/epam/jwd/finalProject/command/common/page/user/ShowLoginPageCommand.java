@@ -5,7 +5,11 @@ import com.epam.jwd.finalProject.command.factory.CommandRequest;
 import com.epam.jwd.finalProject.command.factory.CommandResponse;
 import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
-
+/**
+ * The login page
+ *
+ * @author Daniil Serov
+ */
 public class ShowLoginPageCommand implements Command {
 
     private static final String LOGIN_PAGE = "page.login";

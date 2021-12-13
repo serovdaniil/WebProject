@@ -14,6 +14,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Optional;
 
+/**
+ * This command is for detailed display of the category
+ *
+ * @author Daniil Serov
+ */
 public class FindCategoryByIdCommand implements Command {
     private final CategoryService service;
     private final RequestFactory requestFactory;

@@ -2,7 +2,12 @@ package com.epam.jwd.finalProject.model;
 
 import java.util.Objects;
 
-public class SectionResult implements Entity{
+/**
+ * Entity class SectionResult
+ *
+ * @author Daniil Serov
+ */
+public class SectionResult implements Entity {
     private final Long id;
     private final String result;
 

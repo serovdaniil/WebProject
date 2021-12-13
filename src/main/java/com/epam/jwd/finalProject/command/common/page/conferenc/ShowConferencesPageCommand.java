@@ -10,7 +10,11 @@ import com.epam.jwd.finalProject.service.api.EntityService;
 import com.epam.jwd.finalProject.service.factory.ServiceFactory;
 
 import java.util.List;
-
+/**
+ * This page displays conferences
+ *
+ * @author Daniil Serov
+ */
 public class ShowConferencesPageCommand implements Command {
 
     private static final String CONFERENCES_ATTRIBUTE_NAME = "conferences";

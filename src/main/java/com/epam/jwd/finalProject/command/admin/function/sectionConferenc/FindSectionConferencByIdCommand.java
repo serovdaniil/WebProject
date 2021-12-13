@@ -14,6 +14,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Optional;
 
+/**
+ * This command is for detailed display of the conference section
+ *
+ * @author Daniil Serov
+ */
 public class FindSectionConferencByIdCommand implements Command {
     private final SectionConferencService service;
     private final RequestFactory requestFactory;

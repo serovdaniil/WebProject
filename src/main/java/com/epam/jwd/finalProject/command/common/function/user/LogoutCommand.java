@@ -6,6 +6,11 @@ import com.epam.jwd.finalProject.command.factory.CommandResponse;
 import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
 
+/**
+ * This command is for exiting your personal account
+ *
+ * @author Daniil Serov
+ */
 public class LogoutCommand implements Command {
 
     private static final String USER_SESSION_ATTRIBUTE_NAME = "user";

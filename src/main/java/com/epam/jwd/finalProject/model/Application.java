@@ -2,11 +2,17 @@ package com.epam.jwd.finalProject.model;
 
 import java.util.Objects;
 
-public class Application implements Entity{
-private final Long id;
-private final User user;
-private final SectionResult result;
-private final SectionConferenc sectionConferenc;
+/**
+ * Entity class Application
+ *
+ * @author Daniil Serov
+ */
+public class Application implements Entity {
+
+    private final Long id;
+    private final User user;
+    private final SectionResult result;
+    private final SectionConferenc sectionConferenc;
 
     public Application(Long id, User user, SectionResult result, SectionConferenc sectionConferenc) {
         this.id = id;

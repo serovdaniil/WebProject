@@ -2,9 +2,13 @@ package com.epam.jwd.finalProject.model;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
-public enum Role{
+/**
+ * Enum Role
+ *
+ * @author Daniil Serov
+ */
+public enum Role {
     USER,
     ADMIN,
     BLOKED,

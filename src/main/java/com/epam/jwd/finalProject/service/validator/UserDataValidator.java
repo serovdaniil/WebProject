@@ -2,8 +2,13 @@ package com.epam.jwd.finalProject.service.validator;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+/**
+ * @author Daniil Serov
+ */
 public class UserDataValidator {
+    /**
+     * Regex string
+     */
     private static final String REGEX_FIRST_NAME = "(^[A-Z][a-z]{0,35}(-[A-Z])*[a-z]{0,22}$)|(^[А-Я][а-я]{0,22}(-[А-Я])*[а-я]{0,22}$)|(^[A-Z][a-z]{0,45}$)|(^[А-Я][а-я]{0,45}$)";
     private static final String REGEX_LAST_NAME = "(^[A-Z][a-z]{0,35}(-[A-Z])*[a-z]{0,22}$)|(^[А-Я][а-я]{0,22}(-[А-Я])*[а-я]{0,22}$)|(^[A-Z][a-z]{0,45}$)|(^[А-Я][а-я]{0,45}$)";
     private static final String REGEX_EMAIL = "^([A-Za-z0-9_-]+\\.)*[a-z0-9_-]+@[a-z0-9_-]+(\\.[a-z0-9_-]+)*\\.[a-z]{2,6}$";
@@ -12,7 +17,12 @@ public class UserDataValidator {
 
     private Pattern pattern;
     private Matcher matcher;
-
+    /**
+     * Validator first name
+     *
+     * @param firstName
+     * @return boolean
+     */
     public boolean isFirstNameValid(String firstName) {
         if (firstName.isEmpty()) {
             return false;
@@ -21,7 +31,12 @@ public class UserDataValidator {
         matcher = pattern.matcher(firstName);
         return matcher.matches();
     }
-
+    /**
+     * Validator last name
+     *
+     * @param lastName
+     * @return boolean
+     */
     public boolean isLastNameValid(String lastName) {
         if (lastName.isEmpty()) {
             return false;
@@ -30,7 +45,12 @@ public class UserDataValidator {
         matcher = pattern.matcher(lastName);
         return matcher.matches();
     }
-
+    /**
+     * Validator email
+     *
+     * @param email
+     * @return boolean
+     */
     public boolean isEmailValid(String email) {
         if (email.isEmpty()) {
             return false;
@@ -39,7 +59,12 @@ public class UserDataValidator {
         matcher = pattern.matcher(email);
         return matcher.matches();
     }
-
+    /**
+     * Validator password
+     *
+     * @param password
+     * @return boolean
+     */
     public boolean isPasswordValid(String password) {
         if (password.isEmpty()) {
             return false;
@@ -48,7 +73,12 @@ public class UserDataValidator {
         matcher = pattern.matcher(password);
         return matcher.matches();
     }
-
+    /**
+     * Validator login
+     *
+     * @param login
+     * @return boolean
+     */
     public boolean isLoginValid(String login) {
         if (login.isEmpty()) {
             return false;
@@ -57,7 +87,12 @@ public class UserDataValidator {
         matcher = pattern.matcher(login);
         return matcher.matches();
     }
-
+    /**
+     * Validator id
+     *
+     * @param id
+     * @return boolean
+     */
     public boolean isIdValid(Long id) {
         if (id<=0) {
             return false;

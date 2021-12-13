@@ -6,6 +6,11 @@ import com.epam.jwd.finalProject.command.factory.CommandResponse;
 import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
 
+/**
+ * This page displays conferences in category
+ *
+ * @author Daniil Serov
+ */
 public class ShowFindConferencInIdCategoryPageCommand implements Command {
     private static final String SHOW_ALL_CONFERENC_IN_CATEGORY_PAGE = "page.allConferencesInCategory";
 

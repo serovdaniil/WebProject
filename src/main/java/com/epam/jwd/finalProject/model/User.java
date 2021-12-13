@@ -2,8 +2,11 @@ package com.epam.jwd.finalProject.model;
 
 import java.util.Objects;
 
-import static com.epam.jwd.finalProject.model.Role.USER;
-
+/**
+ * Entity class User
+ *
+ * @author Daniil Serov
+ */
 public class User implements Entity {
     private final Long id;
     private final String login;

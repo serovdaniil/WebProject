@@ -11,6 +11,11 @@ import com.epam.jwd.finalProject.service.factory.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * This command is for deleting a category
+ *
+ * @author Daniil Serov
+ */
 public class RemoveCategoryByIdCommand implements Command {
     private final CategoryService service;
     private final RequestFactory requestFactory;

@@ -14,6 +14,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Optional;
 
+/**
+ * This command is for searching for a question by id
+ *
+ * @author Daniil Serov
+ */
 public class FindQuestionByIdCommand implements Command {
     private final QuestionService service;
     private final RequestFactory requestFactory;

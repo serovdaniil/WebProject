@@ -3,27 +3,25 @@ package com.epam.jwd.finalProject.dao.connection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import java.util.Enumeration;
-import java.util.Properties;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+
 /**
+ * Custom connection pool.Realization with two blocking queue for given away and ready to given away connections.
+ * Singleton.
+ *
  * @author Daniil Serov
  */
-
-public class LockingConnectionPool implements ConnectionPool{
+public class LockingConnectionPool implements ConnectionPool {
     private static final Logger LOG = LogManager.getLogger(LockingConnectionPool.class);
     private static AtomicBoolean isCreated = new AtomicBoolean();
     private static LockingConnectionPool instance = new LockingConnectionPool();
@@ -61,7 +59,7 @@ public class LockingConnectionPool implements ConnectionPool{
         for (int i = 0; i < mount; i++) {
             try {
                 Connection connection = ConnectionCreator.getConnection();
-                ProxyConnection proxyConnection = new ProxyConnection(connection,this);
+                ProxyConnection proxyConnection = new ProxyConnection(connection, this);
                 freeConnection.add(proxyConnection);
             } catch (SQLException e) {
                 LOG.error("coudn't create connection to data base: " + e.getMessage());
@@ -85,6 +83,7 @@ public class LockingConnectionPool implements ConnectionPool{
         }
         return instance;
     }
+
     @Override
     public Connection getConnection() {
         Connection connection = null;
@@ -97,6 +96,7 @@ public class LockingConnectionPool implements ConnectionPool{
         }
         return connection;
     }
+
     @Override
     public void releaseConnection(Connection connection) {
         if (connection instanceof ProxyConnection && givenAwayConnections.remove(connection)) {
@@ -108,6 +108,7 @@ public class LockingConnectionPool implements ConnectionPool{
             }
         }
     }
+
     @Override
     public void destroyPool() {
         for (int i = 0; i < DEFAULT_POOL_SIZE; i++) {
@@ -134,7 +135,8 @@ public class LockingConnectionPool implements ConnectionPool{
                 DriverManager.deregisterDriver(drivers.nextElement());
             } catch (SQLException e) {
                 LOG.error("Could not deregister driver", e);
-            }};
+            }
+        }
     }
 
 }

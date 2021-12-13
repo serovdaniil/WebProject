@@ -14,6 +14,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * This command is used to search for name conferenc
+ *
+ * @author Daniil Serov
+ */
 public class FindSectionConferencByNameCommand implements Command {
     private final SectionConferencService service;
     private final RequestFactory requestFactory;

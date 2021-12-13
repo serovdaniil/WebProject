@@ -14,15 +14,38 @@ import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
+/**
+ * @author Daniil Serov
+ * @see MethodQuestionDaoImpl
+ */
 public class QuestionServiceImpl implements QuestionService {
+    /**
+     * Validator for this service
+     */
     private final QuestionDataValidator questionDataValidator = new QuestionDataValidator().getInstance();
+    /**
+     * Dao for this service
+     */
     private final MethodQuestionDaoImpl questionDao;
+    /**
+     * Logger for this service
+     */
     private static final Logger LOG = LogManager.getLogger(QuestionServiceImpl.class);
+
+    /**
+     * Constructor - creating a new object
+     *
+     * @param questionDao dao for this service
+     */
     public QuestionServiceImpl(MethodQuestionDaoImpl questionDao) {
         this.questionDao = questionDao.getInstance();
     }
 
+    /**
+     * Find all question
+     *
+     * @return List question
+     */
     @Override
     public List<Question> findAll() {
         LOG.debug("Service: Reading all questions started.");
@@ -35,6 +58,13 @@ public class QuestionServiceImpl implements QuestionService {
         return Collections.emptyList();
     }
 
+    /**
+     * Find question by id
+     *
+     * @param id id question
+     * @return List question
+     * @throws ValidationException if there are validation problems
+     */
     @Override
     public Optional<Question> findId(Long id) throws ValidationException {
         LOG.debug("Service: Finding question by id started.");
@@ -46,6 +76,13 @@ public class QuestionServiceImpl implements QuestionService {
         return questionDao.readById(id);
     }
 
+    /**
+     * Remove question by id
+     *
+     * @param id id question
+     * @return Boolean
+     * @throws ValidationException if there are validation problems
+     */
     @Override
     public boolean remove(Long id) throws ValidationException {
         LOG.debug("Service: Removing question by id started.");
@@ -57,6 +94,14 @@ public class QuestionServiceImpl implements QuestionService {
         return questionDao.delete(id);
     }
 
+    /**
+     * Create question by id
+     *
+     * @param name name question
+     * @param idUser user id
+     * @return Boolean
+     * @throws ValidationException if there are validation problems
+     */
     @Override
     public boolean create(String name, Long idUser) throws ValidationException {
         LOG.debug("Service: Creating question started.");
@@ -70,6 +115,14 @@ public class QuestionServiceImpl implements QuestionService {
         return questionDao.create(name, date, idUser);
     }
 
+    /**
+     * Add answer question by id
+     *
+     * @param answer answer for question
+     * @param id question id
+     * @return Boolean
+     * @throws ValidationException if there are validation problems
+     */
     @Override
     public boolean addAnswer(Long id, String answer) throws ValidationException {
         LOG.debug("Service: Add answer started.");
@@ -81,6 +134,13 @@ public class QuestionServiceImpl implements QuestionService {
         return questionDao.addAnswer(id, answer);
     }
 
+    /**
+     * Find questions for account id
+     *
+     * @param id user id
+     * @return List questions
+     * @throws ValidationException if there are validation problems
+     */
     @Override
     public List<Question> findAccountIdByQuestion(Long id) throws ValidationException {
         LOG.debug("Service: Finding questions by id user started.");

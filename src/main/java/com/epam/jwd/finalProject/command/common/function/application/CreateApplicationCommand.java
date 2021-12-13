@@ -17,6 +17,11 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * This command is used to create an application
+ *
+ * @author Daniil Serov
+ */
 public class CreateApplicationCommand implements Command {
     private static final String PARAM_ID = "id";
     private static final String USER_SESSION_ATTRIBUTE_NAME = "user";

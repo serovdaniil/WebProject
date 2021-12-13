@@ -3,6 +3,11 @@ package com.epam.jwd.finalProject.model;
 import java.sql.Date;
 import java.util.Objects;
 
+/**
+ * Entity class Question
+ *
+ * @author Daniil Serov
+ */
 public class Question implements Entity {
     private final Long id;
     private final String question;

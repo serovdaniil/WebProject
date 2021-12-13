@@ -1,5 +1,9 @@
 package com.epam.jwd.finalProject.controller;
-
+/**
+ * Pages for the client's work
+ *
+ * @author Daniil Serov
+ */
 public enum PagePaths {
     INDEX("/"),
     MAIN("/WEB-INF/jsp/common/main.jsp"),

@@ -2,7 +2,12 @@ package com.epam.jwd.finalProject.model;
 
 import java.util.Objects;
 
-public class SectionConferenc implements Entity{
+/**
+ * Entity class SectionConferenc
+ *
+ * @author Daniil Serov
+ */
+public class SectionConferenc implements Entity {
     private final Long id;
     private final String name;
     private final String description;

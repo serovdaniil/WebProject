@@ -6,6 +6,11 @@ import com.epam.jwd.finalProject.command.factory.CommandResponse;
 import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
 
+/**
+ * The error page
+ *
+ * @author Daniil Serov
+ */
 public class ShowErrorPageCommand implements Command {
 
     private static final String ERROR_PAGE = "page.error";

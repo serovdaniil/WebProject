@@ -1,5 +1,7 @@
 package com.epam.jwd.finalProject.dao.exception;
-
+/**
+ * @author Daniil Serov
+ */
 public class CouldNotInitializeConnectionPool extends Error{
     private static final long serialVersionUID = 8553014030613840383L;
 

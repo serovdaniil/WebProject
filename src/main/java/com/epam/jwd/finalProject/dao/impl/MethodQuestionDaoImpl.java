@@ -15,16 +15,39 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The question dao
+ *
+ * @author Daniil Serov
+ */
 public class MethodQuestionDaoImpl implements QuestionDao {
-
+    /**
+     * Connection pool for this dao
+     */
     private final ConnectionPool connectionPool;
-    //change connectionPool.locking()
+
+    /**
+     * Constructor - creating a new object
+     *
+     * @param connectionPool connectionPool for this dao
+     */
     public MethodQuestionDaoImpl(ConnectionPool connectionPool) {
         this.connectionPool = connectionPool;
     }
 
+    /**
+     * Logger for this dao
+     */
     private static final Logger LOG = LogManager.getLogger(MethodQuestionDaoImpl.class);
 
+    /**
+     * Create question
+     *
+     * @param name   name for new question
+     * @param date   date for new question
+     * @param idUser id user for new question
+     * @return boolean result of operation
+     */
     @Override
     public boolean create(String name, Date date, Long idUser) {
         boolean result = false;
@@ -49,6 +72,13 @@ public class MethodQuestionDaoImpl implements QuestionDao {
         return result;
     }
 
+    /**
+     * Add answer by id question
+     *
+     * @param id     id question
+     * @param answer answer for new question
+     * @return boolean result of operation
+     */
     @Override
     public boolean addAnswer(Long id, String answer) {
         LOG.info("Start add answer by question");
@@ -71,28 +101,11 @@ public class MethodQuestionDaoImpl implements QuestionDao {
         return result;
     }
 
-    @Override
-    public boolean updateQuestion(Long id, String question) {
-        LOG.info("Start update name question");
-        boolean result = false;
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_QUESTION)) {
-            statement.setLong(2, id);
-            statement.setString(1, question);
-            int rowCount = statement.executeUpdate();
-            if (rowCount != 0) {
-                result = true;
-            }
-            LOG.info("End update name question");
-        } catch (SQLException e) {
-            LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}", SqlQuery.UPDATE_QUESTION);
-        } catch (NullPointerException e) {
-            LOG.error(e);
-        }
-        return result;
-    }
-
+    /**
+     * Read all questions
+     *
+     * @return List questions
+     */
     @Override
     public List<Question> readAll() throws EntityExtractionFailedException {
         LOG.info("Start readAll question");
@@ -111,6 +124,12 @@ public class MethodQuestionDaoImpl implements QuestionDao {
         return Collections.emptyList();
     }
 
+    /**
+     * Read question by id
+     *
+     * @param id id question
+     * @return Question
+     */
     @Override
     public Optional<Question> readById(Long id) {
         LOG.info("Start readById question");
@@ -121,7 +140,7 @@ public class MethodQuestionDaoImpl implements QuestionDao {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 Question question = extractQuestion(resultSet);
-                productOptional = (Optional<Question>) Optional.of(question);
+                productOptional = Optional.of(question);
             }
             LOG.info("End readById question");
         } catch (SQLException e) {
@@ -135,6 +154,12 @@ public class MethodQuestionDaoImpl implements QuestionDao {
         return productOptional;
     }
 
+    /**
+     * Find questions by id user
+     *
+     * @param id id user
+     * @return List questions
+     */
     @Override
     public List<Question> findAccountIdByQuestion(Long id) {
         LOG.info("Start find account with Id by question");
@@ -156,111 +181,12 @@ public class MethodQuestionDaoImpl implements QuestionDao {
         return Collections.emptyList();
     }
 
-    @Override
-    public List<Question> findByFirstName(String firstName) {
-        LOG.info("Start find account by name to the question");
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_QUESTION_BY_ACCOUNT_FIRSTNAME)) {
-            statement.setString(1, firstName);
-            ResultSet resultSet = statement.executeQuery();
-            ResultSetExtractor<Question> extractor = MethodQuestionDaoImpl::extractQuestion;
-            LOG.info("End find account by name to the question");
-            return extractor.extractAll(resultSet);
-        } catch (SQLException e) {
-            LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}", SqlQuery.FIND_QUESTION_BY_ACCOUNT_FIRSTNAME);
-        } catch (EntityExtractionFailedException e) {
-            LOG.error("could not extract entity", e);
-        } catch (NullPointerException e) {
-            LOG.error(e);
-        }
-        return Collections.emptyList();
-    }
-
-    @Override
-    public List<Question> findByLastName(String lastName) {
-        LOG.info("Start find account by last name to the question");
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_QUESTION_BY_ACCOUNT_LASTNAME)) {
-            statement.setString(1, lastName);
-            ResultSet resultSet = statement.executeQuery();
-            ResultSetExtractor<Question> extractor = MethodQuestionDaoImpl::extractQuestion;
-            LOG.info("End find account by last name to the question");
-            return extractor.extractAll(resultSet);
-        } catch (SQLException e) {
-            LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}", SqlQuery.FIND_QUESTION_BY_ACCOUNT_LASTNAME);
-        } catch (EntityExtractionFailedException e) {
-            LOG.error("could not extract entity", e);
-        } catch (NullPointerException e) {
-            LOG.error(e);
-        }
-        return Collections.emptyList();
-    }
-
-    @Override
-    public List<Question> findByEmail(String email) {
-        LOG.info("Start find account by email to the question");
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_QUESTION_BY_ACCOUNT_EMAIL)) {
-            statement.setString(1, email);
-            ResultSet resultSet = statement.executeQuery();
-            ResultSetExtractor<Question> extractor = MethodQuestionDaoImpl::extractQuestion;
-            LOG.info("End find account by email to the question");
-            return extractor.extractAll(resultSet);
-        } catch (SQLException e) {
-            LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}", SqlQuery.FIND_QUESTION_BY_ACCOUNT_EMAIL);
-        } catch (EntityExtractionFailedException e) {
-            LOG.error("could not extract entity", e);
-        } catch (NullPointerException e) {
-            LOG.error(e);
-        }
-        return Collections.emptyList();
-    }
-
-    @Override
-    public List<Question> findByLogin(String login) {
-        LOG.info("Start find account by login to the question");
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_QUESTION_BY_ACCOUNT_LOGIN)) {
-            statement.setString(1, login);
-            ResultSet resultSet = statement.executeQuery();
-            ResultSetExtractor<Question> extractor = MethodQuestionDaoImpl::extractQuestion;
-            LOG.info("End find account by login to the question");
-            return extractor.extractAll(resultSet);
-        } catch (SQLException e) {
-            LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}", SqlQuery.FIND_QUESTION_BY_ACCOUNT_LOGIN);
-        } catch (EntityExtractionFailedException e) {
-            LOG.error("could not extract entity", e);
-        } catch (NullPointerException e) {
-            LOG.error(e);
-        }
-        return Collections.emptyList();
-    }
-
-    @Override
-    public List<Question> findByAnswer(String answer) {
-        LOG.info("Start find answer by question");
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_QUESTION_BY_ACCOUNT_ANSWER)) {
-            statement.setString(1, answer);
-            ResultSet resultSet = statement.executeQuery();
-            ResultSetExtractor<Question> extractor = MethodQuestionDaoImpl::extractQuestion;
-            LOG.info("End find answer by question");
-            return extractor.extractAll(resultSet);
-        } catch (SQLException e) {
-            LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}", SqlQuery.FIND_QUESTION_BY_ACCOUNT_ANSWER);
-        } catch (EntityExtractionFailedException e) {
-            LOG.error("could not extract entity", e);
-        } catch (NullPointerException e) {
-            LOG.error(e);
-        }
-        return Collections.emptyList();
-    }
-
+    /**
+     * Remove question by id
+     *
+     * @param id id question
+     * @return boolean result of operation
+     */
     @Override
     public boolean delete(Long id) {
         LOG.info("Start delete question");
@@ -279,6 +205,11 @@ public class MethodQuestionDaoImpl implements QuestionDao {
         return result;
     }
 
+    /**
+     * Get question
+     *
+     * @return Question
+     */
     private static Question extractQuestion(ResultSet resultSet) throws EntityExtractionFailedException {
         try {
             return new Question(
@@ -297,6 +228,12 @@ public class MethodQuestionDaoImpl implements QuestionDao {
             throw new EntityExtractionFailedException();
         }
     }
+
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static MethodQuestionDaoImpl getInstance() {
         return Holder.INSTANCE;
     }

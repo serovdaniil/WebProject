@@ -14,6 +14,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Optional;
 
+/**
+ * This command is for updating the password
+ *
+ * @author Daniil Serov
+ */
 public class UpdatePasswordCommand implements Command {
     private final UserService service;
     private final RequestFactory requestFactory;
@@ -37,7 +42,7 @@ public class UpdatePasswordCommand implements Command {
         final Optional<User> userOptional = request.retrieveFromSession(USER_SESSION_ATTRIBUTE_NAME);
         final String login = userOptional.get().getLogin();
         final String password = request.getParameter(FIND_PARAM_PASSWORD);
-        Optional<User> user=Optional.empty();
+        Optional<User> user = Optional.empty();
         try {
             user = service.updatePasswordByLogin(login, password);
         } catch (ValidationException e) {

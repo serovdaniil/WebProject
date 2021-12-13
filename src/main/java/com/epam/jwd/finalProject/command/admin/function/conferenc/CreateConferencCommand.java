@@ -11,6 +11,11 @@ import com.epam.jwd.finalProject.service.factory.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * This command is for creating a conference
+ *
+ * @author Daniil Serov
+ */
 public class CreateConferencCommand implements Command {
     private final ConferencService service;
     private final RequestFactory requestFactory;

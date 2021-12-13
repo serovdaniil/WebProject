@@ -6,6 +6,11 @@ import com.epam.jwd.finalProject.command.factory.CommandResponse;
 import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
 
+/**
+ * This command displays a page with detailed information about the user
+ *
+ * @author Daniil Serov
+ */
 public class ShowReadUserByIdPageCommand implements Command {
     private static final String SHOW_READ_USER_BY_ID_PAGE = "page.readUserById";
 

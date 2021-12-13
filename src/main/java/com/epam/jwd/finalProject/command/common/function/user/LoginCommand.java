@@ -14,6 +14,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Optional;
 
+/**
+ * This command is used to log in to your personal account
+ *
+ * @author Daniil Serov
+ */
 public class LoginCommand implements Command {
 
     private static final String INDEX_PAGE = "page.index";

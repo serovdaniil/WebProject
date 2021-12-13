@@ -5,7 +5,11 @@ import com.epam.jwd.finalProject.command.factory.CommandRequest;
 import com.epam.jwd.finalProject.command.factory.CommandResponse;
 import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
-
+/**
+ * The main page
+ *
+ * @author Daniil Serov
+ */
 public class ShowMainPageCommand implements Command {
     private static final String MAIN_PAGE = "page.main";
 

@@ -12,6 +12,11 @@ import com.epam.jwd.finalProject.service.factory.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * This command is for updating the status of the conference
+ *
+ * @author Daniil Serov
+ */
 public class ChangeStatusConferencCommand implements Command {
     private final ConferencService service;
     private final SectionConferencService sectionConferencService;

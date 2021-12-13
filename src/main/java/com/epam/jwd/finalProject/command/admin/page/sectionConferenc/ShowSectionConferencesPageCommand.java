@@ -11,6 +11,11 @@ import com.epam.jwd.finalProject.service.factory.ServiceFactory;
 
 import java.util.List;
 
+/**
+ * This command displays all sections of the conference
+ *
+ * @author Daniil Serov
+ */
 public class ShowSectionConferencesPageCommand implements Command {
     private static final String CONFERENCES_ATTRIBUTE_NAME = "sectionConferences";
     private static final String SECTION_CONFERENCES_PAGE = "page.sectionConferences";

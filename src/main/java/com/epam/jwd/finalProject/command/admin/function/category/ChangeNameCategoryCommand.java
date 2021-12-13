@@ -11,6 +11,11 @@ import com.epam.jwd.finalProject.service.factory.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * This command is for updating the category name
+ *
+ * @author Daniil Serov
+ */
 public class ChangeNameCategoryCommand implements Command {
     private final CategoryService service;
     private final RequestFactory requestFactory;

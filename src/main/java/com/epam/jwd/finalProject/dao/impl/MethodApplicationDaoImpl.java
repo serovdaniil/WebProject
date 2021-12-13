@@ -16,16 +16,38 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The application dao
+ *
+ * @author Daniil Serov
+ */
 public class MethodApplicationDaoImpl implements ApplicationDao {
-
+    /**
+     * Logger for this dao
+     */
     private static final Logger LOG = LogManager.getLogger(MethodApplicationDaoImpl.class);
-
+    /**
+     * Connection pool for this dao
+     */
     private final ConnectionPool connectionPool;
-    //change connectionPool.locking()
+
+    /**
+     * Constructor - creating a new object
+     *
+     * @param connectionPool connectionPool for this dao
+     */
     public MethodApplicationDaoImpl(ConnectionPool connectionPool) {
         this.connectionPool = connectionPool;
     }
 
+    /**
+     * Create application
+     *
+     * @param idAccount          id account
+     * @param idSectionConferenc id section conferenc for application
+     * @param idResultSection    id resulr section
+     * @return boolean result of operation
+     */
     @Override
     public boolean create(Long idAccount, Long idSectionConferenc, Long idResultSection) {
         boolean result = false;
@@ -49,6 +71,12 @@ public class MethodApplicationDaoImpl implements ApplicationDao {
         return result;
     }
 
+    /**
+     * Change status application after section conferenc
+     *
+     * @param idSectionConferenc id section conferenc for application
+     * @return boolean result of operation
+     */
     @Override
     public boolean changeStatusApplicationAfterUpdateSectionConferenc(Long idSectionConferenc) {
         LOG.info("START update result application");
@@ -70,6 +98,13 @@ public class MethodApplicationDaoImpl implements ApplicationDao {
         return result;
     }
 
+    /**
+     * Update status application by id
+     *
+     * @param idApplication   id application
+     * @param idResultSection result section
+     * @return boolean result of operation
+     */
     @Override
     public boolean updateIdStatusApplication(Long idApplication, Long idResultSection) {
         LOG.info("START update result application");
@@ -92,7 +127,11 @@ public class MethodApplicationDaoImpl implements ApplicationDao {
         return result;
     }
 
-
+    /**
+     * Read all application
+     *
+     * @return List application
+     */
     @Override
     public List<Application> readAll() throws EntityExtractionFailedException {
         LOG.info("Start readAll application");
@@ -111,6 +150,12 @@ public class MethodApplicationDaoImpl implements ApplicationDao {
         return Collections.emptyList();
     }
 
+    /**
+     * Read apllication by id
+     *
+     * @param id id application
+     * @return Application
+     */
     @Override
     public Optional<Application> readById(Long id) {
         LOG.info("Start readById application");
@@ -135,48 +180,12 @@ public class MethodApplicationDaoImpl implements ApplicationDao {
         return productOptional;
     }
 
-    @Override
-    public List<Application> findBySectionConferencId(Long idSectionConferenc) {
-        LOG.info("Start find id by section_conferenc");
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ID_SECTION_CONFERENC_BY_CAPPLICATION)) {
-            statement.setLong(1, idSectionConferenc);
-            ResultSet resultSet = statement.executeQuery();
-            ResultSetExtractor<Application> extractor = MethodApplicationDaoImpl::extractApplication;
-            LOG.info("End find id by section_conferenc");
-            return extractor.extractAll(resultSet);
-        } catch (SQLException e) {
-            LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}", SqlQuery.FIND_ID_SECTION_CONFERENC_BY_CAPPLICATION);
-        } catch (EntityExtractionFailedException e) {
-            LOG.error("could not extract entity", e);
-        } catch (NullPointerException e) {
-            LOG.error(e);
-        }
-        return Collections.emptyList();
-    }
-
-    @Override
-    public List<Application> findBySectionConferencName(String nameSectionConferenc) {
-        LOG.info("Start find name by section_conferenc");
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_NAME_SECTION_CONFERENC_BY_CAPPLICATION)) {
-            statement.setString(1, nameSectionConferenc);
-            ResultSet resultSet = statement.executeQuery();
-            ResultSetExtractor<Application> extractor = MethodApplicationDaoImpl::extractApplication;
-            LOG.info("End find name by section_conferenc");
-            return extractor.extractAll(resultSet);
-        } catch (SQLException e) {
-            LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}", SqlQuery.FIND_NAME_SECTION_CONFERENC_BY_CAPPLICATION);
-        } catch (EntityExtractionFailedException e) {
-            LOG.error("could not extract entity", e);
-        } catch (NullPointerException e) {
-            LOG.error(e);
-        }
-        return Collections.emptyList();
-    }
-
+    /**
+     * Find application by id account
+     *
+     * @param id id application
+     * @return List application
+     */
     @Override
     public List<Application> findAccountIdByApplication(Long id) {
         LOG.info("Start find id by account");
@@ -198,90 +207,12 @@ public class MethodApplicationDaoImpl implements ApplicationDao {
         return Collections.emptyList();
     }
 
-    @Override
-    public List<Application> findByFirstName(String firstName) {
-        LOG.info("Start find firstName by account");
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_FIRSTNAME_ACCOUNT_BY_CAPPLICATION)) {
-            statement.setString(1, firstName);
-            ResultSet resultSet = statement.executeQuery();
-            ResultSetExtractor<Application> extractor = MethodApplicationDaoImpl::extractApplication;
-            LOG.info("End find firstName by account");
-            return extractor.extractAll(resultSet);
-        } catch (SQLException e) {
-            LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}", SqlQuery.FIND_FIRSTNAME_ACCOUNT_BY_CAPPLICATION);
-        } catch (EntityExtractionFailedException e) {
-            LOG.error("could not extract entity", e);
-        } catch (NullPointerException e) {
-            LOG.error(e);
-        }
-        return Collections.emptyList();
-    }
-
-    @Override
-    public List<Application> findByLastName(String lastName) {
-        LOG.info("Start find lastName by account");
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_LASTNAME_ACCOUNT_BY_CAPPLICATION)) {
-            statement.setString(1, lastName);
-            ResultSet resultSet = statement.executeQuery();
-            ResultSetExtractor<Application> extractor = MethodApplicationDaoImpl::extractApplication;
-            LOG.info("End find lastName by account");
-            return extractor.extractAll(resultSet);
-        } catch (SQLException e) {
-            LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}", SqlQuery.FIND_LASTNAME_ACCOUNT_BY_CAPPLICATION);
-        } catch (EntityExtractionFailedException e) {
-            LOG.error("could not extract entity", e);
-        } catch (NullPointerException e) {
-            LOG.error(e);
-        }
-        return Collections.emptyList();
-    }
-
-    @Override
-    public List<Application> findByEmail(String email) {
-        LOG.info("Start find email by account");
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_EMAIL_ACCOUNT_BY_CAPPLICATION)) {
-            statement.setString(1, email);
-            ResultSet resultSet = statement.executeQuery();
-            ResultSetExtractor<Application> extractor = MethodApplicationDaoImpl::extractApplication;
-            LOG.info("End find email by account");
-            return extractor.extractAll(resultSet);
-        } catch (SQLException e) {
-            LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}", SqlQuery.FIND_EMAIL_ACCOUNT_BY_CAPPLICATION);
-        } catch (EntityExtractionFailedException e) {
-            LOG.error("could not extract entity", e);
-        } catch (NullPointerException e) {
-            LOG.error(e);
-        }
-        return Collections.emptyList();
-    }
-
-    @Override
-    public List<Application> findByLogin(String login) {
-        LOG.info("Start find login by account");
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_LOGIN_ACCOUNT_BY_CAPPLICATION)) {
-            statement.setString(1, login);
-            ResultSet resultSet = statement.executeQuery();
-            ResultSetExtractor<Application> extractor = MethodApplicationDaoImpl::extractApplication;
-            LOG.info("End find login by account");
-            return extractor.extractAll(resultSet);
-        } catch (SQLException e) {
-            LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}", SqlQuery.FIND_LOGIN_ACCOUNT_BY_CAPPLICATION);
-        } catch (EntityExtractionFailedException e) {
-            LOG.error("could not extract entity", e);
-        } catch (NullPointerException e) {
-            LOG.error(e);
-        }
-        return Collections.emptyList();
-    }
-
+    /**
+     * Find application by status result
+     *
+     * @param idStatus id status application
+     * @return List application
+     */
     @Override
     public List<Application> findByStatusResult(Long idStatus) {
         LOG.info("Start find statusResult by account");
@@ -303,90 +234,12 @@ public class MethodApplicationDaoImpl implements ApplicationDao {
         return Collections.emptyList();
     }
 
-    @Override
-    public List<Application> findByConferencId(Long idConferenc) {
-        LOG.info("Start find IdConferenc by account");
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ID_CONFERENC_BY_CAPPLICATION)) {
-            statement.setLong(1, idConferenc);
-            ResultSet resultSet = statement.executeQuery();
-            ResultSetExtractor<Application> extractor = MethodApplicationDaoImpl::extractApplication;
-            LOG.info("End find IdConferenc by account");
-            return extractor.extractAll(resultSet);
-        } catch (SQLException e) {
-            LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}", SqlQuery.FIND_ID_CONFERENC_BY_CAPPLICATION);
-        } catch (EntityExtractionFailedException e) {
-            LOG.error("could not extract entity", e);
-        } catch (NullPointerException e) {
-            LOG.error(e);
-        }
-        return Collections.emptyList();
-    }
-
-    @Override
-    public List<Application> findByConferencName(String nameConferenc) {
-        LOG.info("Start find nameConferenc by account");
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_NAME_CONFERENC_BY_CAPPLICATION)) {
-            statement.setString(1, nameConferenc);
-            ResultSet resultSet = statement.executeQuery();
-            ResultSetExtractor<Application> extractor = MethodApplicationDaoImpl::extractApplication;
-            LOG.info("End find nameConferenc by account");
-            return extractor.extractAll(resultSet);
-        } catch (SQLException e) {
-            LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}", SqlQuery.FIND_NAME_CONFERENC_BY_CAPPLICATION);
-        } catch (EntityExtractionFailedException e) {
-            LOG.error("could not extract entity", e);
-        } catch (NullPointerException e) {
-            LOG.error(e);
-        }
-        return Collections.emptyList();
-    }
-
-    @Override
-    public List<Application> findByCategoryId(Long idCategory) {
-        LOG.info("Start find idCategory by account");
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ID_CATEGORY_BY_CAPPLICATION)) {
-            statement.setLong(1, idCategory);
-            ResultSet resultSet = statement.executeQuery();
-            ResultSetExtractor<Application> extractor = MethodApplicationDaoImpl::extractApplication;
-            LOG.info("End find idCategory by account");
-            return extractor.extractAll(resultSet);
-        } catch (SQLException e) {
-            LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}", SqlQuery.FIND_ID_CATEGORY_BY_CAPPLICATION);
-        } catch (EntityExtractionFailedException e) {
-            LOG.error("could not extract entity", e);
-        } catch (NullPointerException e) {
-            LOG.error(e);
-        }
-        return Collections.emptyList();
-    }
-
-    @Override
-    public List<Application> findByCategoryName(String nameCategory) {
-        LOG.info("Start find nameCategory by account");
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_NAME_CATEGORY_BY_CAPPLICATION)) {
-            statement.setString(1, nameCategory);
-            ResultSet resultSet = statement.executeQuery();
-            ResultSetExtractor<Application> extractor = MethodApplicationDaoImpl::extractApplication;
-            LOG.info("End find nameCategory by account");
-            return extractor.extractAll(resultSet);
-        } catch (SQLException e) {
-            LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}", SqlQuery.FIND_NAME_CATEGORY_BY_CAPPLICATION);
-        } catch (EntityExtractionFailedException e) {
-            LOG.error("could not extract entity", e);
-        } catch (NullPointerException e) {
-            LOG.error(e);
-        }
-        return Collections.emptyList();
-    }
-
+    /**
+     * Remove application by id
+     *
+     * @param id id application
+     * @return boolean result of operation
+     */
     @Override
     public boolean delete(Long id) {
         LOG.info("Start delete application");
@@ -405,7 +258,11 @@ public class MethodApplicationDaoImpl implements ApplicationDao {
         return result;
     }
 
-
+    /**
+     * Get application
+     *
+     * @return Application
+     */
     private static Application extractApplication(ResultSet resultSet) throws EntityExtractionFailedException {
         try {
             return new Application(
@@ -436,6 +293,12 @@ public class MethodApplicationDaoImpl implements ApplicationDao {
             throw new EntityExtractionFailedException();
         }
     }
+
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static MethodApplicationDaoImpl getInstance() {
         return MethodApplicationDaoImpl.Holder.INSTANCE;
     }

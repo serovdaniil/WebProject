@@ -15,6 +15,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * This command is used to search for a conference by name
+ *
+ * @author Daniil Serov
+ */
 public class FindConferencByNameCommand implements Command {
     private final ConferencService service;
     private final RequestFactory requestFactory;

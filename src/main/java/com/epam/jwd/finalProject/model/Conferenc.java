@@ -2,6 +2,11 @@ package com.epam.jwd.finalProject.model;
 
 import java.util.Objects;
 
+/**
+ * Entity class Conferenc
+ *
+ * @author Daniil Serov
+ */
 public class Conferenc implements Entity {
     private final Long id;
     private final String name;

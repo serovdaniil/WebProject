@@ -14,6 +14,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Optional;
 
+/**
+ * This command displays detailed information about the user
+ *
+ * @author Daniil Serov
+ */
 public class ReadUserByIdCommand implements Command {
     private final UserService service;
     private final RequestFactory requestFactory;

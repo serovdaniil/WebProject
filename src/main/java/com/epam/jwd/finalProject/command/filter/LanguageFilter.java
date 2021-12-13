@@ -12,6 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 
+/**
+ * Localization filter
+ *
+ * @author Daniil Serov
+ */
 @WebFilter(urlPatterns = "/*")
 public class LanguageFilter implements Filter {
 

@@ -14,11 +14,15 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Optional;
 
+/**
+ * This command changes the roles of users
+ *
+ * @author Daniil Serov
+ */
 public class UpdateRoleCommand implements Command {
     private final UserService service;
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
-    private static final String USER_SESSION_ATTRIBUTE_NAME = "user";
     private static final String FIND_PARAM_ID_ROLE = "roleNew";
     private static final String FIND_PARAM_ID_ACCOUNT = "id";
     private static final String URL_UPDATE_ROLE_USER_PAGE = "/controller?command=show_users";

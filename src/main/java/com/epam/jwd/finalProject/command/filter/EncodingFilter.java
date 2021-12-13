@@ -10,9 +10,13 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebInitParam;
 
+/**
+ * Character Encoding filter
+ *
+ * @author Daniil Serov
+ */
 @WebFilter(filterName = "Encoding", urlPatterns = {"/*"}, initParams = {
         @WebInitParam(name = "encoding", value = "UTF-8", description = "Encoding Param")})
-
 public class EncodingFilter implements Filter {
     private String code;
 

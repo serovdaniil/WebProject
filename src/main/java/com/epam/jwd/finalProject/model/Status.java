@@ -2,7 +2,12 @@ package com.epam.jwd.finalProject.model;
 
 import java.util.Objects;
 
-public class Status implements Entity{
+/**
+ * Entity class status
+ *
+ * @author Daniil Serov
+ */
+public class Status implements Entity {
     private final Long id;
     private final String status;
 

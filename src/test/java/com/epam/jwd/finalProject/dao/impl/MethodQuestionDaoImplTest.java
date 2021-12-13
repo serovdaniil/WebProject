@@ -64,14 +64,6 @@ public class MethodQuestionDaoImplTest extends Assert {
     }
 
     @Test
-    public void updateQuestion() {
-        boolean expectedResult = true;
-        when(dao.updateQuestion(idUser,question)).thenReturn(true);
-        boolean actualResult = dao.updateQuestion(idUser,question);
-        Assert.assertEquals(actualResult, expectedResult);
-    }
-
-    @Test
     public void readAll() throws EntityExtractionFailedException {
         List<Question> expectedResult = questionList;
         when(dao.readAll()).thenReturn(expectedResult);
@@ -92,46 +84,6 @@ public class MethodQuestionDaoImplTest extends Assert {
         List<Question> expectedResult = questionList;
         when(dao.findAccountIdByQuestion(idUser)).thenReturn(expectedResult);
         List<Question> actualResult = dao.findAccountIdByQuestion(idUser);
-        assertEquals(actualResult, expectedResult);
-    }
-
-    @Test
-    public void findByFirstName() {
-        List<Question> expectedResult = questionList;
-        when(dao.findByFirstName(firstName)).thenReturn(expectedResult);
-        List<Question> actualResult = dao.findByFirstName(firstName);
-        assertEquals(actualResult, expectedResult);
-    }
-
-    @Test
-    public void findByLastName() {
-        List<Question> expectedResult = questionList;
-        when(dao.findByLastName(lastName)).thenReturn(expectedResult);
-        List<Question> actualResult = dao.findByLastName(lastName);
-        assertEquals(actualResult, expectedResult);
-    }
-
-    @Test
-    public void findByEmail() {
-        List<Question> expectedResult = questionList;
-        when(dao.findByEmail(email)).thenReturn(expectedResult);
-        List<Question> actualResult = dao.findByEmail(email);
-        assertEquals(actualResult, expectedResult);
-    }
-
-    @Test
-    public void findByLogin() {
-        List<Question> expectedResult = questionList;
-        when(dao.findByLogin(login)).thenReturn(expectedResult);
-        List<Question> actualResult = dao.findByLogin(login);
-        assertEquals(actualResult, expectedResult);
-    }
-
-    @Test
-    public void findByAnswer() {
-        List<Question> expectedResult = questionList;
-        when(dao.findByAnswer(answer)).thenReturn(expectedResult);
-        List<Question> actualResult = dao.findByAnswer(answer);
         assertEquals(actualResult, expectedResult);
     }
 

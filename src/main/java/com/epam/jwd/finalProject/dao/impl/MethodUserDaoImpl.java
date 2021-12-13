@@ -12,17 +12,37 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The user dao
+ *
+ * @author Daniil Serov
+ */
 public class MethodUserDaoImpl implements UserDao {
-
+    /**
+     * Logger for this dao
+     */
     private static final Logger LOG = LogManager.getLogger(MethodUserDaoImpl.class);
-
+    /**
+     * Connection pool for this dao
+     */
     private final ConnectionPool connectionPool;
 
-    //change connectionPool.locking()
+    /**
+     * Constructor - creating a new object
+     *
+     * @param connectionPool connectionPool for this dao
+     */
     public MethodUserDaoImpl(ConnectionPool connectionPool) {
         this.connectionPool = connectionPool;
     }
 
+    /**
+     * Create user
+     *
+     * @param email    email for new user
+     * @param password password for new user
+     * @return User
+     */
     @Override
     public Optional<User> create(String email, String password) {
         boolean result = false;
@@ -50,6 +70,12 @@ public class MethodUserDaoImpl implements UserDao {
         return findByEmail(email);
     }
 
+    /**
+     * Read user by id
+     *
+     * @param id id for user
+     * @return User
+     */
     @Override
     public Optional<User> readById(Long id) {
         LOG.info("Start readById user");
@@ -74,6 +100,13 @@ public class MethodUserDaoImpl implements UserDao {
         return productOptional;
     }
 
+    /**
+     * Update password by login
+     *
+     * @param login    login for user
+     * @param password password for user
+     * @return User
+     */
     @Override
     public Optional<User> updatePasswordByLogin(String login, String password) {
         LOG.info("START update password by login account");
@@ -96,28 +129,13 @@ public class MethodUserDaoImpl implements UserDao {
         return findPasswordByLogin(login);
     }
 
-    @Override
-    public boolean updateLogin(Long id, String login) {
-        LOG.info("START update login by id account");
-        boolean result = false;
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_LOGIN_BY_ID_ACCOUNT)) {
-            statement.setLong(2, id);
-            statement.setString(1, login);
-            int rowCount = statement.executeUpdate();
-            if (rowCount != 0) {
-                result = true;
-            }
-            LOG.info("END update login by id account");
-        } catch (SQLException e) {
-            LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}", SqlQuery.UPDATE_LOGIN_BY_ID_ACCOUNT);
-        } catch (NullPointerException e) {
-            LOG.error(e);
-        }
-        return result;
-    }
-
+    /**
+     * Update email
+     *
+     * @param id    id for user
+     * @param email email for user
+     * @return User
+     */
     @Override
     public Optional<User> updateEmail(Long id, String email) {
         LOG.info("START update email by id account");
@@ -140,6 +158,13 @@ public class MethodUserDaoImpl implements UserDao {
         return readById(id);
     }
 
+    /**
+     * Update first name
+     *
+     * @param id        id for user
+     * @param firstName firstName for user
+     * @return User
+     */
     @Override
     public Optional<User> updateFirstName(Long id, String firstName) {
         LOG.info("START update firstName by id account");
@@ -158,6 +183,13 @@ public class MethodUserDaoImpl implements UserDao {
         return readById(id);
     }
 
+    /**
+     * Update last name
+     *
+     * @param id       id for user
+     * @param lastName lastName for user
+     * @return User
+     */
     @Override
     public Optional<User> updateLastName(Long id, String lastName) {
         LOG.info("START update lastName by id account");
@@ -176,6 +208,13 @@ public class MethodUserDaoImpl implements UserDao {
         return readById(id);
     }
 
+    /**
+     * Update role
+     *
+     * @param idAccount id for user
+     * @param idRole    id role for user
+     * @return User
+     */
     @Override
     public Optional<User> updateRole(Long idAccount, Long idRole) {
         LOG.info("START update role by id account");
@@ -194,6 +233,11 @@ public class MethodUserDaoImpl implements UserDao {
         return readById(idAccount);
     }
 
+    /**
+     * Read all users
+     *
+     * @return List user
+     */
     @Override
     public List<User> readAll() throws EntityExtractionFailedException {
         LOG.info("Start readAll account");
@@ -212,48 +256,12 @@ public class MethodUserDaoImpl implements UserDao {
         return Collections.emptyList();
     }
 
-    @Override
-    public List<User> findByFirstName(String firstName) {
-        LOG.info("Start find firstName by account");
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_FIRSTNAME_BY_ACCOUNT)) {
-            statement.setString(1, firstName);
-            ResultSet resultSet = statement.executeQuery();
-            ResultSetExtractor<User> extractor = MethodUserDaoImpl::extractUser;
-            LOG.info("End find firstName by account");
-            return extractor.extractAll(resultSet);
-        } catch (SQLException e) {
-            LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}", SqlQuery.FIND_FIRSTNAME_BY_ACCOUNT);
-        } catch (EntityExtractionFailedException e) {
-            LOG.error("could not extract entity", e);
-        } catch (NullPointerException e) {
-            LOG.error(e);
-        }
-        return Collections.emptyList();
-    }
-
-    @Override
-    public List<User> findByLastName(String lastName) {
-        LOG.info("Start find lastName by account");
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_LASTNAME_BY_ACCOUNT)) {
-            statement.setString(1, lastName);
-            ResultSet resultSet = statement.executeQuery();
-            ResultSetExtractor<User> extractor = MethodUserDaoImpl::extractUser;
-            LOG.info("End find lastName by account");
-            return extractor.extractAll(resultSet);
-        } catch (SQLException e) {
-            LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}", SqlQuery.FIND_LASTNAME_BY_ACCOUNT);
-        } catch (EntityExtractionFailedException e) {
-            LOG.error("could not extract entity", e);
-        } catch (NullPointerException e) {
-            LOG.error(e);
-        }
-        return Collections.emptyList();
-    }
-
+    /**
+     * Find user by email
+     *
+     * @param email email for user
+     * @return User
+     */
     @Override
     public Optional<User> findByEmail(String email) {
         LOG.info("Start find email by account");
@@ -278,6 +286,12 @@ public class MethodUserDaoImpl implements UserDao {
         return productOptional;
     }
 
+    /**
+     * Find password by login
+     *
+     * @param login login for user
+     * @return User
+     */
     @Override
     public Optional<User> findPasswordByLogin(String login) {
         LOG.info("Start find password by login");
@@ -298,6 +312,11 @@ public class MethodUserDaoImpl implements UserDao {
         return productOptional;
     }
 
+    /**
+     * Get user
+     *
+     * @return User
+     */
     private static User extractUser(ResultSet resultSet) throws EntityExtractionFailedException {
         try {
             return new User(resultSet.getLong("id_user"),
@@ -312,6 +331,11 @@ public class MethodUserDaoImpl implements UserDao {
         }
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static MethodUserDaoImpl getInstance() {
         return MethodUserDaoImpl.Holder.INSTANCE;
     }

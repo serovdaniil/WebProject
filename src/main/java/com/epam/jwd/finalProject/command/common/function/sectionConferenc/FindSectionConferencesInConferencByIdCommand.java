@@ -14,6 +14,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * This command is used to search for the conference section by the conference id
+ *
+ * @author Daniil Serov
+ */
 public class FindSectionConferencesInConferencByIdCommand implements Command {private final SectionConferencService service;
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;

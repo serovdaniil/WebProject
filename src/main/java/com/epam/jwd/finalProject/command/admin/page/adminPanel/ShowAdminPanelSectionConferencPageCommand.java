@@ -6,6 +6,11 @@ import com.epam.jwd.finalProject.command.factory.CommandResponse;
 import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
 
+/**
+ * This command displays the admin panel for managing conference sections
+ *
+ * @author Daniil Serov
+ */
 public class ShowAdminPanelSectionConferencPageCommand implements Command {
     private static final String SHOW_READ_USER_BY_ID_PAGE = "page.adminPanelSectionConferenc";
 

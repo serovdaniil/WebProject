@@ -4,7 +4,9 @@ import com.epam.jwd.finalProject.command.factory.CommandRequest;
 import com.epam.jwd.finalProject.command.factory.CommandResponse;
 
 import javax.servlet.http.HttpServletRequest;
-
+/**
+ * @author Daniil Serov
+ */
 public interface RequestFactory {
     CommandRequest createRequest(HttpServletRequest request);
 

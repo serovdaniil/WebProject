@@ -11,6 +11,11 @@ import com.epam.jwd.finalProject.service.factory.ServiceFactory;
 
 import java.util.List;
 
+/**
+ * This command displays all user questions
+ *
+ * @author Daniil Serov
+ */
 public class ShowQuestionPageCommand implements Command {
     private static final String QUESTIONS_ATTRIBUTE_NAME = "questions";
     private static final String QUESTION_PAGE = "page.questions";

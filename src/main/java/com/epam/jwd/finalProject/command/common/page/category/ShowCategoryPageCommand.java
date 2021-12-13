@@ -10,7 +10,11 @@ import com.epam.jwd.finalProject.service.api.EntityService;
 import com.epam.jwd.finalProject.service.factory.ServiceFactory;
 
 import java.util.List;
-
+/**
+ * This page displays categories
+ *
+ * @author Daniil Serov
+ */
 public class ShowCategoryPageCommand implements Command {
     private static final String CATEGORIES_ATTRIBUTE_NAME = "categories";
     private static final String CATEGORIES_PAGE = "page.categories";

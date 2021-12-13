@@ -18,24 +18,46 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The section conferenc dao
+ *
+ * @author Daniil Serov
+ */
 public class MethodSectionConferencDaoImpl implements SectionConferencDao {
-
+    /**
+     * Logger for this dao
+     */
     private static final Logger LOG = LogManager.getLogger(MethodConferencDaoImpl.class);
+    /**
+     * Connection pool for this dao
+     */
     private final ConnectionPool connectionPool;
 
-    //change connectionPool.locking()
+    /**
+     * Constructor - creating a new object
+     *
+     * @param connectionPool connectionPool for this dao
+     */
     public MethodSectionConferencDaoImpl(ConnectionPool connectionPool) {
         this.connectionPool = connectionPool;
     }
 
+    /**
+     * Create section conferenc
+     *
+     * @param name        name for new section conferenc
+     * @param description description for new section conferenc
+     * @param idConferenc id conferenc for new section conferenc
+     * @return boolean result of operation
+     */
     @Override
-    public boolean create(String name, String discription, Long idConferenc) {
+    public boolean create(String name, String description, Long idConferenc) {
         boolean result = false;
         LOG.info("Start create and add new section_conferenc");
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.CREATE_SECTION_CONFERENC)) {
             statement.setString(1, name);
-            statement.setString(2, discription);
+            statement.setString(2, description);
             statement.setLong(3, idConferenc);
             int rowCount = statement.executeUpdate();
             if (rowCount != 0) {
@@ -51,6 +73,13 @@ public class MethodSectionConferencDaoImpl implements SectionConferencDao {
         return result;
     }
 
+    /**
+     * Change status by id section conferenc
+     *
+     * @param idSectionConferenc id for section conferenc
+     * @param idStatus           id status for section conferenc
+     * @return boolean result of operation
+     */
     @Override
     public boolean changeStatus(Long idSectionConferenc, Long idStatus) {
         LOG.info("Start update status section conferenc");
@@ -73,6 +102,12 @@ public class MethodSectionConferencDaoImpl implements SectionConferencDao {
         return result;
     }
 
+    /**
+     * Change status after update status conferenc by id conferenc
+     *
+     * @param idConferenc id for conferenc
+     * @return boolean result of operation
+     */
     @Override
     public boolean changeStatusAfterUpdateConferenc(Long idConferenc) {
         LOG.info("Start update status section conferences after update conferenc");
@@ -95,6 +130,13 @@ public class MethodSectionConferencDaoImpl implements SectionConferencDao {
         return result;
     }
 
+    /**
+     * Update description by id section conferenc
+     *
+     * @param id          id for section conferenc
+     * @param description description for section conferenc
+     * @return boolean result of operation
+     */
     @Override
     public boolean updateDescription(Long id, String description) {
         LOG.info("Start add description by section_conferenc");
@@ -117,6 +159,11 @@ public class MethodSectionConferencDaoImpl implements SectionConferencDao {
         return result;
     }
 
+    /**
+     * Read all section conferenc
+     *
+     * @return List section conferenc
+     */
     @Override
     public List<SectionConferenc> readAll() throws EntityExtractionFailedException {
         LOG.info("Start readAll conferenc");
@@ -135,6 +182,12 @@ public class MethodSectionConferencDaoImpl implements SectionConferencDao {
         return Collections.emptyList();
     }
 
+    /**
+     * Find section conferenc by id
+     *
+     * @param id id for section conferenc
+     * @return Section conferenc
+     */
     @Override
     public Optional<SectionConferenc> readById(Long id) {
         LOG.info("Start readById section_conferenc");
@@ -159,6 +212,12 @@ public class MethodSectionConferencDaoImpl implements SectionConferencDao {
         return productOptional;
     }
 
+    /**
+     * Find section conferenc by name
+     *
+     * @param name name for section conferenc
+     * @return List section conferenc
+     */
     @Override
     public List<SectionConferenc> findByName(String name) {
         LOG.info("Start find name by section_conferenc");
@@ -180,6 +239,12 @@ public class MethodSectionConferencDaoImpl implements SectionConferencDao {
         return Collections.emptyList();
     }
 
+    /**
+     * Remove section conferenc by id
+     *
+     * @param id id for section conferenc
+     * @return boolean result of operation
+     */
     @Override
     public boolean delete(Long id) {
         LOG.info("Start delete conferenc");
@@ -198,26 +263,12 @@ public class MethodSectionConferencDaoImpl implements SectionConferencDao {
         return result;
     }
 
-    private static SectionConferenc extractSectionConferenc(ResultSet resultSet) throws EntityExtractionFailedException {
-        try {
-            return new SectionConferenc(
-                    resultSet.getLong("id_section_conferenc"),
-                    resultSet.getString("name"),
-                    resultSet.getString("description"),
-                    new Conferenc(resultSet.getLong("id_conferenc"),
-                            resultSet.getString("conferenc.name"),
-                            resultSet.getString("conferenc.description"),
-                            new Category(resultSet.getLong("id_category"),
-                                    resultSet.getString("name_category")),
-                            new Status(resultSet.getLong("id_status"),
-                                    resultSet.getString("name_status"))),
-                    new Status(resultSet.getLong("id_status"),
-                            resultSet.getString("name_status")));
-        } catch (SQLException e) {
-            throw new EntityExtractionFailedException();
-        }
-    }
-
+    /**
+     * Find section conferenc by id conferenc
+     *
+     * @param id id for conferenc
+     * @return List section conferenc
+     */
     @Override
     public List<SectionConferenc> findSectionConferencesInConferencById(Long id) {
         LOG.info("Start find section_conferences in conferenc by id");
@@ -239,6 +290,36 @@ public class MethodSectionConferencDaoImpl implements SectionConferencDao {
         return Collections.emptyList();
     }
 
+    /**
+     * Get section conferenc
+     *
+     * @return Section conferenc
+     */
+    private static SectionConferenc extractSectionConferenc(ResultSet resultSet) throws EntityExtractionFailedException {
+        try {
+            return new SectionConferenc(
+                    resultSet.getLong("id_section_conferenc"),
+                    resultSet.getString("name"),
+                    resultSet.getString("description"),
+                    new Conferenc(resultSet.getLong("id_conferenc"),
+                            resultSet.getString("conferenc.name"),
+                            resultSet.getString("conferenc.description"),
+                            new Category(resultSet.getLong("id_category"),
+                                    resultSet.getString("name_category")),
+                            new Status(resultSet.getLong("id_status"),
+                                    resultSet.getString("name_status"))),
+                    new Status(resultSet.getLong("id_status"),
+                            resultSet.getString("name_status")));
+        } catch (SQLException e) {
+            throw new EntityExtractionFailedException();
+        }
+    }
+
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static MethodSectionConferencDaoImpl getInstance() {
         return MethodSectionConferencDaoImpl.Holder.INSTANCE;
     }

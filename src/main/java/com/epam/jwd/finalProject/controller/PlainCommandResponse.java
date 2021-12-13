@@ -3,7 +3,9 @@ package com.epam.jwd.finalProject.controller;
 import com.epam.jwd.finalProject.command.factory.CommandResponse;
 
 import java.util.Objects;
-
+/**
+ * @author Daniil Serov
+ */
 public class PlainCommandResponse implements CommandResponse {
 
     private final boolean redirect;

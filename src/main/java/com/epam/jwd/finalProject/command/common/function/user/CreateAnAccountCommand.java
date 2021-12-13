@@ -14,6 +14,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Optional;
 
+/**
+ * This command is for creating a personal account
+ *
+ * @author Daniil Serov
+ */
 public class CreateAnAccountCommand implements Command {
     private static final String INDEX_PAGE = "page.index";
     private static final String REGISTRATION_PAGE = "page.createAnAccount";

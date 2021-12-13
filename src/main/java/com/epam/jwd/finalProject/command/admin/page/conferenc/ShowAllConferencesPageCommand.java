@@ -11,6 +11,11 @@ import com.epam.jwd.finalProject.service.factory.ServiceFactory;
 
 import java.util.List;
 
+/**
+ * This command displays all conferences
+ *
+ * @author Daniil Serov
+ */
 public class ShowAllConferencesPageCommand implements Command {
     private static final String CONFERENCES_ATTRIBUTE_NAME = "conferences";
     private static final String CONFERENCES_PAGE = "page.allConferences";

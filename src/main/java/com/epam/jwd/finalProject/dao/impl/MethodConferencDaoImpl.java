@@ -17,17 +17,38 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The conferenc dao
+ *
+ * @author Daniil Serov
+ */
 public class MethodConferencDaoImpl implements ConferencDao {
-
+    /**
+     * Logger for this dao
+     */
     private static final Logger LOG = LogManager.getLogger(MethodConferencDaoImpl.class);
-
+    /**
+     * Connection pool for this dao
+     */
     private final ConnectionPool connectionPool;
 
-    //change connectionPool.locking()
+    /**
+     * Constructor - creating a new object
+     *
+     * @param connectionPool connectionPool for this dao
+     */
     public MethodConferencDaoImpl(ConnectionPool connectionPool) {
         this.connectionPool = connectionPool;
     }
 
+    /**
+     * Create conferenc
+     *
+     * @param name        name for new conferenc
+     * @param description description for new conferenc
+     * @param idCategory  id category for new conferenc
+     * @return boolean result of operation
+     */
     @Override
     public boolean create(String name, String description, Long idCategory) {
         boolean result = false;
@@ -51,6 +72,13 @@ public class MethodConferencDaoImpl implements ConferencDao {
         return result;
     }
 
+    /**
+     * Change status conferenc by id
+     *
+     * @param idConferenc id conferenc
+     * @param idStatus    status conferenc
+     * @return boolean result of operation
+     */
     @Override
     public boolean changeStatus(Long idConferenc, Long idStatus) {
         LOG.info("Start update status conferenc");
@@ -73,6 +101,13 @@ public class MethodConferencDaoImpl implements ConferencDao {
         return result;
     }
 
+    /**
+     * Update description for conferenc
+     *
+     * @param id          id conferenc
+     * @param description new description for conferenc
+     * @return boolean result of operation
+     */
     @Override
     public boolean updateDescription(Long id, String description) {
         LOG.info("Start add description by conferenc");
@@ -95,6 +130,11 @@ public class MethodConferencDaoImpl implements ConferencDao {
         return result;
     }
 
+    /**
+     * Read all conferenc
+     *
+     * @return List Conferenc
+     */
     @Override
     public List<Conferenc> readAll() throws EntityExtractionFailedException {
         LOG.info("Start readAll conferenc");
@@ -113,6 +153,11 @@ public class MethodConferencDaoImpl implements ConferencDao {
         return Collections.emptyList();
     }
 
+    /**
+     * Read all active status conferenc
+     *
+     * @return List Conferenc
+     */
     @Override
     public List<Conferenc> readAllActive() throws EntityExtractionFailedException {
         LOG.info("Start readAll conferenc active");
@@ -131,6 +176,12 @@ public class MethodConferencDaoImpl implements ConferencDao {
         return Collections.emptyList();
     }
 
+    /**
+     * Read conferenc by id
+     *
+     * @param id id conferenc
+     * @return Conferenc
+     */
     @Override
     public Optional<Conferenc> readById(Long id) {
         LOG.info("Start readById conferenc");
@@ -155,6 +206,12 @@ public class MethodConferencDaoImpl implements ConferencDao {
         return productOptional;
     }
 
+    /**
+     * Find conferences by name
+     *
+     * @param name name conferenc
+     * @return List Conferenc
+     */
     @Override
     public List<Conferenc> findByName(String name) {
         LOG.info("Start find name by conferenc");
@@ -176,6 +233,12 @@ public class MethodConferencDaoImpl implements ConferencDao {
         return Collections.emptyList();
     }
 
+    /**
+     * Remove conferenc by id
+     *
+     * @param id id conferenc
+     * @return boolean result of operation
+     */
     @Override
     public boolean delete(Long id) {
         LOG.info("Start delete conferenc");
@@ -194,6 +257,11 @@ public class MethodConferencDaoImpl implements ConferencDao {
         return result;
     }
 
+    /**
+     * Get conferenc
+     *
+     * @return Conferenc
+     */
     private static Conferenc extractConferenc(ResultSet resultSet) throws EntityExtractionFailedException {
         try {
             return new Conferenc(
@@ -209,6 +277,11 @@ public class MethodConferencDaoImpl implements ConferencDao {
         }
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static MethodConferencDaoImpl getInstance() {
         return MethodConferencDaoImpl.Holder.INSTANCE;
     }

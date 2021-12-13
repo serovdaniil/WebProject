@@ -5,7 +5,11 @@ import com.epam.jwd.finalProject.command.factory.CommandRequest;
 import com.epam.jwd.finalProject.command.factory.CommandResponse;
 import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
-
+/**
+ * The about page
+ *
+ * @author Daniil Serov
+ */
 public class ShowAboutPageCommand implements Command {
     private static final String FIND_SECTION_CONFERENCES_BY_NAME_PAGE = "page.about";
 

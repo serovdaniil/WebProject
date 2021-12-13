@@ -64,13 +64,6 @@ public class MethodUserDaoImplTest extends Assert {
         assertEquals(actualResult, expectedResult);
     }
 
-    @Test
-    public void updateLogin() {
-        boolean expectedResult = true;
-        when(dao.updateLogin(id, login)).thenReturn(true);
-        boolean actualResult = dao.updateLogin(id, login);
-        Assert.assertEquals(actualResult, expectedResult);
-    }
 
     @Test
     public void updateEmail() {
@@ -109,22 +102,6 @@ public class MethodUserDaoImplTest extends Assert {
         List<User> expectedResult= users;
         when(dao.readAll()).thenReturn(expectedResult);
         List<User> actualResult = dao.readAll();
-        assertEquals(actualResult, expectedResult);
-    }
-
-    @Test
-    public void findByFirstName() {
-        List<User> expectedResult= users;
-        when(dao.findByFirstName(firstName)).thenReturn(expectedResult);
-        List<User> actualResult = dao.findByFirstName(firstName);
-        assertEquals(actualResult, expectedResult);
-    }
-
-    @Test
-    public void findByLastName() {
-        List<User> expectedResult= users;
-        when(dao.findByLastName(lastName)).thenReturn(expectedResult);
-        List<User> actualResult = dao.findByLastName(lastName);
         assertEquals(actualResult, expectedResult);
     }
 

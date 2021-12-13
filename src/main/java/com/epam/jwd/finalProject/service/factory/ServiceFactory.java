@@ -3,8 +3,14 @@ package com.epam.jwd.finalProject.service.factory;
 import com.epam.jwd.finalProject.model.*;
 import com.epam.jwd.finalProject.service.api.*;
 
+/**
+ * @author Daniil Serov
+ */
 public interface ServiceFactory {
 
+    /**
+     * factory service
+     */
     <T extends Entity> EntityService<T> serviceFor(Class<T> modelClass);
 
     default UserService userService() {

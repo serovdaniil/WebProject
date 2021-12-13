@@ -1,5 +1,7 @@
 package com.epam.jwd.finalProject.controller;
-
+/**
+ * @author Daniil Serov
+ */
 public class SimplePropertyContext implements PropertyContext{
 
     private SimplePropertyContext() {

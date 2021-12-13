@@ -60,16 +60,16 @@ public class MethodCategoryDaoImplTest extends Assert {
     @Test
     public void readAll() throws EntityExtractionFailedException {
         List<Category> expectedResult = categories;
-        when(dao.readAll()).thenReturn(expectedResult);
-        List<Category> actualResult = dao.readAll();
+        when(dao.findAll()).thenReturn(expectedResult);
+        List<Category> actualResult = dao.findAll();
         assertEquals(actualResult, expectedResult);
     }
 
     @Test
     public void readById() {
         Optional<Category> expectedResult = Optional.of(category);
-        when(dao.readById((long) 1)).thenReturn(expectedResult);
-        Optional<Category> actualResult = dao.readById((long) 1);
+        when(dao.findById((long) 1)).thenReturn(expectedResult);
+        Optional<Category> actualResult = dao.findById((long) 1);
         assertEquals(actualResult, expectedResult);
     }
 
@@ -94,14 +94,6 @@ public class MethodCategoryDaoImplTest extends Assert {
         List<SectionConferenc> expectedResult = sectionConferencs;
         when(dao.findSectionConferencInIdCategory((long)5)).thenReturn(expectedResult);
         List<SectionConferenc> actualResult = dao.findSectionConferencInIdCategory((long)5);
-        assertEquals(actualResult, expectedResult);
-    }
-
-    @Test
-    public void findSectionConferencInNameCategory() {
-        List<SectionConferenc> expectedResult = sectionConferencs;
-        when(dao.findSectionConferencInNameCategory("asd")).thenReturn(expectedResult);
-        List<SectionConferenc> actualResult = dao.findSectionConferencInNameCategory(("asd"));
         assertEquals(actualResult, expectedResult);
     }
 

@@ -49,6 +49,11 @@ import java.util.List;
 
 import static com.epam.jwd.finalProject.model.Role.*;
 
+/**
+ * List of commands
+ *
+ * @author Daniil Serov
+ */
 public enum CommandRegistry {
     MAIN_PAGE(ShowMainPageCommand.getInstance(), "main_page", UNAUTHORIZED, USER, ADMIN, BLOKED),
     //Conferenc

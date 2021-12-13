@@ -14,6 +14,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Optional;
 
+/**
+ * This command is for updating the email
+ *
+ * @author Daniil Serov
+ */
 public class UpdateEmailCommand implements Command {
     private final UserService service;
     private final RequestFactory requestFactory;

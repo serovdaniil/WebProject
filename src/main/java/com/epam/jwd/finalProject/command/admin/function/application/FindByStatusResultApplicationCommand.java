@@ -15,6 +15,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * This command is for searching by the status of the application for training
+ *
+ * @author Daniil Serov
+ */
 public class FindByStatusResultApplicationCommand implements Command {
     private static final String PARAM_NAME_RESULT = "resultNew";
     private static final String APPLICATIONS_ATTRIBUTE_NAME = "applications";
