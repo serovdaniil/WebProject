@@ -15,6 +15,7 @@ public class UpdateDescriptionInSectionConferencCommand implements Command {
     private final SectionConferencService service;
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
+
     private static final String PARAM_ID = "id";
     private static final String PARAM_DESCTIPTION = "description";
     private static final String RESULT_ATTRIBUTE_NAME = "result";

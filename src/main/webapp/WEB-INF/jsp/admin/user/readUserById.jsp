@@ -18,6 +18,7 @@
 <fmt:message bundle="${loc}" key="label.userById.button.updateRole" var="button"/>
 <fmt:message bundle="${loc}" key="label.userById.role.admin" var="admin"/>
 <fmt:message bundle="${loc}" key="label.userById.role.user" var="user"/>
+<fmt:message bundle="${loc}" key="label.userById.role.bloked" var="bloked"/>
 <html>
 <head>
     <title>${pageTitle}</title>
@@ -57,6 +58,7 @@
     <select id="roleNew-input" name="roleNew">
         <option>${user}</option>
         <option>${admin}</option>
+        <option>${bloked}</option>
     </select>
     <button type="submit" class="button">${button}</button>
 </form>

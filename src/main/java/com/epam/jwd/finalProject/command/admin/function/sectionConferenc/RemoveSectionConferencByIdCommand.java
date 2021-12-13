@@ -15,6 +15,7 @@ public class RemoveSectionConferencByIdCommand implements Command {
     private final SectionConferencService service;
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
+
     private static final String PARAM_ID = "id";
     private static final String SECTION_CONFERENCES_ATTRIBUTE_NAME_RESULT = "result";
     private static final String OPERATION_WAS_UNSUCCSESFUL = "The operation was unsuccsesful";

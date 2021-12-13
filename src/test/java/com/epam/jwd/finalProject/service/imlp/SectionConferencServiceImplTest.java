@@ -3,6 +3,7 @@ package com.epam.jwd.finalProject.service.imlp;
 import com.epam.jwd.finalProject.model.Category;
 import com.epam.jwd.finalProject.model.Conferenc;
 import com.epam.jwd.finalProject.model.SectionConferenc;
+import com.epam.jwd.finalProject.model.Status;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
 import org.junit.Assert;
 import org.junit.Before;
@@ -22,6 +23,7 @@ public class SectionConferencServiceImplTest extends Assert {
     private SectionConferenc sectionConferencTwo;
     private String name;
     private String description;
+    private String nameStatus;
     private Long id;
     private Long idConferenc;
     private List<SectionConferenc> sectionConferencs;
@@ -30,16 +32,33 @@ public class SectionConferencServiceImplTest extends Assert {
     public void setUp() throws Exception {
         service = mock(SectionConferencServiceImpl.class);
         sectionConferencOne=new SectionConferenc((long)1,"ART","Name",new Conferenc((long)2,
-                "SD","Qwerty",new Category((long)3,"QWE")));
+                "SD","Qwerty",new Category((long)3,"QWE"),new Status((long)2,"Active")),new Status((long)5,"Active"));
         sectionConferencTwo=new SectionConferenc((long)4,"ZXC","Poi",new Conferenc((long)5,
-                "KL","ASDF",new Category((long)6,"NB")));
+                "KL","ASDF",new Category((long)6,"NB"),new Status((long)2,"Active")),new Status((long)5,"Active"));
         name="Bike";
         description="test";
         id=(long)7;
+        nameStatus="Active";
         idConferenc=(long)2;
         sectionConferencs=new ArrayList<>();
         sectionConferencs.add(sectionConferencOne);
         sectionConferencs.add(sectionConferencTwo);
+    }
+
+    @Test
+    public void changeStatus() throws ValidationException {
+        boolean expectedResult = true;
+        when(service.changeStatus(id,nameStatus)).thenReturn(true);
+        boolean actualResult =service.changeStatus(id,nameStatus);
+        Assert.assertEquals(actualResult, expectedResult);
+    }
+
+    @Test
+    public void changeStatusAfterUpdateConferenc() throws ValidationException {
+        boolean expectedResult = true;
+        when(service.changeStatusAfterUpdateConferenc(idConferenc)).thenReturn(true);
+        boolean actualResult =service.changeStatusAfterUpdateConferenc(idConferenc);
+        Assert.assertEquals(actualResult, expectedResult);
     }
 
     @Test

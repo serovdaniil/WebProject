@@ -13,6 +13,8 @@ public interface ConferencDao {
 
     boolean updateDescription(Long id, String description);
 
+    List<Conferenc> readAllActive() throws EntityExtractionFailedException;
+
     List<Conferenc> readAll() throws EntityExtractionFailedException;
 
     Optional<Conferenc> readById(Long id);
@@ -20,6 +22,8 @@ public interface ConferencDao {
     List<Conferenc> findByName(String name);
 
     boolean delete(Long id);
+
+    boolean changeStatus(Long idConferenc,Long idStatus);
 
     static ConferencDao instance() {
         return MethodConferencDaoImpl.getInstance();

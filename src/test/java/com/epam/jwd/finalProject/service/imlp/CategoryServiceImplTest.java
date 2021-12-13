@@ -3,6 +3,7 @@ package com.epam.jwd.finalProject.service.imlp;
 import com.epam.jwd.finalProject.model.Category;
 import com.epam.jwd.finalProject.model.Conferenc;
 import com.epam.jwd.finalProject.model.SectionConferenc;
+import com.epam.jwd.finalProject.model.Status;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
 import org.junit.Assert;
 import org.junit.Before;
@@ -33,8 +34,8 @@ public class CategoryServiceImplTest extends Assert {
         id = (long) 1;
         category = new Category((long) 1, "PE");
         sectionConferenc = new SectionConferenc((long) 1, "ART", "Name", new Conferenc((long) 2,
-                "SD", "Qwerty", new Category((long) 3, "QWE")));
-        conferenc = new Conferenc((long) 2, "SD", "Qwerty", new Category((long) 3, "QWE"));
+                "SD", "Qwerty", new Category((long) 3, "QWE"),new Status((long)2,"Active")),new Status((long)5,"Active"));
+        conferenc = new Conferenc((long)1,"name","description",new Category((long)3,"IT"),new Status((long)1,"Active"));
         sectionConferencList = new ArrayList<>();
         sectionConferencList.add(sectionConferenc);
         categoryList = new ArrayList<>();

@@ -34,9 +34,16 @@ public class ApplicationServiceImplTest extends Assert{
         application = new Application((long) 1,
                 new User((long) 1, "daniils3rov@yandex.ru", "daniils3rov@yandex.ru", "Serov231969", "Daniil", "Serov", Role.USER),
                 new SectionResult((long) 1, "Open"), new SectionConferenc((long) 1, "ART", "Name",
-                new Conferenc((long) 2, "SD", "Qwerty", new Category((long) 3, "QWE"))));
-        applicationList = new ArrayList<>();
+                new Conferenc((long) 2, "SD", "Qwerty", new Category((long) 3, "QWE"),new Status((long)4,"Active")),new Status((long)1,"Active")));
+         applicationList = new ArrayList<>();
         applicationList.add(application);
+    }
+    @Test
+    public void changeStatusApplicationAfterUpdateSectionConferenc() throws ValidationException {
+        boolean expectedResult = true;
+        when(service.changeStatusApplicationAfterUpdateSectionConferenc(idSectionConferenc)).thenReturn(true);
+        boolean actualResult = service.changeStatusApplicationAfterUpdateSectionConferenc(idSectionConferenc);
+        Assert.assertEquals(actualResult, expectedResult);
     }
 
     @Test

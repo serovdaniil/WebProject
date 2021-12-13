@@ -50,6 +50,27 @@ public class MethodApplicationDaoImpl implements ApplicationDao {
     }
 
     @Override
+    public boolean changeStatusApplicationAfterUpdateSectionConferenc(Long idSectionConferenc) {
+        LOG.info("START update result application");
+        boolean result = false;
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.CHANGE_STATUS_AFTER_UPDATE_SECTION_CONFERENC)) {
+            statement.setLong(1, idSectionConferenc);
+            int rowCount = statement.executeUpdate();
+            if (rowCount != 0) {
+                result = true;
+            }
+            LOG.info("END update result application");
+        } catch (SQLException e) {
+            LOG.error("sql exception occurred", e);
+            LOG.debug("sql: {}", SqlQuery.CHANGE_STATUS_AFTER_UPDATE_SECTION_CONFERENC);
+        } catch (NullPointerException e) {
+            LOG.error(e);
+        }
+        return result;
+    }
+
+    @Override
     public boolean updateIdStatusApplication(Long idApplication, Long idResultSection) {
         LOG.info("START update result application");
         boolean result = false;
@@ -406,7 +427,11 @@ public class MethodApplicationDaoImpl implements ApplicationDao {
                                     resultSet.getString("conferenc.name"),
                                     resultSet.getString("conferenc.description"),
                                     new Category(resultSet.getLong("id_category"),
-                                            resultSet.getString("name_category")))));
+                                            resultSet.getString("name_category")),
+                                    new Status(resultSet.getLong("id_status"),
+                                            resultSet.getString("name_status"))),
+                            new Status(resultSet.getLong("id_status"),
+                                    resultSet.getString("name_status"))));
         } catch (SQLException e) {
             throw new EntityExtractionFailedException();
         }

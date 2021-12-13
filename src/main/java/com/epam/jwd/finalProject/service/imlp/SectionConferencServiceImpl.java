@@ -22,6 +22,30 @@ public class SectionConferencServiceImpl implements SectionConferencService {
     }
 
     @Override
+    public boolean changeStatus(Long idSectionConferenc, String nameStatus) throws ValidationException {
+        LOG.debug("Service: Change status conferenc  started.");
+        Long idStatus=resultSection(nameStatus);
+        if (!sectionConferencDataValidator.isIdValid(idSectionConferenc) ||
+                !sectionConferencDataValidator.isIdValid(idStatus)) {
+            LOG.error("The entered data is not correct!");
+            throw new ValidationException("The entered data is not correct!");
+        }
+        LOG.debug("Service: Change status conferenc finished.");
+        return sectionConferencDao.changeStatus(idSectionConferenc,idStatus);
+    }
+
+    @Override
+    public boolean changeStatusAfterUpdateConferenc(Long idConferenc) throws ValidationException {
+        LOG.debug("Service: Change status after update status conferenc started.");
+        if (!sectionConferencDataValidator.isIdValid(idConferenc)) {
+            LOG.error("The entered data is not correct!");
+            throw new ValidationException("The entered data is not correct!");
+        }
+        LOG.debug("Service: Change status after update status conferencc finished.");
+        return sectionConferencDao.changeStatusAfterUpdateConferenc(idConferenc);
+    }
+
+    @Override
     public List<SectionConferenc> findAll() {
         LOG.debug("Service: Reading all section conferences started.");
         try {
@@ -101,5 +125,18 @@ public class SectionConferencServiceImpl implements SectionConferencService {
         }
         LOG.debug("Service: Find section conferenc of id finished.");
         return sectionConferencDao.findSectionConferencesInConferencById(id);
+    }
+
+    private Long resultSection(String resultSection) {
+        Long idResult = null;
+
+        if ((resultSection.equals("Active")) || (resultSection.equals("Активная")) || (resultSection.equals("Actif")) || (resultSection.equals("Актыўны"))) {
+            idResult = (long) 1;
+        }
+
+        if ((resultSection.equals("DELETE")) || (resultSection.equals("Удаленная")) || (resultSection.equals("Distant")) || (resultSection.equals("Выдалены"))) {
+            idResult = (long) 2;
+        }
+        return idResult;
     }
 }

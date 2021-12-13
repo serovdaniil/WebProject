@@ -15,6 +15,7 @@ public class CreateSectionConferencCommand implements Command {
     private final SectionConferencService service;
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
+
     private static final String PARAM_NAME = "name";
     private static final String PARAM_DESCRIPTION = "description";
     private static final String PARAM_ID_CONFERENC = "idConferenc";

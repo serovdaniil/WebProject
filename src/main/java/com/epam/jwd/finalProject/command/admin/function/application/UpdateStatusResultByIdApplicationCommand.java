@@ -15,7 +15,7 @@ import org.apache.logging.log4j.Logger;
 
 public class UpdateStatusResultByIdApplicationCommand implements Command {
     private static final String PARAM_ID = "id";
-    private static final String PARAM_RESULT = "result";
+    private static final String PARAM_RESULT = "resultNew";
     private static final String APPLICATIONS_ATTRIBUTE_NAME_RESULT = "result";
     private static final String URL_APPLICATIONS_PAGE = "/controller?command=show_applications";
     private static final Logger LOG = LogManager.getLogger(UpdateStatusResultByIdApplicationCommand.class);
@@ -34,6 +34,7 @@ public class UpdateStatusResultByIdApplicationCommand implements Command {
     public CommandResponse execute(CommandRequest request) {
         final Long id =Long.parseLong(request.getParameter(PARAM_ID));
         final String nameResult =request.getParameter(PARAM_RESULT);
+        LOG.info(nameResult);
         final boolean resultUpdate;
         try {
             resultUpdate = service.updateIdStatusApplication(id,nameResult);

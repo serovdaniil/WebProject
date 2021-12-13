@@ -33,11 +33,11 @@ public class MethodCategoryDaoImplTest extends Assert {
         categories=new ArrayList<>();
         categories.add(category);
         sectionConferenc = new SectionConferenc((long) 1, "ART", "Name", new Conferenc((long) 2,
-                "SD", "Qwerty", new Category((long) 3, "QWE")));
+                "SD", "Qwerty", new Category((long) 3, "QWE"),new Status((long)2,"Active")),new Status((long)5,"Active"));
         sectionConferencs=new ArrayList<>();
         sectionConferencs.add(sectionConferenc);
         conferencs=new ArrayList<>();
-        conferenc = new Conferenc((long) 2, "SD", "Qwerty", new Category((long) 3, "QWE"));
+        conferenc = new Conferenc((long)1,"name","description",new Category((long)3,"IT"),new Status((long)1,"Active"));
         conferencs.add(conferenc);
     }
 

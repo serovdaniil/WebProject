@@ -1,9 +1,11 @@
 package com.epam.jwd.finalProject.dao.impl;
+
 import com.epam.jwd.finalProject.dao.api.ConferencDao;
 import com.epam.jwd.finalProject.dao.connection.ConnectionPool;
 import com.epam.jwd.finalProject.dao.exception.EntityExtractionFailedException;
 import com.epam.jwd.finalProject.model.Category;
 import com.epam.jwd.finalProject.model.Conferenc;
+import com.epam.jwd.finalProject.model.Status;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,13 +22,14 @@ public class MethodConferencDaoImpl implements ConferencDao {
     private static final Logger LOG = LogManager.getLogger(MethodConferencDaoImpl.class);
 
     private final ConnectionPool connectionPool;
+
     //change connectionPool.locking()
     public MethodConferencDaoImpl(ConnectionPool connectionPool) {
         this.connectionPool = connectionPool;
     }
 
     @Override
-    public boolean create(String name,String description,Long idCategory) {
+    public boolean create(String name, String description, Long idCategory) {
         boolean result = false;
         LOG.info("Start create and add new conferenc");
         try (Connection connection = connectionPool.getConnection();
@@ -42,6 +45,28 @@ public class MethodConferencDaoImpl implements ConferencDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", SqlQuery.CREATE_CONFERENC);
+        } catch (NullPointerException e) {
+            LOG.error(e);
+        }
+        return result;
+    }
+
+    @Override
+    public boolean changeStatus(Long idConferenc, Long idStatus) {
+        LOG.info("Start update status conferenc");
+        boolean result = false;
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_STATUS_CONFERENC)) {
+            statement.setLong(2, idConferenc);
+            statement.setLong(1, idStatus);
+            int rowCount = statement.executeUpdate();
+            if (rowCount != 0) {
+                result = true;
+            }
+            LOG.info("End update status conferenc");
+        } catch (SQLException e) {
+            LOG.error("sql exception occurred", e);
+            LOG.debug("sql: {}", SqlQuery.UPDATE_STATUS_CONFERENC);
         } catch (NullPointerException e) {
             LOG.error(e);
         }
@@ -82,6 +107,24 @@ public class MethodConferencDaoImpl implements ConferencDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", SqlQuery.FIND_ALL_CONFERENC);
+        } catch (EntityExtractionFailedException e) {
+            LOG.error("could not extract entity", e);
+        }
+        return Collections.emptyList();
+    }
+
+    @Override
+    public List<Conferenc> readAllActive() throws EntityExtractionFailedException {
+        LOG.info("Start readAll conferenc active");
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ALL_CONFERENC_ACTIVE)) {
+            ResultSet resultSet = statement.executeQuery();
+            ResultSetExtractor<Conferenc> extractor = MethodConferencDaoImpl::extractConferenc;
+            LOG.info("End readAll conferenc active");
+            return extractor.extractAll(resultSet);
+        } catch (SQLException e) {
+            LOG.error("sql exception occurred", e);
+            LOG.debug("sql: {}", SqlQuery.FIND_ALL_CONFERENC_ACTIVE);
         } catch (EntityExtractionFailedException e) {
             LOG.error("could not extract entity", e);
         }
@@ -158,11 +201,14 @@ public class MethodConferencDaoImpl implements ConferencDao {
                     resultSet.getString("name"),
                     resultSet.getString("description"),
                     new Category(resultSet.getLong("id_category"),
-                            resultSet.getString("name_category")));
+                            resultSet.getString("name_category")),
+                    new Status(resultSet.getLong("id_status"),
+                            resultSet.getString("name_status")));
         } catch (SQLException e) {
             throw new EntityExtractionFailedException();
         }
     }
+
     public static MethodConferencDaoImpl getInstance() {
         return MethodConferencDaoImpl.Holder.INSTANCE;
     }

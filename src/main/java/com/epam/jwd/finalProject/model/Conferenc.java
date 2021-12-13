@@ -7,12 +7,14 @@ public class Conferenc implements Entity {
     private final String name;
     private final String description;
     private final Category category;
+    private final Status status;
 
-    public Conferenc(Long id, String name, String description, Category category) {
+    public Conferenc(Long id, String name, String description, Category category, Status status) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.category = category;
+        this.status = status;
     }
 
     @Override
@@ -32,17 +34,21 @@ public class Conferenc implements Entity {
         return category;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Conferenc conferenc = (Conferenc) o;
-        return Objects.equals(id, conferenc.id) && Objects.equals(name, conferenc.name) && Objects.equals(description, conferenc.description) && Objects.equals(category, conferenc.category);
+        return Objects.equals(id, conferenc.id) && Objects.equals(name, conferenc.name) && Objects.equals(description, conferenc.description) && Objects.equals(category, conferenc.category) && Objects.equals(status, conferenc.status);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, category);
+        return Objects.hash(id, name, description, category, status);
     }
 
     @Override
@@ -52,6 +58,7 @@ public class Conferenc implements Entity {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", category=" + category +
+                ", status=" + status +
                 '}';
     }
 }

@@ -20,7 +20,7 @@ public class FindConferencByIdCommand implements Command {
     private final PropertyContext propertyContext;
     private static final String PARAM_ID = "id";
     private static final String CONFERENCES_ATTRIBUTE_NAME_FIND = "conferenc";
-    private static final String CONFERENCES_PAGE = "page.adminPanelConferenc";
+    private static final String CONFERENCES_PAGE = "page.readConferencById";
     private static final Logger LOG = LogManager.getLogger(FindConferencByIdCommand.class);
 
     FindConferencByIdCommand(ConferencService service, RequestFactory requestFactory, PropertyContext propertyContext) {
@@ -32,9 +32,11 @@ public class FindConferencByIdCommand implements Command {
     @Override
     public CommandResponse execute(CommandRequest request) {
         final Long id = Long.parseLong(request.getParameter(PARAM_ID));
-        final Optional<Conferenc> conferenc;
+        final Optional<Conferenc> conferencOptional;
+        final Conferenc conferenc;
         try {
-            conferenc = service.findId(id);
+            conferencOptional = service.findId(id);
+            conferenc = conferencOptional.get();
             request.addAttributeToJsp(CONFERENCES_ATTRIBUTE_NAME_FIND, conferenc);
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);

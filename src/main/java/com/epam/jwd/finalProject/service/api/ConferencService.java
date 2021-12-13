@@ -11,4 +11,8 @@ public interface ConferencService extends EntityService<Conferenc> {
     boolean updateDescription(Long id, String description) throws ValidationException;
 
     List<Conferenc> findByName(String name) throws ValidationException;
+
+    List<Conferenc> findAllStatus();
+
+    boolean changeStatus(Long idConferenc,String nameStatus) throws ValidationException;
 }

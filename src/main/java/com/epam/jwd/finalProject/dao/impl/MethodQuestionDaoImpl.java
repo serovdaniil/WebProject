@@ -292,8 +292,7 @@ public class MethodQuestionDaoImpl implements QuestionDao {
                             resultSet.getString("password"),
                             resultSet.getString("first_name"),
                             resultSet.getString("last_name"),
-                            Role.of(resultSet.getString("account_role")))
-                    );
+                            Role.of(resultSet.getString("account_role"))));
         } catch (SQLException e) {
             throw new EntityExtractionFailedException();
         }

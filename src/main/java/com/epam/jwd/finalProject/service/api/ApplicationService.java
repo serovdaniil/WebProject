@@ -13,4 +13,6 @@ public interface ApplicationService extends EntityService {
     List<Application> findAccountIdByApplication(Long id) throws ValidationException;
 
     List<Application> findByStatusResult(String nameStatus) throws ValidationException;
+
+    boolean changeStatusApplicationAfterUpdateSectionConferenc(Long idSectionConferenc) throws ValidationException;
 }

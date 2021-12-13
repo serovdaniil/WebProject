@@ -5,26 +5,27 @@ import com.epam.jwd.finalProject.command.factory.CommandRequest;
 import com.epam.jwd.finalProject.command.factory.CommandResponse;
 import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
-import com.epam.jwd.finalProject.model.SectionConferenc;
 import com.epam.jwd.finalProject.service.api.SectionConferencService;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
 import com.epam.jwd.finalProject.service.factory.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Optional;
-
-public class FindSectionConferencByIdCommand implements Command {
+public class ChangeStatusSectionConferencCommand implements Command {
     private final SectionConferencService service;
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
     private static final String PARAM_ID = "id";
+    private static final String PARAM_STATUS = "newStatus";
+    private static final String CONFERENCES_ATTRIBUTE_NAME_RESULT_REMOVE = "result";
+    private static final String OPERATION_WAS_UNSUCCSESFUL = "The operation was unsuccsesful";
     private static final String SECTION_CONFERENCES_ATTRIBUTE_NAME = "sectionConferenc";
-    private static final String SECTION_CONFERENCES_PAGE = "page.readSectionConferencById";
+    private static final String READ_SECTION_CONFERENCES_BY_ID_PAGE = "page.readSectionConferencById";
+    private static final String SECTION_CONFERENCES_PAGE = "/controller?command=show_section_conferences";
     private static final Logger LOG = LogManager.getLogger(FindSectionConferencByIdCommand.class);
 
-    FindSectionConferencByIdCommand(SectionConferencService service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    ChangeStatusSectionConferencCommand(SectionConferencService service, RequestFactory requestFactory, PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().sectionConferencService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -33,25 +34,28 @@ public class FindSectionConferencByIdCommand implements Command {
     @Override
     public CommandResponse execute(CommandRequest request) {
         final Long id = Long.parseLong(request.getParameter(PARAM_ID));
-        final Optional<SectionConferenc> sectionConferencOptional;
-        SectionConferenc sectionConferenc;
+        final String status = request.getParameter(PARAM_STATUS);
+        boolean resultChange=false;
         try {
-            sectionConferencOptional = service.findId(id);
-            sectionConferenc=sectionConferencOptional.get();
-            request.addAttributeToJsp(SECTION_CONFERENCES_ATTRIBUTE_NAME, sectionConferenc);
+            resultChange = service.changeStatus(id,status);
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
         }
-        return requestFactory.createForwardResponse(propertyContext.get(SECTION_CONFERENCES_PAGE));
+        if (!resultChange) {
+            request.addAttributeToJsp(CONFERENCES_ATTRIBUTE_NAME_RESULT_REMOVE, OPERATION_WAS_UNSUCCSESFUL);
+            return requestFactory.createForwardResponse(propertyContext.get(READ_SECTION_CONFERENCES_BY_ID_PAGE));
+        } else {
+            return requestFactory.createRedirectResponse(SECTION_CONFERENCES_PAGE);
+        }
     }
 
-    public static FindSectionConferencByIdCommand getInstance() {
-        return FindSectionConferencByIdCommand.Holder.INSTANCE;
+    public static ChangeStatusSectionConferencCommand getInstance() {
+        return ChangeStatusSectionConferencCommand.Holder.INSTANCE;
     }
 
     private static class Holder {
-        public static final FindSectionConferencByIdCommand INSTANCE =
-                new FindSectionConferencByIdCommand(ServiceFactory.simple().sectionConferencService(), RequestFactory.getInstance(),
+        public static final ChangeStatusSectionConferencCommand INSTANCE =
+                new ChangeStatusSectionConferencCommand(ServiceFactory.simple().sectionConferencService(), RequestFactory.getInstance(),
                         PropertyContext.instance());
     }
 }

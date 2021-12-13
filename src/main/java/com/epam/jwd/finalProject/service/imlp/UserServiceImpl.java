@@ -162,11 +162,14 @@ public class UserServiceImpl implements UserService {
 
     private Long role(String nameRole) {
         Long idResult = null;
-        if ((nameRole.equals("User")) || (nameRole.equals("Юзер")) || (nameRole.equals("Uzer"))) {
+        if ((nameRole.equals("User")) || (nameRole.equals("Юзер")) || (nameRole.equals("Uzer")) || (nameRole.equals("Юзэр"))) {
             idResult = (long) 1;
         }
-        if ((nameRole.equals("Admin")) || (nameRole.equals("Админ")) || (nameRole.equals("Admin"))) {
+        if ((nameRole.equals("Admin")) || (nameRole.equals("Админ")) || (nameRole.equals("Адмін"))) {
             idResult = (long) 2;
+        }
+        if ((nameRole.equals("Bloked")) || (nameRole.equals("Bloqué")) || (nameRole.equals("Заблокированный")) || (nameRole.equals("Заблакаваны"))) {
+            idResult = (long) 4;
         }
         return idResult;
     }

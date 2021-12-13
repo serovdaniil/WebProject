@@ -22,6 +22,10 @@ public interface SectionConferencDao {
 
     boolean delete(Long id);
 
+    boolean changeStatus(Long idSectionConferenc, Long idStatus);
+
+    boolean changeStatusAfterUpdateConferenc(Long idConferenc);
+
     static SectionConferencDao instance() {
         return MethodSectionConferencDaoImpl.getInstance();
     }

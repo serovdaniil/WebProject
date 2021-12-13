@@ -20,21 +20,41 @@ public class MethodSectionConferencDaoImplTest extends Assert {
     private String name;
     private String description;
     private Long id;
+    private Long idConferenc;
+    private Long idStatus;
     private List<SectionConferenc> sectionConferencs;
 
     @Before
     public void setUp(){
         dao = mock(MethodSectionConferencDaoImpl.class);
         sectionConferencOne=new SectionConferenc((long)1,"ART","Name",new Conferenc((long)2,
-                "SD","Qwerty",new Category((long)3,"QWE")));
+                "SD","Qwerty",new Category((long)3,"QWE"),new Status((long)2,"Active")),new Status((long)5,"Active"));
         sectionConferencTwo=new SectionConferenc((long)4,"ZXC","Poi",new Conferenc((long)5,
-                "KL","ASDF",new Category((long)6,"NB")));
+                "KL","ASDF",new Category((long)6,"NB"),new Status((long)2,"Active")),new Status((long)5,"Active"));
         name="Bike";
         description="test";
         id=(long)7;
+        idConferenc=(long)4;
+        idStatus=(long)1;
         sectionConferencs=new ArrayList<>();
         sectionConferencs.add(sectionConferencOne);
         sectionConferencs.add(sectionConferencTwo);
+    }
+
+    @Test
+    public void changeStatus() {
+        boolean expectedResult = true;
+        when(dao.changeStatus(id,idStatus)).thenReturn(true);
+        boolean actualResult =dao.changeStatus(id,idStatus);
+        Assert.assertEquals(actualResult, expectedResult);
+    }
+
+    @Test
+    public void changeStatusAfterUpdateConferenc() {
+        boolean expectedResult = true;
+        when(dao.changeStatusAfterUpdateConferenc(idConferenc)).thenReturn(true);
+        boolean actualResult =dao.changeStatusAfterUpdateConferenc(idConferenc);
+        Assert.assertEquals(actualResult, expectedResult);
     }
 
     @Test

@@ -12,6 +12,9 @@ import com.epam.jwd.finalProject.command.admin.function.conferenc.*;
 import com.epam.jwd.finalProject.command.admin.function.question.AddAnswerToQuestionCommand;
 import com.epam.jwd.finalProject.command.admin.function.sectionConferenc.*;
 import com.epam.jwd.finalProject.command.admin.function.user.ReadUserByIdCommand;
+import com.epam.jwd.finalProject.command.admin.page.conferenc.ShowAllConferencesPageCommand;
+import com.epam.jwd.finalProject.command.admin.page.conferenc.ShowReadConferencByIdPageCommand;
+import com.epam.jwd.finalProject.command.admin.page.sectionConferenc.ShowReadSectionConferencByIdPageCommand;
 import com.epam.jwd.finalProject.command.admin.page.user.ShowUsersPageCommand;
 import com.epam.jwd.finalProject.command.admin.page.user.ShowReadUserByIdPageCommand;
 import com.epam.jwd.finalProject.command.admin.function.user.UpdateRoleCommand;
@@ -35,7 +38,7 @@ import com.epam.jwd.finalProject.command.common.function.question.FindQuestionBy
 import com.epam.jwd.finalProject.command.common.function.question.FindQuestionByIdCommand;
 import com.epam.jwd.finalProject.command.common.page.sectionConferenc.ShowFindSectionConferencByNamePageCommand;
 import com.epam.jwd.finalProject.command.common.page.sectionConferenc.ShowFindSectionConferencesInConferencByIdPageCommand;
-import com.epam.jwd.finalProject.command.common.page.sectionConferenc.ShowSectionConferencesPageCommand;
+import com.epam.jwd.finalProject.command.admin.page.sectionConferenc.ShowSectionConferencesPageCommand;
 import com.epam.jwd.finalProject.command.common.function.sectionConferenc.*;
 import com.epam.jwd.finalProject.command.common.page.user.*;
 import com.epam.jwd.finalProject.command.error.ShowErrorPageCommand;
@@ -47,33 +50,38 @@ import java.util.List;
 import static com.epam.jwd.finalProject.model.Role.*;
 
 public enum CommandRegistry {
-    MAIN_PAGE(ShowMainPageCommand.getInstance(), "main_page", UNAUTHORIZED, USER, ADMIN),
+    MAIN_PAGE(ShowMainPageCommand.getInstance(), "main_page", UNAUTHORIZED, USER, ADMIN, BLOKED),
     //Conferenc
-    SHOW_CONFERENCES(ShowConferencesPageCommand.getInstance(), "show_conferences", UNAUTHORIZED, USER, ADMIN),
-    FIND_CONFERENCES_BY_NAME(FindConferencByNameCommand.getInstance(), "find_conferences_by_name", UNAUTHORIZED, USER, ADMIN),
-    SHOW_FIND_CONFERENCES_BY_NAME(ShowFindConferencByNamePageCommand.getInstance(), "show_find_conferences_by_name", UNAUTHORIZED, USER, ADMIN),
+    SHOW_CONFERENCES(ShowConferencesPageCommand.getInstance(), "show_conferences", UNAUTHORIZED, USER, ADMIN, BLOKED),
+    FIND_CONFERENCES_BY_NAME(FindConferencByNameCommand.getInstance(), "find_conferences_by_name",ADMIN),
+    SHOW_FIND_CONFERENCES_BY_NAME(ShowFindConferencByNamePageCommand.getInstance(), "show_find_conferences_by_name",ADMIN),
     UPDATE_DESCRIPTION_IN_CONFERENC(UpdateDescriptionInConferencCommand.getInstance(), "update_description_in_conferenc", ADMIN),
     FIND_CONFERENCES_BY_ID(FindConferencByIdCommand.getInstance(), "find_conferenc_by_id", ADMIN),
     REMOVE_CONFERENCES_BY_ID(RemoveConferencByIdCommand.getInstance(), "remove_conferenc_by_id", ADMIN),
     CREATE_CONFERENCES(CreateConferencCommand.getInstance(), "create_conferenc", ADMIN),
+    SHOW_ALL_CONFERENCES(ShowAllConferencesPageCommand.getInstance(), "show_all_conferences", ADMIN),
+    SHOW_READ_CONFERENC_BY_ID(ShowReadConferencByIdPageCommand.getInstance(), "show_read_conferences_by_id", ADMIN),
+    CHANGE_STATUS_CONFERENC(ChangeStatusConferencCommand.getInstance(), "change_status_conferenc_by_id", ADMIN),
     // sectionConferenc
-    SHOW_SECTON_CONFERENCES(ShowSectionConferencesPageCommand.getInstance(), "show_section_conferences", UNAUTHORIZED, USER, ADMIN),
+    SHOW_SECTON_CONFERENCES(ShowSectionConferencesPageCommand.getInstance(), "show_section_conferences",ADMIN),
+    SHOW_READ_SECTON_CONFERENC_BY_ID(ShowReadSectionConferencByIdPageCommand.getInstance(), "show_read_section_conferences_by_id",ADMIN),
     FIND_SECTION_CONFERENCES_BY_ID(FindSectionConferencByIdCommand.getInstance(), "find_section_conferenc_by_id", ADMIN),
+    CHANGE_STATUS_SECTION_CONFERENC_BY_ID(ChangeStatusSectionConferencCommand.getInstance(), "change_status_section_conferenc_by_id", ADMIN),
     REMOVE_SECTION_CONFERENCES_BY_ID(RemoveSectionConferencByIdCommand.getInstance(), "remove_section_conferenc_by_id", ADMIN),
     CREATE_SECTION_CONFERENCES(CreateSectionConferencCommand.getInstance(), "create_section_conferenc", ADMIN),
     UPDATE_DESCRIPTION_IN_SECTION_CONFERENC(UpdateDescriptionInSectionConferencCommand.getInstance(), "update_description_in_section_conferenc", ADMIN),
-    FIND_SECTION_CONFERENCES_BY_NAME(FindSectionConferencByNameCommand.getInstance(), "find_section_conferences_by_name", UNAUTHORIZED, USER, ADMIN),
-    SHOW_FIND_SECTION_CONFERENCES_BY_NAME(ShowFindSectionConferencByNamePageCommand.getInstance(), "show_find_section_conferences_by_name", UNAUTHORIZED, USER, ADMIN),
-    FIND_SECTION_CONFERENCES_IN_CONFERENC_BY_ID(FindSectionConferencesInConferencByIdCommand.getInstance(), "find_section_conferences_in_conferenc_by_id", UNAUTHORIZED, USER, ADMIN),
-    SHOW_FIND_SECTION_CONFERENCES_IN_CONFERENC_BY_ID(ShowFindSectionConferencesInConferencByIdPageCommand.getInstance(), "show_find_section_conferences_in_conferenc_by_id", UNAUTHORIZED, USER, ADMIN),
+    FIND_SECTION_CONFERENCES_BY_NAME(FindSectionConferencByNameCommand.getInstance(), "find_section_conferences_by_name", ADMIN),
+    SHOW_FIND_SECTION_CONFERENCES_BY_NAME(ShowFindSectionConferencByNamePageCommand.getInstance(), "show_find_section_conferences_by_name", ADMIN),
+    FIND_SECTION_CONFERENCES_IN_CONFERENC_BY_ID(FindSectionConferencesInConferencByIdCommand.getInstance(), "find_section_conferences_in_conferenc_by_id", UNAUTHORIZED, USER, ADMIN, BLOKED),
+    SHOW_FIND_SECTION_CONFERENCES_IN_CONFERENC_BY_ID(ShowFindSectionConferencesInConferencByIdPageCommand.getInstance(), "show_find_section_conferences_in_conferenc_by_id", UNAUTHORIZED, USER, ADMIN, BLOKED),
     // categories
-    SHOW_CATEGORIES(ShowCategoryPageCommand.getInstance(), "show_categories", UNAUTHORIZED, USER, ADMIN),
+    SHOW_CATEGORIES(ShowCategoryPageCommand.getInstance(), "show_categories", UNAUTHORIZED, USER, ADMIN, BLOKED),
     CREATE_CATEGORY(CreateCategoryCommand.getInstance(), "create_category", ADMIN),
     CHANGE_NAME_CATEGORY(ChangeNameCategoryCommand.getInstance(), "change_name_category", ADMIN),
-    SHOW_ALL_CONFERENCES_IN_CATEGORY(ShowFindConferencInIdCategoryPageCommand.getInstance(), "show_all_conferences_in_category", UNAUTHORIZED, USER, ADMIN),
-    ALL_CONFERENCES_IN_CATEGORY(FindConferencInIdCategoryCommand.getInstance(), "all_conferences_in_category", UNAUTHORIZED, USER, ADMIN),
-    SHOW_ALL_SECTION_CONFERENCES_IN_CATEGORY(ShowFindSectionConferencInCategoryByIdPageCommand.getInstance(), "show_all_section_conferences_in_category", UNAUTHORIZED, USER, ADMIN),
-    ALL_SECTION_CONFERENCES_IN_CATEGORY(FindSectionConferencInCategoryByIdCommand.getInstance(), "all_section_conferences_in_category", UNAUTHORIZED, USER, ADMIN),
+    SHOW_ALL_CONFERENCES_IN_CATEGORY(ShowFindConferencInIdCategoryPageCommand.getInstance(), "show_all_conferences_in_category", UNAUTHORIZED, USER, ADMIN, BLOKED),
+    ALL_CONFERENCES_IN_CATEGORY(FindConferencInIdCategoryCommand.getInstance(), "all_conferences_in_category", UNAUTHORIZED, USER, ADMIN, BLOKED),
+    SHOW_ALL_SECTION_CONFERENCES_IN_CATEGORY(ShowFindSectionConferencInCategoryByIdPageCommand.getInstance(), "show_all_section_conferences_in_category", UNAUTHORIZED, USER, ADMIN, BLOKED),
+    ALL_SECTION_CONFERENCES_IN_CATEGORY(FindSectionConferencInCategoryByIdCommand.getInstance(), "all_section_conferences_in_category", UNAUTHORIZED, USER, ADMIN, BLOKED),
     ID_CATEGORY(FindCategoryByIdCommand.getInstance(), "id_category", ADMIN),
     REMOVE_CATEGORY(RemoveCategoryByIdCommand.getInstance(), "remove_category_by_id", ADMIN),
     //Question

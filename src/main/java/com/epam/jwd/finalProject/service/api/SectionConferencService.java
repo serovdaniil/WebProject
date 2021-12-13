@@ -13,4 +13,8 @@ public interface SectionConferencService extends EntityService<SectionConferenc>
     List<SectionConferenc> findByName(String name) throws ValidationException;
 
     List<SectionConferenc> findSectionConferencesInConferencById(Long id) throws ValidationException;
+
+    boolean changeStatus(Long idSectionConferenc, String nameStatus) throws ValidationException;
+
+    boolean changeStatusAfterUpdateConferenc(Long idConferenc) throws ValidationException;
 }

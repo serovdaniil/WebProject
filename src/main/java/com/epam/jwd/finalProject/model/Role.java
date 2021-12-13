@@ -7,6 +7,7 @@ import java.util.Objects;
 public enum Role{
     USER,
     ADMIN,
+    BLOKED,
     UNAUTHORIZED;
 
     private static final List<Role> ALL_AVAILABLE_ROLES = Arrays.asList(values());

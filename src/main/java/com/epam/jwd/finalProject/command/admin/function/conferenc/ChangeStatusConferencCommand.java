@@ -6,24 +6,28 @@ import com.epam.jwd.finalProject.command.factory.CommandResponse;
 import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
 import com.epam.jwd.finalProject.service.api.ConferencService;
+import com.epam.jwd.finalProject.service.api.SectionConferencService;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
 import com.epam.jwd.finalProject.service.factory.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class RemoveConferencByIdCommand implements Command {
+public class ChangeStatusConferencCommand implements Command {
     private final ConferencService service;
+    private final SectionConferencService sectionConferencService;
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
     private static final String PARAM_ID = "id";
+    private static final String PARAM_STATUS = "newStatus";
     private static final String CONFERENCES_ATTRIBUTE_NAME_RESULT_REMOVE = "result";
     private static final String OPERATION_WAS_UNSUCCSESFUL = "The operation was unsuccsesful";
-    private static final String CONFERENC_ADMIN_PANEL_PAGE = "page.adminPanelConferenc";
-    private static final String CONFERENCES_PAGE = "/controller?command=show_conferences";
+    private static final String CONFERENC_READ_CONFERENC_BY_ID_PAGE = "page.readConferencById";
+    private static final String CONFERENCES_PAGE = "/controller?command=show_all_conferences";
     private static final Logger LOG = LogManager.getLogger(RemoveConferencByIdCommand.class);
 
-    RemoveConferencByIdCommand(ConferencService service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    ChangeStatusConferencCommand(ConferencService service, SectionConferencService sectionConferencService, RequestFactory requestFactory, PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().conferencService();
+        this.sectionConferencService = ServiceFactory.simple().sectionConferencService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
     }
@@ -31,27 +35,30 @@ public class RemoveConferencByIdCommand implements Command {
     @Override
     public CommandResponse execute(CommandRequest request) {
         final Long id = Long.parseLong(request.getParameter(PARAM_ID));
-        boolean resultRemove = false;
+        final String status = request.getParameter(PARAM_STATUS);
+        boolean resultChange = false;
         try {
-            resultRemove = service.remove(id);
+            resultChange = service.changeStatus(id,status);
+            if ((status.equals("DELETE")) || (status.equals("Удаленная")) || (status.equals("Distant")) || (status.equals("Выдалены"))){
+            resultChange=sectionConferencService.changeStatusAfterUpdateConferenc(id);}
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
         }
-        if (!resultRemove) {
+        if (!resultChange) {
             request.addAttributeToJsp(CONFERENCES_ATTRIBUTE_NAME_RESULT_REMOVE, OPERATION_WAS_UNSUCCSESFUL);
-            return requestFactory.createForwardResponse(propertyContext.get(CONFERENC_ADMIN_PANEL_PAGE));
+            return requestFactory.createForwardResponse(propertyContext.get(CONFERENC_READ_CONFERENC_BY_ID_PAGE));
         } else {
             return requestFactory.createRedirectResponse(CONFERENCES_PAGE);
         }
     }
 
-    public static RemoveConferencByIdCommand getInstance() {
-        return RemoveConferencByIdCommand.Holder.INSTANCE;
+    public static ChangeStatusConferencCommand getInstance() {
+        return ChangeStatusConferencCommand.Holder.INSTANCE;
     }
 
     private static class Holder {
-        public static final RemoveConferencByIdCommand INSTANCE =
-                new RemoveConferencByIdCommand(ServiceFactory.simple().conferencService(), RequestFactory.getInstance(),
+        public static final ChangeStatusConferencCommand INSTANCE =
+                new ChangeStatusConferencCommand(ServiceFactory.simple().conferencService(), ServiceFactory.simple().sectionConferencService(), RequestFactory.getInstance(),
                         PropertyContext.instance());
     }
 }

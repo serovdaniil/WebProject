@@ -25,6 +25,17 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
+    public boolean changeStatusApplicationAfterUpdateSectionConferenc(Long idSectionConferenc) throws ValidationException {
+        LOG.debug("Service: Change status after update status section conferenc started.");
+        if (!applicationDataValidator.isIdValid(idSectionConferenc)) {
+            LOG.error("The entered data is not correct!");
+            throw new ValidationException("The entered data is not correct!");
+        }
+        LOG.debug("Service: Change status after update status section conferenc   finished.");
+        return applicationDao.changeStatusApplicationAfterUpdateSectionConferenc(idSectionConferenc);
+    }
+
+    @Override
     public boolean create(Long idUser, Long idSectionConferenc, Long idResultSection) throws ValidationException {
         LOG.debug("Service: Creating application started.");
         if (!applicationDataValidator.isIdValid(idUser) ||
@@ -33,10 +44,6 @@ public class ApplicationServiceImpl implements ApplicationService {
             LOG.error("The entered data is not correct!");
             throw new ValidationException("The entered data is not correct!");
         }
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu/MM/dd");
-        LocalDate localDate = LocalDate.now();
-        LOG.info(dtf.format(localDate));    // 2021/03/22
-
         LOG.debug("Service: Creating application finished.");
         return applicationDao.create(idUser, idSectionConferenc, idResultSection);
     }
@@ -44,7 +51,9 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
     public boolean updateIdStatusApplication(Long idApplication, String resultSection) throws ValidationException {
         LOG.debug("Service: Updating status result for application started.");
+        LOG.info(resultSection);
         final Long idResult = resultSection(resultSection);
+        LOG.info(idResult);
         if (!applicationDataValidator.isIdValid(idApplication) ||
                 !applicationDataValidator.isIdValid(idResult)) {
             LOG.error("The entered data is not correct!");
@@ -113,16 +122,16 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     private Long resultSection(String resultSection) {
         Long idResult = null;
-        if ((resultSection.equals("Activate")) || (resultSection.equals("Создана")) || (resultSection.equals("Créé"))) {
+        if ((resultSection.equals("Activate")) || (resultSection.equals("Создана")) || (resultSection.equals("Créé")) || (resultSection.equals("Створаны"))) {
             idResult = (long) 1;
         }
-        if ((resultSection.equals("Waiting")) || (resultSection.equals("В ожидании")) || (resultSection.equals("En attendant"))) {
+        if ((resultSection.equals("Waiting")) || (resultSection.equals("В ожидании")) || (resultSection.equals("En attendant")) || (resultSection.equals("У чаканні"))) {
             idResult = (long) 2;
         }
-        if ((resultSection.equals("Completed")) || (resultSection.equals("Завершена")) || (resultSection.equals("Achevé"))) {
+        if ((resultSection.equals("Completed")) || (resultSection.equals("Завершена")) || (resultSection.equals("Achevé")) || (resultSection.equals("Завершаны"))) {
             idResult = (long) 3;
         }
-        if ((resultSection.equals("Deleted")) || (resultSection.equals("Удалена")) || (resultSection.equals("Distant"))) {
+        if ((resultSection.equals("Deleted")) || (resultSection.equals("Удалена")) || (resultSection.equals("Distant")) || (resultSection.equals("Выдалены"))) {
             idResult = (long) 4;
         }
         return idResult;

@@ -1,4 +1,4 @@
-package com.epam.jwd.finalProject.command.common.page.sectionConferenc;
+package com.epam.jwd.finalProject.command.admin.page.sectionConferenc;
 
 import com.epam.jwd.finalProject.command.factory.Command;
 import com.epam.jwd.finalProject.command.factory.CommandRequest;

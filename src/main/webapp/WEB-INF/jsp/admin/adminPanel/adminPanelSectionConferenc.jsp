@@ -15,6 +15,7 @@
 <fmt:message bundle="${loc}" key="label.panelSectionConferenc.menu.readConferenc" var="menuReadConferenc"/>
 <fmt:message bundle="${loc}" key="label.panelSectionConferenc.menu.remove" var="menuRemove"/>
 <fmt:message bundle="${loc}" key="label.panelSectionConferenc.menu.searchId" var="menuSearchById"/>
+<fmt:message bundle="${loc}" key="label.panelSectionConferenc.menu.readSectionConferenc" var="menuSectionConferenc"/>
 <fmt:message bundle="${loc}" key="label.panelSectionConferenc.menu.updateDescription" var="menuUpdateDescription"/>
 <fmt:message bundle="${loc}" key="label.panelSectionConferenc.text" var="text"/>
 <fmt:message bundle="${loc}" key="label.panelSectionConferenc.textMain" var="textMain"/>
@@ -47,6 +48,7 @@
 <p><a href="#searchById" class="create">${menuSearchById}</a></p>
 <p><a href="${pageContext.request.contextPath}/controller?command=show_conferences" class="create">${menuReadConferenc}</a></p>
 <p><a href="${pageContext.request.contextPath}/controller?command=show_categories" class="create">${menuReadCategory}</a></p>
+<p><a href="${pageContext.request.contextPath}/controller?command=show_section_conferences" class="create">${menuSectionConferenc}</a></p>
 <p>${requestScope.result}</p>
 <p>${requestScope.sectionConferenc}</p>
 <p><a name="create"></a></p>

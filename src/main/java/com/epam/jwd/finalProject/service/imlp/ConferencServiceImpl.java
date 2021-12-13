@@ -25,6 +25,18 @@ public class ConferencServiceImpl implements ConferencService {
     }
 
     @Override
+    public boolean changeStatus(Long idConferenc, String nameStatus) throws ValidationException {
+        LOG.debug("Service: Change status of conferenc started.");
+        final Long idStatus = resultSection(nameStatus);
+        if (!conferencDataValidator.isIdValid(idConferenc) || !conferencDataValidator.isIdValid(idStatus)) {
+            LOG.error("The entered data is not correct!");
+            throw new ValidationException("The entered data is not correct!");
+        }
+        LOG.debug("Service: Change status of conferenc finished.");
+        return conferencDao.changeStatus(idConferenc, idStatus);
+    }
+
+    @Override
     public boolean updateDescription(Long id, String description) throws ValidationException {
         LOG.debug("Service: Updating description in conferenc started.");
         if (!conferencDataValidator.isIdValid(id) || !conferencDataValidator.isDescriptionValid(description)) {
@@ -47,14 +59,26 @@ public class ConferencServiceImpl implements ConferencService {
     }
 
     @Override
-    public List<Conferenc> findAll() {
-        LOG.debug("Service: Readind all conferences started1.");
+    public List<Conferenc> findAllStatus() {
+        LOG.debug("Service: Readind all conferences started .");
         try {
             return conferencDao.readAll();
         } catch (EntityExtractionFailedException e) {
             e.printStackTrace();
         }
-        LOG.debug("Service: Readind all conferences finished.");
+        LOG.debug("Service: Readind all  conferences finished.");
+        return Collections.emptyList();
+    }
+
+    @Override
+    public List<Conferenc> findAll() {
+        LOG.debug("Service: Readind all active conferences started .");
+        try {
+            return conferencDao.readAllActive();
+        } catch (EntityExtractionFailedException e) {
+            e.printStackTrace();
+        }
+        LOG.debug("Service: Readind all active conferences finished.");
         return Collections.emptyList();
     }
 
@@ -91,5 +115,18 @@ public class ConferencServiceImpl implements ConferencService {
         }
         LOG.debug("Service: Removing conferenc by id finished.");
         return conferencDao.delete(id);
+    }
+
+    private Long resultSection(String resultSection) {
+        Long idResult = null;
+
+        if ((resultSection.equals("Active")) || (resultSection.equals("Активная")) || (resultSection.equals("Actif")) || (resultSection.equals("Актыўны"))) {
+            idResult = (long) 1;
+        }
+
+        if ((resultSection.equals("DELETE")) || (resultSection.equals("Удаленная")) || (resultSection.equals("Distant")) || (resultSection.equals("Выдалены"))) {
+            idResult = (long) 2;
+        }
+        return idResult;
     }
 }

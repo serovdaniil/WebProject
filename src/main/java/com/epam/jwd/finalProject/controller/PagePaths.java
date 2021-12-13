@@ -3,9 +3,12 @@ package com.epam.jwd.finalProject.controller;
 public enum PagePaths {
     INDEX("/"),
     MAIN("/WEB-INF/jsp/common/main.jsp"),
+    READCONFERENCBYID("/WEB-INF/jsp/admin/conferenc/readConferencById.jsp"),
     CONFERENCES("/WEB-INF/jsp/common/conferenc/conferences.jsp"),
+    ALLCONFERENCES("/WEB-INF/jsp/admin/conferenc/allConferences.jsp"),
     FINDCONFERENCESBYNAME("/WEB-INF/jsp/common/conferenc/findConferencesByName.jsp"),
-    SECTIONCONFERENCES("/WEB-INF/jsp/common/sectionConferenc/sectionConferences.jsp"),
+    SECTIONCONFERENCES("/WEB-INF/jsp/admin/sectionConferenc/sectionConferences.jsp"),
+    READSECTIONCONFERENCBYID("/WEB-INF/jsp/admin/sectionConferenc/readSectionConferencById.jsp"),
     FINDSECTIONCONFERENCESBYNAME("/WEB-INF/jsp/common/sectionConferenc/findSectionConferencesByName.jsp"),
     FINDSECTIONCONFERENCESINCONFERENCBYID("/WEB-INF/jsp/common/sectionConferenc/findSectionConferencesInConferencById.jsp"),
     ADMINPANELCONFERENC("/WEB-INF/jsp/admin/adminPanel/adminPanelConferenc.jsp"),

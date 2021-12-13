@@ -24,7 +24,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public List findAll() {
+    public List<Question> findAll() {
         LOG.debug("Service: Reading all questions started.");
         try {
             return questionDao.readAll();

@@ -3,6 +3,7 @@ package com.epam.jwd.finalProject.dao.impl;
 import com.epam.jwd.finalProject.dao.exception.EntityExtractionFailedException;
 import com.epam.jwd.finalProject.model.Category;
 import com.epam.jwd.finalProject.model.Conferenc;
+import com.epam.jwd.finalProject.model.Status;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +18,7 @@ import static org.mockito.Mockito.when;
 public class MethodConferencDaoImplTest extends Assert{
     private MethodConferencDaoImpl dao;
     private Long id;
+    private Long idStatus;
     private Long idCategory;
     private String name;
     private String description;
@@ -27,12 +29,21 @@ public class MethodConferencDaoImplTest extends Assert{
     public void setUp(){
         dao = mock(MethodConferencDaoImpl.class);
         id=(long)1;
+        idStatus=(long)4;
         idCategory=(long)4;
         name="Java";
         description="Learning java method";
-        conferenc=new Conferenc((long)1,name,description,new Category((long)3,"IT"));
+        conferenc=new Conferenc((long)1,name,description,new Category((long)3,"IT"),new Status((long)1,"Active"));
         conferencList=new ArrayList<>();
         conferencList.add(conferenc);
+    }
+
+    @Test
+    public void changeStatus() {
+        boolean expectedResult = true;
+        when(dao.changeStatus(id,idStatus)).thenReturn(true);
+        boolean actualResult = dao.changeStatus(id,idStatus);
+        Assert.assertEquals(actualResult, expectedResult);
     }
 
     @Test
@@ -56,6 +67,14 @@ public class MethodConferencDaoImplTest extends Assert{
         List<Conferenc> expectedResult = conferencList;
         when(dao.readAll()).thenReturn(expectedResult);
         List<Conferenc> actualResult = dao.readAll();
+        assertEquals(actualResult, expectedResult);
+    }
+
+    @Test
+    public void readAllActive() throws EntityExtractionFailedException {
+        List<Conferenc> expectedResult = conferencList;
+        when(dao.readAllActive()).thenReturn(expectedResult);
+        List<Conferenc> actualResult = dao.readAllActive();
         assertEquals(actualResult, expectedResult);
     }
 

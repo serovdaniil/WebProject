@@ -37,6 +37,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public boolean changeName(Long id, String name) throws ValidationException {
+
         LOG.debug("Service: Changing the category name started.");
         if (!categoryDataValidator.isNameValid(name) || !categoryDataValidator.isIdValid(id)) {
             LOG.error("The entered data is not correct!");

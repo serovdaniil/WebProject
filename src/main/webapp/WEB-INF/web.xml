@@ -6,7 +6,7 @@
          version="4.0">
     <jsp-config>
         <taglib>
-            <taglib-uri>finalProject.com.epam.jwd</taglib-uri>
+            <taglib-uri>com.epam.jwd</taglib-uri>
             <taglib-location>WEB-INF/tld/simpleTags.tld</taglib-location>
         </taglib>
     </jsp-config>

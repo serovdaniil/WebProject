@@ -7,12 +7,14 @@ public class SectionConferenc implements Entity{
     private final String name;
     private final String description;
     private final Conferenc conferenc;
+    private final Status status;
 
-    public SectionConferenc(Long id, String name, String description, Conferenc conferenc) {
+    public SectionConferenc(Long id, String name, String description, Conferenc conferenc, Status status) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.conferenc = conferenc;
+        this.status = status;
     }
 
     @Override
@@ -32,20 +34,21 @@ public class SectionConferenc implements Entity{
         return conferenc;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof SectionConferenc)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         SectionConferenc that = (SectionConferenc) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(description, that.description) &&
-                Objects.equals(conferenc, that.conferenc);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(conferenc, that.conferenc) && Objects.equals(status, that.status);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, conferenc);
+        return Objects.hash(id, name, description, conferenc, status);
     }
 
     @Override
@@ -55,6 +58,7 @@ public class SectionConferenc implements Entity{
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", conferenc=" + conferenc +
+                ", status=" + status +
                 '}';
     }
 }

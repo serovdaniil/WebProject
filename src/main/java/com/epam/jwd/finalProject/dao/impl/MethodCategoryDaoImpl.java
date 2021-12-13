@@ -1,4 +1,5 @@
 package com.epam.jwd.finalProject.dao.impl;
+
 import com.epam.jwd.finalProject.dao.api.CategoryDao;
 import com.epam.jwd.finalProject.dao.connection.ConnectionPool;
 import com.epam.jwd.finalProject.dao.exception.EntityExtractionFailedException;
@@ -229,7 +230,9 @@ public class MethodCategoryDaoImpl implements CategoryDao {
                     resultSet.getString("name"),
                     resultSet.getString("description"),
                     new Category(resultSet.getLong("id_category"),
-                            resultSet.getString("name_category")));
+                            resultSet.getString("name_category")),
+                    new Status(resultSet.getLong("id_status"),
+                            resultSet.getString("name_status")));
         } catch (SQLException e) {
             throw new EntityExtractionFailedException();
         }
@@ -245,7 +248,11 @@ public class MethodCategoryDaoImpl implements CategoryDao {
                             resultSet.getString("conferenc.name"),
                             resultSet.getString("conferenc.description"),
                             new Category(resultSet.getLong("id_category"),
-                                    resultSet.getString("name_category"))));
+                                    resultSet.getString("name_category")),
+                            new Status(resultSet.getLong("id_status"),
+                                    resultSet.getString("name_status"))),
+                    new Status(resultSet.getLong("id_status"),
+                            resultSet.getString("name_status")));
         } catch (SQLException e) {
             throw new EntityExtractionFailedException();
         }

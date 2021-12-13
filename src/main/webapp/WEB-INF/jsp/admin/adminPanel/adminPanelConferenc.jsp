@@ -47,7 +47,7 @@
 <p><a href="#remove" class="create">${menuRemove}</a></p>
 <p><a href="#searchById" class="create">${menuSearchId}</a></p>
 <p><a href="#searchByName" class="create">${menuSearchName}</a></p>
-<p><a href="${pageContext.request.contextPath}/controller?command=show_conferences" class="create">${menuReadConferenc}</a></p>
+<p><a href="${pageContext.request.contextPath}/controller?command=show_all_conferences" class="create">${menuReadConferenc}</a></p>
 <p><a href="${pageContext.request.contextPath}/controller?command=show_categories" class="create">${menuReadCategory}</a></p>
 <p>${requestScope.result}</p>
 <p>${requestScope.conferenc}</p>

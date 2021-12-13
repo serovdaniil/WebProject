@@ -50,7 +50,7 @@ public class MethodApplicationDaoImplTest extends Assert {
         application = new Application((long) 1,
                 new User((long) 1, "daniils3rov@yandex.ru", "daniils3rov@yandex.ru", "Serov231969", "Daniil", "Serov", Role.USER),
                 new SectionResult((long) 1, "Open"), new SectionConferenc((long) 1, "ART", "Name",
-                new Conferenc((long) 2, "SD", "Qwerty", new Category((long) 3, "QWE"))));
+                new Conferenc((long) 2, "SD", "Qwerty", new Category((long) 3, "QWE"),new Status((long)4,"Active")),new Status((long)1,"Active")));
         applicationList = new ArrayList<>();
         applicationList.add(application);
     }
@@ -60,6 +60,14 @@ public class MethodApplicationDaoImplTest extends Assert {
         boolean expectedResult = true;
         when(dao.create(idUser, idSectionConferenc, idResult)).thenReturn(true);
         boolean actualResult = dao.create(idApplication, idUser, idResult);
+        Assert.assertEquals(actualResult, expectedResult);
+    }
+
+    @Test
+    public void changeStatusApplicationAfterUpdateSectionConferenc() {
+        boolean expectedResult = true;
+        when(dao.changeStatusApplicationAfterUpdateSectionConferenc(idSectionConferenc)).thenReturn(true);
+        boolean actualResult = dao.changeStatusApplicationAfterUpdateSectionConferenc(idSectionConferenc);
         Assert.assertEquals(actualResult, expectedResult);
     }
 

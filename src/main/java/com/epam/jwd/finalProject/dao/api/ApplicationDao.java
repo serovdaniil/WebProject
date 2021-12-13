@@ -10,6 +10,8 @@ import java.util.Optional;
 public interface ApplicationDao {
     boolean create(Long idAccount, Long idSectionConferenc, Long idResultSection);
 
+    boolean changeStatusApplicationAfterUpdateSectionConferenc(Long idSectionConferenc);
+
     boolean updateIdStatusApplication(Long idApplication, Long idResultSection);
 
     List<Application> readAll() throws EntityExtractionFailedException;
