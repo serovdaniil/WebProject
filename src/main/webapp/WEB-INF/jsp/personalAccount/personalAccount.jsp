@@ -45,7 +45,7 @@
     <c:if test="${not empty sessionScope.user && sessionScope.user.role eq Role.ADMIN}">
         <div id="container-right">
             <p class="center-pic"><img src="/jpg/questionByAccount.png" alt="img"/></p>
-            <p class="title">${blockQuestionTitle}й</p>
+            <p class="title">${blockQuestionTitle}</p>
             <p>${blockQuestionText}</p>
             <a class="button"
                href="${pageContext.request.contextPath}/controller?command=show_questions">${blockQuestionButton}</a>
@@ -63,10 +63,10 @@
     <c:if test="${not empty sessionScope.user && sessionScope.user.role eq Role.USER}">
         <div id="container">
             <p class="center-pic"><img src="/jpg/applications.png" alt="img"/></p>
-            <p class="title">${blockMyQuestionTitle}</p>
-            <p>${blockMyQuestionText}</p>
+            <p class="title">${blockMyApplicationTitle}</p>
+            <p>${blockMyApplicationText}</p>
             <a class="button"
-               href="${pageContext.request.contextPath}/controller?command=show_applications_by_account">${blockMyQuestionButton}</a>
+               href="${pageContext.request.contextPath}/controller?command=show_applications_by_account">${blockMyApplicationButton}</a>
         </div>
     </c:if>
     <c:if test="${not empty sessionScope.user && sessionScope.user.role eq Role.USER}">

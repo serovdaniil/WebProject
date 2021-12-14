@@ -75,7 +75,7 @@ public class SqlQuery {
 
     // MethodSectionConferencDaoImpl
 
-    protected static final String CREATE_SECTION_CONFERENC = "INSERT INTO section_conferenc (name,description,conferenc_id) values(?,?,?)";
+    protected static final String CREATE_SECTION_CONFERENC = "INSERT INTO section_conferenc (name,description,conferenc_id,section_conferenc_status_id) values(?,?,?,1)";
     protected static final String ADD_DESCRIPTION_BY_SECTION_CONFERENC = "UPDATE section_conferenc SET description = ?" +
             " WHERE id_section_conferenc = ?";
     protected static final String UPDATE_STATUS_SECTION_CONFERENC = "UPDATE section_conferenc SET section_conferenc_status_id =?" +
@@ -87,7 +87,7 @@ public class SqlQuery {
     protected static final String FIND_ID_SECTION_CONFERENC = "SELECT * FROM section_conferenc JOIN status ON section_conferenc_status_id=id_status JOIN conferenc " +
             "ON conferenc_id=id_conferenc JOIN category ON category_id=id_category WHERE id_section_conferenc=?";
     protected static final String FIND_NAME_SECTION_CONFERENC = "SELECT * FROM section_conferenc JOIN status ON section_conferenc_status_id=id_status JOIN conferenc " +
-            "ON conferenc_id=id_conferenc JOIN category ON category_id=id_category JOIN status ON section_conferenc_status_id=id_status WHERE section_conferenc.name=?";
+            "ON conferenc_id=id_conferenc JOIN category ON category_id=id_category WHERE section_conferenc.name=?";
     protected static final String SECTION_CONFERENC_DELETE = "DELETE FROM section_conferenc  WHERE id_section_conferenc=?";
     protected static final String FIND_SECTION_CONFERENCES_IN_CONFERENC_BY_ID_ACTIVE = "SELECT * FROM section_conferenc JOIN conferenc " +
             "ON conferenc_id=id_conferenc JOIN category ON category_id=id_category JOIN status ON section_conferenc_status_id=id_status WHERE section_conferenc.conferenc_id=? && section_conferenc_status_id=1";

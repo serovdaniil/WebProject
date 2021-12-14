@@ -28,7 +28,7 @@ public class UpdateRoleCommand implements Command {
     private static final String URL_UPDATE_ROLE_USER_PAGE = "/controller?command=show_users";
     private static final String RESULT_ATTRIBUTE_NAME = "result";
     private static final String OPERATION_WAS_UNSUCCSESFUL = "The operation was unsuccsesful";
-    private static final String SHOW_USERS_PAGE = "page.show_users";
+    private static final String SHOW_USERS_PAGE = "page.users";
     private static final Logger LOG = LogManager.getLogger(UpdateRoleCommand.class);
 
     UpdateRoleCommand(UserService service, RequestFactory requestFactory, PropertyContext propertyContext) {
@@ -47,10 +47,10 @@ public class UpdateRoleCommand implements Command {
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
         }
-        if (user.get().equals(Optional.empty())){
+        if (user.get().equals(Optional.empty())) {
             request.addAttributeToJsp(RESULT_ATTRIBUTE_NAME, OPERATION_WAS_UNSUCCSESFUL);
             return requestFactory.createForwardResponse(propertyContext.get(SHOW_USERS_PAGE));
-        }else{
+        } else {
             return requestFactory.createRedirectResponse(URL_UPDATE_ROLE_USER_PAGE);
         }
     }

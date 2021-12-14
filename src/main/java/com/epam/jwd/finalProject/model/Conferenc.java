@@ -58,12 +58,12 @@ public class Conferenc implements Entity {
 
     @Override
     public String toString() {
-        return "Conferenc{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", category=" + category +
-                ", status=" + status +
-                '}';
+        StringBuilder s=new StringBuilder(100);
+        s.append("Conferenc '" + name + "':\n");
+        s.append(" ID - " + id + "\n");
+        s.append(" Description - " + description + "\n");
+        s.append(" Category - " + category + "\n");
+        s.append(" Status - " + status + "\n");
+        return s.toString();
     }
 }

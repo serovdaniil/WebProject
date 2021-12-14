@@ -31,16 +31,18 @@
             <li><label for="id-input">${id}</label>
                 <input id="id-input" class="container" type="text" name="id" readonly
                        value="${sectionConferenc.id}"/>
+                <br>
                 <label for="name-input">${name}</label>
                 <input id="name-input" class="container" type="text" name="nameSectionConferenc" readonly
                        value="${sectionConferenc.name}"/>
+                <br>
                 <label for="conferenc-input">${conferenc}</label>
                 <input id="conferenc-input" class="container" type="text" name="conferencName" readonly
                        value="${sectionConferenc.conferenc.name}"/>
                 <br>
                 <label for="descriprion-input">${description}</label>
-                <input id="descriprion-input" class="container" type="text" name="descriptionConferenc" readonly
-                       value="${sectionConferenc.description}"/>
+                <textarea id="descriprion-input" class="containerArea" type="text" name="descriptionConferenc" readonly
+                >${sectionConferenc.description}</textarea>
                 <br><br>
                 <c:if test="${not empty sessionScope.user}">
                     <button type="submit" class="button">${add}</button>

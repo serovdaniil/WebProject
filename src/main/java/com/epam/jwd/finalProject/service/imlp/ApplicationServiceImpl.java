@@ -185,6 +185,7 @@ public class ApplicationServiceImpl implements ApplicationService {
             LOG.error("The entered data is not correct!");
             throw new ValidationException("The entered data is not correct!");
         }
+        LOG.debug(id);
         LOG.debug("Service: Removing application finished.");
         return applicationDao.delete(id);
     }

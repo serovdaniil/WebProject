@@ -22,20 +22,23 @@
 <h2>${textMain}</h2>
 <ul class="list3a">
     <c:forEach var="conferenc" items="${requestScope.conferences}">
-        <form name="conferenc-form" action="${pageContext.request.contextPath}/controller?command=find_section_conferences_in_conferenc_by_id"
+        <form name="conferenc-form"
+              action="${pageContext.request.contextPath}/controller?command=find_section_conferences_in_conferenc_by_id"
               method="post">
             <li><label for="id-input">${id}</label>
                 <input id="id-input" class="container" type="text" name="id" readonly
                        value="${conferenc.id}"/>
+                <br>
                 <label for="name-input">${name}</label>
-                <input id="name-input" class="container" type="text" name="name" readonly value="${conferenc.name}"/>
+                <input id="name-input" class="container" name="name" readonly value="${conferenc.name}"/>
+                <br>
                 <label for="category-input">${category}</label>
                 <input id="category-input" class="container" type="text" name="categoryName" readonly
                        value="${conferenc.category.name}"/>
                 <br>
                 <label for="descriprion-input">${description}:</label>
-                <input id="descriprion-input" class="container" type="text" name="conferencName" readonly
-                       value="${conferenc.description}"/>
+                <textarea id="descriprion-input" class="containerArea" name="conferencName" readonly>
+                        ${conferenc.description}"</textarea>
                 <br>
                 <button type="submit" class="button">${more}</button>
             </li>

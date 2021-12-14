@@ -3,7 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <fmt:setLocale value="${cookie.lang.value}"/>
 <fmt:setBundle basename="l10n.page.main" var="loc"/>
-<fmt:message bundle="${loc}" key="label.useful.readConferenc.main" var="text"/>
+<fmt:message bundle="${loc}" key="label.title.sectionConferences" var="text"/>
 <fmt:message bundle="${loc}" key="label.sectionConferencInConferenc.conferenc" var="conferenc"/>
 <fmt:message bundle="${loc}" key="label.sectionConferencInConferenc.description" var="description"/>
 <fmt:message bundle="${loc}" key="label.sectionConferencInConferenc.name" var="name"/>

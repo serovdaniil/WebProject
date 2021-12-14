@@ -48,7 +48,7 @@ public class UpdatePasswordCommand implements Command {
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
         }
-        if (password.equals(user.get().getPassword())) {
+        if (!password.equals(user.get().getPassword())) {
             request.clearSession();
             request.createSession();
             request.addToSession(USER_SESSION_ATTRIBUTE_NAME, user.get());

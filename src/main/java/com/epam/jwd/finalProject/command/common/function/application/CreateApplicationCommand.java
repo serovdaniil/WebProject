@@ -27,7 +27,7 @@ public class CreateApplicationCommand implements Command {
     private static final String USER_SESSION_ATTRIBUTE_NAME = "user";
     private static final String APPLICATIONS_ATTRIBUTE_NAME_SECTION_CONFERENC = "applications";
     private static final String APPLICATIONS_ATTRIBUTE_NAME = "result";
-    private static final String APPLICATIONS_PAGE = "page.applicationsByAccount";
+    private static final String APPLICATIONS_PAGE = "/controller?command=show_applications_by_account";
     private static final Logger LOG = LogManager.getLogger(CreateApplicationCommand.class);
 
     private final ApplicationService applicationService;
@@ -55,7 +55,7 @@ public class CreateApplicationCommand implements Command {
         }  catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
         }
-        return requestFactory.createForwardResponse(propertyContext.get(APPLICATIONS_PAGE));
+        return requestFactory.createRedirectResponse(APPLICATIONS_PAGE);
     }
 
     public static CreateApplicationCommand getInstance() {

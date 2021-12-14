@@ -53,11 +53,11 @@ public class Application implements Entity {
 
     @Override
     public String toString() {
-        return "Application{" +
-                "id=" + id +
-                ", user=" + user +
-                ", result=" + result +
-                ", sectionConferenc=" + sectionConferenc +
-                '}';
+        StringBuilder s=new StringBuilder(100);
+        s.append("Application '" + user + "':\n");
+        s.append(" ID - " + id + "\n");
+        s.append(" Result - " + result + "\n");
+        s.append(" Section conferenc - " + sectionConferenc + "\n");
+        return s.toString();
     }
 }

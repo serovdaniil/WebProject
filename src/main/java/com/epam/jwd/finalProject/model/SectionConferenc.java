@@ -58,12 +58,12 @@ public class SectionConferenc implements Entity {
 
     @Override
     public String toString() {
-        return "SectionConferenc{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", conferenc=" + conferenc +
-                ", status=" + status +
-                '}';
+        StringBuilder s=new StringBuilder(100);
+        s.append("Section Conferenc '" + name + "':\n");
+        s.append(" ID - " + id + "\n");
+        s.append(" Description - " + description + "\n");
+        s.append(" Conferenc - " + conferenc + "\n");
+        s.append(" Status - " + status + "\n");
+        return s.toString();
     }
 }

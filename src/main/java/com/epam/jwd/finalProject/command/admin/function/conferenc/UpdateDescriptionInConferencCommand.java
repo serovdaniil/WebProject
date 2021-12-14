@@ -25,7 +25,7 @@ public class UpdateDescriptionInConferencCommand implements Command {
     private static final String RESULT_ATTRIBUTE_NAME = "result";
     private static final String OPERATION_WAS_UNSUCCSESFUL = "The operation was unsuccsesful";
     private static final String CONFERENC_ADMIN_PANEL_PAGE = "page.adminPanelConferenc";
-    private static final String CONFERENCES_PAGE = "/controller?command=show_conferences";
+    private static final String CONFERENCES_PAGE = "/controller?command=show_all_conferences";
     private static final Logger LOG = LogManager.getLogger(FindConferencByIdCommand.class);
 
     UpdateDescriptionInConferencCommand(ConferencService service, RequestFactory requestFactory, PropertyContext propertyContext) {

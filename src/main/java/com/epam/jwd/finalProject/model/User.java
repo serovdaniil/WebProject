@@ -70,14 +70,14 @@ public class User implements Entity {
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", login='" + login + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", role=" + role +
-                '}';
+        StringBuilder s=new StringBuilder(100);
+        s.append("User '" + firstName + "':\n");
+        s.append(" ID - " + id + "\n");
+        s.append(" Last name - " + lastName + "\n");
+        s.append(" Login - " + login + "\n");
+        s.append(" Email - " + email + "\n");
+        s.append(" Password - " + password + "\n");
+        s.append(" Role - " + role + "\n");
+        return s.toString();
     }
 }

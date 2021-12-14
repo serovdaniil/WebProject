@@ -40,9 +40,9 @@ public class Status implements Entity {
 
     @Override
     public String toString() {
-        return "Status{" +
-                "id=" + id +
-                ", status='" + status + '\'' +
-                '}';
+        StringBuilder s = new StringBuilder(100);
+        s.append("Status'" + status + "':\n");
+        s.append(" ID - " + id + "\n");
+        return s.toString();
     }
 }

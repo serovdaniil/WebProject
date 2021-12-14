@@ -59,12 +59,12 @@ public class Question implements Entity {
 
     @Override
     public String toString() {
-        return "Question{" +
-                "id=" + id +
-                ", question='" + question + '\'' +
-                ", answer='" + answer + '\'' +
-                ", date=" + date +
-                ", user=" + user +
-                '}';
+        StringBuilder s=new StringBuilder(100);
+        s.append("Question '" + question + "':\n");
+        s.append(" ID - " + id + "\n");
+        s.append(" Answer - " + answer + "\n");
+        s.append(" Date - " + date + "\n");
+        s.append(" User - " + user + "\n");
+        return s.toString();
     }
 }

@@ -40,9 +40,9 @@ public class Category implements Entity {
 
     @Override
     public String toString() {
-        return "Category{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+        StringBuilder s=new StringBuilder(100);
+        s.append("Category '" + name + "':\n");
+        s.append(" ID - " + id + "\n");
+        return s.toString();
     }
 }

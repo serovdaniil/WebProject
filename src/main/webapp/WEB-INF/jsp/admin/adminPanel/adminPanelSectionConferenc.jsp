@@ -65,7 +65,7 @@
     <br>
     <label for="idCategory-input" class="bolt">${boxIdConferenc}</label>
     <input id="idCategory-input" type="text" name="idConferenc" required pattern="^[0-9]+$" value=""/>
-    <button type="submit" class="create"> Create section conferenc</button>
+    <button type="submit" class="create">${buttonCreate}</button>
     <br>
 </form>
 <br>

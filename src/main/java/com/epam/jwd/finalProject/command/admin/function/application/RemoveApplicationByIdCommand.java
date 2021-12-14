@@ -37,7 +37,7 @@ public class RemoveApplicationByIdCommand implements Command {
     @Override
     public CommandResponse execute(CommandRequest request) {
         final Long id =Long.parseLong(request.getParameter(PARAM_ID));
-        final String nameResult ="Delete";
+        final String nameResult ="Deleted";
         final boolean resultUpdate;
         try {
             resultUpdate = service.updateIdStatusApplication(id,nameResult);

@@ -41,9 +41,9 @@ public class SectionResult implements Entity {
 
     @Override
     public String toString() {
-        return "SectionResult{" +
-                "id=" + id +
-                ", result='" + result + '\'' +
-                '}';
+        StringBuilder s=new StringBuilder(100);
+        s.append("Section result '" + result + "':\n");
+        s.append(" ID - " + id + "\n");
+        return s.toString();
     }
 }
