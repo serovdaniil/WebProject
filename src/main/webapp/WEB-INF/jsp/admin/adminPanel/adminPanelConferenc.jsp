@@ -45,7 +45,7 @@
 <p><a href="#create" class="create">${menuCreate}</a></p>
 <p><a href="#update" class="create">${menuUpdate}</a></p>
 <p><a href="#remove" class="create">${menuRemove}</a></p>
-<p><a href="#searchById" class="create">${menuSearchId}</a></p>
+<%--<p><a href="#searchById" class="create">${menuSearchId}</a></p>--%>
 <p><a href="#searchByName" class="create">${menuSearchName}</a></p>
 <p><a href="${pageContext.request.contextPath}/controller?command=show_all_conferences" class="create">${menuReadConferenc}</a></p>
 <p><a href="${pageContext.request.contextPath}/controller?command=show_categories" class="create">${menuReadCategory}</a></p>
@@ -94,7 +94,7 @@
     <button type="submit" class="create">${buttonRemove}</button>
 </form>
 <br>
-<p><a name="searchById"></a></p>
+<%--<p><a name="searchById"></a></p>
 <p class="bolt">${textFindId}
     <br>
     ${textAfterFindId}
@@ -105,7 +105,7 @@
     <button type="submit" class="create">${buttonSearch}</button>
 </form>
 <p>${requestScope.result}</p>
-<br>
+<br>--%>
 <p><a name="searchByName"></a></p>
 <p class="bolt">${textFindName}
     <br>

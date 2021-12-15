@@ -22,7 +22,7 @@
     <%@include file="/WEB-INF/css/text.css"%>
 </style>
 <%@include file="/WEB-INF/jsp/common/header.jsp" %>
-<h2>${questionMain} ${requestScope.question.question}, ${user} ${requestScope.question.user.firstName} ${requestScope.question.user.lastName}</h2>
+<h2>${questionMain} - "${requestScope.question.question}", ${user} ${requestScope.question.user.firstName} ${requestScope.question.user.lastName}</h2>
 <form name="question-form" action="/controller?command=add_answer_to_question" method="post">
     <label for="id-input">${id}</label>
     <input id="id-input" class="container" type="text" name="id" readonly

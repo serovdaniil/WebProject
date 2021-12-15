@@ -18,6 +18,7 @@ import com.epam.jwd.finalProject.command.admin.page.sectionConferenc.ShowReadSec
 import com.epam.jwd.finalProject.command.admin.page.user.ShowUsersPageCommand;
 import com.epam.jwd.finalProject.command.admin.page.user.ShowReadUserByIdPageCommand;
 import com.epam.jwd.finalProject.command.admin.function.user.UpdateRoleCommand;
+import com.epam.jwd.finalProject.command.common.function.ChangeLanguageCommand;
 import com.epam.jwd.finalProject.command.common.function.application.CreateApplicationCommand;
 import com.epam.jwd.finalProject.command.common.function.application.FindAccountIdByApplicationCommand;
 import com.epam.jwd.finalProject.command.common.function.application.FindApplicationByIdCommand;
@@ -58,8 +59,8 @@ public enum CommandRegistry {
     MAIN_PAGE(ShowMainPageCommand.getInstance(), "main_page", UNAUTHORIZED, USER, ADMIN, BLOKED),
     //Conferenc
     SHOW_CONFERENCES(ShowConferencesPageCommand.getInstance(), "show_conferences", UNAUTHORIZED, USER, ADMIN, BLOKED),
-    FIND_CONFERENCES_BY_NAME(FindConferencByNameCommand.getInstance(), "find_conferences_by_name",ADMIN),
-    SHOW_FIND_CONFERENCES_BY_NAME(ShowFindConferencByNamePageCommand.getInstance(), "show_find_conferences_by_name",ADMIN),
+    FIND_CONFERENCES_BY_NAME(FindConferencByNameCommand.getInstance(), "find_conferences_by_name", ADMIN),
+    SHOW_FIND_CONFERENCES_BY_NAME(ShowFindConferencByNamePageCommand.getInstance(), "show_find_conferences_by_name", ADMIN),
     UPDATE_DESCRIPTION_IN_CONFERENC(UpdateDescriptionInConferencCommand.getInstance(), "update_description_in_conferenc", ADMIN),
     FIND_CONFERENCES_BY_ID(FindConferencByIdCommand.getInstance(), "find_conferenc_by_id", ADMIN),
     REMOVE_CONFERENCES_BY_ID(RemoveConferencByIdCommand.getInstance(), "remove_conferenc_by_id", ADMIN),
@@ -68,8 +69,8 @@ public enum CommandRegistry {
     SHOW_READ_CONFERENC_BY_ID(ShowReadConferencByIdPageCommand.getInstance(), "show_read_conferences_by_id", ADMIN),
     CHANGE_STATUS_CONFERENC(ChangeStatusConferencCommand.getInstance(), "change_status_conferenc_by_id", ADMIN),
     // sectionConferenc
-    SHOW_SECTON_CONFERENCES(ShowSectionConferencesPageCommand.getInstance(), "show_section_conferences",ADMIN),
-    SHOW_READ_SECTON_CONFERENC_BY_ID(ShowReadSectionConferencByIdPageCommand.getInstance(), "show_read_section_conferences_by_id",ADMIN),
+    SHOW_SECTON_CONFERENCES(ShowSectionConferencesPageCommand.getInstance(), "show_section_conferences", ADMIN),
+    SHOW_READ_SECTON_CONFERENC_BY_ID(ShowReadSectionConferencByIdPageCommand.getInstance(), "show_read_section_conferences_by_id", ADMIN),
     FIND_SECTION_CONFERENCES_BY_ID(FindSectionConferencByIdCommand.getInstance(), "find_section_conferenc_by_id", ADMIN),
     CHANGE_STATUS_SECTION_CONFERENC_BY_ID(ChangeStatusSectionConferencCommand.getInstance(), "change_status_section_conferenc_by_id", ADMIN),
     REMOVE_SECTION_CONFERENCES_BY_ID(RemoveSectionConferencByIdCommand.getInstance(), "remove_section_conferenc_by_id", ADMIN),
@@ -127,7 +128,8 @@ public enum CommandRegistry {
     LOGIN(LoginCommand.getInstance(), "login", UNAUTHORIZED),
     SHOW_CREATE_AN_ACCOUNT(ShowCreateAnAccountCommand.getInstance(), "show_create_an_account", UNAUTHORIZED),
     CREATE_AN_ACCOUNT(CreateAnAccountCommand.getInstance(), "create_an_account", UNAUTHORIZED),
-    LOGOUT(LogoutCommand.getInstance(), "logout", USER, ADMIN),
+    LOGOUT(LogoutCommand.getInstance(), "logout", USER, ADMIN, BLOKED),
+    CHANGELANGUAGE(ChangeLanguageCommand.getInstance(), "changeLanguage"),
     DEFAULT(ShowMainPageCommand.getInstance(), "");
 
     private final Command command;

@@ -25,7 +25,7 @@ public class LockingConnectionPool implements ConnectionPool {
     private static final Logger LOG = LogManager.getLogger(LockingConnectionPool.class);
     private static AtomicBoolean isCreated = new AtomicBoolean();
     private static LockingConnectionPool instance = new LockingConnectionPool();
-    private static final Lock LOCKER = new ReentrantLock(true); //михаил сказал надо сделать private static final
+    private static final Lock LOCKER = new ReentrantLock(true);
     private BlockingQueue<ProxyConnection> freeConnection;
     private BlockingQueue<ProxyConnection> givenAwayConnections;
     private static final int DEFAULT_POOL_SIZE = 8;
@@ -33,7 +33,7 @@ public class LockingConnectionPool implements ConnectionPool {
     private boolean initialized = false;
 
     public LockingConnectionPool() {
-        initializeConnections(DEFAULT_POOL_SIZE);
+        init();
     }
 
     @Override

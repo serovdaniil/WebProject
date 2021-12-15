@@ -5,6 +5,5 @@
 </head>
 <body>
 <h3>You don't have enough rights</h3>
-<%--todo: add detailed error description--%>
 </body>
 </html>

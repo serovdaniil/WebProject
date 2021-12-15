@@ -60,4 +60,9 @@ public class WrappingCommandRequest implements CommandRequest {
     public void createSession() {
         request.getSession(true);
     }
+
+    @Override
+    public String getURL() {
+        return String.valueOf(request.getRequestURL());
+    }
 }

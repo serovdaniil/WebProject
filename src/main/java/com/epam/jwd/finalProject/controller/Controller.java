@@ -20,8 +20,6 @@ import java.io.IOException;
  */
 @WebServlet("/controller")
 public class Controller extends HttpServlet {
-    private static final long serialVersionUID = 7792798972556410954L;
-
     private static final Logger LOG = LogManager.getLogger(Controller.class);
 
     private static final String COMMAND_NAME_PARAM = "command";

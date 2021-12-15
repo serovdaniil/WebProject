@@ -30,7 +30,6 @@ import java.util.Set;
  */
 @WebFilter(urlPatterns = "/*")
 public class RoleFilter implements Filter {
-
     private static final Logger LOGGER = LogManager.getLogger(RoleFilter.class);
     private static final String COMMAND_PARAM_NAME = "command";
     private static final String USER_SESSION_ATTRIBUTE_NAME = "user";

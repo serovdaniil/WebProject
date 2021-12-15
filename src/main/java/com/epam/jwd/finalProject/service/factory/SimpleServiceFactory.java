@@ -4,7 +4,6 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.epam.jwd.finalProject.dao.api.UserDao;
 import com.epam.jwd.finalProject.dao.impl.*;
 import com.epam.jwd.finalProject.model.Entity;
-import com.epam.jwd.finalProject.service.ProxyEntityService;
 import com.epam.jwd.finalProject.service.api.EntityService;
 import com.epam.jwd.finalProject.service.imlp.*;
 
@@ -33,15 +32,15 @@ public enum SimpleServiceFactory implements ServiceFactory {
             final String className = clazz.getSimpleName();
             switch (className) {
                 case "Conferenc":
-                    return ProxyEntityService.of(new ConferencServiceImpl(MethodConferencDaoImpl.getInstance()));
+                    return new ConferencServiceImpl(MethodConferencDaoImpl.getInstance());
                 case "SectionConferenc":
-                    return ProxyEntityService.of(new SectionConferencServiceImpl(MethodSectionConferencDaoImpl.getInstance()));
+                    return new SectionConferencServiceImpl(MethodSectionConferencDaoImpl.getInstance());
                 case "Category":
-                    return ProxyEntityService.of(new CategoryServiceImpl(MethodCategoryDaoImpl.getInstance()));
+                    return new CategoryServiceImpl(MethodCategoryDaoImpl.getInstance());
                 case "Question":
-                    return ProxyEntityService.of(new QuestionServiceImpl(MethodQuestionDaoImpl.getInstance()));
+                    return new QuestionServiceImpl(MethodQuestionDaoImpl.getInstance());
                 case "Application":
-                    return ProxyEntityService.of(new ApplicationServiceImpl(MethodApplicationDaoImpl.getInstance()));
+                    return new ApplicationServiceImpl(MethodApplicationDaoImpl.getInstance());
                 case "User":
                     return new UserServiceImpl((MethodUserDaoImpl) UserDao.instance(), BCrypt.withDefaults(), BCrypt.verifyer());
                 default:

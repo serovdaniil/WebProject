@@ -66,7 +66,7 @@
           action="${pageContext.request.contextPath}/controller?command=update_email_by_user" method="post">
         <label for="email-input">${email}:</label>
         <input id="email-input" type="text" name="email" min="2" max="45"
-               requiredpattern="^([A-Za-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$"
+               required pattern="^([A-Za-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$"
                value="${sessionScope.user.email}"/>
         <button type="submit" class="cancelbtn">${buttonEmail}</button>
     </form>

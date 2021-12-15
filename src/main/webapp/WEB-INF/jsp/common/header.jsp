@@ -52,10 +52,10 @@
     <li></li>
     <li></li>
     <li></li>
-    <li></li>
-    <li></li>   <li></li>
-    <li></li>   <li></li>
-    <li></li>   <li></li>
+    <li><a href="/controller?command=changeLanguage&lang=fr_FR" type="radio" aria-autocomplete="off" aria-checked >FR</a></li>
+    <li><a href="/controller?command=changeLanguage&lang=be_BE" type="radio" aria-autocomplete="off" aria-checked >BE</a></li>
+    <li><a href="/controller?command=changeLanguage&lang=ru_RU" type="radio" aria-autocomplete="off" aria-checked >RU</a></li>
+    <li><a href="/controller?command=changeLanguage&lang=en_US" type="radio" aria-autocomplete="off" aria-checked >EN</a></li>
     <li></li>
     <li><c:choose>
         <c:when test="${not empty sessionScope.user}">

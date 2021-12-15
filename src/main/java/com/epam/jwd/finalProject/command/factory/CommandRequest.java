@@ -24,4 +24,6 @@ public interface CommandRequest {
     void clearSession();
 
     void createSession();
+
+    String getURL();
 }

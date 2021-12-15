@@ -4,11 +4,7 @@
 <fmt:setLocale value="${cookie.lang.value}"/>
 <fmt:setBundle basename="l10n.page.main" var="loc"/>
 <fmt:message bundle="${loc}" key="label.title.registration" var="pageTitle"/>
-<fmt:message bundle="${loc}" key="label.registration.boxLogin" var="login"/>
-<fmt:message bundle="${loc}" key="label.registration.boxPassword" var="password"/>
-<fmt:message bundle="${loc}" key="label.registration.button.registration" var="registration"/>
-<fmt:message bundle="${loc}" key="label.registration.removeText" var="removeText"/>
-<fmt:message bundle="${loc}" key="label.registration.create" var="createAccount"/>
+<fmt:message bundle="${loc}" key="label.about.text" var="text"/>
 <!doctype html>
 <html>
 <head>
@@ -18,9 +14,10 @@
 <body>
 <style>
     <%@include file="/WEB-INF/css/loginStyle.css"%>
+    <%@include file="/WEB-INF/css/text.css"%>
 </style>
 <%@include file="/WEB-INF/jsp/common/header.jsp"%>
-
+<p>${text}</p>
 <%@include file="/WEB-INF/jsp/common/footer.jsp" %>
 </body>
 </html>

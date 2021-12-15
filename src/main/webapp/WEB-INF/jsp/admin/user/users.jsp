@@ -9,7 +9,7 @@
 <fmt:message bundle="${loc}" key="label.users.boxFirstName" var="firstName"/>
 <fmt:message bundle="${loc}" key="label.users.boxId" var="id"/>
 <fmt:message bundle="${loc}" key="label.users.boxLastName" var="lastName"/>
-<fmt:message bundle="${loc}" key="label.users.boxLogin" var="firstName"/>
+<fmt:message bundle="${loc}" key="label.users.boxLogin" var="login"/>
 <fmt:message bundle="${loc}" key="label.users.boxRole" var="role"/>
 <fmt:message bundle="${loc}" key="label.users.button.more" var="more"/>
 <html>

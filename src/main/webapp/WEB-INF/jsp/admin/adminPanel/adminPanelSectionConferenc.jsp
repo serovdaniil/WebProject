@@ -45,7 +45,7 @@
 <p><a href="#create" class="create">${menuCreate}</a></p>
 <p><a href="#update" class="create">${menuUpdateDescription}</a></p>
 <p><a href="#remove" class="create">${menuRemove}</a></p>
-<p><a href="#searchById" class="create">${menuSearchById}</a></p>
+<%--<p><a href="#searchById" class="create">${menuSearchById}</a></p>--%>
 <p><a href="${pageContext.request.contextPath}/controller?command=show_conferences" class="create">${menuReadConferenc}</a></p>
 <p><a href="${pageContext.request.contextPath}/controller?command=show_categories" class="create">${menuReadCategory}</a></p>
 <p><a href="${pageContext.request.contextPath}/controller?command=show_section_conferences" class="create">${menuSectionConferenc}</a></p>
@@ -96,7 +96,7 @@
 </form>
 
 <br>
-<p><a name="searchById"></a></p>
+<%--<p><a name="searchById"></a></p>
 <p class="bolt">${textFindId}
     <br>
     ${textAfterFindId}
@@ -106,7 +106,7 @@
     <input id="idSectionConferenc-input" type="text" name="id" value=""required pattern="^[0-9]+$"/>
     <button type="submit" class="create">${buttonFindSectionConferenc}</button>
 </form>
-<br>
+<br>--%>
 <p><a name="searchByName"></a></p>
 <p class="bolt">${textFindName}
     <br>${textAfterFindName}

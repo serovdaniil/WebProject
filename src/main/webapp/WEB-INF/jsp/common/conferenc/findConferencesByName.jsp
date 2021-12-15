@@ -14,20 +14,18 @@
     <%@include file="/WEB-INF/css/text.css"%>
 </style>
 <%@include file="/WEB-INF/jsp/common/header.jsp" %>
-<h3>Find Conferenc by name</h3>
+<h3>${pageTitle}</h3>
 <table>
     <tr>
         <th>ID</th>
         <th>NAME</th>
         <th>DESCRIPTION</th>
         <th>CATEGORY</th>
-        <%--        <th>Owner</th>--%>
     </tr>
     <c:forEach var="conferenc" items="${requestScope.conferences}">
         <tr>
             <td>${conferenc.id}</td>
             <td>${conferenc.name}</td>
-
             <td>${conferenc.description}</td>
             <td>${conferenc.category.name}</td>
         </tr>

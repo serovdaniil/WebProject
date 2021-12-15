@@ -20,6 +20,7 @@
 <form name="createQuestion-form" action="${pageContext.request.contextPath}/controller?command=create_question" method="post">
     <label for="name-input">${boxQuestion}:</label>
     <input id="name-input" type="text" name="name" min="2" max="1000" pattern="^.{2,1000}$" value=""/>
+    <br>
     <c:if test="${not empty sessionScope.user}">
     <button type="submit">${button}</button>
     </c:if>

@@ -12,7 +12,7 @@ public class SimplePropertyContext implements PropertyContext{
         if (name.startsWith("page.")) {
             return PagePaths.of(name.substring(5)).getPath();
         }
-        return null; //todo: exception
+        return null;
     }
 
     static SimplePropertyContext getInstance() {
