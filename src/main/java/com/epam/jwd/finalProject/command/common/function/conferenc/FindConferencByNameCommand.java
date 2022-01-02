@@ -29,7 +29,8 @@ public class FindConferencByNameCommand implements Command {
     private static final String FIND_CONFERENCES_BY_NAME_PAGE = "page.findConferencesByName";
     private static final Logger LOG = LogManager.getLogger(RemoveConferencByIdCommand.class);
 
-    FindConferencByNameCommand(ConferencService service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    FindConferencByNameCommand(ConferencService service, RequestFactory requestFactory,
+                               PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().conferencService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -55,7 +56,7 @@ public class FindConferencByNameCommand implements Command {
 
     private static class Holder {
         public static final FindConferencByNameCommand INSTANCE =
-                new FindConferencByNameCommand(ServiceFactory.simple().conferencService(),RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new FindConferencByNameCommand(ServiceFactory.simple().conferencService(),
+                        RequestFactory.getInstance(), PropertyContext.instance());
     }
 }

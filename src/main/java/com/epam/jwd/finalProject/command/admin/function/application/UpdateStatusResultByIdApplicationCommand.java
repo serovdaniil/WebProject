@@ -29,7 +29,8 @@ public class UpdateStatusResultByIdApplicationCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    UpdateStatusResultByIdApplicationCommand(EntityService<Application> service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    UpdateStatusResultByIdApplicationCommand(EntityService<Application> service, RequestFactory requestFactory,
+                                             PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().applicationService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -62,7 +63,7 @@ public class UpdateStatusResultByIdApplicationCommand implements Command {
 
     private static class Holder {
         public static final UpdateStatusResultByIdApplicationCommand INSTANCE =
-                new UpdateStatusResultByIdApplicationCommand(ServiceFactory.simple().serviceFor(Application.class), RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new UpdateStatusResultByIdApplicationCommand(ServiceFactory.simple().serviceFor(Application.class),
+                        RequestFactory.getInstance(), PropertyContext.instance());
     }
 }

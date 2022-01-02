@@ -1,7 +1,7 @@
 package com.epam.jwd.finalProject.service.imlp;
 
 import com.epam.jwd.finalProject.dao.exception.EntityExtractionFailedException;
-import com.epam.jwd.finalProject.dao.impl.MethodCategoryDaoImpl;
+import com.epam.jwd.finalProject.dao.impl.CategoryDaoImpl;
 import com.epam.jwd.finalProject.model.Category;
 import com.epam.jwd.finalProject.model.Conferenc;
 import com.epam.jwd.finalProject.model.SectionConferenc;
@@ -16,13 +16,13 @@ import java.util.List;
 import java.util.Optional;
 /**
  * @author Daniil Serov
- * @see MethodCategoryDaoImpl
+ * @see CategoryDaoImpl
  */
 public class CategoryServiceImpl implements CategoryService {
     /**
      * Dao for this service
      */
-    private final MethodCategoryDaoImpl categoryDao;
+    private final CategoryDaoImpl categoryDao;
     /**
      * Logger for this service
      */
@@ -36,7 +36,7 @@ public class CategoryServiceImpl implements CategoryService {
      *
      * @param categoryDao dao for this service
      */
-    public CategoryServiceImpl(MethodCategoryDaoImpl categoryDao) {
+    public CategoryServiceImpl(CategoryDaoImpl categoryDao) {
         this.categoryDao = categoryDao.getInstance();
     }
     /**

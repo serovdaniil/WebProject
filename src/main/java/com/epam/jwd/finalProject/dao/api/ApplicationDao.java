@@ -1,7 +1,7 @@
 package com.epam.jwd.finalProject.dao.api;
 
 import com.epam.jwd.finalProject.dao.exception.EntityExtractionFailedException;
-import com.epam.jwd.finalProject.dao.impl.MethodApplicationDaoImpl;
+import com.epam.jwd.finalProject.dao.impl.ApplicationDaoImpl;
 import com.epam.jwd.finalProject.model.Application;
 
 import java.util.List;
@@ -85,6 +85,6 @@ public interface ApplicationDao {
      * @return the instance
      */
     static ApplicationDao instance() {
-        return MethodApplicationDaoImpl.getInstance();
+        return ApplicationDaoImpl.getInstance();
     }
 }

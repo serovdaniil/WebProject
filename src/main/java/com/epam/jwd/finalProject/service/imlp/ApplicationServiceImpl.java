@@ -1,7 +1,7 @@
 package com.epam.jwd.finalProject.service.imlp;
 
 import com.epam.jwd.finalProject.dao.exception.EntityExtractionFailedException;
-import com.epam.jwd.finalProject.dao.impl.MethodApplicationDaoImpl;
+import com.epam.jwd.finalProject.dao.impl.ApplicationDaoImpl;
 import com.epam.jwd.finalProject.model.Application;
 import com.epam.jwd.finalProject.service.api.ApplicationService;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
@@ -15,13 +15,13 @@ import java.util.Optional;
 
 /**
  * @author Daniil Serov
- * @see MethodApplicationDaoImpl
+ * @see ApplicationDaoImpl
  */
 public class ApplicationServiceImpl implements ApplicationService {
     /**
      * Dao for this service
      */
-    private final MethodApplicationDaoImpl applicationDao;
+    private final ApplicationDaoImpl applicationDao;
 
     /**
      * Logger for this service
@@ -38,7 +38,7 @@ public class ApplicationServiceImpl implements ApplicationService {
      *
      * @param applicationDao dao for this service
      */
-    public ApplicationServiceImpl(MethodApplicationDaoImpl applicationDao) {
+    public ApplicationServiceImpl(ApplicationDaoImpl applicationDao) {
         this.applicationDao = applicationDao.getInstance();
     }
 
@@ -197,16 +197,20 @@ public class ApplicationServiceImpl implements ApplicationService {
      */
     private Long resultSection(String resultSection) {
         Long idResult = null;
-        if ((resultSection.equals("Activate")) || (resultSection.equals("Создана")) || (resultSection.equals("Créé")) || (resultSection.equals("Створаны"))) {
+        if ((resultSection.equals("Activate")) || (resultSection.equals("Создана")) ||
+                (resultSection.equals("Créé")) || (resultSection.equals("Створаны"))) {
             idResult = (long) 1;
         }
-        if ((resultSection.equals("Waiting")) || (resultSection.equals("В ожидании")) || (resultSection.equals("En attendant")) || (resultSection.equals("У чаканні"))) {
+        if ((resultSection.equals("Waiting")) || (resultSection.equals("В ожидании")) ||
+                (resultSection.equals("En attendant")) || (resultSection.equals("У чаканні"))) {
             idResult = (long) 2;
         }
-        if ((resultSection.equals("Completed")) || (resultSection.equals("Завершена")) || (resultSection.equals("Achevé")) || (resultSection.equals("Завершаны"))) {
+        if ((resultSection.equals("Completed")) || (resultSection.equals("Завершена")) ||
+                (resultSection.equals("Achevé")) || (resultSection.equals("Завершаны"))) {
             idResult = (long) 3;
         }
-        if ((resultSection.equals("Deleted")) || (resultSection.equals("Удалена")) || (resultSection.equals("Distant")) || (resultSection.equals("Выдалены"))) {
+        if ((resultSection.equals("Deleted")) || (resultSection.equals("Удалена")) ||
+                (resultSection.equals("Distant")) || (resultSection.equals("Выдалены"))) {
             idResult = (long) 4;
         }
         return idResult;

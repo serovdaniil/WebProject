@@ -1,7 +1,7 @@
 package com.epam.jwd.finalProject.service.imlp;
 
 import com.epam.jwd.finalProject.dao.exception.EntityExtractionFailedException;
-import com.epam.jwd.finalProject.dao.impl.MethodQuestionDaoImpl;
+import com.epam.jwd.finalProject.dao.impl.QuestionDaoImpl;
 import com.epam.jwd.finalProject.model.Question;
 import com.epam.jwd.finalProject.service.api.QuestionService;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 /**
  * @author Daniil Serov
- * @see MethodQuestionDaoImpl
+ * @see QuestionDaoImpl
  */
 public class QuestionServiceImpl implements QuestionService {
     /**
@@ -26,7 +26,7 @@ public class QuestionServiceImpl implements QuestionService {
     /**
      * Dao for this service
      */
-    private final MethodQuestionDaoImpl questionDao;
+    private final QuestionDaoImpl questionDao;
     /**
      * Logger for this service
      */
@@ -37,7 +37,7 @@ public class QuestionServiceImpl implements QuestionService {
      *
      * @param questionDao dao for this service
      */
-    public QuestionServiceImpl(MethodQuestionDaoImpl questionDao) {
+    public QuestionServiceImpl(QuestionDaoImpl questionDao) {
         this.questionDao = questionDao.getInstance();
     }
 

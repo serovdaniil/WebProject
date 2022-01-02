@@ -27,7 +27,8 @@
 <h2>${textMain}</h2>
 <p>${textAfterMain}</p>
 <p>${text}</p>
-<a class="create" href="${pageContext.request.contextPath}/controller?command=show_find_by_status_result_application">${linkFilterStatus}</a>
+<a class="create"
+   href="${pageContext.request.contextPath}/controller?command=show_find_by_status_result_application">${linkFilterStatus}</a>
 <table>
     <tr>
         <th>${idApplication}</th>
@@ -38,7 +39,8 @@
         <th></th>
     </tr>
     <c:forEach var="application" items="${requestScope.applications}">
-        <form name="application-form" action="${pageContext.request.contextPath}/controller?command=find_application_by_id" method="post">
+        <form name="application-form"
+              action="${pageContext.request.contextPath}/controller?command=find_application_by_id" method="post">
             <tr>
                 <td>
                     <input class="container" type="text" name="id" readonly

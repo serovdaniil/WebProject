@@ -43,7 +43,8 @@ public class Application implements Entity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Application that = (Application) o;
-        return Objects.equals(id, that.id) && Objects.equals(user, that.user) && Objects.equals(result, that.result) && Objects.equals(sectionConferenc, that.sectionConferenc);
+        return Objects.equals(id, that.id) && Objects.equals(user, that.user) && Objects.equals(result, that.result)
+                && Objects.equals(sectionConferenc, that.sectionConferenc);
     }
 
     @Override

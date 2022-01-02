@@ -30,7 +30,8 @@ public class ChangeStatusSectionConferencCommand implements Command {
     private static final String SECTION_CONFERENCES_PAGE = "/controller?command=show_section_conferences";
     private static final Logger LOG = LogManager.getLogger(FindSectionConferencByIdCommand.class);
 
-    ChangeStatusSectionConferencCommand(SectionConferencService service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    ChangeStatusSectionConferencCommand(SectionConferencService service, RequestFactory requestFactory,
+                                        PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().sectionConferencService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -60,7 +61,7 @@ public class ChangeStatusSectionConferencCommand implements Command {
 
     private static class Holder {
         public static final ChangeStatusSectionConferencCommand INSTANCE =
-                new ChangeStatusSectionConferencCommand(ServiceFactory.simple().sectionConferencService(), RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new ChangeStatusSectionConferencCommand(ServiceFactory.simple().sectionConferencService(),
+                        RequestFactory.getInstance(), PropertyContext.instance());
     }
 }

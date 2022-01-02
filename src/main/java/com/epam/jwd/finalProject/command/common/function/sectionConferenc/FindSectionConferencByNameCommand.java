@@ -28,7 +28,8 @@ public class FindSectionConferencByNameCommand implements Command {
     private static final String SECTION_CONFERENCES_PAGE = "page.adminPanelSectionConferenc";
     private static final Logger LOG = LogManager.getLogger(FindSectionConferencByNameCommand.class);
 
-    FindSectionConferencByNameCommand(SectionConferencService service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    FindSectionConferencByNameCommand(SectionConferencService service, RequestFactory requestFactory,
+                                      PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().sectionConferencService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -53,7 +54,7 @@ public class FindSectionConferencByNameCommand implements Command {
 
     private static class Holder {
         public static final FindSectionConferencByNameCommand INSTANCE =
-                new FindSectionConferencByNameCommand(ServiceFactory.simple().sectionConferencService(), RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new FindSectionConferencByNameCommand(ServiceFactory.simple().sectionConferencService(),
+                        RequestFactory.getInstance(), PropertyContext.instance());
     }
 }

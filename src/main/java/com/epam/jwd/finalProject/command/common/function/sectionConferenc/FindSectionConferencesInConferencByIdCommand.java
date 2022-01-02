@@ -19,7 +19,8 @@ import java.util.List;
  *
  * @author Daniil Serov
  */
-public class FindSectionConferencesInConferencByIdCommand implements Command {private final SectionConferencService service;
+public class FindSectionConferencesInConferencByIdCommand implements Command {
+    private final SectionConferencService service;
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
     private static final String FIND_PARAM_ID = "id";
@@ -27,7 +28,8 @@ public class FindSectionConferencesInConferencByIdCommand implements Command {pr
     private static final String FIND_SECTION_CONFERENCES_BY_NAME_PAGE = "page.findSectionConferencesInConferencById";
     private static final Logger LOG = LogManager.getLogger(FindSectionConferencesInConferencByIdCommand.class);
 
-    FindSectionConferencesInConferencByIdCommand(SectionConferencService service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    FindSectionConferencesInConferencByIdCommand(SectionConferencService service, RequestFactory requestFactory,
+                                                 PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().sectionConferencService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -52,7 +54,7 @@ public class FindSectionConferencesInConferencByIdCommand implements Command {pr
 
     private static class Holder {
         public static final FindSectionConferencesInConferencByIdCommand INSTANCE =
-                new FindSectionConferencesInConferencByIdCommand(ServiceFactory.simple().sectionConferencService(),RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new FindSectionConferencesInConferencByIdCommand(ServiceFactory.simple().sectionConferencService(),
+                        RequestFactory.getInstance(), PropertyContext.instance());
     }
 }

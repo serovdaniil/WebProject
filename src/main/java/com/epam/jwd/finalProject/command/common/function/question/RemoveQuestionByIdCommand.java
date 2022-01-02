@@ -25,7 +25,8 @@ public class RemoveQuestionByIdCommand implements Command {
     private static final String FIND_QUESTIONS = "controller?command=find_questions_by_id_account";
     private static final Logger LOG = LogManager.getLogger(RemoveQuestionByIdCommand.class);
 
-    RemoveQuestionByIdCommand(QuestionService service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    RemoveQuestionByIdCommand(QuestionService service, RequestFactory requestFactory,
+                              PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().questionService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -56,7 +57,7 @@ public class RemoveQuestionByIdCommand implements Command {
 
     private static class Holder {
         public static final RemoveQuestionByIdCommand INSTANCE =
-                new RemoveQuestionByIdCommand(ServiceFactory.simple().questionService(), RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new RemoveQuestionByIdCommand(ServiceFactory.simple().questionService(),
+                        RequestFactory.getInstance(), PropertyContext.instance());
     }
 }

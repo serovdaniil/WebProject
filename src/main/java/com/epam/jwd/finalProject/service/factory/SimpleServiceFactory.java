@@ -4,6 +4,7 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.epam.jwd.finalProject.dao.api.UserDao;
 import com.epam.jwd.finalProject.dao.impl.*;
 import com.epam.jwd.finalProject.model.Entity;
+import com.epam.jwd.finalProject.security.PasswordEncoder;
 import com.epam.jwd.finalProject.service.api.EntityService;
 import com.epam.jwd.finalProject.service.imlp.*;
 
@@ -32,17 +33,17 @@ public enum SimpleServiceFactory implements ServiceFactory {
             final String className = clazz.getSimpleName();
             switch (className) {
                 case "Conferenc":
-                    return new ConferencServiceImpl(MethodConferencDaoImpl.getInstance());
+                    return new ConferencServiceImpl(ConferencDaoImpl.getInstance());
                 case "SectionConferenc":
-                    return new SectionConferencServiceImpl(MethodSectionConferencDaoImpl.getInstance());
+                    return new SectionConferencServiceImpl(SectionConferencDaoImpl.getInstance());
                 case "Category":
-                    return new CategoryServiceImpl(MethodCategoryDaoImpl.getInstance());
+                    return new CategoryServiceImpl(CategoryDaoImpl.getInstance());
                 case "Question":
-                    return new QuestionServiceImpl(MethodQuestionDaoImpl.getInstance());
+                    return new QuestionServiceImpl(QuestionDaoImpl.getInstance());
                 case "Application":
-                    return new ApplicationServiceImpl(MethodApplicationDaoImpl.getInstance());
+                    return new ApplicationServiceImpl(ApplicationDaoImpl.getInstance());
                 case "User":
-                    return new UserServiceImpl((MethodUserDaoImpl) UserDao.instance(), BCrypt.withDefaults(), BCrypt.verifyer());
+                    return new UserServiceImpl((UserDaoImpl) UserDao.instance(), PasswordEncoder.getInstance());
                 default:
                     throw new IllegalArgumentException(String.format(SERVICE_NOT_FOUND, className));
             }

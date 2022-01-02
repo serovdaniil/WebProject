@@ -1,7 +1,7 @@
 package com.epam.jwd.finalProject.service.imlp;
 
 import com.epam.jwd.finalProject.dao.exception.EntityExtractionFailedException;
-import com.epam.jwd.finalProject.dao.impl.MethodConferencDaoImpl;
+import com.epam.jwd.finalProject.dao.impl.ConferencDaoImpl;
 import com.epam.jwd.finalProject.model.Conferenc;
 import com.epam.jwd.finalProject.service.api.ConferencService;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
@@ -15,13 +15,13 @@ import java.util.Optional;
 
 /**
  * @author Daniil Serov
- * @see MethodConferencDaoImpl
+ * @see ConferencDaoImpl
  */
 public class ConferencServiceImpl implements ConferencService {
     /**
      * Dao for this service
      */
-    private final MethodConferencDaoImpl conferencDao;
+    private final ConferencDaoImpl conferencDao;
     /**
      * Logger for this service
      */
@@ -36,7 +36,7 @@ public class ConferencServiceImpl implements ConferencService {
      *
      * @param conferencDao dao for this service
      */
-    public ConferencServiceImpl(MethodConferencDaoImpl conferencDao) {
+    public ConferencServiceImpl(ConferencDaoImpl conferencDao) {
         this.conferencDao = conferencDao.getInstance();
     }
 
@@ -198,11 +198,13 @@ public class ConferencServiceImpl implements ConferencService {
     private Long resultSection(String resultSection) {
         Long idResult = null;
 
-        if ((resultSection.equals("Active")) || (resultSection.equals("Активная")) || (resultSection.equals("Actif")) || (resultSection.equals("Актыўны"))) {
+        if ((resultSection.equals("Active")) || (resultSection.equals("Активная")) || (resultSection.equals("Actif"))
+                || (resultSection.equals("Актыўны"))) {
             idResult = (long) 1;
         }
 
-        if ((resultSection.equals("DELETE")) || (resultSection.equals("Удаленная")) || (resultSection.equals("Distant")) || (resultSection.equals("Выдалены"))) {
+        if ((resultSection.equals("DELETE")) || (resultSection.equals("Удаленная")) || (resultSection.equals("Distant"))
+                || (resultSection.equals("Выдалены"))) {
             idResult = (long) 2;
         }
         return idResult;

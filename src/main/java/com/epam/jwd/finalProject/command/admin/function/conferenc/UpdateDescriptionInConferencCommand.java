@@ -28,7 +28,8 @@ public class UpdateDescriptionInConferencCommand implements Command {
     private static final String CONFERENCES_PAGE = "/controller?command=show_all_conferences";
     private static final Logger LOG = LogManager.getLogger(FindConferencByIdCommand.class);
 
-    UpdateDescriptionInConferencCommand(ConferencService service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    UpdateDescriptionInConferencCommand(ConferencService service, RequestFactory requestFactory,
+                                        PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().conferencService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -58,7 +59,7 @@ public class UpdateDescriptionInConferencCommand implements Command {
 
     private static class Holder {
         public static final UpdateDescriptionInConferencCommand INSTANCE =
-                new UpdateDescriptionInConferencCommand(ServiceFactory.simple().conferencService(), RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new UpdateDescriptionInConferencCommand(ServiceFactory.simple().conferencService(),
+                        RequestFactory.getInstance(), PropertyContext.instance());
     }
 }

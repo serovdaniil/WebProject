@@ -14,7 +14,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class MethodSectionConferencDaoImplTest extends Assert {
-    private MethodSectionConferencDaoImpl dao;
+    private SectionConferencDaoImpl dao;
     private SectionConferenc sectionConferencOne;
     private SectionConferenc sectionConferencTwo;
     private String name;
@@ -26,7 +26,7 @@ public class MethodSectionConferencDaoImplTest extends Assert {
 
     @Before
     public void setUp(){
-        dao = mock(MethodSectionConferencDaoImpl.class);
+        dao = mock(SectionConferencDaoImpl.class);
         sectionConferencOne=new SectionConferenc((long)1,"ART","Name",new Conferenc((long)2,
                 "SD","Qwerty",new Category((long)3,"QWE"),new Status((long)2,"Active")),new Status((long)5,"Active"));
         sectionConferencTwo=new SectionConferenc((long)4,"ZXC","Poi",new Conferenc((long)5,

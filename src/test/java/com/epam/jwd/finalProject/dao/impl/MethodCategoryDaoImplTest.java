@@ -14,7 +14,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class MethodCategoryDaoImplTest extends Assert {
-    private MethodCategoryDaoImpl dao;
+    private CategoryDaoImpl dao;
     private String name;
     private Long id;
     private Category category;
@@ -26,7 +26,7 @@ public class MethodCategoryDaoImplTest extends Assert {
 
     @Before
     public void setUp() {
-        dao = mock(MethodCategoryDaoImpl.class);
+        dao = mock(CategoryDaoImpl.class);
         name = "IT";
         id = (long) 1;
         category = new Category((long) 1, "PE");

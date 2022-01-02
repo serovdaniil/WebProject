@@ -56,7 +56,8 @@
 </div>
 <div>
     <h2 class="shadow">${textQuestion}</h2>
-    <form name="createQuestion-form" action="${pageContext.request.contextPath}/controller?command=create_question" method="post">
+    <form name="createQuestion-form" action="${pageContext.request.contextPath}/controller?command=create_question"
+          method="post">
         <label for="name-input">${boxQuestion}:</label>
         <input id="name-input" type="text" required min="1" max="245" name="name"
                pattern="^[A-ZА-Яa-zа-я]+((\s)?((\'|\-|\.|\,)?([A-ZА-Яa-zа-я])+))*$" value=""/>

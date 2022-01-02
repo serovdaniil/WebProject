@@ -28,7 +28,8 @@ public class RemoveApplicationByIdCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    RemoveApplicationByIdCommand(EntityService<Application> service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    RemoveApplicationByIdCommand(EntityService<Application> service, RequestFactory requestFactory,
+                                 PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().applicationService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -60,7 +61,7 @@ public class RemoveApplicationByIdCommand implements Command {
 
     private static class Holder {
         public static final RemoveApplicationByIdCommand INSTANCE =
-                new RemoveApplicationByIdCommand(ServiceFactory.simple().serviceFor(Application.class), RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new RemoveApplicationByIdCommand(ServiceFactory.simple().serviceFor(Application.class),
+                        RequestFactory.getInstance(), PropertyContext.instance());
     }
 }

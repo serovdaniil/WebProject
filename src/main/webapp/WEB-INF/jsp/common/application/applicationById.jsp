@@ -27,7 +27,8 @@
 </style>
 <%@include file="/WEB-INF/jsp/common/header.jsp" %>
 <h2> ${textMain} ${requestScope.application.user.firstName} ${requestScope.application.user.lastName}</h2>
-<form name="question-form" action="${pageContext.request.contextPath}/controller?command=update_status_result_application" method="post">
+<form name="question-form"
+      action="${pageContext.request.contextPath}/controller?command=update_status_result_application" method="post">
     <label for="id-input">${id}</label>
     <input id="id-input" class="container" type="text" name="id" readonly
            value="${requestScope.application.id}"/>

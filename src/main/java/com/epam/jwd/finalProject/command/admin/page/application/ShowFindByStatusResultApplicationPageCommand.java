@@ -33,6 +33,7 @@ public class ShowFindByStatusResultApplicationPageCommand implements Command {
 
     private static class Holder {
         public static final ShowFindByStatusResultApplicationPageCommand INSTANCE =
-                new ShowFindByStatusResultApplicationPageCommand(RequestFactory.getInstance(), PropertyContext.instance());
+                new ShowFindByStatusResultApplicationPageCommand(RequestFactory.getInstance(),
+                        PropertyContext.instance());
     }
 }

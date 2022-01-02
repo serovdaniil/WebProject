@@ -28,7 +28,8 @@ public class RemoveSectionConferencByIdCommand implements Command {
     private static final String SECTION_CONFERENCES_PAGE = "/controller?command=show_section_conferences";
     private static final Logger LOG = LogManager.getLogger(RemoveSectionConferencByIdCommand.class);
 
-    RemoveSectionConferencByIdCommand(SectionConferencService service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    RemoveSectionConferencByIdCommand(SectionConferencService service, RequestFactory requestFactory,
+                                      PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().sectionConferencService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -57,7 +58,7 @@ public class RemoveSectionConferencByIdCommand implements Command {
 
     private static class Holder {
         public static final RemoveSectionConferencByIdCommand INSTANCE =
-                new RemoveSectionConferencByIdCommand(ServiceFactory.simple().sectionConferencService(), RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new RemoveSectionConferencByIdCommand(ServiceFactory.simple().sectionConferencService(),
+                        RequestFactory.getInstance(), PropertyContext.instance());
     }
 }

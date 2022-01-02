@@ -33,7 +33,8 @@ public class AddAnswerToQuestionCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    AddAnswerToQuestionCommand(EntityService<Question> questionServiceservice, RequestFactory requestFactory, PropertyContext propertyContext) {
+    AddAnswerToQuestionCommand(EntityService<Question> questionServiceservice, RequestFactory requestFactory,
+                               PropertyContext propertyContext) {
         this.questionService = ServiceFactory.simple().questionService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -68,7 +69,7 @@ public class AddAnswerToQuestionCommand implements Command {
 
     private static class Holder {
         public static final AddAnswerToQuestionCommand INSTANCE =
-                new AddAnswerToQuestionCommand(ServiceFactory.simple().serviceFor(Question.class), RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new AddAnswerToQuestionCommand(ServiceFactory.simple().serviceFor(Question.class),
+                        RequestFactory.getInstance(), PropertyContext.instance());
     }
 }

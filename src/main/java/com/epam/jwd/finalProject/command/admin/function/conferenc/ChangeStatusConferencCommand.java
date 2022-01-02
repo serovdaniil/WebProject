@@ -30,7 +30,8 @@ public class ChangeStatusConferencCommand implements Command {
     private static final String CONFERENCES_PAGE = "/controller?command=show_all_conferences";
     private static final Logger LOG = LogManager.getLogger(RemoveConferencByIdCommand.class);
 
-    ChangeStatusConferencCommand(ConferencService service, SectionConferencService sectionConferencService, RequestFactory requestFactory, PropertyContext propertyContext) {
+    ChangeStatusConferencCommand(ConferencService service, SectionConferencService sectionConferencService,
+                                 RequestFactory requestFactory, PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().conferencService();
         this.sectionConferencService = ServiceFactory.simple().sectionConferencService();
         this.requestFactory = RequestFactory.getInstance();
@@ -44,7 +45,8 @@ public class ChangeStatusConferencCommand implements Command {
         boolean resultChange = false;
         try {
             resultChange = service.changeStatus(id,status);
-            if ((status.equals("DELETE")) || (status.equals("Удаленная")) || (status.equals("Distant")) || (status.equals("Выдалены"))){
+            if ((status.equals("DELETE")) || (status.equals("Удаленная")) || (status.equals("Distant")) ||
+                    (status.equals("Выдалены"))){
             resultChange=sectionConferencService.changeStatusAfterUpdateConferenc(id);}
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
@@ -63,7 +65,8 @@ public class ChangeStatusConferencCommand implements Command {
 
     private static class Holder {
         public static final ChangeStatusConferencCommand INSTANCE =
-                new ChangeStatusConferencCommand(ServiceFactory.simple().conferencService(), ServiceFactory.simple().sectionConferencService(), RequestFactory.getInstance(),
+                new ChangeStatusConferencCommand(ServiceFactory.simple().conferencService(),
+                        ServiceFactory.simple().sectionConferencService(), RequestFactory.getInstance(),
                         PropertyContext.instance());
     }
 }

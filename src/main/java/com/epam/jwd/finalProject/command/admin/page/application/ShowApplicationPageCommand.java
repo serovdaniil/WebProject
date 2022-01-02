@@ -24,7 +24,8 @@ public class ShowApplicationPageCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    ShowApplicationPageCommand(EntityService<Application> service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    ShowApplicationPageCommand(EntityService<Application> service, RequestFactory requestFactory,
+                               PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().serviceFor(Application.class);
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -43,7 +44,7 @@ public class ShowApplicationPageCommand implements Command {
 
     private static class Holder {
         public static final ShowApplicationPageCommand INSTANCE =
-                new ShowApplicationPageCommand(ServiceFactory.simple().serviceFor(Application.class), RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new ShowApplicationPageCommand(ServiceFactory.simple().serviceFor(Application.class),
+                        RequestFactory.getInstance(), PropertyContext.instance());
     }
 }

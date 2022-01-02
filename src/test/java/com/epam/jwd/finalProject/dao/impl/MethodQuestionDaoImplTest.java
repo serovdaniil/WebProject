@@ -17,7 +17,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class MethodQuestionDaoImplTest extends Assert {
-    private MethodQuestionDaoImpl dao;
+    private QuestionDaoImpl dao;
     private String question;
     private String answer;
     private String firstName;
@@ -32,7 +32,7 @@ public class MethodQuestionDaoImplTest extends Assert {
 
     @Before
     public void setUp() {
-        dao = mock(MethodQuestionDaoImpl.class);
+        dao = mock(QuestionDaoImpl.class);
         question = "Do you have hobby?";
         answer = "Yes, I have.";
         firstName="Daniil";

@@ -30,7 +30,8 @@ public class FindByStatusResultApplicationCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    FindByStatusResultApplicationCommand(EntityService<Application> service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    FindByStatusResultApplicationCommand(EntityService<Application> service, RequestFactory requestFactory,
+                                         PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().applicationService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -55,7 +56,7 @@ public class FindByStatusResultApplicationCommand implements Command {
 
     private static class Holder {
         public static final FindByStatusResultApplicationCommand INSTANCE =
-                new FindByStatusResultApplicationCommand(ServiceFactory.simple().serviceFor(Application.class), RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new FindByStatusResultApplicationCommand(ServiceFactory.simple().serviceFor(Application.class),
+                        RequestFactory.getInstance(), PropertyContext.instance());
     }
 }

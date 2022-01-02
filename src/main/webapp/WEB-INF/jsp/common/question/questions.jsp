@@ -32,7 +32,8 @@
         <th></th>
     </tr>
     <c:forEach var="question" items="${requestScope.questions}">
-        <form name="question-form" action="${pageContext.request.contextPath}/controller?command=find_question_by_id" method="post">
+        <form name="question-form" action="${pageContext.request.contextPath}/controller?command=find_question_by_id"
+              method="post">
             <tr>
                 <td>
                     <input class="container" type="text" name="id" readonly value="${question.id}"/>

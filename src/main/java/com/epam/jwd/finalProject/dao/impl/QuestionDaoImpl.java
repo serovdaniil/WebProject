@@ -20,7 +20,24 @@ import java.util.Optional;
  *
  * @author Daniil Serov
  */
-public class MethodQuestionDaoImpl implements QuestionDao {
+public class QuestionDaoImpl implements QuestionDao {
+    /**
+     * SQL query for this dao
+     */
+    private static final String CREATE_QUESTION = "INSERT INTO final_task.question (question,answer,date,user_id) " +
+            "values(?,?,?,?)";
+    private static final String ADD_ANSWER = "UPDATE final_task.question SET final_task.question.answer = ? " +
+            "WHERE final_task.question.id = ?";
+    private static final String FIND_ALL_QUESTION = "SELECT * FROM final_task.question JOIN final_task.user " +
+            "ON user_id=id_user " +
+            "JOIN final_task.role ON role_id=id_role";
+    private static final String FIND_ID_QUESTION = "SELECT * FROM final_task.question JOIN final_task.user " +
+            "ON user_id=id_user " +
+            "JOIN final_task.role ON role_id=id_role WHERE final_task.question.id = ?";
+    private static final String FIND_ACCOUNT_ID_BY_QUESTION = "SELECT * FROM final_task.question JOIN final_task.user " +
+            "ON user_id=id_user JOIN final_task.role ON role_id=id_role WHERE final_task.question.user_id = ?";
+    private static final String QUESTION_DELETE = "DELETE FROM final_task.question WHERE final_task.question.id = ?";
+
     /**
      * Connection pool for this dao
      */
@@ -31,14 +48,14 @@ public class MethodQuestionDaoImpl implements QuestionDao {
      *
      * @param connectionPool connectionPool for this dao
      */
-    public MethodQuestionDaoImpl(ConnectionPool connectionPool) {
+    public QuestionDaoImpl(ConnectionPool connectionPool) {
         this.connectionPool = connectionPool;
     }
 
     /**
      * Logger for this dao
      */
-    private static final Logger LOG = LogManager.getLogger(MethodQuestionDaoImpl.class);
+    private static final Logger LOG = LogManager.getLogger(QuestionDaoImpl.class);
 
     /**
      * Create question
@@ -53,7 +70,7 @@ public class MethodQuestionDaoImpl implements QuestionDao {
         boolean result = false;
         LOG.info("Start create and add new question");
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.CREATE_QUESTION)) {
+             PreparedStatement statement = connection.prepareStatement(CREATE_QUESTION)) {
             statement.setString(1, name);
             statement.setString(2, "");
             statement.setDate(3, (java.sql.Date) date);
@@ -65,7 +82,7 @@ public class MethodQuestionDaoImpl implements QuestionDao {
             LOG.info("End create and add new question");
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}", SqlQuery.CREATE_QUESTION);
+            LOG.debug("sql: {}", CREATE_QUESTION);
         } catch (NullPointerException e) {
             LOG.error(e);
         }
@@ -84,7 +101,7 @@ public class MethodQuestionDaoImpl implements QuestionDao {
         LOG.info("Start add answer by question");
         boolean result = false;
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.ADD_ANSWER)) {
+             PreparedStatement statement = connection.prepareStatement(ADD_ANSWER)) {
             statement.setLong(2, id);
             statement.setString(1, answer);
             int rowCount = statement.executeUpdate();
@@ -94,7 +111,7 @@ public class MethodQuestionDaoImpl implements QuestionDao {
             LOG.info("End add answer by question");
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}", SqlQuery.ADD_ANSWER);
+            LOG.debug("sql: {}", ADD_ANSWER);
         } catch (NullPointerException e) {
             LOG.error(e);
         }
@@ -110,14 +127,14 @@ public class MethodQuestionDaoImpl implements QuestionDao {
     public List<Question> readAll() throws EntityExtractionFailedException {
         LOG.info("Start readAll question");
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ALL_QUESTION)) {
+             PreparedStatement statement = connection.prepareStatement(FIND_ALL_QUESTION)) {
             ResultSet resultSet = statement.executeQuery();
-            ResultSetExtractor<Question> extractor = MethodQuestionDaoImpl::extractQuestion;
+            ResultSetExtractor<Question> extractor = QuestionDaoImpl::extractQuestion;
             LOG.info("End readAll question");
             return extractor.extractAll(resultSet);
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}", SqlQuery.FIND_ALL_QUESTION);
+            LOG.debug("sql: {}", FIND_ALL_QUESTION);
         } catch (EntityExtractionFailedException e) {
             LOG.error("could not extract entity", e);
         }
@@ -135,7 +152,7 @@ public class MethodQuestionDaoImpl implements QuestionDao {
         LOG.info("Start readById question");
         Optional<Question> productOptional = Optional.empty();
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ID_QUESTION)) {
+             PreparedStatement statement = connection.prepareStatement(FIND_ID_QUESTION)) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -145,7 +162,7 @@ public class MethodQuestionDaoImpl implements QuestionDao {
             LOG.info("End readById question");
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}", SqlQuery.FIND_ID_QUESTION);
+            LOG.debug("sql: {}", FIND_ID_QUESTION);
         } catch (EntityExtractionFailedException e) {
             LOG.error("could not extract entity", e);
         } catch (NullPointerException e) {
@@ -164,15 +181,15 @@ public class MethodQuestionDaoImpl implements QuestionDao {
     public List<Question> findAccountIdByQuestion(Long id) {
         LOG.info("Start find account with Id by question");
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ACCOUNT_ID_BY_QUESTION)) {
+             PreparedStatement statement = connection.prepareStatement(FIND_ACCOUNT_ID_BY_QUESTION)) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
-            ResultSetExtractor<Question> extractor = MethodQuestionDaoImpl::extractQuestion;
+            ResultSetExtractor<Question> extractor = QuestionDaoImpl::extractQuestion;
             LOG.info("End find account with Id by question");
             return extractor.extractAll(resultSet);
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}", SqlQuery.FIND_ACCOUNT_ID_BY_QUESTION);
+            LOG.debug("sql: {}", FIND_ACCOUNT_ID_BY_QUESTION);
         } catch (EntityExtractionFailedException e) {
             LOG.error("could not extract entity", e);
         } catch (NullPointerException e) {
@@ -192,13 +209,13 @@ public class MethodQuestionDaoImpl implements QuestionDao {
         LOG.info("Start delete question");
         boolean result = false;
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.QUESTION_DELETE)) {
+             PreparedStatement statement = connection.prepareStatement(QUESTION_DELETE)) {
             statement.setLong(1, id);
             result = statement.executeUpdate() == 1;
             LOG.info("End delete question");
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}", SqlQuery.QUESTION_DELETE);
+            LOG.debug("sql: {}", QUESTION_DELETE);
         } catch (NullPointerException e) {
             LOG.error(e);
         }
@@ -234,12 +251,12 @@ public class MethodQuestionDaoImpl implements QuestionDao {
      *
      * @return the instance
      */
-    public static MethodQuestionDaoImpl getInstance() {
+    public static QuestionDaoImpl getInstance() {
         return Holder.INSTANCE;
     }
 
     private static class Holder {
-        public static final MethodQuestionDaoImpl INSTANCE = new MethodQuestionDaoImpl(ConnectionPool.locking());
+        public static final QuestionDaoImpl INSTANCE = new QuestionDaoImpl(ConnectionPool.locking());
     }
 
 }

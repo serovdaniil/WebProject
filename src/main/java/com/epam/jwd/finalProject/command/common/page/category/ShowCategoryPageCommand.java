@@ -23,7 +23,8 @@ public class ShowCategoryPageCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    ShowCategoryPageCommand(EntityService<Category> service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    ShowCategoryPageCommand(EntityService<Category> service, RequestFactory requestFactory,
+                            PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().serviceFor(Category.class);
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -42,7 +43,7 @@ public class ShowCategoryPageCommand implements Command {
 
     private static class Holder {
         public static final ShowCategoryPageCommand INSTANCE =
-                new ShowCategoryPageCommand(ServiceFactory.simple().serviceFor(Category.class), RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new ShowCategoryPageCommand(ServiceFactory.simple().serviceFor(Category.class),
+                        RequestFactory.getInstance(), PropertyContext.instance());
     }
 }

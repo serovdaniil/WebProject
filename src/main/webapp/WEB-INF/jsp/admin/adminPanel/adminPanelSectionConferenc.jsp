@@ -46,9 +46,12 @@
 <p><a href="#update" class="create">${menuUpdateDescription}</a></p>
 <p><a href="#remove" class="create">${menuRemove}</a></p>
 <%--<p><a href="#searchById" class="create">${menuSearchById}</a></p>--%>
-<p><a href="${pageContext.request.contextPath}/controller?command=show_conferences" class="create">${menuReadConferenc}</a></p>
-<p><a href="${pageContext.request.contextPath}/controller?command=show_categories" class="create">${menuReadCategory}</a></p>
-<p><a href="${pageContext.request.contextPath}/controller?command=show_section_conferences" class="create">${menuSectionConferenc}</a></p>
+<p><a href="${pageContext.request.contextPath}/controller?command=show_conferences"
+      class="create">${menuReadConferenc}</a></p>
+<p><a href="${pageContext.request.contextPath}/controller?command=show_categories"
+      class="create">${menuReadCategory}</a></p>
+<p><a href="${pageContext.request.contextPath}/controller?command=show_section_conferences"
+      class="create">${menuSectionConferenc}</a></p>
 <p>${requestScope.result}</p>
 <p>${requestScope.sectionConferenc}</p>
 <p><a name="create"></a></p>
@@ -56,7 +59,8 @@
     <br>
    ${textAfterCreate}
 </p>
-<form name="createSectionConferenc-form" action="${pageContext.request.contextPath}/controller?command=create_section_conferenc" method="post">
+<form name="createSectionConferenc-form"
+      action="${pageContext.request.contextPath}/controller?command=create_section_conferenc" method="post">
     <label for="nameSectionConferenc-input" class="bolt">${boxNameSection}</label>
     <input id="nameSectionConferenc-input" type="text" name="name" min="2" max="400" value="" required pattern="^.{0,1000}$"/>
     <br>
@@ -73,13 +77,15 @@
 <p class="bolt">${textUpdate}
     <br>
     ${textAfterUpdate}</p>
-<form name="updateDescriptionBySectionConferenc-form" action="${pageContext.request.contextPath}/controller?command=update_description_in_section_conferenc"
+<form name="updateDescriptionBySectionConferenc-form"
+      action="${pageContext.request.contextPath}/controller?command=update_description_in_section_conferenc"
       method="post">
     <label for="idUpdateSection-input" class="bolt">${boxIdSectionConferenc}</label>
     <input id="idUpdateSection-input" type="text" name="id" value=""required pattern="^[0-9]+$"/>
     <br>
     <label for="descriprionSectionConferenc-input" class="bolt">${boxDescription}</label>
-    <input id="descriprionSectionConferenc-input" type="text" name="description" min="2" max="1000" value=""required pattern="^.{0,1000}$"/>
+    <input id="descriprionSectionConferenc-input" type="text" name="description" min="2" max="1000" value=""required
+           pattern="^.{0,1000}$"/>
     <button type="submit" class="create">${buttonUpdateSectionConferenc}</button>
     <br>
 </form>
@@ -89,7 +95,8 @@
     <br>
     ${textAfterRemove}
 </p>
-<form name="removeSectionConferenc-form" action="${pageContext.request.contextPath}/controller?command=remove_section_conferenc_by_id" method="post">
+<form name="removeSectionConferenc-form"
+      action="${pageContext.request.contextPath}/controller?command=remove_section_conferenc_by_id" method="post">
     <label for="idSection-input" class="bolt">${boxIdSectionConferenc}</label>
     <input id="idSection-input" type="text" name="id" value="" required pattern="^[0-9]+$"/>
     <button type="submit" class="create">${buttonRemoveSectionConferenc}</button>
@@ -101,7 +108,8 @@
     <br>
     ${textAfterFindId}
 </p>
-<form name="findSectionConferencById-form" action="${pageContext.request.contextPath}/controller?command=find_section_conferenc_by_id" method="post">
+<form name="findSectionConferencById-form"
+action="${pageContext.request.contextPath}/controller?command=find_section_conferenc_by_id" method="post">
     <label for="idSectionConferenc-input" class="bolt">${boxIdSectionConferenc}</label>
     <input id="idSectionConferenc-input" type="text" name="id" value=""required pattern="^[0-9]+$"/>
     <button type="submit" class="create">${buttonFindSectionConferenc}</button>
@@ -111,9 +119,11 @@
 <p class="bolt">${textFindName}
     <br>${textAfterFindName}
 </p>
-<form name="findSectionConferencByName-form" action="${pageContext.request.contextPath}/controller?command=find_section_conferences_by_name" method="post">
+<form name="findSectionConferencByName-form"
+      action="${pageContext.request.contextPath}/controller?command=find_section_conferences_by_name" method="post">
     <label for="searchNameSectionConferenc-input" class="bolt">${boxIdSectionConferenc}</label>
-    <input id="searchNameSectionConferenc-input" type="text" name="name" min="2" max="400" value=""required pattern="^.{2,1000}$"/>
+    <input id="searchNameSectionConferenc-input" type="text" name="name" min="2" max="400" value=""required
+           pattern="^.{2,1000}$"/>
     <button type="submit" class="create">${buttonFindSectionConferenc}</button>
 </form>
 <%@include file="/WEB-INF/jsp/common/footer.jsp" %>

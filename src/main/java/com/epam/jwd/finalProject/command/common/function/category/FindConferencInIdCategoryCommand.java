@@ -28,7 +28,8 @@ public class FindConferencInIdCategoryCommand implements Command {
     private static final String ALL_CONFERENC_IN_CATEGORY_PAGE = "page.allConferencesInCategory";
     private static final Logger LOG = LogManager.getLogger(FindConferencInIdCategoryCommand.class);
 
-    FindConferencInIdCategoryCommand(CategoryService service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    FindConferencInIdCategoryCommand(CategoryService service, RequestFactory requestFactory,
+                                     PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().categoryService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -53,7 +54,7 @@ public class FindConferencInIdCategoryCommand implements Command {
 
     private static class Holder {
         public static final FindConferencInIdCategoryCommand INSTANCE =
-                new FindConferencInIdCategoryCommand(ServiceFactory.simple().categoryService(), RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new FindConferencInIdCategoryCommand(ServiceFactory.simple().categoryService(),
+                        RequestFactory.getInstance(), PropertyContext.instance());
     }
 }

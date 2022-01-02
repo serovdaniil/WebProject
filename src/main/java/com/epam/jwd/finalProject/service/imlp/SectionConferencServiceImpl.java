@@ -1,7 +1,7 @@
 package com.epam.jwd.finalProject.service.imlp;
 
 import com.epam.jwd.finalProject.dao.exception.EntityExtractionFailedException;
-import com.epam.jwd.finalProject.dao.impl.MethodSectionConferencDaoImpl;
+import com.epam.jwd.finalProject.dao.impl.SectionConferencDaoImpl;
 import com.epam.jwd.finalProject.model.SectionConferenc;
 import com.epam.jwd.finalProject.service.api.SectionConferencService;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 /**
  * @author Daniil Serov
- * @see MethodSectionConferencDaoImpl
+ * @see SectionConferencDaoImpl
  */
 public class SectionConferencServiceImpl implements SectionConferencService {
     /**
@@ -24,7 +24,7 @@ public class SectionConferencServiceImpl implements SectionConferencService {
     /**
      * Dao for this service
      */
-    private final MethodSectionConferencDaoImpl sectionConferencDao;
+    private final SectionConferencDaoImpl sectionConferencDao;
     /**
      * Validator for this service
      */
@@ -35,7 +35,7 @@ public class SectionConferencServiceImpl implements SectionConferencService {
      *
      * @param sectionConferencDao dao for this service
      */
-    public SectionConferencServiceImpl(MethodSectionConferencDaoImpl sectionConferencDao) {
+    public SectionConferencServiceImpl(SectionConferencDaoImpl sectionConferencDao) {
         this.sectionConferencDao = sectionConferencDao.getInstance();
     }
 
@@ -219,11 +219,13 @@ public class SectionConferencServiceImpl implements SectionConferencService {
     private Long resultSection(String resultSection) {
         Long idResult = null;
 
-        if ((resultSection.equals("Active")) || (resultSection.equals("Активная")) || (resultSection.equals("Actif")) || (resultSection.equals("Актыўны"))) {
+        if ((resultSection.equals("Active")) || (resultSection.equals("Активная")) ||
+                (resultSection.equals("Actif")) || (resultSection.equals("Актыўны"))) {
             idResult = (long) 1;
         }
 
-        if ((resultSection.equals("DELETE")) || (resultSection.equals("Удаленная")) || (resultSection.equals("Distant")) || (resultSection.equals("Выдалены"))) {
+        if ((resultSection.equals("DELETE")) || (resultSection.equals("Удаленная")) ||
+                (resultSection.equals("Distant")) || (resultSection.equals("Выдалены"))) {
             idResult = (long) 2;
         }
         return idResult;

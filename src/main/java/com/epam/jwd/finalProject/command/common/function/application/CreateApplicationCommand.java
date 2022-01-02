@@ -34,7 +34,8 @@ public class CreateApplicationCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    CreateApplicationCommand(EntityService<Application> service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    CreateApplicationCommand(EntityService<Application> service, RequestFactory requestFactory,
+                             PropertyContext propertyContext) {
         this.applicationService = ServiceFactory.simple().applicationService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -64,7 +65,7 @@ public class CreateApplicationCommand implements Command {
 
     private static class Holder {
         public static final CreateApplicationCommand INSTANCE =
-                new CreateApplicationCommand(ServiceFactory.simple().serviceFor(Application.class),RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new CreateApplicationCommand(ServiceFactory.simple().serviceFor(Application.class),
+                        RequestFactory.getInstance(), PropertyContext.instance());
     }
 }

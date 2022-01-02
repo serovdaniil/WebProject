@@ -33,6 +33,7 @@ public class ShowFindSectionConferencInCategoryByIdPageCommand implements Comman
 
     private static class Holder {
         public static final ShowFindSectionConferencInCategoryByIdPageCommand INSTANCE =
-                new ShowFindSectionConferencInCategoryByIdPageCommand(RequestFactory.getInstance(), PropertyContext.instance());
+                new ShowFindSectionConferencInCategoryByIdPageCommand(RequestFactory.getInstance(),
+                        PropertyContext.instance());
     }
 }

@@ -30,7 +30,8 @@ public class FindQuestionByIdAccountCommand implements Command {
     private static final String FIND_QUESTIONS_BY_ID_ACCOUNT_PAGE = "page.findQuestionsByIdAccount";
     private static final Logger LOG = LogManager.getLogger(FindQuestionByIdAccountCommand.class);
 
-    FindQuestionByIdAccountCommand(QuestionService service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    FindQuestionByIdAccountCommand(QuestionService service, RequestFactory requestFactory,
+                                   PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().questionService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -57,7 +58,7 @@ public class FindQuestionByIdAccountCommand implements Command {
 
     private static class Holder {
         public static final FindQuestionByIdAccountCommand INSTANCE =
-                new FindQuestionByIdAccountCommand(ServiceFactory.simple().questionService(), RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new FindQuestionByIdAccountCommand(ServiceFactory.simple().questionService(),
+                        RequestFactory.getInstance(), PropertyContext.instance());
     }
 }

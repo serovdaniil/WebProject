@@ -16,7 +16,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class MethodConferencDaoImplTest extends Assert{
-    private MethodConferencDaoImpl dao;
+    private ConferencDaoImpl dao;
     private Long id;
     private Long idStatus;
     private Long idCategory;
@@ -27,7 +27,7 @@ public class MethodConferencDaoImplTest extends Assert{
 
     @Before
     public void setUp(){
-        dao = mock(MethodConferencDaoImpl.class);
+        dao = mock(ConferencDaoImpl.class);
         id=(long)1;
         idStatus=(long)4;
         idCategory=(long)4;

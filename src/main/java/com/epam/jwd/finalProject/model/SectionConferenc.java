@@ -48,7 +48,9 @@ public class SectionConferenc implements Entity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SectionConferenc that = (SectionConferenc) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(conferenc, that.conferenc) && Objects.equals(status, that.status);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name)
+                && Objects.equals(description, that.description) && Objects.equals(conferenc, that.conferenc)
+                && Objects.equals(status, that.status);
     }
 
     @Override

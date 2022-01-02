@@ -32,6 +32,7 @@ public class ShowFindSectionConferencByNamePageCommand implements Command {
 
     private static class Holder {
         public static final ShowFindSectionConferencByNamePageCommand INSTANCE =
-                new ShowFindSectionConferencByNamePageCommand(RequestFactory.getInstance(), PropertyContext.instance());
+                new ShowFindSectionConferencByNamePageCommand(RequestFactory.getInstance(),
+                        PropertyContext.instance());
     }
 }

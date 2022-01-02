@@ -30,7 +30,8 @@ public class CreateSectionConferencCommand implements Command {
     private static final String SECTION_CONFERENCES_PAGE = "/controller?command=show_section_conferences";
     private static final Logger LOG = LogManager.getLogger(CreateSectionConferencCommand.class);
 
-    CreateSectionConferencCommand(SectionConferencService service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    CreateSectionConferencCommand(SectionConferencService service, RequestFactory requestFactory,
+                                  PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().sectionConferencService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -60,7 +61,7 @@ public class CreateSectionConferencCommand implements Command {
 
     private static class Holder {
         public static final CreateSectionConferencCommand INSTANCE =
-                new CreateSectionConferencCommand(ServiceFactory.simple().sectionConferencService(), RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new CreateSectionConferencCommand(ServiceFactory.simple().sectionConferencService(),
+                        RequestFactory.getInstance(), PropertyContext.instance());
     }
 }

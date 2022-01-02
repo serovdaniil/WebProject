@@ -27,7 +27,8 @@
                value=""/>
         <br>
         <label for="password-input">${boxPassword}:</label>
-        <input id="password-input" type="password" min="2" max="15" required pattern="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,15})$"
+        <input id="password-input" type="password" min="2" max="15" required
+               pattern="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,15})$"
                name="password" value=""/>
         <br/>
         <c:if test="${not empty requestScope.errorLoginPassMessage}">

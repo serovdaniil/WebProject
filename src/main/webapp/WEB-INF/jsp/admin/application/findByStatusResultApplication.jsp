@@ -29,7 +29,8 @@
 </style>
 <%@include file="/WEB-INF/jsp/common/header.jsp" %>
 <h2>${textMain}</h2>
-<form name="idCategory-form" action="${pageContext.request.contextPath}/controller?command=find_by_status_result_application" method="post">
+<form name="idCategory-form"
+      action="${pageContext.request.contextPath}/controller?command=find_by_status_result_application" method="post">
     <label for="login-input">${idStatus}</label>
     <select id="login-input" name="resultNew">
         <option>${open}</option>
@@ -49,7 +50,8 @@
         <th></th>
     </tr>
     <c:forEach var="application" items="${requestScope.applications}">
-        <form name="application-form" action="${pageContext.request.contextPath}/controller?command=find_application_by_id" method="post">
+        <form name="application-form"
+              action="${pageContext.request.contextPath}/controller?command=find_application_by_id" method="post">
             <tr>
                 <td>
                     <input class="container" type="text" name="id" readonly value="${application.id}"/>

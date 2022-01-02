@@ -30,7 +30,8 @@ public class FindApplicationByIdCommand implements Command {
     private static final String FIND_APPLICATION_BY_ID = "page.applicationById";
     private static final Logger LOG = LogManager.getLogger(FindApplicationByIdCommand.class);
 
-    FindApplicationByIdCommand(EntityService<Application> service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    FindApplicationByIdCommand(EntityService<Application> service, RequestFactory requestFactory,
+                               PropertyContext propertyContext) {
         this.applicationService = ServiceFactory.simple().applicationService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -44,7 +45,6 @@ public class FindApplicationByIdCommand implements Command {
         try {
             applicationByID = applicationService.findId(id);
             application=applicationByID.get();
-            LOG.debug(applicationByID);
             request.addAttributeToJsp(APPLICATION_ATTRIBUTE_NAME, application);
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
@@ -58,7 +58,7 @@ public class FindApplicationByIdCommand implements Command {
 
     private static class Holder {
         public static final FindApplicationByIdCommand INSTANCE =
-                new FindApplicationByIdCommand(ServiceFactory.simple().serviceFor(Application.class), RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new FindApplicationByIdCommand(ServiceFactory.simple().serviceFor(Application.class),
+                        RequestFactory.getInstance(), PropertyContext.instance());
     }
 }

@@ -24,7 +24,8 @@ public class ShowQuestionPageCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    ShowQuestionPageCommand(EntityService<Question> service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    ShowQuestionPageCommand(EntityService<Question> service, RequestFactory requestFactory,
+                            PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().serviceFor(Question.class);
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -43,7 +44,7 @@ public class ShowQuestionPageCommand implements Command {
 
     private static class Holder {
         public static final ShowQuestionPageCommand INSTANCE =
-                new ShowQuestionPageCommand(ServiceFactory.simple().serviceFor(Question.class), RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new ShowQuestionPageCommand(ServiceFactory.simple().serviceFor(Question.class),
+                        RequestFactory.getInstance(), PropertyContext.instance());
     }
 }

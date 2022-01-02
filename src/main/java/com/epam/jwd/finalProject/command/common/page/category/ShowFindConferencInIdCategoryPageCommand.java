@@ -33,6 +33,7 @@ public class ShowFindConferencInIdCategoryPageCommand implements Command {
 
     private static class Holder {
         public static final ShowFindConferencInIdCategoryPageCommand INSTANCE =
-                new ShowFindConferencInIdCategoryPageCommand(RequestFactory.getInstance(), PropertyContext.instance());
+                new ShowFindConferencInIdCategoryPageCommand(RequestFactory.getInstance(),
+                        PropertyContext.instance());
     }
 }

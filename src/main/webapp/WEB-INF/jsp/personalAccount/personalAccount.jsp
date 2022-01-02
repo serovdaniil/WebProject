@@ -66,7 +66,8 @@
             <p class="title">${blockMyApplicationTitle}</p>
             <p>${blockMyApplicationText}</p>
             <a class="button"
-               href="${pageContext.request.contextPath}/controller?command=show_applications_by_account">${blockMyApplicationButton}</a>
+               href="${pageContext.request.contextPath}/controller?command=show_applications_by_account">
+                    ${blockMyApplicationButton}</a>
         </div>
     </c:if>
     <c:if test="${not empty sessionScope.user && sessionScope.user.role eq Role.USER}">
@@ -75,7 +76,8 @@
             <p class="title">${blockMyQuestionTitle}</p>
             <p>${blockMyQuestionText}</p>
             <a class="button"
-               href="${pageContext.request.contextPath}/controller?command=find_questions_by_id_account">${blockMyQuestionButton}</a>
+               href="${pageContext.request.contextPath}/controller?command=find_questions_by_id_account">
+                    ${blockMyQuestionButton}</a>
         </div>
     </c:if>
     <c:if test="${not empty sessionScope.user && sessionScope.user.role eq Role.ADMIN}">
@@ -83,7 +85,8 @@
             <p class="center-pic"><img src="/jpg/users.png" alt="img"/></p>
             <p class="title">${blockUsersTitle}</p>
             <p>${blockUsersText}</p>
-            <a class="button" href="${pageContext.request.contextPath}/controller?command=show_users">${blockUsersButton}</a>
+            <a class="button" href="${pageContext.request.contextPath}/controller?command=show_users">
+                    ${blockUsersButton}</a>
         </div>
     </c:if>
     <c:if test="${not empty sessionScope.user && sessionScope.user.role eq Role.ADMIN}">
@@ -92,7 +95,8 @@
             <p class="title">${blockApplicationsTitle}</p>
             <p>${blockApplicationsText}</p>
             <a class="button"
-               href="${pageContext.request.contextPath}/controller?command=show_applications">${blockApplicationsButton}</a>
+               href="${pageContext.request.contextPath}/controller?command=show_applications">
+                    ${blockApplicationsButton}</a>
         </div>
     </c:if>
     <c:if test="${not empty sessionScope.user && sessionScope.user.role eq Role.ADMIN}">
@@ -101,7 +105,8 @@
             <p class="title">${blockPanelConferencTitle}</p>
             <p>${blockPanelConferencText}</p>
             <a class="button"
-               href="${pageContext.request.contextPath}/controller?command=show_admin_panel_conferenc">${blockPanelButton}</a>
+               href="${pageContext.request.contextPath}/controller?command=show_admin_panel_conferenc">
+                    ${blockPanelButton}</a>
         </div>
     </c:if>
     <c:if test="${not empty sessionScope.user && sessionScope.user.role eq Role.ADMIN}">
@@ -110,7 +115,8 @@
             <p class="title">${blockPanelSectionConferencTitle}</p>
             <p>${blockPanelSectionConferencText}</p>
             <a class="button"
-               href="${pageContext.request.contextPath}/controller?command=show_admin_panel_section_conferenc">${blockPanelButton}</a>
+               href="${pageContext.request.contextPath}/controller?command=show_admin_panel_section_conferenc">
+                    ${blockPanelButton}</a>
         </div>
     </c:if>
     <c:if test="${not empty sessionScope.user && sessionScope.user.role eq Role.ADMIN}">
@@ -119,7 +125,8 @@
             <p class="title">${blockPanelCategoryTitle}</p>
             <p>${blockPanelCategoryText}</p>
             <a class="button"
-               href="${pageContext.request.contextPath}/controller?command=show_admin_panel_category">${blockPanelButton}</a>
+               href="${pageContext.request.contextPath}/controller?command=show_admin_panel_category">
+                    ${blockPanelButton}</a>
         </div>
     </c:if>
     <%--<c:if test="${not empty sessionScope.user && sessionScope.user.role eq Role.ADMIN}">

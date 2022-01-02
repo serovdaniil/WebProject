@@ -1,7 +1,7 @@
 package com.epam.jwd.finalProject.dao.api;
 
 import com.epam.jwd.finalProject.dao.exception.EntityExtractionFailedException;
-import com.epam.jwd.finalProject.dao.impl.MethodCategoryDaoImpl;
+import com.epam.jwd.finalProject.dao.impl.CategoryDaoImpl;
 import com.epam.jwd.finalProject.model.Category;
 import com.epam.jwd.finalProject.model.Conferenc;
 import com.epam.jwd.finalProject.model.SectionConferenc;
@@ -77,6 +77,6 @@ public interface CategoryDao {
      * @return the instance
      */
     static CategoryDao instance() {
-        return MethodCategoryDaoImpl.getInstance();
+        return CategoryDaoImpl.getInstance();
     }
 }

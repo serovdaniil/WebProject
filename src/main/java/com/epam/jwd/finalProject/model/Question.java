@@ -49,7 +49,9 @@ public class Question implements Entity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Question question1 = (Question) o;
-        return Objects.equals(id, question1.id) && Objects.equals(question, question1.question) && Objects.equals(answer, question1.answer) && Objects.equals(date, question1.date) && Objects.equals(user, question1.user);
+        return Objects.equals(id, question1.id) && Objects.equals(question, question1.question)
+                && Objects.equals(answer, question1.answer) && Objects.equals(date, question1.date)
+                && Objects.equals(user, question1.user);
     }
 
     @Override

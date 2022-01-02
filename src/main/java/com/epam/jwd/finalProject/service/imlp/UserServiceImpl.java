@@ -1,9 +1,9 @@
 package com.epam.jwd.finalProject.service.imlp;
 
-import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.epam.jwd.finalProject.dao.exception.EntityExtractionFailedException;
-import com.epam.jwd.finalProject.dao.impl.MethodUserDaoImpl;
+import com.epam.jwd.finalProject.dao.impl.UserDaoImpl;
 import com.epam.jwd.finalProject.model.User;
+import com.epam.jwd.finalProject.security.PasswordEncoder;
 import com.epam.jwd.finalProject.service.api.UserService;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
 import com.epam.jwd.finalProject.service.validator.UserDataValidator;
@@ -15,10 +15,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static at.favre.lib.crypto.bcrypt.BCrypt.MIN_COST;
+
 /**
  * @author Daniil Serov
- * @see MethodUserDaoImpl
+ * @see UserDaoImpl
  */
 public class UserServiceImpl implements UserService {
     /**
@@ -27,19 +27,15 @@ public class UserServiceImpl implements UserService {
     private static final Logger LOG = LogManager.getLogger(UserServiceImpl.class);
 
     /**
-     * Get bytes password
-     */
-    private static final byte[] DUMMY_PASSWORD = "password".getBytes(StandardCharsets.UTF_8);
-    /**
      * Dao for this service
      */
-    private final MethodUserDaoImpl userDao;
+    private final UserDaoImpl userDao;
 
     /**
      * BCrypt for password
      */
-    private final BCrypt.Hasher hasher;
-    private final BCrypt.Verifyer verifier;
+    private final PasswordEncoder passwordEncoder;
+
     /**
      * Validator for this service
      */
@@ -48,14 +44,12 @@ public class UserServiceImpl implements UserService {
     /**
      * Constructor - creating a new object
      *
-     * @param userDao dao for this service
-     * @param hasher for this password
-     * @param verifier for this password
+     * @param userDao         dao for this service
+     * @param passwordEncoder encoder for this password
      */
-    public UserServiceImpl(MethodUserDaoImpl userDao, BCrypt.Hasher hasher, BCrypt.Verifyer verifier) {
+    public UserServiceImpl(UserDaoImpl userDao, PasswordEncoder passwordEncoder) {
         this.userDao = userDao.getInstance();
-        this.hasher = hasher;
-        this.verifier = verifier;
+        this.passwordEncoder = passwordEncoder.getInstance();
     }
 
     /**
@@ -101,7 +95,7 @@ public class UserServiceImpl implements UserService {
     /**
      * Authenticate user
      *
-     * @param login login for user
+     * @param login    login for user
      * @param password password for user
      * @return User
      * @throws ValidationException if there are validation problems
@@ -120,27 +114,20 @@ public class UserServiceImpl implements UserService {
                     .getPassword()
                     .getBytes(StandardCharsets.UTF_8);
             LOG.debug("Service: Authenticating finished.");
-            return verifier.verify(enteredPassword, hashedPassword).verified
+            return passwordEncoder.checkPassword(enteredPassword, hashedPassword)
                     ? readUser
                     : Optional.empty();
         } else {
-            protectFromTimingAttack(enteredPassword);
+            passwordEncoder.protectFromTimingAttack(enteredPassword);
             LOG.debug("Service: Authenticating finished.");
             return Optional.empty();
         }
     }
 
     /**
-     * Password
-     */
-    private void protectFromTimingAttack(byte[] enteredPassword) {
-        verifier.verify(enteredPassword, DUMMY_PASSWORD);
-    }
-
-    /**
      * Registration user
      *
-     * @param email email for user
+     * @param email    email for user
      * @param password password for user
      * @return User
      * @throws ValidationException if there are validation problems
@@ -152,17 +139,14 @@ public class UserServiceImpl implements UserService {
             LOG.error("The entered data is not correct!");
             throw new ValidationException("The entered data is not correct!");
         }
-
-        final char[] rawPassword = password.toCharArray();
-        final String hashedPassword = hasher.hashToString(MIN_COST, rawPassword);
         LOG.debug("Service: Registration finished.");
-        return userDao.create(email, hashedPassword);
+        return userDao.create(email, passwordEncoder.encoder(password));
     }
 
     /**
      * Update password by login
      *
-     * @param login login for user
+     * @param login    login for user
      * @param password password for user
      * @return User
      * @throws ValidationException if there are validation problems
@@ -174,8 +158,7 @@ public class UserServiceImpl implements UserService {
             LOG.error("The entered data is not correct!");
             throw new ValidationException("The entered data is not correct!");
         }
-        final char[] rawPassword = password.toCharArray();
-        final String hashedPassword = hasher.hashToString(MIN_COST, rawPassword);
+        final String hashedPassword = passwordEncoder.encoder(password);
         final Optional<User> readUser = userDao.updatePasswordByLogin(login, hashedPassword);
         LOG.debug("Service: Updating password finished.");
         return readUser;
@@ -184,7 +167,7 @@ public class UserServiceImpl implements UserService {
     /**
      * Update email for user
      *
-     * @param id id user
+     * @param id    id user
      * @param email email for user
      * @return User
      * @throws ValidationException if there are validation problems
@@ -203,7 +186,7 @@ public class UserServiceImpl implements UserService {
     /**
      * Update first name for user
      *
-     * @param id id user
+     * @param id        id user
      * @param firstName first name for user
      * @return User
      * @throws ValidationException if there are validation problems
@@ -222,7 +205,7 @@ public class UserServiceImpl implements UserService {
     /**
      * Update last name for user
      *
-     * @param id id user
+     * @param id       id user
      * @param lastName last name for user
      * @return User
      * @throws ValidationException if there are validation problems
@@ -242,7 +225,7 @@ public class UserServiceImpl implements UserService {
      * Update role for user
      *
      * @param idAccount id user
-     * @param nameRole role for user
+     * @param nameRole  role for user
      * @return User
      * @throws ValidationException if there are validation problems
      */
@@ -266,13 +249,16 @@ public class UserServiceImpl implements UserService {
      */
     private Long role(String nameRole) {
         Long idResult = null;
-        if ((nameRole.equals("User")) || (nameRole.equals("Юзер")) || (nameRole.equals("Uzer")) || (nameRole.equals("Юзэр"))) {
+        if ((nameRole.equals("User")) || (nameRole.equals("Юзер")) || (nameRole.equals("Uzer")) ||
+                (nameRole.equals("Юзэр"))) {
             idResult = (long) 1;
         }
-        if ((nameRole.equals("Admin")) || (nameRole.equals("Админ")) || (nameRole.equals("Адмін"))) {
+        if ((nameRole.equals("Admin")) || (nameRole.equals("Админ")) ||
+                (nameRole.equals("Адмін"))) {
             idResult = (long) 2;
         }
-        if ((nameRole.equals("Bloked")) || (nameRole.equals("Bloqué")) || (nameRole.equals("Заблокированный")) || (nameRole.equals("Заблакаваны"))) {
+        if ((nameRole.equals("Bloked")) || (nameRole.equals("Bloqué")) ||
+                (nameRole.equals("Заблокированный")) || (nameRole.equals("Заблакаваны"))) {
             idResult = (long) 4;
         }
         return idResult;

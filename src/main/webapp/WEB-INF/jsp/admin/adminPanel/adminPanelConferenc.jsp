@@ -73,13 +73,15 @@
 <p class="bolt">${textUpdate}
     <br>
     ${textAfterUpdate}</p>
-<form name="updateDescriptionByConferenc-form" action="${pageContext.request.contextPath}/controller?command=update_description_in_conferenc"
+<form name="updateDescriptionByConferenc-form"
+      action="${pageContext.request.contextPath}/controller?command=update_description_in_conferenc"
       method="post">
     <label for="idUpdate-input" class="bolt">${boxIdConferenc}</label>
     <input id="idUpdate-input" type="text" name="id" value=""required pattern="^[0-9]+$"/>
     <br>
     <label for="descriprionConferenc-input" class="bolt">${boxDescriptionConferenc}</label>
-    <input id="descriprionConferenc-input" type="text" name="description" value="" max="255" required pattern="^[A-ZА-Яa-zа-я]+((\s)?((\'|\-|\.|\,)?([A-ZА-Яa-zа-я])+))*$"/>
+    <input id="descriprionConferenc-input" type="text" name="description" value="" max="255" required
+           pattern="^[A-ZА-Яa-zа-я]+((\s)?((\'|\-|\.|\,)?([A-ZА-Яa-zа-я])+))*$"/>
     <button type="submit" class="create">${buttonUpdate}</button>
 </form>
 <br>
@@ -88,7 +90,8 @@
     <br>
    ${textAfterRemove}
 </p>
-<form name="removeConferenc-form" action="${pageContext.request.contextPath}/controller?command=remove_conferenc_by_id" method="post">
+<form name="removeConferenc-form"
+      action="${pageContext.request.contextPath}/controller?command=remove_conferenc_by_id" method="post">
     <label for="idForm-input" class="bolt">${boxIdConferenc}</label>
     <input id="idForm-input" type="text" name="id" value=""required pattern="^[0-9]+$"/>
     <button type="submit" class="create">${buttonRemove}</button>
@@ -99,7 +102,8 @@
     <br>
     ${textAfterFindId}
 </p>
-<form name="findConferencById-form" action="${pageContext.request.contextPath}/controller?command=find_conferenc_by_id" method="post">
+<form name="findConferencById-form"
+action="${pageContext.request.contextPath}/controller?command=find_conferenc_by_id" method="post">
     <label for="idConferenc-input" class="bolt">${boxIdConferenc}</label>
     <input id="idConferenc-input" type="text" name="id" value=""required pattern="^[0-9]+$"/>
     <button type="submit" class="create">${buttonSearch}</button>
@@ -111,9 +115,11 @@
     <br>
    ${textAfterFindName}
 </p>
-<form name="findConferencByName-form" action="${pageContext.request.contextPath}/controller?command=find_conferences_by_name" method="post">
+<form name="findConferencByName-form"
+      action="${pageContext.request.contextPath}/controller?command=find_conferences_by_name" method="post">
     <label for="searchNameConferenc-input" class="bolt">${boxNameConferenc}</label>
-    <input id="searchNameConferenc-input" type="text" name="name" min="2" max="255" value=""required pattern="^[A-ZА-Яa-zа-я]+((\s)?((\'|\-|\.|\,)?([A-ZА-Яa-zа-я])+))*$"/>
+    <input id="searchNameConferenc-input" type="text" name="name" min="2" max="255" value=""required
+           pattern="^[A-ZА-Яa-zа-я]+((\s)?((\'|\-|\.|\,)?([A-ZА-Яa-zа-я])+))*$"/>
     <button type="submit" class="create">${buttonSearch}</button>
 </form>
 

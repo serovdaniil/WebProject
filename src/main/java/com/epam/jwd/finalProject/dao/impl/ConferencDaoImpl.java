@@ -22,11 +22,29 @@ import java.util.Optional;
  *
  * @author Daniil Serov
  */
-public class MethodConferencDaoImpl implements ConferencDao {
+public class ConferencDaoImpl implements ConferencDao {
+    /**
+     * SQL query for this dao
+     */
+    private static final String CREATE_CONFERENC = "INSERT INTO conferenc " +
+            "(name,description,category_id,conferenc_status_id) values(?,?,?,1)";
+    private static final String ADD_DESCRIPTION_BY_CONFERENC = "UPDATE conferenc SET description = ?" +
+            " WHERE id_conferenc = ?";
+    private static final String UPDATE_STATUS_CONFERENC = "UPDATE conferenc SET conferenc_status_id = ?" +
+            " WHERE id_conferenc = ?";
+    private static final String FIND_ALL_CONFERENC_ACTIVE = "SELECT * FROM conferenc JOIN category " +
+            "ON category_id=id_category JOIN status ON conferenc_status_id=id_status WHERE conferenc_status_id=1";
+    private static final String FIND_ALL_CONFERENC = "SELECT * FROM conferenc JOIN category " +
+            "ON category_id=id_category JOIN status ON conferenc_status_id=id_status";
+    private static final String FIND_ID_CONFERENC = "SELECT * FROM conferenc JOIN category " +
+            "ON category_id=id_category JOIN status ON conferenc_status_id=id_status WHERE id_conferenc=?";
+    private static final String FIND_NAME_CONFERENC = "SELECT * FROM conferenc JOIN category " +
+            "ON category_id=id_category JOIN status ON conferenc_status_id=id_status WHERE conferenc.name=?";
+    private static final String CONFERENC_DELETE = "DELETE FROM conferenc WHERE id_conferenc=?";
     /**
      * Logger for this dao
      */
-    private static final Logger LOG = LogManager.getLogger(MethodConferencDaoImpl.class);
+    private static final Logger LOG = LogManager.getLogger(ConferencDaoImpl.class);
     /**
      * Connection pool for this dao
      */
@@ -37,7 +55,7 @@ public class MethodConferencDaoImpl implements ConferencDao {
      *
      * @param connectionPool connectionPool for this dao
      */
-    public MethodConferencDaoImpl(ConnectionPool connectionPool) {
+    public ConferencDaoImpl(ConnectionPool connectionPool) {
         this.connectionPool = connectionPool;
     }
 
@@ -54,7 +72,7 @@ public class MethodConferencDaoImpl implements ConferencDao {
         boolean result = false;
         LOG.info("Start create and add new conferenc");
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.CREATE_CONFERENC)) {
+             PreparedStatement statement = connection.prepareStatement(CREATE_CONFERENC)) {
             statement.setString(1, name);
             statement.setString(2, description);
             statement.setLong(3, idCategory);
@@ -65,7 +83,7 @@ public class MethodConferencDaoImpl implements ConferencDao {
             LOG.info("End create and add new question");
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}", SqlQuery.CREATE_CONFERENC);
+            LOG.debug("sql: {}", CREATE_CONFERENC);
         } catch (NullPointerException e) {
             LOG.error(e);
         }
@@ -84,7 +102,7 @@ public class MethodConferencDaoImpl implements ConferencDao {
         LOG.info("Start update status conferenc");
         boolean result = false;
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_STATUS_CONFERENC)) {
+             PreparedStatement statement = connection.prepareStatement(UPDATE_STATUS_CONFERENC)) {
             statement.setLong(2, idConferenc);
             statement.setLong(1, idStatus);
             int rowCount = statement.executeUpdate();
@@ -94,7 +112,7 @@ public class MethodConferencDaoImpl implements ConferencDao {
             LOG.info("End update status conferenc");
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}", SqlQuery.UPDATE_STATUS_CONFERENC);
+            LOG.debug("sql: {}", UPDATE_STATUS_CONFERENC);
         } catch (NullPointerException e) {
             LOG.error(e);
         }
@@ -113,7 +131,7 @@ public class MethodConferencDaoImpl implements ConferencDao {
         LOG.info("Start add description by conferenc");
         boolean result = false;
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.ADD_DESCRIPTION_BY_CONFERENC)) {
+             PreparedStatement statement = connection.prepareStatement(ADD_DESCRIPTION_BY_CONFERENC)) {
             statement.setLong(2, id);
             statement.setString(1, description);
             int rowCount = statement.executeUpdate();
@@ -123,7 +141,7 @@ public class MethodConferencDaoImpl implements ConferencDao {
             LOG.info("End add description by conferenc");
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}", SqlQuery.ADD_DESCRIPTION_BY_CONFERENC);
+            LOG.debug("sql: {}", ADD_DESCRIPTION_BY_CONFERENC);
         } catch (NullPointerException e) {
             LOG.error(e);
         }
@@ -139,14 +157,14 @@ public class MethodConferencDaoImpl implements ConferencDao {
     public List<Conferenc> readAll() throws EntityExtractionFailedException {
         LOG.info("Start readAll conferenc");
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ALL_CONFERENC)) {
+             PreparedStatement statement = connection.prepareStatement(FIND_ALL_CONFERENC)) {
             ResultSet resultSet = statement.executeQuery();
-            ResultSetExtractor<Conferenc> extractor = MethodConferencDaoImpl::extractConferenc;
+            ResultSetExtractor<Conferenc> extractor = ConferencDaoImpl::extractConferenc;
             LOG.info("End readAll conferenc");
             return extractor.extractAll(resultSet);
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}", SqlQuery.FIND_ALL_CONFERENC);
+            LOG.debug("sql: {}", FIND_ALL_CONFERENC);
         } catch (EntityExtractionFailedException e) {
             LOG.error("could not extract entity", e);
         }
@@ -162,14 +180,14 @@ public class MethodConferencDaoImpl implements ConferencDao {
     public List<Conferenc> readAllActive() throws EntityExtractionFailedException {
         LOG.info("Start readAll conferenc active");
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ALL_CONFERENC_ACTIVE)) {
+             PreparedStatement statement = connection.prepareStatement(FIND_ALL_CONFERENC_ACTIVE)) {
             ResultSet resultSet = statement.executeQuery();
-            ResultSetExtractor<Conferenc> extractor = MethodConferencDaoImpl::extractConferenc;
+            ResultSetExtractor<Conferenc> extractor = ConferencDaoImpl::extractConferenc;
             LOG.info("End readAll conferenc active");
             return extractor.extractAll(resultSet);
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}", SqlQuery.FIND_ALL_CONFERENC_ACTIVE);
+            LOG.debug("sql: {}", FIND_ALL_CONFERENC_ACTIVE);
         } catch (EntityExtractionFailedException e) {
             LOG.error("could not extract entity", e);
         }
@@ -187,7 +205,7 @@ public class MethodConferencDaoImpl implements ConferencDao {
         LOG.info("Start readById conferenc");
         Optional<Conferenc> productOptional = Optional.empty();
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ID_CONFERENC)) {
+             PreparedStatement statement = connection.prepareStatement(FIND_ID_CONFERENC)) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -197,7 +215,7 @@ public class MethodConferencDaoImpl implements ConferencDao {
             LOG.info("End readById conferenc");
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}", SqlQuery.FIND_ID_CONFERENC);
+            LOG.debug("sql: {}", FIND_ID_CONFERENC);
         } catch (EntityExtractionFailedException e) {
             LOG.error("could not extract entity", e);
         } catch (NullPointerException e) {
@@ -216,15 +234,15 @@ public class MethodConferencDaoImpl implements ConferencDao {
     public List<Conferenc> findByName(String name) {
         LOG.info("Start find name by conferenc");
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_NAME_CONFERENC)) {
+             PreparedStatement statement = connection.prepareStatement(FIND_NAME_CONFERENC)) {
             statement.setString(1, name);
             ResultSet resultSet = statement.executeQuery();
-            ResultSetExtractor<Conferenc> extractor = MethodConferencDaoImpl::extractConferenc;
+            ResultSetExtractor<Conferenc> extractor = ConferencDaoImpl::extractConferenc;
             LOG.info("End find name by conferenc");
             return extractor.extractAll(resultSet);
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}", SqlQuery.FIND_NAME_CONFERENC);
+            LOG.debug("sql: {}", FIND_NAME_CONFERENC);
         } catch (EntityExtractionFailedException e) {
             LOG.error("could not extract entity", e);
         } catch (NullPointerException e) {
@@ -244,13 +262,13 @@ public class MethodConferencDaoImpl implements ConferencDao {
         LOG.info("Start delete conferenc");
         boolean result = false;
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.CONFERENC_DELETE)) {
+             PreparedStatement statement = connection.prepareStatement(CONFERENC_DELETE)) {
             statement.setLong(1, id);
             result = statement.executeUpdate() == 1;
             LOG.info("End delete conferenc");
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}", SqlQuery.CONFERENC_DELETE);
+            LOG.debug("sql: {}", CONFERENC_DELETE);
         } catch (NullPointerException e) {
             LOG.error(e);
         }
@@ -282,11 +300,11 @@ public class MethodConferencDaoImpl implements ConferencDao {
      *
      * @return the instance
      */
-    public static MethodConferencDaoImpl getInstance() {
-        return MethodConferencDaoImpl.Holder.INSTANCE;
+    public static ConferencDaoImpl getInstance() {
+        return ConferencDaoImpl.Holder.INSTANCE;
     }
 
     private static class Holder {
-        public static final MethodConferencDaoImpl INSTANCE = new MethodConferencDaoImpl(ConnectionPool.locking());
+        public static final ConferencDaoImpl INSTANCE = new ConferencDaoImpl(ConnectionPool.locking());
     }
 }

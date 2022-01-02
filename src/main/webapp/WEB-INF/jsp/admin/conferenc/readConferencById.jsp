@@ -25,7 +25,8 @@
 </style>
 <%@include file="/WEB-INF/jsp/common/header.jsp" %>
 <h2>${textMain}</h2>
-<form name="question-form" action="${pageContext.request.contextPath}/controller?command=change_status_conferenc_by_id" method="post">
+<form name="question-form" action="${pageContext.request.contextPath}/controller?command=change_status_conferenc_by_id"
+      method="post">
     <label for="conferencId-input">${id}</label>
     <input id="conferencId-input" class="container" type="text" name="id" readonly
            value="${requestScope.conferenc.id}"/>

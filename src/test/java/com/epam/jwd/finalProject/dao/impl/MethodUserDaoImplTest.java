@@ -15,7 +15,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class MethodUserDaoImplTest extends Assert {
-    private MethodUserDaoImpl dao;
+    private UserDaoImpl dao;
     private User user;
     private String firstName;
     private String lastName;
@@ -27,7 +27,7 @@ public class MethodUserDaoImplTest extends Assert {
 
     @Before
     public void setUp(){
-        dao = mock(MethodUserDaoImpl.class);
+        dao = mock(UserDaoImpl.class);
         user = new User((long) 1, "daniils3rov@yandex.ru", "daniils3rov@yandex.ru",
                 "Serov231969", "Daniil", "Serov", Role.USER);
         firstName = "Daniil";

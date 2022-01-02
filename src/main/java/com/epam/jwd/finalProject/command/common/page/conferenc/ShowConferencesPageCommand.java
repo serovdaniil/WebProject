@@ -24,7 +24,8 @@ public class ShowConferencesPageCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    ShowConferencesPageCommand(EntityService<Conferenc> service,RequestFactory requestFactory, PropertyContext propertyContext) {
+    ShowConferencesPageCommand(EntityService<Conferenc> service,RequestFactory requestFactory,
+                               PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().serviceFor(Conferenc.class);
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -42,7 +43,7 @@ public class ShowConferencesPageCommand implements Command {
 
     private static class Holder {
         public static final ShowConferencesPageCommand INSTANCE =
-                new ShowConferencesPageCommand(ServiceFactory.simple().serviceFor(Conferenc.class),RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new ShowConferencesPageCommand(ServiceFactory.simple().serviceFor(Conferenc.class),
+                        RequestFactory.getInstance(), PropertyContext.instance());
     }
 }

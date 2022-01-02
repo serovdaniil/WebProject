@@ -65,7 +65,8 @@
     <input id="idUpdate-input" type="text" name="id" value=""required pattern="^[0-9]+$"/>
     <br>
     <label for="nameCategory-input" class="bolt">${boxNameCategory}</label>
-    <input id="nameCategory-input" type="text" name="name" min="2" max="45" value=""required pattern="^[A-ZА-Яa-zа-я]+((\s)?((\'|\-|\.|\,)?([A-ZА-Яa-zа-я])+))*$"/>
+    <input id="nameCategory-input" type="text" name="name" min="2" max="45" value=""required
+           pattern="^[A-ZА-Яa-zа-я]+((\s)?((\'|\-|\.|\,)?([A-ZА-Яa-zа-я])+))*$"/>
     <button type="submit" class="create">${buttonUpdateName}</button>
     <br>
 </form>

@@ -32,7 +32,8 @@ public class FindAccountIdByApplicationCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    FindAccountIdByApplicationCommand(EntityService<Application> service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    FindAccountIdByApplicationCommand(EntityService<Application> service, RequestFactory requestFactory,
+                                      PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().applicationService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -58,7 +59,7 @@ public class FindAccountIdByApplicationCommand implements Command {
 
     private static class Holder {
         public static final FindAccountIdByApplicationCommand INSTANCE =
-                new FindAccountIdByApplicationCommand(ServiceFactory.simple().serviceFor(Application.class), RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new FindAccountIdByApplicationCommand(ServiceFactory.simple().serviceFor(Application.class),
+                        RequestFactory.getInstance(), PropertyContext.instance());
     }
 }

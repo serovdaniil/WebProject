@@ -7,7 +7,8 @@
 <body>
 <h3>Find SectionConferenc by name</h3>
 
-<form name="findSectionConferencesInCategory-form" action="/controller?command=all_section_conferences_in_category" method="post">
+<form name="findSectionConferencesInCategory-form" action="/controller?command=all_section_conferences_in_category"
+      method="post">
     <label for="login-input">Name:</label>
     <input id="login-input" type="text" name="id" value=""/>
     <input type="submit" value="Search"/>
