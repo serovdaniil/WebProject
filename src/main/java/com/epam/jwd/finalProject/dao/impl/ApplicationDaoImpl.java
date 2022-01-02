@@ -89,7 +89,6 @@ public class ApplicationDaoImpl implements ApplicationDao {
     @Override
     public boolean create(Long idAccount, Long idSectionConferenc, Long idResultSection) throws DaoException {
         boolean result = false;
-        LOG.info("Start create application");
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(CREATE_APPLICATION)) {
             statement.setLong(1, idAccount);
@@ -99,7 +98,6 @@ public class ApplicationDaoImpl implements ApplicationDao {
             if (rowCount != 0) {
                 result = true;
             }
-            LOG.info("End create application");
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", CREATE_APPLICATION);
@@ -116,8 +114,7 @@ public class ApplicationDaoImpl implements ApplicationDao {
      */
     @Override
     public boolean changeStatusApplicationAfterUpdateSectionConferenc(Long idSectionConferenc) throws DaoException {
-        LOG.info("START update result application");
-        boolean result = false;
+               boolean result = false;
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(CHANGE_STATUS_AFTER_UPDATE_SECTION_CONFERENC)) {
             statement.setLong(1, idSectionConferenc);
@@ -125,7 +122,6 @@ public class ApplicationDaoImpl implements ApplicationDao {
             if (rowCount != 0) {
                 result = true;
             }
-            LOG.info("END update result application");
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", CHANGE_STATUS_AFTER_UPDATE_SECTION_CONFERENC);
@@ -143,8 +139,7 @@ public class ApplicationDaoImpl implements ApplicationDao {
      */
     @Override
     public boolean updateIdStatusApplication(Long idApplication, Long idResultSection) throws DaoException {
-        LOG.info("START update result application");
-        boolean result = false;
+             boolean result = false;
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_ID_RESULT_APPLICATION)) {
             statement.setLong(2, idApplication);
@@ -153,7 +148,6 @@ public class ApplicationDaoImpl implements ApplicationDao {
             if (rowCount != 0) {
                 result = true;
             }
-            LOG.info("END update result application");
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", UPDATE_ID_RESULT_APPLICATION);
@@ -169,12 +163,10 @@ public class ApplicationDaoImpl implements ApplicationDao {
      */
     @Override
     public List<Application> readAll() throws EntityExtractionFailedException, DaoException {
-        LOG.info("Start readAll application");
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ALL_APPLICATION)) {
             ResultSet resultSet = statement.executeQuery();
             ResultSetExtractor<Application> extractor = ApplicationDaoImpl::extractApplication;
-            LOG.info("End readAll application");
             return extractor.extractAll(resultSet);
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
@@ -194,7 +186,6 @@ public class ApplicationDaoImpl implements ApplicationDao {
      */
     @Override
     public Optional<Application> readById(Long id) throws DaoException {
-        LOG.info("Start readById application");
         Optional<Application> productOptional = Optional.empty();
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ID_APPLICATION)) {
@@ -204,7 +195,6 @@ public class ApplicationDaoImpl implements ApplicationDao {
                 Application application = extractApplication(resultSet);
                 productOptional = Optional.of(application);
             }
-            LOG.info("End readById application");
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", FIND_ID_APPLICATION);
@@ -223,13 +213,11 @@ public class ApplicationDaoImpl implements ApplicationDao {
      */
     @Override
     public List<Application> findAccountIdByApplication(Long id) throws DaoException {
-        LOG.info("Start find id by account");
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ID_ACCOUNT_BY_CAPPLICATION)) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             ResultSetExtractor<Application> extractor = ApplicationDaoImpl::extractApplication;
-            LOG.info("End find id by account");
             return extractor.extractAll(resultSet);
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
@@ -249,13 +237,11 @@ public class ApplicationDaoImpl implements ApplicationDao {
      */
     @Override
     public List<Application> findByStatusResult(Long idStatus) throws DaoException {
-        LOG.info("Start find statusResult by account");
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ID_SECTION_RESULT_BY_CAPPLICATION)) {
             statement.setLong(1, idStatus);
             ResultSet resultSet = statement.executeQuery();
             ResultSetExtractor<Application> extractor = ApplicationDaoImpl::extractApplication;
-            LOG.info("End find statusResult by account");
             return extractor.extractAll(resultSet);
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
@@ -275,13 +261,11 @@ public class ApplicationDaoImpl implements ApplicationDao {
      */
     @Override
     public boolean delete(Long id) throws DaoException {
-        LOG.info("Start delete application");
         boolean result = false;
         try (Connection connection = LockingConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(APPLICATION_DELETE)) {
             statement.setLong(1, id);
             result = statement.executeUpdate() == 1;
-            LOG.info("End delete application");
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", APPLICATION_DELETE);

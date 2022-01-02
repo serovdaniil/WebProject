@@ -52,13 +52,11 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public List<Question> findAll() throws ServiceException {
         try {
-            LOG.debug("Service: Reading all questions started.");
             try {
                 return questionDao.readAll();
             } catch (EntityExtractionFailedException e) {
                 e.printStackTrace();
             }
-            LOG.debug("Service: Reading all questions finished.");
             return Collections.emptyList();
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -75,12 +73,10 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public Optional<Question> findId(Long id) throws ValidationException, ServiceException {
         try {
-            LOG.debug("Service: Finding question by id started.");
             if (!questionDataValidator.isIdValid(id)) {
                 LOG.error("The entered data is not correct!");
                 throw new ValidationException("The entered data is not correct!");
             }
-            LOG.debug("Service: Finding question by id finished.");
             return questionDao.readById(id);
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -97,12 +93,10 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public boolean remove(Long id) throws ValidationException, ServiceException {
         try {
-            LOG.debug("Service: Removing question by id started.");
             if (!questionDataValidator.isIdValid(id)) {
                 LOG.error("The entered data is not correct!");
                 throw new ValidationException("The entered data is not correct!");
             }
-            LOG.debug("Service: Removing question by id finished.");
             return questionDao.delete(id);
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -120,14 +114,12 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public boolean create(String name, Long idUser) throws ValidationException, ServiceException {
         try {
-            LOG.debug("Service: Creating question started.");
             if (!questionDataValidator.isIdValid(idUser) || !questionDataValidator.isNameValid(name)) {
                 LOG.error("The entered data is not correct!");
                 throw new ValidationException("The entered data is not correct!");
             }
             LocalDate localDate = LocalDate.now();
             Date date = java.sql.Date.valueOf(localDate);
-            LOG.debug("Service: Creating questionc finished.");
             return questionDao.create(name, date, idUser);
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -145,12 +137,10 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public boolean addAnswer(Long id, String answer) throws ValidationException, ServiceException {
         try {
-            LOG.debug("Service: Add answer started.");
             if (!questionDataValidator.isIdValid(id) || !questionDataValidator.isAnswerValid(answer)) {
                 LOG.error("The entered data is not correct!");
                 throw new ValidationException("The entered data is not correct!");
             }
-            LOG.debug("Service: Add answer finished.");
             return questionDao.addAnswer(id, answer);
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -167,12 +157,10 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public List<Question> findAccountIdByQuestion(Long id) throws ValidationException, ServiceException {
         try {
-            LOG.debug("Service: Finding questions by id user started.");
             if (!questionDataValidator.isIdValid(id)) {
                 LOG.error("The entered data is not correct!");
                 throw new ValidationException("The entered data is not correct!");
             }
-            LOG.debug("Service: Finding questions by id user finished.");
             return questionDao.findAccountIdByQuestion(id);
         } catch (DaoException e) {
             throw new ServiceException(e);

@@ -69,7 +69,6 @@ public class CategoryDaoImpl implements CategoryDao {
     @Override
     public boolean create(String name) throws DaoException {
         boolean result = false;
-        LOG.info("Start create category");
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(CREATE_CATEGORY)) {
             statement.setString(1, name);
@@ -77,7 +76,6 @@ public class CategoryDaoImpl implements CategoryDao {
             if (rowCount != 0) {
                 result = true;
             }
-            LOG.info("End create category");
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", CREATE_CATEGORY);
@@ -95,7 +93,6 @@ public class CategoryDaoImpl implements CategoryDao {
      */
     @Override
     public boolean changeName(Long id, String name) throws DaoException {
-        LOG.info("START update name by ID Category");
         boolean result = false;
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_NAME_BY_ID_CATEGORY)) {
@@ -105,7 +102,6 @@ public class CategoryDaoImpl implements CategoryDao {
             if (rowCount != 0) {
                 result = true;
             }
-            LOG.info("END update name by ID Category");
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", UPDATE_NAME_BY_ID_CATEGORY);
@@ -121,7 +117,6 @@ public class CategoryDaoImpl implements CategoryDao {
      */
     @Override
     public List<Category> findAll() throws EntityExtractionFailedException, DaoException {
-
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ALL_CATEGORY)) {
             ResultSet resultSet = statement.executeQuery();
@@ -145,7 +140,6 @@ public class CategoryDaoImpl implements CategoryDao {
      */
     @Override
     public Optional<Category> findById(Long id) throws DaoException {
-        LOG.info("Start readById category");
         Optional<Category> productOptional = Optional.empty();
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ID_CATEGORY)) {
@@ -155,7 +149,6 @@ public class CategoryDaoImpl implements CategoryDao {
                 Category category = extractCategory(resultSet);
                 productOptional = Optional.of(category);
             }
-            LOG.info("End readById category");
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", FIND_ID_CATEGORY);
@@ -174,13 +167,11 @@ public class CategoryDaoImpl implements CategoryDao {
      */
     @Override
     public List<Conferenc> findConferencInIdCategory(Long id) throws DaoException {
-        LOG.info("Start find conferenc in categori by ID");
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_BY_ID_CONFERENC_IN_CATEGORY)) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             ResultSetExtractor<Conferenc> extractor = CategoryDaoImpl::extractConferenc;
-            LOG.info("End find conferenc in categori by ID");
             return extractor.extractAll(resultSet);
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
@@ -200,13 +191,11 @@ public class CategoryDaoImpl implements CategoryDao {
      */
     @Override
     public List<SectionConferenc> findSectionConferencInIdCategory(Long id) throws DaoException {
-        LOG.info("Start find section conferenc in categori by ID");
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_BY_ID_SECTIONCONFERENC_IN_CATEGORY)) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             ResultSetExtractor<SectionConferenc> extractor = CategoryDaoImpl::extractSectionConferenc;
-            LOG.info("End find section conferenc in categori by ID");
             return extractor.extractAll(resultSet);
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
@@ -226,13 +215,11 @@ public class CategoryDaoImpl implements CategoryDao {
      */
     @Override
     public boolean delete(Long id) throws DaoException {
-        LOG.info("Start delete category");
         boolean result = false;
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(CATEGORY_DELETE)) {
             statement.setLong(1, id);
             result = statement.executeUpdate() == 1;
-            LOG.info("End delete category");
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", CATEGORY_DELETE);

@@ -69,7 +69,6 @@ public class QuestionDaoImpl implements QuestionDao {
     @Override
     public boolean create(String name, Date date, Long idUser) throws DaoException {
         boolean result = false;
-        LOG.info("Start create and add new question");
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(CREATE_QUESTION)) {
             statement.setString(1, name);
@@ -80,7 +79,6 @@ public class QuestionDaoImpl implements QuestionDao {
             if (rowCount != 0) {
                 result = true;
             }
-            LOG.info("End create and add new question");
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", CREATE_QUESTION);
@@ -98,7 +96,6 @@ public class QuestionDaoImpl implements QuestionDao {
      */
     @Override
     public boolean addAnswer(Long id, String answer) throws DaoException {
-        LOG.info("Start add answer by question");
         boolean result = false;
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(ADD_ANSWER)) {
@@ -108,7 +105,6 @@ public class QuestionDaoImpl implements QuestionDao {
             if (rowCount != 0) {
                 result = true;
             }
-            LOG.info("End add answer by question");
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", ADD_ANSWER);
@@ -124,12 +120,10 @@ public class QuestionDaoImpl implements QuestionDao {
      */
     @Override
     public List<Question> readAll() throws EntityExtractionFailedException, DaoException {
-        LOG.info("Start readAll question");
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ALL_QUESTION)) {
             ResultSet resultSet = statement.executeQuery();
             ResultSetExtractor<Question> extractor = QuestionDaoImpl::extractQuestion;
-            LOG.info("End readAll question");
             return extractor.extractAll(resultSet);
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
@@ -149,7 +143,6 @@ public class QuestionDaoImpl implements QuestionDao {
      */
     @Override
     public Optional<Question> readById(Long id) throws DaoException {
-        LOG.info("Start readById question");
         Optional<Question> productOptional = Optional.empty();
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ID_QUESTION)) {
@@ -159,7 +152,6 @@ public class QuestionDaoImpl implements QuestionDao {
                 Question question = extractQuestion(resultSet);
                 productOptional = Optional.of(question);
             }
-            LOG.info("End readById question");
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", FIND_ID_QUESTION);
@@ -178,13 +170,11 @@ public class QuestionDaoImpl implements QuestionDao {
      */
     @Override
     public List<Question> findAccountIdByQuestion(Long id) throws DaoException {
-        LOG.info("Start find account with Id by question");
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ACCOUNT_ID_BY_QUESTION)) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             ResultSetExtractor<Question> extractor = QuestionDaoImpl::extractQuestion;
-            LOG.info("End find account with Id by question");
             return extractor.extractAll(resultSet);
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
@@ -204,13 +194,11 @@ public class QuestionDaoImpl implements QuestionDao {
      */
     @Override
     public boolean delete(Long id) throws DaoException {
-        LOG.info("Start delete question");
         boolean result = false;
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(QUESTION_DELETE)) {
             statement.setLong(1, id);
             result = statement.executeUpdate() == 1;
-            LOG.info("End delete question");
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", QUESTION_DELETE);

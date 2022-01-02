@@ -54,12 +54,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public boolean create(String name) throws ValidationException, ServiceException {
         try {
-            LOG.debug("Service: Creating category started.");
             if (!categoryDataValidator.isNameValid(name)) {
                 LOG.error("The entered data is not correct!");
                 throw new ValidationException("The entered data is not correct!");
             }
-            LOG.debug("Service: Creating category finished.");
             return categoryDao.create(name);
         } catch (
                 DaoException e) {
@@ -78,12 +76,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public boolean changeName(Long id, String name) throws ValidationException, ServiceException {
         try {
-            LOG.debug("Service: Changing the category name started.");
             if (!categoryDataValidator.isNameValid(name) || !categoryDataValidator.isIdValid(id)) {
                 LOG.error("The entered data is not correct!");
                 throw new ValidationException("The entered data is not correct!");
             }
-            LOG.debug("Service: Changing the category name finished.");
             return categoryDao.changeName(id, name);
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -100,12 +96,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<Conferenc> findConferencInIdCategory(Long id) throws ValidationException, ServiceException {
         try {
-            LOG.debug("Service: Search for categories in conferences started.");
             if (!categoryDataValidator.isIdValid(id)) {
                 LOG.error("The entered data is not correct!");
                 throw new ValidationException("The entered data is not correct!");
             }
-            LOG.debug("Service: Search for categories in conferences finished.");
             return categoryDao.findConferencInIdCategory(id);
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -122,12 +116,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<SectionConferenc> findSectionConferencInIdCategory(Long id) throws ValidationException, ServiceException {
         try {
-            LOG.debug("Service: Search for categories in section conferences started.");
             if (!categoryDataValidator.isIdValid(id)) {
                 LOG.error("The entered data is not correct!");
                 throw new ValidationException("The entered data is not correct!");
             }
-            LOG.debug("Service: Search for categories in section conferences finished.");
             return categoryDao.findSectionConferencInIdCategory(id);
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -142,13 +134,11 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<Category> findAll() throws ServiceException {
         try {
-            LOG.debug("Service: Search all categories started.");
             try {
                 return categoryDao.findAll();
             } catch (EntityExtractionFailedException e) {
                 e.printStackTrace();
             }
-            LOG.debug("Service: Search all categories finished.");
             return Collections.emptyList();
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -165,12 +155,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Optional<Category> findId(Long id) throws ValidationException, ServiceException {
         try {
-            LOG.debug("Service: Search category by id started.");
             if (!categoryDataValidator.isIdValid(id)) {
                 LOG.error("The entered data is not correct!");
                 throw new ValidationException("The entered data is not correct!");
             }
-            LOG.debug("Service: Search category by id finished.");
             return categoryDao.findById(id);
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -187,12 +175,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public boolean remove(Long id) throws ValidationException, ServiceException {
         try {
-            LOG.debug("Service: Removing category by id started.");
             if (!categoryDataValidator.isIdValid(id)) {
                 LOG.error("The entered data is not correct!");
                 throw new ValidationException("The entered data is not correct!");
             }
-            LOG.debug("Service: Removing category by id finished.");
             return categoryDao.delete(id);
         } catch (DaoException e) {
             throw new ServiceException(e);

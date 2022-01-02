@@ -62,13 +62,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAll() throws ServiceException {
         try {
-            LOG.debug("Service: Reading all users started.");
             try {
                 return userDao.readAll();
             } catch (EntityExtractionFailedException e) {
                 e.printStackTrace();
             }
-            LOG.debug("Service: Reading all users finished.");
             return Collections.emptyList();
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -85,12 +83,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> findId(Long id) throws ValidationException, ServiceException {
         try {
-            LOG.debug("Service: Reading user started.");
             if (!userDataValidator.isIdValid(id)) {
                 LOG.error("The entered data is not correct!");
                 throw new ValidationException("The entered data is not correct!");
             }
-            LOG.debug("Service: Reading user finished.");
             return userDao.readById(id);
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -117,7 +113,6 @@ public class UserServiceImpl implements UserService {
                 LOG.error("The entered data is not correct!");
                 throw new ValidationException("The entered data is not correct!");
             }
-            LOG.debug("Service: Authenticating started.");
             final byte[] enteredPassword = password.getBytes(StandardCharsets.UTF_8);
             final Optional<User> readUser = userDao.findPasswordByLogin(login);
             if (readUser.isPresent()) {
@@ -130,7 +125,6 @@ public class UserServiceImpl implements UserService {
                         : Optional.empty();
             } else {
                 passwordEncoder.protectFromTimingAttack(enteredPassword);
-                LOG.debug("Service: Authenticating finished.");
                 return Optional.empty();
             }
         } catch (DaoException e) {
@@ -149,12 +143,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> registration(String email, String password) throws ValidationException, ServiceException {
         try {
-            LOG.debug("Service: Registration started.");
             if (!userDataValidator.isEmailValid(email) || !userDataValidator.isPasswordValid(password)) {
                 LOG.error("The entered data is not correct!");
                 throw new ValidationException("The entered data is not correct!");
             }
-            LOG.debug("Service: Registration finished.");
             return userDao.create(email, passwordEncoder.encoder(password));
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -172,14 +164,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> updatePasswordByLogin(String login, String password) throws ValidationException, ServiceException {
         try {
-            LOG.debug("Service: Updating password started.");
             if (!userDataValidator.isLoginValid(login) || !userDataValidator.isPasswordValid(password)) {
                 LOG.error("The entered data is not correct!");
                 throw new ValidationException("The entered data is not correct!");
             }
             final String hashedPassword = passwordEncoder.encoder(password);
             final Optional<User> readUser = userDao.updatePasswordByLogin(login, hashedPassword);
-            LOG.debug("Service: Updating password finished.");
             return readUser;
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -197,12 +187,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> updateEmail(Long id, String email) throws ValidationException, ServiceException {
         try {
-            LOG.debug("Service: Updating email started.");
             if (!userDataValidator.isEmailValid(email) || !userDataValidator.isIdValid(id)) {
                 LOG.error("The entered data is not correct!");
                 throw new ValidationException("The entered data is not correct!");
             }
-            LOG.debug("Service: Updating email finished.");
             return userDao.updateEmail(id, email);
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -220,12 +208,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> updateFirstName(Long id, String firstName) throws ValidationException, ServiceException {
         try {
-            LOG.debug("Service: Updating first name started.");
             if (!userDataValidator.isFirstNameValid(firstName) || !userDataValidator.isIdValid(id)) {
                 LOG.error("The entered data is not correct!");
                 throw new ValidationException("The entered data is not correct!");
             }
-            LOG.debug("Service: Updating first name finished.");
             return userDao.updateFirstName(id, firstName);
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -243,12 +229,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> updateLastName(Long id, String lastName) throws ValidationException, ServiceException {
         try {
-            LOG.debug("Service: Updating last name started.");
             if (!userDataValidator.isLastNameValid(lastName) || !userDataValidator.isIdValid(id)) {
                 LOG.error("The entered data is not correct!");
                 throw new ValidationException("The entered data is not correct!");
             }
-            LOG.debug("Service: Updating last name finished.");
             return userDao.updateLastName(id, lastName);
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -266,13 +250,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> updateRole(Long idAccount, String nameRole) throws ValidationException, ServiceException {
         try {
-            LOG.debug("Service: Updating role for user started.");
             final Long idRole = role(nameRole);
             if (!userDataValidator.isIdValid(idAccount) || !userDataValidator.isIdValid(idRole)) {
                 LOG.error("The entered data is not correct!");
                 throw new ValidationException("The entered data is not correct!");
             }
-            LOG.debug("Service: Updating role for user finished.");
             return userDao.updateRole(idAccount, idRole);
         } catch (DaoException e) {
             throw new ServiceException(e);
