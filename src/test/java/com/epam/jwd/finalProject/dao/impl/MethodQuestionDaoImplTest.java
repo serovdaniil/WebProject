@@ -1,5 +1,6 @@
 package com.epam.jwd.finalProject.dao.impl;
 
+import com.epam.jwd.finalProject.dao.exception.DaoException;
 import com.epam.jwd.finalProject.dao.exception.EntityExtractionFailedException;
 import com.epam.jwd.finalProject.model.Question;
 import com.epam.jwd.finalProject.model.Role;
@@ -41,14 +42,16 @@ public class MethodQuestionDaoImplTest extends Assert {
         login="daniils3rov@yandex.ru";
         idUser = (long) 1;
         idQuestion = (long) 1;
-        questionObject = new Question((long) 1, "Do you have hobby?", "Yes, I have.", new java.sql.Date(524524L), new User((long) 1, "daniils3rov@yandex.ru", "daniils3rov@yandex.ru", "Serov231969", "Daniil", "Serov", Role.USER));
+        questionObject = new Question((long) 1, "Do you have hobby?", "Yes, I have.",
+                new java.sql.Date(524524L), new User((long) 1, "daniils3rov@yandex.ru",
+                "daniils3rov@yandex.ru", "Serov231969", "Daniil", "Serov", Role.USER));
         questionList = new ArrayList<>();
         questionList.add(questionObject);
         date=new java.sql.Date(54252453);
     }
 
     @Test
-    public void create() {
+    public void create() throws DaoException {
         boolean expectedResult = true;
         when(dao.create(question,date,idUser)).thenReturn(true);
         boolean actualResult = dao.create(question,date,idUser);
@@ -56,7 +59,7 @@ public class MethodQuestionDaoImplTest extends Assert {
     }
 
     @Test
-    public void addAnswer() {
+    public void addAnswer() throws DaoException {
         boolean expectedResult = true;
         when(dao.addAnswer(idUser,answer)).thenReturn(true);
         boolean actualResult = dao.addAnswer(idUser,answer);
@@ -64,7 +67,7 @@ public class MethodQuestionDaoImplTest extends Assert {
     }
 
     @Test
-    public void readAll() throws EntityExtractionFailedException {
+    public void readAll() throws EntityExtractionFailedException, DaoException  {
         List<Question> expectedResult = questionList;
         when(dao.readAll()).thenReturn(expectedResult);
         List<Question> actualResult = dao.readAll();
@@ -72,7 +75,7 @@ public class MethodQuestionDaoImplTest extends Assert {
     }
 
     @Test
-    public void readById() {
+    public void readById()throws DaoException  {
         Optional<Question> expectedResult= Optional.of(questionObject);
         when(dao.readById((long)1)).thenReturn(expectedResult);
         Optional<Question> actualResult = dao.readById((long)1);
@@ -80,7 +83,7 @@ public class MethodQuestionDaoImplTest extends Assert {
     }
 
     @Test
-    public void findAccountIdByQuestion() {
+    public void findAccountIdByQuestion() throws DaoException {
         List<Question> expectedResult = questionList;
         when(dao.findAccountIdByQuestion(idUser)).thenReturn(expectedResult);
         List<Question> actualResult = dao.findAccountIdByQuestion(idUser);
@@ -88,7 +91,7 @@ public class MethodQuestionDaoImplTest extends Assert {
     }
 
     @Test
-    public void delete() {
+    public void delete()throws DaoException  {
         boolean expectedResult = true;
         when(dao.delete(idQuestion)).thenReturn(true);
         boolean actualResult = dao.delete(idQuestion);

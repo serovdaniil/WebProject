@@ -7,7 +7,10 @@ import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
 import com.epam.jwd.finalProject.model.Conferenc;
 import com.epam.jwd.finalProject.service.api.ConferencService;
+import com.epam.jwd.finalProject.service.exception.ServiceException;
 import com.epam.jwd.finalProject.service.factory.ServiceFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
@@ -19,6 +22,7 @@ import java.util.List;
 public class ShowAllConferencesPageCommand implements Command {
     private static final String CONFERENCES_ATTRIBUTE_NAME = "conferences";
     private static final String CONFERENCES_PAGE = "page.allConferences";
+    private static final Logger LOG = LogManager.getLogger(ShowAllConferencesPageCommand.class);
 
     private final ConferencService service;
     private final RequestFactory requestFactory;
@@ -33,10 +37,15 @@ public class ShowAllConferencesPageCommand implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        final List<Conferenc> conferencesAll = service.findAllStatus();
-        request.addAttributeToJsp(CONFERENCES_ATTRIBUTE_NAME, conferencesAll);
+        try {
+            final List<Conferenc> conferencesAll = service.findAllStatus();
+            request.addAttributeToJsp(CONFERENCES_ATTRIBUTE_NAME, conferencesAll);
+        } catch (ServiceException e) {
+            LOG.error("The service exception!" + e);
+        }
         return requestFactory.createForwardResponse(propertyContext.get(CONFERENCES_PAGE));
     }
+
     public static ShowAllConferencesPageCommand getInstance() {
         return ShowAllConferencesPageCommand.Holder.INSTANCE;
     }
@@ -44,6 +53,6 @@ public class ShowAllConferencesPageCommand implements Command {
     private static class Holder {
         public static final ShowAllConferencesPageCommand INSTANCE =
                 new ShowAllConferencesPageCommand(ServiceFactory.simple().conferencService(),
-                        RequestFactory.getInstance(),PropertyContext.instance());
+                        RequestFactory.getInstance(), PropertyContext.instance());
     }
 }

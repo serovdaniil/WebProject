@@ -1,5 +1,6 @@
 package com.epam.jwd.finalProject.dao.api;
 
+import com.epam.jwd.finalProject.dao.exception.DaoException;
 import com.epam.jwd.finalProject.dao.exception.EntityExtractionFailedException;
 import com.epam.jwd.finalProject.dao.impl.ApplicationDaoImpl;
 import com.epam.jwd.finalProject.model.Application;
@@ -21,7 +22,7 @@ public interface ApplicationDao {
      * @param idResultSection    id resulr section
      * @return boolean result of operation
      */
-    boolean create(Long idAccount, Long idSectionConferenc, Long idResultSection);
+    boolean create(Long idAccount, Long idSectionConferenc, Long idResultSection) throws DaoException;
 
     /**
      * Change status application after section conferenc
@@ -29,7 +30,7 @@ public interface ApplicationDao {
      * @param idSectionConferenc id section conferenc for application
      * @return boolean result of operation
      */
-    boolean changeStatusApplicationAfterUpdateSectionConferenc(Long idSectionConferenc);
+    boolean changeStatusApplicationAfterUpdateSectionConferenc(Long idSectionConferenc) throws DaoException;
 
     /**
      * Update status application by id
@@ -38,14 +39,14 @@ public interface ApplicationDao {
      * @param idResultSection result section
      * @return boolean result of operation
      */
-    boolean updateIdStatusApplication(Long idApplication, Long idResultSection);
+    boolean updateIdStatusApplication(Long idApplication, Long idResultSection) throws DaoException;
 
     /**
      * Read all application
      *
      * @return List application
      */
-    List<Application> readAll() throws EntityExtractionFailedException;
+    List<Application> readAll() throws EntityExtractionFailedException, DaoException;
 
     /**
      * Read apllication by id
@@ -53,7 +54,7 @@ public interface ApplicationDao {
      * @param id id application
      * @return Application
      */
-    Optional<Application> readById(Long id);
+    Optional<Application> readById(Long id) throws DaoException;
 
     /**
      * Find application by id account
@@ -61,7 +62,7 @@ public interface ApplicationDao {
      * @param id id application
      * @return List application
      */
-    List<Application> findAccountIdByApplication(Long id);
+    List<Application> findAccountIdByApplication(Long id) throws DaoException;
 
     /**
      * Find application by status result
@@ -69,7 +70,7 @@ public interface ApplicationDao {
      * @param idStatus id status application
      * @return List application
      */
-    List<Application> findByStatusResult(Long idStatus);
+    List<Application> findByStatusResult(Long idStatus) throws DaoException;
 
     /**
      * Remove application by id
@@ -77,7 +78,7 @@ public interface ApplicationDao {
      * @param id id application
      * @return boolean result of operation
      */
-    boolean delete(Long id);
+    boolean delete(Long id) throws DaoException;
 
     /**
      * Gets instance.

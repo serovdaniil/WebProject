@@ -1,5 +1,6 @@
 package com.epam.jwd.finalProject.dao.api;
 
+import com.epam.jwd.finalProject.dao.exception.DaoException;
 import com.epam.jwd.finalProject.dao.exception.EntityExtractionFailedException;
 import com.epam.jwd.finalProject.dao.impl.QuestionDaoImpl;
 import com.epam.jwd.finalProject.model.Question;
@@ -23,7 +24,7 @@ public interface QuestionDao {
      * @param idUser id user for new question
      * @return boolean result of operation
      */
-    boolean create(String name, Date date, Long idUser);
+    boolean create(String name, Date date, Long idUser) throws DaoException;
 
     /**
      * Add answer by id question
@@ -32,14 +33,14 @@ public interface QuestionDao {
      * @param answer answer for new question
      * @return boolean result of operation
      */
-    boolean addAnswer(Long id, String answer);
+    boolean addAnswer(Long id, String answer) throws DaoException;
 
     /**
      * Read all questions
      *
      * @return List questions
      */
-    List<Question> readAll() throws EntityExtractionFailedException;
+    List<Question> readAll() throws EntityExtractionFailedException, DaoException;
 
     /**
      * Read question by id
@@ -47,7 +48,7 @@ public interface QuestionDao {
      * @param id id question
      * @return Question
      */
-    Optional<Question> readById(Long id);
+    Optional<Question> readById(Long id) throws DaoException;
 
     /**
      * Find questions by id user
@@ -55,7 +56,7 @@ public interface QuestionDao {
      * @param id id user
      * @return List questions
      */
-    List<Question> findAccountIdByQuestion(Long id);
+    List<Question> findAccountIdByQuestion(Long id) throws DaoException;
 
     /**
      * Remove question by id
@@ -63,7 +64,7 @@ public interface QuestionDao {
      * @param id id question
      * @return boolean result of operation
      */
-    boolean delete(Long id);
+    boolean delete(Long id) throws DaoException;
 
     /**
      * Gets instance.

@@ -4,6 +4,7 @@ import com.epam.jwd.finalProject.dao.exception.EntityExtractionFailedException;
 import com.epam.jwd.finalProject.model.Category;
 import com.epam.jwd.finalProject.model.Conferenc;
 import com.epam.jwd.finalProject.model.Status;
+import com.epam.jwd.finalProject.service.exception.ServiceException;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
 import org.junit.Assert;
 import org.junit.Before;
@@ -34,12 +35,13 @@ public class ConferencServiceImplTest extends Assert {
         name = "Java";
         nameStatus="Active";
         description = "Learning java method";
-        conferenc = new Conferenc((long) 1, name, description, new Category((long) 3, "IT"), new Status((long) 1, "Active"));
+        conferenc = new Conferenc((long) 1, name, description, new Category((long) 3, "IT"),
+                new Status((long) 1, "Active"));
         conferencList = new ArrayList<>();
         conferencList.add(conferenc);
     }
     @Test
-    public void changeStatus() throws ValidationException {
+    public void changeStatus() throws ValidationException, ServiceException {
         boolean expectedResult = true;
         when(service.changeStatus(id,nameStatus)).thenReturn(true);
         boolean actualResult = service.changeStatus(id,nameStatus);
@@ -47,7 +49,7 @@ public class ConferencServiceImplTest extends Assert {
     }
 
     @Test
-    public void readAllActive() throws EntityExtractionFailedException {
+    public void readAllActive() throws ServiceException  {
         List<Conferenc> expectedResult = conferencList;
         when(service.findAllStatus()).thenReturn(expectedResult);
         List<Conferenc> actualResult = service.findAllStatus();
@@ -55,7 +57,7 @@ public class ConferencServiceImplTest extends Assert {
     }
 
     @Test
-    public void updateDescription() throws ValidationException {
+    public void updateDescription() throws ValidationException, ServiceException  {
         boolean expectedResult = true;
         when(service.updateDescription(id, description)).thenReturn(true);
         boolean actualResult = service.updateDescription(id, description);
@@ -63,7 +65,7 @@ public class ConferencServiceImplTest extends Assert {
     }
 
     @Test
-    public void findByName() throws ValidationException {
+    public void findByName() throws ValidationException, ServiceException  {
         List<Conferenc> expectedResult = conferencList;
         when(service.findByName(name)).thenReturn(expectedResult);
         List<Conferenc> actualResult = service.findByName(name);
@@ -71,7 +73,7 @@ public class ConferencServiceImplTest extends Assert {
     }
 
     @Test
-    public void findAll() {
+    public void findAll() throws ServiceException {
         List<Conferenc> expectedResult = conferencList;
         when(service.findAll()).thenReturn(expectedResult);
         List<Conferenc> actualResult = service.findAll();
@@ -79,7 +81,7 @@ public class ConferencServiceImplTest extends Assert {
     }
 
     @Test
-    public void create() throws ValidationException {
+    public void create() throws ValidationException, ServiceException  {
         boolean expectedResult = true;
         when(service.create(name, description, idCategory)).thenReturn(true);
         boolean actualResult = service.create(name, description, idCategory);
@@ -87,7 +89,7 @@ public class ConferencServiceImplTest extends Assert {
     }
 
     @Test
-    public void findId() throws ValidationException {
+    public void findId() throws ValidationException, ServiceException  {
         Optional<Conferenc> expectedResult = Optional.of(conferenc);
         when(service.findId(id)).thenReturn(expectedResult);
         Optional<Conferenc> actualResult = service.findId((long) 1);
@@ -95,7 +97,7 @@ public class ConferencServiceImplTest extends Assert {
     }
 
     @Test
-    public void remove() throws ValidationException {
+    public void remove() throws ValidationException, ServiceException  {
         boolean expectedResult = true;
         when(service.remove(id)).thenReturn(true);
         boolean actualResult = service.remove(id);

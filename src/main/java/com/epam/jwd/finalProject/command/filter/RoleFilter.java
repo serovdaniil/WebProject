@@ -52,7 +52,8 @@ public class RoleFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response,
+                         FilterChain chain) throws IOException, ServletException {
         final HttpServletRequest req = (HttpServletRequest) request;
         final String commandName = req.getParameter(COMMAND_PARAM_NAME);
         LOGGER.trace("Checking permissions for command. commandName: {}", commandName);

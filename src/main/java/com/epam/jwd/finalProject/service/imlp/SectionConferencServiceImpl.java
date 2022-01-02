@@ -1,9 +1,11 @@
 package com.epam.jwd.finalProject.service.imlp;
 
+import com.epam.jwd.finalProject.dao.exception.DaoException;
 import com.epam.jwd.finalProject.dao.exception.EntityExtractionFailedException;
 import com.epam.jwd.finalProject.dao.impl.SectionConferencDaoImpl;
 import com.epam.jwd.finalProject.model.SectionConferenc;
 import com.epam.jwd.finalProject.service.api.SectionConferencService;
+import com.epam.jwd.finalProject.service.exception.ServiceException;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
 import com.epam.jwd.finalProject.service.validator.SectionConferencDataValidator;
 import org.apache.logging.log4j.LogManager;
@@ -12,6 +14,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
 /**
  * @author Daniil Serov
  * @see SectionConferencDaoImpl
@@ -28,7 +31,8 @@ public class SectionConferencServiceImpl implements SectionConferencService {
     /**
      * Validator for this service
      */
-    private final SectionConferencDataValidator sectionConferencDataValidator = new SectionConferencDataValidator().getInstance();
+    private final SectionConferencDataValidator sectionConferencDataValidator =
+            new SectionConferencDataValidator().getInstance();
 
     /**
      * Constructor - creating a new object
@@ -43,21 +47,25 @@ public class SectionConferencServiceImpl implements SectionConferencService {
      * Change status section conferenc by id
      *
      * @param idSectionConferenc id section conferenc
-     * @param nameStatus  name status
+     * @param nameStatus         name status
      * @return boolean
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public boolean changeStatus(Long idSectionConferenc, String nameStatus) throws ValidationException {
-        LOG.debug("Service: Change status conferenc  started.");
-        Long idStatus=resultSection(nameStatus);
-        if (!sectionConferencDataValidator.isIdValid(idSectionConferenc) ||
-                !sectionConferencDataValidator.isIdValid(idStatus)) {
-            LOG.error("The entered data is not correct!");
-            throw new ValidationException("The entered data is not correct!");
+    public boolean changeStatus(Long idSectionConferenc, String nameStatus) throws ValidationException, ServiceException {
+        try {
+            LOG.debug("Service: Change status conferenc  started.");
+            Long idStatus = resultSection(nameStatus);
+            if (!sectionConferencDataValidator.isIdValid(idSectionConferenc) ||
+                    !sectionConferencDataValidator.isIdValid(idStatus)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            LOG.debug("Service: Change status conferenc finished.");
+            return sectionConferencDao.changeStatus(idSectionConferenc, idStatus);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         }
-        LOG.debug("Service: Change status conferenc finished.");
-        return sectionConferencDao.changeStatus(idSectionConferenc,idStatus);
     }
 
     /**
@@ -68,14 +76,18 @@ public class SectionConferencServiceImpl implements SectionConferencService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public boolean changeStatusAfterUpdateConferenc(Long idConferenc) throws ValidationException {
-        LOG.debug("Service: Change status after update status conferenc started.");
-        if (!sectionConferencDataValidator.isIdValid(idConferenc)) {
-            LOG.error("The entered data is not correct!");
-            throw new ValidationException("The entered data is not correct!");
+    public boolean changeStatusAfterUpdateConferenc(Long idConferenc) throws ValidationException, ServiceException {
+        try {
+            LOG.debug("Service: Change status after update status conferenc started.");
+            if (!sectionConferencDataValidator.isIdValid(idConferenc)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            LOG.debug("Service: Change status after update status conferencc finished.");
+            return sectionConferencDao.changeStatusAfterUpdateConferenc(idConferenc);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         }
-        LOG.debug("Service: Change status after update status conferencc finished.");
-        return sectionConferencDao.changeStatusAfterUpdateConferenc(idConferenc);
     }
 
     /**
@@ -84,15 +96,19 @@ public class SectionConferencServiceImpl implements SectionConferencService {
      * @return List section conferences
      */
     @Override
-    public List<SectionConferenc> findAll() {
-        LOG.debug("Service: Reading all section conferences started.");
+    public List<SectionConferenc> findAll() throws ServiceException {
         try {
-            return sectionConferencDao.readAll();
-        } catch (EntityExtractionFailedException e) {
-            e.printStackTrace();
+            LOG.debug("Service: Reading all section conferences started.");
+            try {
+                return sectionConferencDao.readAll();
+            } catch (EntityExtractionFailedException e) {
+                e.printStackTrace();
+            }
+            LOG.debug("Service: Reading all section conferences finished.");
+            return Collections.emptyList();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         }
-        LOG.debug("Service: Reading all section conferences finished.");
-        return Collections.emptyList();
     }
 
     /**
@@ -103,14 +119,18 @@ public class SectionConferencServiceImpl implements SectionConferencService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public Optional<SectionConferenc> findId(Long id) throws ValidationException {
-        LOG.debug("Service: Reading section conferenc started.");
-        if (!sectionConferencDataValidator.isIdValid(id)) {
-            LOG.error("The entered data is not correct!");
-            throw new ValidationException("The entered data is not correct!");
+    public Optional<SectionConferenc> findId(Long id) throws ValidationException, ServiceException {
+        try {
+            LOG.debug("Service: Reading section conferenc started.");
+            if (!sectionConferencDataValidator.isIdValid(id)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            LOG.debug("Service: Reading section conferenc finished.");
+            return sectionConferencDao.readById(id);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         }
-        LOG.debug("Service: Reading section conferenc finished.");
-        return sectionConferencDao.readById(id);
     }
 
     /**
@@ -121,57 +141,66 @@ public class SectionConferencServiceImpl implements SectionConferencService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public boolean remove(Long id) throws ValidationException {
-        LOG.debug("Service: Removing section conferenc started.");
-        if (!sectionConferencDataValidator.isIdValid(id)) {
-            LOG.error("The entered data is not correct!");
-            throw new ValidationException("The entered data is not correct!");
+    public boolean remove(Long id) throws ValidationException, ServiceException {
+        try {
+            LOG.debug("Service: Removing section conferenc started.");
+            if (!sectionConferencDataValidator.isIdValid(id)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            LOG.debug("Service: Removing section conferenc finished.");
+            return sectionConferencDao.delete(id);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         }
-        LOG.debug("Service: Removing section conferenc finished.");
-        return sectionConferencDao.delete(id);
     }
 
     /**
      * Create section conferenc by id
      *
-     * @param name name section conferenc
+     * @param name        name section conferenc
      * @param description description section conferenc
      * @param idConferenc id conferenc
      * @return Boolean
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public boolean create(String name, String description, Long idConferenc) throws ValidationException {
-        LOG.debug("Service: Creating section conferenc started.");
-        LOG.info(name);
-        LOG.info(description);
-        LOG.info(idConferenc);
-        if (!sectionConferencDataValidator.isIdValid(idConferenc) || !sectionConferencDataValidator.isNameValid(name) ||
-                !sectionConferencDataValidator.isDescriptionValid(description)) {
-            LOG.error("The entered data is not correct!");
-            throw new ValidationException("The entered data is not correct!");
+    public boolean create(String name, String description, Long idConferenc) throws ValidationException, ServiceException {
+        try {
+            LOG.debug("Service: Creating section conferenc started.");
+            if (!sectionConferencDataValidator.isIdValid(idConferenc) || !sectionConferencDataValidator.isNameValid(name) ||
+                    !sectionConferencDataValidator.isDescriptionValid(description)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            LOG.debug("Service: Creating section conferenc finished.");
+            return sectionConferencDao.create(name, description, idConferenc);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         }
-        LOG.debug("Service: Creating section conferenc finished.");
-        return sectionConferencDao.create(name,description,idConferenc);
     }
 
     /**
      * Update description section conferenc by id
      *
-     * @param id id section conferenc
+     * @param id          id section conferenc
      * @param description description conferenc
      * @return Boolean
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public boolean updateDescription(Long id, String description) throws ValidationException {
-        LOG.debug("Service: Updating description in section conferenc started.");
-        if (!sectionConferencDataValidator.isIdValid(id)) {
-            LOG.error("The entered data is not correct!");
-            throw new ValidationException("The entered data is not correct!");
+    public boolean updateDescription(Long id, String description) throws ValidationException, ServiceException {
+        try {
+            LOG.debug("Service: Updating description in section conferenc started.");
+            if (!sectionConferencDataValidator.isIdValid(id)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            LOG.debug("Service: Updating description in section conferenc finished.");
+            return sectionConferencDao.updateDescription(id, description);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         }
-        LOG.debug("Service: Updating description in section conferenc finished.");
-        return sectionConferencDao.updateDescription(id,description);
     }
 
     /**
@@ -182,14 +211,18 @@ public class SectionConferencServiceImpl implements SectionConferencService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public List<SectionConferenc> findByName(String name) throws ValidationException {
-        LOG.debug("Service: Find section conferenc of name started.");
-        if (!sectionConferencDataValidator.isNameValid(name)) {
-            LOG.error("The entered data is not correct!");
-            throw new ValidationException("The entered data is not correct!");
+    public List<SectionConferenc> findByName(String name) throws ValidationException, ServiceException {
+        try {
+            LOG.debug("Service: Find section conferenc of name started.");
+            if (!sectionConferencDataValidator.isNameValid(name)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            LOG.debug("Service: Find section conferenc of name finished.");
+            return sectionConferencDao.findByName(name);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         }
-        LOG.debug("Service: Find section conferenc of name finished.");
-        return sectionConferencDao.findByName(name);
     }
 
     /**
@@ -200,14 +233,18 @@ public class SectionConferencServiceImpl implements SectionConferencService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public List<SectionConferenc> findSectionConferencesInConferencById(Long id) throws ValidationException {
-        LOG.debug("Service: Find section conferenc of id started.");
-        if (!sectionConferencDataValidator.isIdValid(id)) {
-            LOG.error("The entered data is not correct!");
-            throw new ValidationException("The entered data is not correct!");
+    public List<SectionConferenc> findSectionConferencesInConferencById(Long id) throws ValidationException, ServiceException {
+        try {
+            LOG.debug("Service: Find section conferenc of id started.");
+            if (!sectionConferencDataValidator.isIdValid(id)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            LOG.debug("Service: Find section conferenc of id finished.");
+            return sectionConferencDao.findSectionConferencesInConferencById(id);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         }
-        LOG.debug("Service: Find section conferenc of id finished.");
-        return sectionConferencDao.findSectionConferencesInConferencById(id);
     }
 
     /**

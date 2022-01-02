@@ -28,7 +28,8 @@ public class LanguageFilter implements Filter {
     private static final String FRANCE_LANGUAGE = "fr_FR";
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response,
+                         FilterChain chain) throws IOException, ServletException {
         final String languageFromRequest = request.getParameter(LANGUAGE_COOKIE_NAME);
         if (doesNotContainLangCookie((HttpServletRequest) request)) {
             addEnglishLangCookie((HttpServletResponse) response);

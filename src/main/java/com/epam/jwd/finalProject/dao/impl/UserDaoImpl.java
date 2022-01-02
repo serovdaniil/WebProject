@@ -2,6 +2,7 @@ package com.epam.jwd.finalProject.dao.impl;
 
 import com.epam.jwd.finalProject.dao.api.UserDao;
 import com.epam.jwd.finalProject.dao.connection.ConnectionPool;
+import com.epam.jwd.finalProject.dao.exception.DaoException;
 import com.epam.jwd.finalProject.dao.exception.EntityExtractionFailedException;
 import com.epam.jwd.finalProject.model.*;
 import org.apache.logging.log4j.LogManager;
@@ -71,7 +72,7 @@ public class UserDaoImpl implements UserDao {
      * @return User
      */
     @Override
-    public Optional<User> create(String email, String password) {
+    public Optional<User> create(String email, String password) throws DaoException {
         boolean result = false;
         LOG.info("Start create user");
         try (Connection connection = connectionPool.getConnection();
@@ -91,8 +92,7 @@ public class UserDaoImpl implements UserDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", CREATE_USER);
-        } catch (NullPointerException e) {
-            LOG.error(e);
+            throw new DaoException(e);
         }
         return findByEmail(email);
     }
@@ -104,7 +104,7 @@ public class UserDaoImpl implements UserDao {
      * @return User
      */
     @Override
-    public Optional<User> readById(Long id) {
+    public Optional<User> readById(Long id) throws DaoException {
         LOG.info("Start readById user");
         Optional<User> productOptional = Optional.empty();
         try (Connection connection = connectionPool.getConnection();
@@ -119,10 +119,9 @@ public class UserDaoImpl implements UserDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", FIND_ID_USER);
+            throw new DaoException(e);
         } catch (EntityExtractionFailedException e) {
             LOG.error("could not extract entity", e);
-        } catch (NullPointerException e) {
-            LOG.error(e);
         }
         return productOptional;
     }
@@ -135,7 +134,7 @@ public class UserDaoImpl implements UserDao {
      * @return User
      */
     @Override
-    public Optional<User> updatePasswordByLogin(String login, String password) {
+    public Optional<User> updatePasswordByLogin(String login, String password) throws DaoException {
         LOG.info("START update password by login account");
         boolean result = false;
         try (Connection connection = connectionPool.getConnection();
@@ -150,8 +149,7 @@ public class UserDaoImpl implements UserDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", UPDATE_PASSWORD_BY_LOGIN_ACCOUNT);
-        } catch (NullPointerException e) {
-            LOG.error(e);
+            throw new DaoException(e);
         }
         return findPasswordByLogin(login);
     }
@@ -164,7 +162,7 @@ public class UserDaoImpl implements UserDao {
      * @return User
      */
     @Override
-    public Optional<User> updateEmail(Long id, String email) {
+    public Optional<User> updateEmail(Long id, String email) throws DaoException {
         LOG.info("START update email by id account");
         boolean result = false;
         try (Connection connection = connectionPool.getConnection();
@@ -179,8 +177,7 @@ public class UserDaoImpl implements UserDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", UPDATE_EMAIL_BY_ID_ACCOUNT);
-        } catch (NullPointerException e) {
-            LOG.error(e);
+            throw new DaoException(e);
         }
         return readById(id);
     }
@@ -193,7 +190,7 @@ public class UserDaoImpl implements UserDao {
      * @return User
      */
     @Override
-    public Optional<User> updateFirstName(Long id, String firstName) {
+    public Optional<User> updateFirstName(Long id, String firstName) throws DaoException {
         LOG.info("START update firstName by id account");
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_FIRSTNAME_BY_ID_ACCOUNT)) {
@@ -204,8 +201,7 @@ public class UserDaoImpl implements UserDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", UPDATE_FIRSTNAME_BY_ID_ACCOUNT);
-        } catch (NullPointerException e) {
-            LOG.error(e);
+            throw new DaoException(e);
         }
         return readById(id);
     }
@@ -218,7 +214,7 @@ public class UserDaoImpl implements UserDao {
      * @return User
      */
     @Override
-    public Optional<User> updateLastName(Long id, String lastName) {
+    public Optional<User> updateLastName(Long id, String lastName) throws DaoException {
         LOG.info("START update lastName by id account");
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_LASTNAME_BY_ID_ACCOUNT)) {
@@ -229,8 +225,7 @@ public class UserDaoImpl implements UserDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", UPDATE_LASTNAME_BY_ID_ACCOUNT);
-        } catch (NullPointerException e) {
-            LOG.error(e);
+            throw new DaoException(e);
         }
         return readById(id);
     }
@@ -243,7 +238,7 @@ public class UserDaoImpl implements UserDao {
      * @return User
      */
     @Override
-    public Optional<User> updateRole(Long idAccount, Long idRole) {
+    public Optional<User> updateRole(Long idAccount, Long idRole) throws DaoException {
         LOG.info("START update role by id account");
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_ROLE_BY_ID_ACCOUNT)) {
@@ -254,8 +249,7 @@ public class UserDaoImpl implements UserDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", UPDATE_ROLE_BY_ID_ACCOUNT);
-        } catch (NullPointerException e) {
-            LOG.error(e);
+            throw new DaoException(e);
         }
         return readById(idAccount);
     }
@@ -266,7 +260,7 @@ public class UserDaoImpl implements UserDao {
      * @return List user
      */
     @Override
-    public List<User> readAll() throws EntityExtractionFailedException {
+    public List<User> readAll() throws EntityExtractionFailedException, DaoException {
         LOG.info("Start readAll account");
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ALL_ACCOUNT)) {
@@ -277,6 +271,7 @@ public class UserDaoImpl implements UserDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", FIND_ALL_ACCOUNT);
+            throw new DaoException(e);
         } catch (EntityExtractionFailedException e) {
             LOG.error("could not extract entity", e);
         }
@@ -290,7 +285,7 @@ public class UserDaoImpl implements UserDao {
      * @return User
      */
     @Override
-    public Optional<User> findByEmail(String email) {
+    public Optional<User> findByEmail(String email) throws DaoException {
         LOG.info("Start find email by account");
         Optional<User> productOptional = Optional.empty();
         try (Connection connection = connectionPool.getConnection();
@@ -305,10 +300,9 @@ public class UserDaoImpl implements UserDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", FIND_ID_USER);
+            throw new DaoException(e);
         } catch (EntityExtractionFailedException e) {
             LOG.error("could not extract entity", e);
-        } catch (NullPointerException e) {
-            LOG.error(e);
         }
         return productOptional;
     }
@@ -320,7 +314,7 @@ public class UserDaoImpl implements UserDao {
      * @return User
      */
     @Override
-    public Optional<User> findPasswordByLogin(String login) {
+    public Optional<User> findPasswordByLogin(String login) throws DaoException {
         LOG.info("Start find password by login");
         Optional<User> productOptional = Optional.empty();
         try (Connection connection = connectionPool.getConnection();
@@ -335,6 +329,7 @@ public class UserDaoImpl implements UserDao {
         } catch (SQLException | EntityExtractionFailedException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", FIND_PASSWORD_BY_LOGIN);
+            throw new DaoException(e);
         }
         return productOptional;
     }

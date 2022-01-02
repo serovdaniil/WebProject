@@ -1,6 +1,7 @@
 package com.epam.jwd.finalProject.service.api;
 
 import com.epam.jwd.finalProject.model.Application;
+import com.epam.jwd.finalProject.service.exception.ServiceException;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public interface ApplicationService extends EntityService<Application> {
      * @param idResultSection    id for result section
      * @return boolean result of operation
      */
-    boolean create(Long idAccount, Long idSectionConferenc, Long idResultSection) throws ValidationException;
+    boolean create(Long idAccount, Long idSectionConferenc, Long idResultSection) throws ValidationException, ServiceException;
 
     /**
      * Update description application
@@ -29,7 +30,7 @@ public interface ApplicationService extends EntityService<Application> {
      * @param resultSection string for result section
      * @return boolean result of operation
      */
-    boolean updateIdStatusApplication(Long idApplication, String resultSection) throws ValidationException;
+    boolean updateIdStatusApplication(Long idApplication, String resultSection) throws ValidationException, ServiceException;
 
     /**
      * Find application for account by id
@@ -37,7 +38,7 @@ public interface ApplicationService extends EntityService<Application> {
      * @param id id for application
      * @return List application
      */
-    List<Application> findAccountIdByApplication(Long id) throws ValidationException;
+    List<Application> findAccountIdByApplication(Long id) throws ValidationException, ServiceException;
 
     /**
      * Find application by status result
@@ -45,7 +46,7 @@ public interface ApplicationService extends EntityService<Application> {
      * @param nameStatus name status for application
      * @return List application
      */
-    List<Application> findByStatusResult(String nameStatus) throws ValidationException;
+    List<Application> findByStatusResult(String nameStatus) throws ValidationException, ServiceException;
 
     /**
      * Change status application
@@ -53,5 +54,5 @@ public interface ApplicationService extends EntityService<Application> {
      * @param idSectionConferenc id section conferenc for application
      * @return boolean result of operation
      */
-    boolean changeStatusApplicationAfterUpdateSectionConferenc(Long idSectionConferenc) throws ValidationException;
+    boolean changeStatusApplicationAfterUpdateSectionConferenc(Long idSectionConferenc) throws ValidationException, ServiceException;
 }

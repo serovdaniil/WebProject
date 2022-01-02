@@ -2,6 +2,7 @@ package com.epam.jwd.finalProject.service.imlp;
 
 import com.epam.jwd.finalProject.model.Role;
 import com.epam.jwd.finalProject.model.User;
+import com.epam.jwd.finalProject.service.exception.ServiceException;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
 import org.junit.Assert;
 import org.junit.Before;
@@ -43,7 +44,7 @@ public class UserServiceImplTest extends Assert {
     }
 
     @Test
-    public void findAll() {
+    public void findAll() throws ServiceException {
         List<User> expectedResult= users;
         when(service.findAll()).thenReturn(expectedResult);
         List<User> actualResult = service.findAll();
@@ -51,7 +52,7 @@ public class UserServiceImplTest extends Assert {
     }
 
     @Test
-    public void findId() throws ValidationException {
+    public void findId() throws ValidationException, ServiceException  {
         Optional<User> expectedResult = Optional.of(user);
         when(service.findId(id)).thenReturn(expectedResult);
         Optional<User> actualResult = service.findId(id);
@@ -67,7 +68,7 @@ public class UserServiceImplTest extends Assert {
     }
 
     @Test
-    public void authenticate() throws ValidationException {
+    public void authenticate() throws ValidationException, ServiceException  {
         Optional<User> expectedResult = Optional.of(user);
         when(service.authenticate(login,password)).thenReturn(expectedResult);
         Optional<User> actualResult = service.authenticate(login,password);
@@ -75,7 +76,7 @@ public class UserServiceImplTest extends Assert {
     }
 
     @Test
-    public void registration() throws ValidationException {
+    public void registration() throws ValidationException, ServiceException  {
         Optional<User> expectedResult = Optional.of(user);
         when(service.registration(email,password)).thenReturn(expectedResult);
         Optional<User> actualResult = service.registration(email,password);
@@ -83,7 +84,7 @@ public class UserServiceImplTest extends Assert {
     }
 
     @Test
-    public void updatePasswordByLogin() throws ValidationException {
+    public void updatePasswordByLogin() throws ValidationException, ServiceException  {
         Optional<User> expectedResult = Optional.of(user);
         when(service.updatePasswordByLogin(login,password)).thenReturn(expectedResult);
         Optional<User> actualResult = service.updatePasswordByLogin(login,password);
@@ -91,7 +92,7 @@ public class UserServiceImplTest extends Assert {
     }
 
     @Test
-    public void updateEmail() throws ValidationException {
+    public void updateEmail() throws ValidationException, ServiceException  {
         Optional<User> expectedResult = Optional.of(user);
         when(service.updateEmail(id,email)).thenReturn(expectedResult);
         Optional<User> actualResult = service.updateEmail(id,email);
@@ -99,7 +100,7 @@ public class UserServiceImplTest extends Assert {
     }
 
     @Test
-    public void updateFirstName() throws ValidationException {
+    public void updateFirstName() throws ValidationException, ServiceException  {
         Optional<User> expectedResult = Optional.of(user);
         when(service.updateFirstName(id,firstName)).thenReturn(expectedResult);
         Optional<User> actualResult = service.updateFirstName(id,firstName);
@@ -107,7 +108,7 @@ public class UserServiceImplTest extends Assert {
     }
 
     @Test
-    public void updateLastName() throws ValidationException {
+    public void updateLastName() throws ValidationException, ServiceException  {
         Optional<User> expectedResult = Optional.of(user);
         when(service.updateLastName(id,lastName)).thenReturn(expectedResult);
         Optional<User> actualResult = service.updateLastName(id,lastName);
@@ -115,7 +116,7 @@ public class UserServiceImplTest extends Assert {
     }
 
     @Test
-    public void updateRole() throws ValidationException {
+    public void updateRole() throws ValidationException, ServiceException  {
         Optional<User> expectedResult = Optional.of(user);
         when(service.updateRole(id,role)).thenReturn(expectedResult);
         Optional<User> actualResult = service.updateRole(id,role);

@@ -3,6 +3,7 @@ package com.epam.jwd.finalProject.service.imlp;
 import com.epam.jwd.finalProject.model.Question;
 import com.epam.jwd.finalProject.model.Role;
 import com.epam.jwd.finalProject.model.User;
+import com.epam.jwd.finalProject.service.exception.ServiceException;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
 import org.junit.Assert;
 import org.junit.Before;
@@ -34,14 +35,16 @@ public class QuestionServiceImplTest extends Assert {
         answer = "Yes, I have.";
         idUser = (long) 1;
         idQuestion = (long) 1;
-        questionObject = new Question((long) 1, "Do you have hobby?", "Yes, I have.", new java.sql.Date(524524L), new User((long) 1, "daniils3rov@yandex.ru", "daniils3rov@yandex.ru", "Serov231969", "Daniil", "Serov", Role.USER));
+        questionObject = new Question((long) 1, "Do you have hobby?", "Yes, I have.",
+                new java.sql.Date(524524L), new User((long) 1, "daniils3rov@yandex.ru",
+                "daniils3rov@yandex.ru", "Serov231969", "Daniil", "Serov", Role.USER));
         questionList = new ArrayList<>();
         questionList.add(questionObject);
         date = new java.sql.Date(54252453);
     }
 
     @Test
-    public void findAll() {
+    public void findAll() throws ServiceException {
         List<Question> expectedResult = questionList;
         when(service.findAll()).thenReturn(expectedResult);
         List<Question> actualResult = service.findAll();
@@ -49,7 +52,7 @@ public class QuestionServiceImplTest extends Assert {
     }
 
     @Test
-    public void findId() throws ValidationException {
+    public void findId() throws ValidationException, ServiceException  {
         Optional<Question> expectedResult = Optional.of(questionObject);
         when(service.findId(idQuestion)).thenReturn(expectedResult);
         Optional<Question> actualResult = service.findId((long) 1);
@@ -57,7 +60,7 @@ public class QuestionServiceImplTest extends Assert {
     }
 
     @Test
-    public void remove() throws ValidationException {
+    public void remove() throws ValidationException, ServiceException  {
         boolean expectedResult = true;
         when(service.remove(idQuestion)).thenReturn(true);
         boolean actualResult = service.remove(idQuestion);
@@ -65,7 +68,7 @@ public class QuestionServiceImplTest extends Assert {
     }
 
     @Test
-    public void create() throws ValidationException {
+    public void create() throws ValidationException, ServiceException  {
         boolean expectedResult = true;
         when(service.create(question, idUser)).thenReturn(true);
         boolean actualResult = service.create(question, idUser);
@@ -73,7 +76,7 @@ public class QuestionServiceImplTest extends Assert {
     }
 
     @Test
-    public void addAnswer() throws ValidationException {
+    public void addAnswer() throws ValidationException, ServiceException  {
         boolean expectedResult = true;
         when(service.addAnswer(idQuestion, answer)).thenReturn(true);
         boolean actualResult = service.addAnswer(idQuestion, answer);
@@ -81,7 +84,7 @@ public class QuestionServiceImplTest extends Assert {
     }
 
     @Test
-    public void findAccountIdByQuestion() throws ValidationException {
+    public void findAccountIdByQuestion() throws ValidationException, ServiceException  {
         List<Question> expectedResult = questionList;
         when(service.findAccountIdByQuestion(idUser)).thenReturn(expectedResult);
         List<Question> actualResult = service.findAccountIdByQuestion(idUser);

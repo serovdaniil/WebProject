@@ -1,10 +1,12 @@
 package com.epam.jwd.finalProject.service.imlp;
 
+import com.epam.jwd.finalProject.dao.exception.DaoException;
 import com.epam.jwd.finalProject.dao.exception.EntityExtractionFailedException;
 import com.epam.jwd.finalProject.dao.impl.UserDaoImpl;
 import com.epam.jwd.finalProject.model.User;
 import com.epam.jwd.finalProject.security.PasswordEncoder;
 import com.epam.jwd.finalProject.service.api.UserService;
+import com.epam.jwd.finalProject.service.exception.ServiceException;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
 import com.epam.jwd.finalProject.service.validator.UserDataValidator;
 import org.apache.logging.log4j.LogManager;
@@ -58,15 +60,19 @@ public class UserServiceImpl implements UserService {
      * @return List user
      */
     @Override
-    public List<User> findAll() {
-        LOG.debug("Service: Reading all users started.");
+    public List<User> findAll() throws ServiceException {
         try {
-            return userDao.readAll();
-        } catch (EntityExtractionFailedException e) {
-            e.printStackTrace();
+            LOG.debug("Service: Reading all users started.");
+            try {
+                return userDao.readAll();
+            } catch (EntityExtractionFailedException e) {
+                e.printStackTrace();
+            }
+            LOG.debug("Service: Reading all users finished.");
+            return Collections.emptyList();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         }
-        LOG.debug("Service: Reading all users finished.");
-        return Collections.emptyList();
     }
 
     /**
@@ -77,14 +83,18 @@ public class UserServiceImpl implements UserService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public Optional<User> findId(Long id) throws ValidationException {
-        LOG.debug("Service: Reading user started.");
-        if (!userDataValidator.isIdValid(id)) {
-            LOG.error("The entered data is not correct!");
-            throw new ValidationException("The entered data is not correct!");
+    public Optional<User> findId(Long id) throws ValidationException, ServiceException {
+        try {
+            LOG.debug("Service: Reading user started.");
+            if (!userDataValidator.isIdValid(id)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            LOG.debug("Service: Reading user finished.");
+            return userDao.readById(id);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         }
-        LOG.debug("Service: Reading user finished.");
-        return userDao.readById(id);
     }
 
     @Override
@@ -101,26 +111,30 @@ public class UserServiceImpl implements UserService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public Optional<User> authenticate(String login, String password) throws ValidationException {
-        if (!userDataValidator.isLoginValid(login) || !userDataValidator.isPasswordValid(password)) {
-            LOG.error("The entered data is not correct!");
-            throw new ValidationException("The entered data is not correct!");
-        }
-        LOG.debug("Service: Authenticating started.");
-        final byte[] enteredPassword = password.getBytes(StandardCharsets.UTF_8);
-        final Optional<User> readUser = userDao.findPasswordByLogin(login);
-        if (readUser.isPresent()) {
-            final byte[] hashedPassword = readUser.get()
-                    .getPassword()
-                    .getBytes(StandardCharsets.UTF_8);
-            LOG.debug("Service: Authenticating finished.");
-            return passwordEncoder.checkPassword(enteredPassword, hashedPassword)
-                    ? readUser
-                    : Optional.empty();
-        } else {
-            passwordEncoder.protectFromTimingAttack(enteredPassword);
-            LOG.debug("Service: Authenticating finished.");
-            return Optional.empty();
+    public Optional<User> authenticate(String login, String password) throws ValidationException, ServiceException {
+        try {
+            if (!userDataValidator.isLoginValid(login) || !userDataValidator.isPasswordValid(password)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            LOG.debug("Service: Authenticating started.");
+            final byte[] enteredPassword = password.getBytes(StandardCharsets.UTF_8);
+            final Optional<User> readUser = userDao.findPasswordByLogin(login);
+            if (readUser.isPresent()) {
+                final byte[] hashedPassword = readUser.get()
+                        .getPassword()
+                        .getBytes(StandardCharsets.UTF_8);
+                LOG.debug("Service: Authenticating finished.");
+                return passwordEncoder.checkPassword(enteredPassword, hashedPassword)
+                        ? readUser
+                        : Optional.empty();
+            } else {
+                passwordEncoder.protectFromTimingAttack(enteredPassword);
+                LOG.debug("Service: Authenticating finished.");
+                return Optional.empty();
+            }
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         }
     }
 
@@ -133,14 +147,18 @@ public class UserServiceImpl implements UserService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public Optional<User> registration(String email, String password) throws ValidationException {
-        LOG.debug("Service: Registration started.");
-        if (!userDataValidator.isEmailValid(email) || !userDataValidator.isPasswordValid(password)) {
-            LOG.error("The entered data is not correct!");
-            throw new ValidationException("The entered data is not correct!");
+    public Optional<User> registration(String email, String password) throws ValidationException, ServiceException {
+        try {
+            LOG.debug("Service: Registration started.");
+            if (!userDataValidator.isEmailValid(email) || !userDataValidator.isPasswordValid(password)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            LOG.debug("Service: Registration finished.");
+            return userDao.create(email, passwordEncoder.encoder(password));
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         }
-        LOG.debug("Service: Registration finished.");
-        return userDao.create(email, passwordEncoder.encoder(password));
     }
 
     /**
@@ -152,16 +170,20 @@ public class UserServiceImpl implements UserService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public Optional<User> updatePasswordByLogin(String login, String password) throws ValidationException {
-        LOG.debug("Service: Updating password started.");
-        if (!userDataValidator.isLoginValid(login) || !userDataValidator.isPasswordValid(password)) {
-            LOG.error("The entered data is not correct!");
-            throw new ValidationException("The entered data is not correct!");
+    public Optional<User> updatePasswordByLogin(String login, String password) throws ValidationException, ServiceException {
+        try {
+            LOG.debug("Service: Updating password started.");
+            if (!userDataValidator.isLoginValid(login) || !userDataValidator.isPasswordValid(password)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            final String hashedPassword = passwordEncoder.encoder(password);
+            final Optional<User> readUser = userDao.updatePasswordByLogin(login, hashedPassword);
+            LOG.debug("Service: Updating password finished.");
+            return readUser;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         }
-        final String hashedPassword = passwordEncoder.encoder(password);
-        final Optional<User> readUser = userDao.updatePasswordByLogin(login, hashedPassword);
-        LOG.debug("Service: Updating password finished.");
-        return readUser;
     }
 
     /**
@@ -173,14 +195,18 @@ public class UserServiceImpl implements UserService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public Optional<User> updateEmail(Long id, String email) throws ValidationException {
-        LOG.debug("Service: Updating email started.");
-        if (!userDataValidator.isEmailValid(email) || !userDataValidator.isIdValid(id)) {
-            LOG.error("The entered data is not correct!");
-            throw new ValidationException("The entered data is not correct!");
+    public Optional<User> updateEmail(Long id, String email) throws ValidationException, ServiceException {
+        try {
+            LOG.debug("Service: Updating email started.");
+            if (!userDataValidator.isEmailValid(email) || !userDataValidator.isIdValid(id)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            LOG.debug("Service: Updating email finished.");
+            return userDao.updateEmail(id, email);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         }
-        LOG.debug("Service: Updating email finished.");
-        return userDao.updateEmail(id, email);
     }
 
     /**
@@ -192,14 +218,18 @@ public class UserServiceImpl implements UserService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public Optional<User> updateFirstName(Long id, String firstName) throws ValidationException {
-        LOG.debug("Service: Updating first name started.");
-        if (!userDataValidator.isFirstNameValid(firstName) || !userDataValidator.isIdValid(id)) {
-            LOG.error("The entered data is not correct!");
-            throw new ValidationException("The entered data is not correct!");
+    public Optional<User> updateFirstName(Long id, String firstName) throws ValidationException, ServiceException {
+        try {
+            LOG.debug("Service: Updating first name started.");
+            if (!userDataValidator.isFirstNameValid(firstName) || !userDataValidator.isIdValid(id)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            LOG.debug("Service: Updating first name finished.");
+            return userDao.updateFirstName(id, firstName);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         }
-        LOG.debug("Service: Updating first name finished.");
-        return userDao.updateFirstName(id, firstName);
     }
 
     /**
@@ -211,14 +241,18 @@ public class UserServiceImpl implements UserService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public Optional<User> updateLastName(Long id, String lastName) throws ValidationException {
-        LOG.debug("Service: Updating last name started.");
-        if (!userDataValidator.isLastNameValid(lastName) || !userDataValidator.isIdValid(id)) {
-            LOG.error("The entered data is not correct!");
-            throw new ValidationException("The entered data is not correct!");
+    public Optional<User> updateLastName(Long id, String lastName) throws ValidationException, ServiceException {
+        try {
+            LOG.debug("Service: Updating last name started.");
+            if (!userDataValidator.isLastNameValid(lastName) || !userDataValidator.isIdValid(id)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            LOG.debug("Service: Updating last name finished.");
+            return userDao.updateLastName(id, lastName);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         }
-        LOG.debug("Service: Updating last name finished.");
-        return userDao.updateLastName(id, lastName);
     }
 
     /**
@@ -230,15 +264,19 @@ public class UserServiceImpl implements UserService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public Optional<User> updateRole(Long idAccount, String nameRole) throws ValidationException {
-        LOG.debug("Service: Updating role for user started.");
-        final Long idRole = role(nameRole);
-        if (!userDataValidator.isIdValid(idAccount) || !userDataValidator.isIdValid(idRole)) {
-            LOG.error("The entered data is not correct!");
-            throw new ValidationException("The entered data is not correct!");
+    public Optional<User> updateRole(Long idAccount, String nameRole) throws ValidationException, ServiceException {
+        try {
+            LOG.debug("Service: Updating role for user started.");
+            final Long idRole = role(nameRole);
+            if (!userDataValidator.isIdValid(idAccount) || !userDataValidator.isIdValid(idRole)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            LOG.debug("Service: Updating role for user finished.");
+            return userDao.updateRole(idAccount, idRole);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         }
-        LOG.debug("Service: Updating role for user finished.");
-        return userDao.updateRole(idAccount, idRole);
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.epam.jwd.finalProject.dao.impl;
 
+import com.epam.jwd.finalProject.dao.exception.DaoException;
 import com.epam.jwd.finalProject.dao.exception.EntityExtractionFailedException;
 import com.epam.jwd.finalProject.model.*;
 import org.junit.Assert;
@@ -33,16 +34,18 @@ public class MethodCategoryDaoImplTest extends Assert {
         categories=new ArrayList<>();
         categories.add(category);
         sectionConferenc = new SectionConferenc((long) 1, "ART", "Name", new Conferenc((long) 2,
-                "SD", "Qwerty", new Category((long) 3, "QWE"),new Status((long)2,"Active")),new Status((long)5,"Active"));
+                "SD", "Qwerty", new Category((long) 3, "QWE"),new Status((long)2,"Active")),
+                new Status((long)5,"Active"));
         sectionConferencs=new ArrayList<>();
         sectionConferencs.add(sectionConferenc);
         conferencs=new ArrayList<>();
-        conferenc = new Conferenc((long)1,"name","description",new Category((long)3,"IT"),new Status((long)1,"Active"));
+        conferenc = new Conferenc((long)1,"name","description",new Category((long)3,"IT"),
+                new Status((long)1,"Active"));
         conferencs.add(conferenc);
     }
 
     @Test
-    public void create() {
+    public void create() throws DaoException {
         boolean expectedResult = true;
         when(dao.create(name)).thenReturn(true);
         boolean actualResult = dao.create(name);
@@ -50,7 +53,7 @@ public class MethodCategoryDaoImplTest extends Assert {
     }
 
     @Test
-    public void changeName() {
+    public void changeName()throws DaoException  {
         boolean expectedResult = true;
         when(dao.changeName(id, name)).thenReturn(true);
         boolean actualResult = dao.changeName(id, name);
@@ -58,7 +61,7 @@ public class MethodCategoryDaoImplTest extends Assert {
     }
 
     @Test
-    public void readAll() throws EntityExtractionFailedException {
+    public void readAll() throws EntityExtractionFailedException, DaoException  {
         List<Category> expectedResult = categories;
         when(dao.findAll()).thenReturn(expectedResult);
         List<Category> actualResult = dao.findAll();
@@ -66,7 +69,7 @@ public class MethodCategoryDaoImplTest extends Assert {
     }
 
     @Test
-    public void readById() {
+    public void readById()throws DaoException  {
         Optional<Category> expectedResult = Optional.of(category);
         when(dao.findById((long) 1)).thenReturn(expectedResult);
         Optional<Category> actualResult = dao.findById((long) 1);
@@ -74,7 +77,7 @@ public class MethodCategoryDaoImplTest extends Assert {
     }
 
     @Test
-    public void findConferencInIdCategory() {
+    public void findConferencInIdCategory() throws DaoException {
         List<Conferenc> expectedResult = conferencs;
         when(dao.findConferencInIdCategory((long) 1)).thenReturn(expectedResult);
         List<Conferenc> actualResult = dao.findConferencInIdCategory((long) 1);
@@ -82,7 +85,7 @@ public class MethodCategoryDaoImplTest extends Assert {
     }
 
     @Test
-    public void findConferencInNameCategory() {
+    public void findConferencInNameCategory()throws DaoException  {
         List<Conferenc> expectedResult = conferencs;
         when(dao.findConferencInIdCategory((long) 1)).thenReturn(expectedResult);
         List<Conferenc> actualResult = dao.findConferencInIdCategory((long) 1);
@@ -90,7 +93,7 @@ public class MethodCategoryDaoImplTest extends Assert {
     }
 
     @Test
-    public void findSectionConferencInIdCategory() {
+    public void findSectionConferencInIdCategory() throws DaoException {
         List<SectionConferenc> expectedResult = sectionConferencs;
         when(dao.findSectionConferencInIdCategory((long)5)).thenReturn(expectedResult);
         List<SectionConferenc> actualResult = dao.findSectionConferencInIdCategory((long)5);
@@ -98,7 +101,7 @@ public class MethodCategoryDaoImplTest extends Assert {
     }
 
     @Test
-    public void delete() {
+    public void delete()throws DaoException  {
         boolean expectedResult = true;
         when(dao.delete(id)).thenReturn(true);
         boolean actualResult = dao.delete(id);

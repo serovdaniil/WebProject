@@ -1,6 +1,7 @@
 package com.epam.jwd.finalProject.service.api;
 
 import com.epam.jwd.finalProject.model.Conferenc;
+import com.epam.jwd.finalProject.service.exception.ServiceException;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public interface ConferencService extends EntityService<Conferenc> {
      * @param idCategory category for conferenc
      * @return boolean result of operation
      */
-    boolean create(String name, String description,Long idCategory) throws ValidationException;
+    boolean create(String name, String description,Long idCategory) throws ValidationException, ServiceException;
 
     /**
      * Update description for conferenc
@@ -28,7 +29,7 @@ public interface ConferencService extends EntityService<Conferenc> {
      * @param description description for new conferenc
      * @return boolean result of operation
      */
-    boolean updateDescription(Long id, String description) throws ValidationException;
+    boolean updateDescription(Long id, String description) throws ValidationException, ServiceException;
 
     /**
      * Find conferences by name
@@ -36,14 +37,14 @@ public interface ConferencService extends EntityService<Conferenc> {
      * @param name name conferenc
      * @return List conferenc
      */
-    List<Conferenc> findByName(String name) throws ValidationException;
+    List<Conferenc> findByName(String name) throws ValidationException, ServiceException;
 
     /**
      * Find all status
      *
      * @return List conferenc
      */
-    List<Conferenc> findAllStatus();
+    List<Conferenc> findAllStatus() throws ServiceException;
 
     /**
      * Change status for conferenc
@@ -52,5 +53,5 @@ public interface ConferencService extends EntityService<Conferenc> {
      * @param nameStatus name status for conferenc
      * @return boolean result of operation
      */
-    boolean changeStatus(Long idConferenc,String nameStatus) throws ValidationException;
+    boolean changeStatus(Long idConferenc,String nameStatus) throws ValidationException, ServiceException;
 }

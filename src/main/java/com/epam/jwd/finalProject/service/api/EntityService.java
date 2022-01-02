@@ -1,6 +1,7 @@
 package com.epam.jwd.finalProject.service.api;
 
 import com.epam.jwd.finalProject.model.Entity;
+import com.epam.jwd.finalProject.service.exception.ServiceException;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public interface EntityService<T extends Entity> {
      *
      * @return boolean result of operation
      */
-    List<T> findAll();
+    List<T> findAll() throws ServiceException;
 
     /**
      * Find by id
@@ -26,7 +27,7 @@ public interface EntityService<T extends Entity> {
      * @return boolean result of operation
      * @throws ValidationException
      */
-    Optional<T> findId(Long id) throws ValidationException;
+    Optional<T> findId(Long id) throws ValidationException, ServiceException;
 
     /**
      * Remove by id
@@ -35,5 +36,5 @@ public interface EntityService<T extends Entity> {
      * @return boolean result of operation
      * @throws ValidationException
      */
-    boolean remove(Long id) throws ValidationException;
+    boolean remove(Long id) throws ValidationException, ServiceException;
 }

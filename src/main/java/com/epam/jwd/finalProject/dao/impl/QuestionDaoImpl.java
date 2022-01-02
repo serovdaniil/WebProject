@@ -2,6 +2,7 @@ package com.epam.jwd.finalProject.dao.impl;
 
 import com.epam.jwd.finalProject.dao.api.QuestionDao;
 import com.epam.jwd.finalProject.dao.connection.ConnectionPool;
+import com.epam.jwd.finalProject.dao.exception.DaoException;
 import com.epam.jwd.finalProject.dao.exception.EntityExtractionFailedException;
 import com.epam.jwd.finalProject.model.Question;
 import com.epam.jwd.finalProject.model.Role;
@@ -66,7 +67,7 @@ public class QuestionDaoImpl implements QuestionDao {
      * @return boolean result of operation
      */
     @Override
-    public boolean create(String name, Date date, Long idUser) {
+    public boolean create(String name, Date date, Long idUser) throws DaoException {
         boolean result = false;
         LOG.info("Start create and add new question");
         try (Connection connection = connectionPool.getConnection();
@@ -83,8 +84,7 @@ public class QuestionDaoImpl implements QuestionDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", CREATE_QUESTION);
-        } catch (NullPointerException e) {
-            LOG.error(e);
+            throw new DaoException(e);
         }
         return result;
     }
@@ -97,7 +97,7 @@ public class QuestionDaoImpl implements QuestionDao {
      * @return boolean result of operation
      */
     @Override
-    public boolean addAnswer(Long id, String answer) {
+    public boolean addAnswer(Long id, String answer) throws DaoException {
         LOG.info("Start add answer by question");
         boolean result = false;
         try (Connection connection = connectionPool.getConnection();
@@ -112,8 +112,7 @@ public class QuestionDaoImpl implements QuestionDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", ADD_ANSWER);
-        } catch (NullPointerException e) {
-            LOG.error(e);
+            throw new DaoException(e);
         }
         return result;
     }
@@ -124,7 +123,7 @@ public class QuestionDaoImpl implements QuestionDao {
      * @return List questions
      */
     @Override
-    public List<Question> readAll() throws EntityExtractionFailedException {
+    public List<Question> readAll() throws EntityExtractionFailedException, DaoException {
         LOG.info("Start readAll question");
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ALL_QUESTION)) {
@@ -135,6 +134,7 @@ public class QuestionDaoImpl implements QuestionDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", FIND_ALL_QUESTION);
+            throw new DaoException(e);
         } catch (EntityExtractionFailedException e) {
             LOG.error("could not extract entity", e);
         }
@@ -148,7 +148,7 @@ public class QuestionDaoImpl implements QuestionDao {
      * @return Question
      */
     @Override
-    public Optional<Question> readById(Long id) {
+    public Optional<Question> readById(Long id) throws DaoException {
         LOG.info("Start readById question");
         Optional<Question> productOptional = Optional.empty();
         try (Connection connection = connectionPool.getConnection();
@@ -163,10 +163,9 @@ public class QuestionDaoImpl implements QuestionDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", FIND_ID_QUESTION);
+            throw new DaoException(e);
         } catch (EntityExtractionFailedException e) {
             LOG.error("could not extract entity", e);
-        } catch (NullPointerException e) {
-            LOG.error(e);
         }
         return productOptional;
     }
@@ -178,7 +177,7 @@ public class QuestionDaoImpl implements QuestionDao {
      * @return List questions
      */
     @Override
-    public List<Question> findAccountIdByQuestion(Long id) {
+    public List<Question> findAccountIdByQuestion(Long id) throws DaoException {
         LOG.info("Start find account with Id by question");
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ACCOUNT_ID_BY_QUESTION)) {
@@ -190,10 +189,9 @@ public class QuestionDaoImpl implements QuestionDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", FIND_ACCOUNT_ID_BY_QUESTION);
+            throw new DaoException(e);
         } catch (EntityExtractionFailedException e) {
             LOG.error("could not extract entity", e);
-        } catch (NullPointerException e) {
-            LOG.error(e);
         }
         return Collections.emptyList();
     }
@@ -205,7 +203,7 @@ public class QuestionDaoImpl implements QuestionDao {
      * @return boolean result of operation
      */
     @Override
-    public boolean delete(Long id) {
+    public boolean delete(Long id) throws DaoException {
         LOG.info("Start delete question");
         boolean result = false;
         try (Connection connection = connectionPool.getConnection();
@@ -216,8 +214,7 @@ public class QuestionDaoImpl implements QuestionDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", QUESTION_DELETE);
-        } catch (NullPointerException e) {
-            LOG.error(e);
+            throw new DaoException(e);
         }
         return result;
     }

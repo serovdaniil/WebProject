@@ -7,9 +7,13 @@ import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
 import com.epam.jwd.finalProject.model.Conferenc;
 import com.epam.jwd.finalProject.service.api.EntityService;
+import com.epam.jwd.finalProject.service.exception.ServiceException;
 import com.epam.jwd.finalProject.service.factory.ServiceFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
+
 /**
  * This page displays conferences
  *
@@ -19,12 +23,13 @@ public class ShowConferencesPageCommand implements Command {
 
     private static final String CONFERENCES_ATTRIBUTE_NAME = "conferences";
     private static final String CONFERENCES_PAGE = "page.conferences";
+    private static final Logger LOG = LogManager.getLogger(ShowConferencesPageCommand.class);
 
     private final EntityService<Conferenc> service;
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    ShowConferencesPageCommand(EntityService<Conferenc> service,RequestFactory requestFactory,
+    ShowConferencesPageCommand(EntityService<Conferenc> service, RequestFactory requestFactory,
                                PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().serviceFor(Conferenc.class);
         this.requestFactory = RequestFactory.getInstance();
@@ -33,10 +38,15 @@ public class ShowConferencesPageCommand implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        final List<Conferenc> conferencesAll = service.findAll();
-        request.addAttributeToJsp(CONFERENCES_ATTRIBUTE_NAME, conferencesAll);
+        try {
+            final List<Conferenc> conferencesAll = service.findAll();
+            request.addAttributeToJsp(CONFERENCES_ATTRIBUTE_NAME, conferencesAll);
+        } catch (ServiceException e) {
+            LOG.error("The service exception!" + e);
+        }
         return requestFactory.createForwardResponse(propertyContext.get(CONFERENCES_PAGE));
     }
+
     public static ShowConferencesPageCommand getInstance() {
         return ShowConferencesPageCommand.Holder.INSTANCE;
     }

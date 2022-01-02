@@ -7,6 +7,7 @@ import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
 import com.epam.jwd.finalProject.model.User;
 import com.epam.jwd.finalProject.service.api.UserService;
+import com.epam.jwd.finalProject.service.exception.ServiceException;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
 import com.epam.jwd.finalProject.service.factory.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
@@ -61,6 +62,8 @@ public class LoginCommand implements Command {
             request.addToSession(USER_SESSION_ATTRIBUTE_NAME, user.get());
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
+        }catch (ServiceException e) {
+            LOG.error("The service exception!" + e);
         }
 
         return requestFactory.createRedirectResponse(propertyContext.get(INDEX_PAGE));

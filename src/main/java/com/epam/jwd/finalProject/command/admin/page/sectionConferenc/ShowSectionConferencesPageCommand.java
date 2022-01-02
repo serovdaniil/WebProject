@@ -7,7 +7,10 @@ import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
 import com.epam.jwd.finalProject.model.SectionConferenc;
 import com.epam.jwd.finalProject.service.api.EntityService;
+import com.epam.jwd.finalProject.service.exception.ServiceException;
 import com.epam.jwd.finalProject.service.factory.ServiceFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
@@ -19,6 +22,7 @@ import java.util.List;
 public class ShowSectionConferencesPageCommand implements Command {
     private static final String CONFERENCES_ATTRIBUTE_NAME = "sectionConferences";
     private static final String SECTION_CONFERENCES_PAGE = "page.sectionConferences";
+    private static final Logger LOG = LogManager.getLogger(ShowSectionConferencesPageCommand.class);
 
     private final EntityService<SectionConferenc> service;
     private final RequestFactory requestFactory;
@@ -33,8 +37,12 @@ public class ShowSectionConferencesPageCommand implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
+        try{
         final List<SectionConferenc> sectionConferencesAll = service.findAll();
         request.addAttributeToJsp(CONFERENCES_ATTRIBUTE_NAME, sectionConferencesAll);
+        } catch (ServiceException e) {
+            LOG.error("The service exception!" + e);
+        }
         return requestFactory.createForwardResponse(propertyContext.get(SECTION_CONFERENCES_PAGE));
     }
 

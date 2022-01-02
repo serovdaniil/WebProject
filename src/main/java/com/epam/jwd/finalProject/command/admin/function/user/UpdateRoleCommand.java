@@ -7,6 +7,7 @@ import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
 import com.epam.jwd.finalProject.model.User;
 import com.epam.jwd.finalProject.service.api.UserService;
+import com.epam.jwd.finalProject.service.exception.ServiceException;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
 import com.epam.jwd.finalProject.service.factory.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
@@ -46,6 +47,8 @@ public class UpdateRoleCommand implements Command {
             user = service.updateRole(idAccount, nameRole);
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
+        }catch (ServiceException e) {
+            LOG.error("The service exception!" + e);
         }
         if (user.get().equals(Optional.empty())) {
             request.addAttributeToJsp(RESULT_ATTRIBUTE_NAME, OPERATION_WAS_UNSUCCSESFUL);

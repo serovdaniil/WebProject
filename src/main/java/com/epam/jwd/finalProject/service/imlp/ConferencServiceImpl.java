@@ -1,9 +1,11 @@
 package com.epam.jwd.finalProject.service.imlp;
 
+import com.epam.jwd.finalProject.dao.exception.DaoException;
 import com.epam.jwd.finalProject.dao.exception.EntityExtractionFailedException;
 import com.epam.jwd.finalProject.dao.impl.ConferencDaoImpl;
 import com.epam.jwd.finalProject.model.Conferenc;
 import com.epam.jwd.finalProject.service.api.ConferencService;
+import com.epam.jwd.finalProject.service.exception.ServiceException;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
 import com.epam.jwd.finalProject.service.validator.ConferencDataValidator;
 import org.apache.logging.log4j.LogManager;
@@ -49,15 +51,20 @@ public class ConferencServiceImpl implements ConferencService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public boolean changeStatus(Long idConferenc, String nameStatus) throws ValidationException {
-        LOG.debug("Service: Change status of conferenc started.");
-        final Long idStatus = resultSection(nameStatus);
-        if (!conferencDataValidator.isIdValid(idConferenc) || !conferencDataValidator.isIdValid(idStatus)) {
-            LOG.error("The entered data is not correct!");
-            throw new ValidationException("The entered data is not correct!");
+    public boolean changeStatus(Long idConferenc, String nameStatus) throws ValidationException, ServiceException {
+        try {
+            LOG.debug("Service: Change status of conferenc started.");
+            final Long idStatus = resultSection(nameStatus);
+            if (!conferencDataValidator.isIdValid(idConferenc) || !conferencDataValidator.isIdValid(idStatus)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            LOG.debug("Service: Change status of conferenc finished.");
+            return conferencDao.changeStatus(idConferenc, idStatus);
+        } catch (
+                DaoException e) {
+            throw new ServiceException(e);
         }
-        LOG.debug("Service: Change status of conferenc finished.");
-        return conferencDao.changeStatus(idConferenc, idStatus);
     }
 
     /**
@@ -69,14 +76,18 @@ public class ConferencServiceImpl implements ConferencService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public boolean updateDescription(Long id, String description) throws ValidationException {
-        LOG.debug("Service: Updating description in conferenc started.");
-        if (!conferencDataValidator.isIdValid(id) || !conferencDataValidator.isDescriptionValid(description)) {
-            LOG.error("The entered data is not correct!");
-            throw new ValidationException("The entered data is not correct!");
+    public boolean updateDescription(Long id, String description) throws ValidationException, ServiceException {
+        try {
+            LOG.debug("Service: Updating description in conferenc started.");
+            if (!conferencDataValidator.isIdValid(id) || !conferencDataValidator.isDescriptionValid(description)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            LOG.debug("Service: Updating description in conferenc finished.");
+            return conferencDao.updateDescription(id, description);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         }
-        LOG.debug("Service: Updating description in conferenc finished.");
-        return conferencDao.updateDescription(id, description);
     }
 
     /**
@@ -87,14 +98,18 @@ public class ConferencServiceImpl implements ConferencService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public List<Conferenc> findByName(String name) throws ValidationException {
-        LOG.debug("Service: Search conferenc by name started.");
-        if (!conferencDataValidator.isNameValid(name)) {
-            LOG.error("The entered data is not correct!");
-            throw new ValidationException("The entered data is not correct!");
+    public List<Conferenc> findByName(String name) throws ValidationException, ServiceException {
+        try {
+            LOG.debug("Service: Search conferenc by name started.");
+            if (!conferencDataValidator.isNameValid(name)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            LOG.debug("Service: Search conferenc by name finished.");
+            return conferencDao.findByName(name);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         }
-        LOG.debug("Service: Search conferenc by name finished.");
-        return conferencDao.findByName(name);
     }
 
     /**
@@ -103,15 +118,19 @@ public class ConferencServiceImpl implements ConferencService {
      * @return List conferences
      */
     @Override
-    public List<Conferenc> findAllStatus() {
-        LOG.debug("Service: Readind all conferences started .");
+    public List<Conferenc> findAllStatus() throws ServiceException {
         try {
-            return conferencDao.readAll();
-        } catch (EntityExtractionFailedException e) {
-            e.printStackTrace();
+            LOG.debug("Service: Readind all conferences started .");
+            try {
+                return conferencDao.readAll();
+            } catch (EntityExtractionFailedException e) {
+                e.printStackTrace();
+            }
+            LOG.debug("Service: Readind all  conferences finished.");
+            return Collections.emptyList();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         }
-        LOG.debug("Service: Readind all  conferences finished.");
-        return Collections.emptyList();
     }
 
     /**
@@ -120,15 +139,19 @@ public class ConferencServiceImpl implements ConferencService {
      * @return List conferences
      */
     @Override
-    public List<Conferenc> findAll() {
-        LOG.debug("Service: Readind all active conferences started .");
+    public List<Conferenc> findAll() throws ServiceException {
         try {
-            return conferencDao.readAllActive();
-        } catch (EntityExtractionFailedException e) {
-            e.printStackTrace();
+            LOG.debug("Service: Readind all active conferences started .");
+            try {
+                return conferencDao.readAllActive();
+            } catch (EntityExtractionFailedException e) {
+                e.printStackTrace();
+            }
+            LOG.debug("Service: Readind all active conferences finished.");
+            return Collections.emptyList();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         }
-        LOG.debug("Service: Readind all active conferences finished.");
-        return Collections.emptyList();
     }
 
     /**
@@ -136,21 +159,25 @@ public class ConferencServiceImpl implements ConferencService {
      *
      * @param name        name conferenc
      * @param description description conferenc
-     * @param idCategory id category
+     * @param idCategory  id category
      * @return boolean
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public boolean create(String name, String description, Long idCategory) throws ValidationException {
-        LOG.debug("Service: Creating conferenc started.");
-        if (!conferencDataValidator.isNameValid(name) ||
-                !conferencDataValidator.isDescriptionValid(description) ||
-                !conferencDataValidator.isIdValid(idCategory)) {
-            LOG.error("The entered data is not correct!");
-            throw new ValidationException("The entered data is not correct!");
+    public boolean create(String name, String description, Long idCategory) throws ValidationException, ServiceException {
+        try {
+            LOG.debug("Service: Creating conferenc started.");
+            if (!conferencDataValidator.isNameValid(name) ||
+                    !conferencDataValidator.isDescriptionValid(description) ||
+                    !conferencDataValidator.isIdValid(idCategory)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            LOG.debug("Service: Creating conferenc finished.");
+            return conferencDao.create(name, description, idCategory);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         }
-        LOG.debug("Service: Creating conferenc finished.");
-        return conferencDao.create(name, description, idCategory);
     }
 
     /**
@@ -161,14 +188,18 @@ public class ConferencServiceImpl implements ConferencService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public Optional<Conferenc> findId(Long id) throws ValidationException {
-        LOG.debug("Service: Search conferenc by id started.");
-        if (!conferencDataValidator.isIdValid(id)) {
-            LOG.error("The entered data is not correct!");
-            throw new ValidationException("The entered data is not correct!");
+    public Optional<Conferenc> findId(Long id) throws ValidationException, ServiceException {
+        try {
+            LOG.debug("Service: Search conferenc by id started.");
+            if (!conferencDataValidator.isIdValid(id)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            LOG.debug("Service: Search conferenc by id finished.");
+            return conferencDao.readById(id);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         }
-        LOG.debug("Service: Search conferenc by id finished.");
-        return conferencDao.readById(id);
     }
 
     /**
@@ -179,14 +210,18 @@ public class ConferencServiceImpl implements ConferencService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public boolean remove(Long id) throws ValidationException {
-        LOG.debug("Service: Removing conferenc by id started.");
-        if (!conferencDataValidator.isIdValid(id)) {
-            LOG.error("The entered data is not correct!");
-            throw new ValidationException("The entered data is not correct!");
+    public boolean remove(Long id) throws ValidationException, ServiceException {
+        try {
+            LOG.debug("Service: Removing conferenc by id started.");
+            if (!conferencDataValidator.isIdValid(id)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            LOG.debug("Service: Removing conferenc by id finished.");
+            return conferencDao.delete(id);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         }
-        LOG.debug("Service: Removing conferenc by id finished.");
-        return conferencDao.delete(id);
     }
 
     /**

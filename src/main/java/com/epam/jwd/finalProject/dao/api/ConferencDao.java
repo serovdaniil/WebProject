@@ -1,5 +1,6 @@
 package com.epam.jwd.finalProject.dao.api;
 
+import com.epam.jwd.finalProject.dao.exception.DaoException;
 import com.epam.jwd.finalProject.dao.exception.EntityExtractionFailedException;
 import com.epam.jwd.finalProject.dao.impl.ConferencDaoImpl;
 import com.epam.jwd.finalProject.model.Conferenc;
@@ -22,7 +23,7 @@ public interface ConferencDao {
      * @param idCategory  id category for new conferenc
      * @return boolean result of operation
      */
-    boolean create(String name,String description,Long idCategory);
+    boolean create(String name,String description,Long idCategory) throws DaoException;
 
     /**
      * Update description for conferenc
@@ -31,21 +32,21 @@ public interface ConferencDao {
      * @param description new description for conferenc
      * @return boolean result of operation
      */
-    boolean updateDescription(Long id, String description);
+    boolean updateDescription(Long id, String description) throws DaoException;
 
     /**
      * Read all active status conferenc
      *
      * @return List Conferenc
      */
-    List<Conferenc> readAllActive() throws EntityExtractionFailedException;
+    List<Conferenc> readAllActive() throws EntityExtractionFailedException, DaoException;
 
     /**
      * Read all conferenc
      *
      * @return List Conferenc
      */
-    List<Conferenc> readAll() throws EntityExtractionFailedException;
+    List<Conferenc> readAll() throws EntityExtractionFailedException, DaoException;
 
     /**
      * Read conferenc by id
@@ -53,7 +54,7 @@ public interface ConferencDao {
      * @param id id conferenc
      * @return Conferenc
      */
-    Optional<Conferenc> readById(Long id);
+    Optional<Conferenc> readById(Long id) throws DaoException;
 
     /**
      * Find conferences by name
@@ -61,7 +62,7 @@ public interface ConferencDao {
      * @param name name conferenc
      * @return List Conferenc
      */
-    List<Conferenc> findByName(String name);
+    List<Conferenc> findByName(String name) throws DaoException;
 
     /**
      * Remove conferenc by id
@@ -69,7 +70,7 @@ public interface ConferencDao {
      * @param id id conferenc
      * @return boolean result of operation
      */
-    boolean delete(Long id);
+    boolean delete(Long id) throws DaoException;
 
     /**
      * Change status conferenc by id
@@ -78,7 +79,7 @@ public interface ConferencDao {
      * @param idStatus status conferenc
      * @return boolean result of operation
      */
-    boolean changeStatus(Long idConferenc,Long idStatus);
+    boolean changeStatus(Long idConferenc,Long idStatus) throws DaoException;
 
     /**
      * Gets instance.

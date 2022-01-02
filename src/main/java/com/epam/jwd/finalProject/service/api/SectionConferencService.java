@@ -1,6 +1,7 @@
 package com.epam.jwd.finalProject.service.api;
 
 import com.epam.jwd.finalProject.model.SectionConferenc;
+import com.epam.jwd.finalProject.service.exception.ServiceException;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public interface SectionConferencService extends EntityService<SectionConferenc>
      * @return boolean result of operation
      * @throws ValidationException
      */
-    boolean create(String name, String description,Long idConferenc) throws ValidationException;
+    boolean create(String name, String description,Long idConferenc) throws ValidationException, ServiceException;
 
     /**
      * Update description for section conferenc
@@ -29,7 +30,7 @@ public interface SectionConferencService extends EntityService<SectionConferenc>
      * @return boolean result of operation
      * @throws ValidationException
      */
-    boolean updateDescription(Long id, String description) throws ValidationException;
+    boolean updateDescription(Long id, String description) throws ValidationException, ServiceException;
 
     /**
      * Find id section conferenc by name
@@ -38,7 +39,7 @@ public interface SectionConferencService extends EntityService<SectionConferenc>
      * @return List section conferenc
      * @throws ValidationException
      */
-    List<SectionConferenc> findByName(String name) throws ValidationException;
+    List<SectionConferenc> findByName(String name) throws ValidationException, ServiceException;
 
     /**
      * Find id section conferenc by id
@@ -47,7 +48,7 @@ public interface SectionConferencService extends EntityService<SectionConferenc>
      * @return List section conferenc
      * @throws ValidationException
      */
-    List<SectionConferenc> findSectionConferencesInConferencById(Long id) throws ValidationException;
+    List<SectionConferenc> findSectionConferencesInConferencById(Long id) throws ValidationException, ServiceException;
 
     /**
      * Change status for section conferenc
@@ -57,7 +58,7 @@ public interface SectionConferencService extends EntityService<SectionConferenc>
      * @return boolean result of operation
      * @throws ValidationException
      */
-    boolean changeStatus(Long idSectionConferenc, String nameStatus) throws ValidationException;
+    boolean changeStatus(Long idSectionConferenc, String nameStatus) throws ValidationException, ServiceException;
 
     /**
      * Change status auto after update conferenc
@@ -66,5 +67,5 @@ public interface SectionConferencService extends EntityService<SectionConferenc>
      * @return boolean result of operation
      * @throws ValidationException
      */
-    boolean changeStatusAfterUpdateConferenc(Long idConferenc) throws ValidationException;
+    boolean changeStatusAfterUpdateConferenc(Long idConferenc) throws ValidationException, ServiceException;
 }

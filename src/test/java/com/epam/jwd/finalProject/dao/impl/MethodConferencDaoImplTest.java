@@ -1,5 +1,6 @@
 package com.epam.jwd.finalProject.dao.impl;
 
+import com.epam.jwd.finalProject.dao.exception.DaoException;
 import com.epam.jwd.finalProject.dao.exception.EntityExtractionFailedException;
 import com.epam.jwd.finalProject.model.Category;
 import com.epam.jwd.finalProject.model.Conferenc;
@@ -33,13 +34,14 @@ public class MethodConferencDaoImplTest extends Assert{
         idCategory=(long)4;
         name="Java";
         description="Learning java method";
-        conferenc=new Conferenc((long)1,name,description,new Category((long)3,"IT"),new Status((long)1,"Active"));
+        conferenc=new Conferenc((long)1,name,description,new Category((long)3,"IT"),
+                new Status((long)1,"Active"));
         conferencList=new ArrayList<>();
         conferencList.add(conferenc);
     }
 
     @Test
-    public void changeStatus() {
+    public void changeStatus() throws DaoException {
         boolean expectedResult = true;
         when(dao.changeStatus(id,idStatus)).thenReturn(true);
         boolean actualResult = dao.changeStatus(id,idStatus);
@@ -47,7 +49,7 @@ public class MethodConferencDaoImplTest extends Assert{
     }
 
     @Test
-    public void create() {
+    public void create() throws DaoException {
         boolean expectedResult = true;
         when(dao.create(name,description,idCategory)).thenReturn(true);
         boolean actualResult = dao.create(name,description,idCategory);
@@ -55,7 +57,7 @@ public class MethodConferencDaoImplTest extends Assert{
     }
 
     @Test
-    public void updateDescription() {
+    public void updateDescription()throws DaoException  {
         boolean expectedResult = true;
         when(dao.updateDescription(id,description)).thenReturn(true);
         boolean actualResult = dao.updateDescription(id,description);
@@ -63,7 +65,7 @@ public class MethodConferencDaoImplTest extends Assert{
     }
 
     @Test
-    public void readAll() throws EntityExtractionFailedException {
+    public void readAll() throws EntityExtractionFailedException, DaoException  {
         List<Conferenc> expectedResult = conferencList;
         when(dao.readAll()).thenReturn(expectedResult);
         List<Conferenc> actualResult = dao.readAll();
@@ -71,7 +73,7 @@ public class MethodConferencDaoImplTest extends Assert{
     }
 
     @Test
-    public void readAllActive() throws EntityExtractionFailedException {
+    public void readAllActive() throws EntityExtractionFailedException, DaoException  {
         List<Conferenc> expectedResult = conferencList;
         when(dao.readAllActive()).thenReturn(expectedResult);
         List<Conferenc> actualResult = dao.readAllActive();
@@ -79,7 +81,7 @@ public class MethodConferencDaoImplTest extends Assert{
     }
 
     @Test
-    public void readById() {
+    public void readById() throws DaoException {
         Optional<Conferenc> expectedResult= Optional.of(conferenc);
         when(dao.readById((long)1)).thenReturn(expectedResult);
         Optional<Conferenc> actualResult = dao.readById((long)1);
@@ -87,7 +89,7 @@ public class MethodConferencDaoImplTest extends Assert{
     }
 
     @Test
-    public void findByName() {
+    public void findByName()throws DaoException  {
         List<Conferenc> expectedResult = conferencList;
         when(dao.findByName(name)).thenReturn(expectedResult);
         List<Conferenc> actualResult = dao.findByName(name);
@@ -95,7 +97,7 @@ public class MethodConferencDaoImplTest extends Assert{
     }
 
     @Test
-    public void delete() {
+    public void delete() throws DaoException {
         boolean expectedResult = true;
         when(dao.delete(id)).thenReturn(true);
         boolean actualResult = dao.delete(id);

@@ -1,5 +1,6 @@
 package com.epam.jwd.finalProject.dao.api;
 
+import com.epam.jwd.finalProject.dao.exception.DaoException;
 import com.epam.jwd.finalProject.dao.exception.EntityExtractionFailedException;
 import com.epam.jwd.finalProject.dao.impl.UserDaoImpl;
 import com.epam.jwd.finalProject.model.User;
@@ -21,7 +22,7 @@ public interface UserDao {
      * @param password password for new user
      * @return User
      */
-    Optional<User> create(String email, String password);
+    Optional<User> create(String email, String password) throws DaoException;
 
     /**
      * Update password by login
@@ -30,7 +31,7 @@ public interface UserDao {
      * @param password password for user
      * @return User
      */
-    Optional<User> updatePasswordByLogin(String login, String password);
+    Optional<User> updatePasswordByLogin(String login, String password) throws DaoException;
 
     /**
      * Update email
@@ -39,7 +40,7 @@ public interface UserDao {
      * @param email email for user
      * @return User
      */
-    Optional<User> updateEmail(Long id, String email);
+    Optional<User> updateEmail(Long id, String email) throws DaoException;
 
     /**
      * Update first name
@@ -48,7 +49,7 @@ public interface UserDao {
      * @param firstName firstName for user
      * @return User
      */
-    Optional<User> updateFirstName(Long id, String firstName);
+    Optional<User> updateFirstName(Long id, String firstName) throws DaoException;
 
     /**
      * Update last name
@@ -57,7 +58,7 @@ public interface UserDao {
      * @param lastName lastName for user
      * @return User
      */
-    Optional<User> updateLastName(Long id, String lastName);
+    Optional<User> updateLastName(Long id, String lastName) throws DaoException;
 
     /**
      * Update role
@@ -66,14 +67,14 @@ public interface UserDao {
      * @param idRole    id role for user
      * @return User
      */
-    Optional<User> updateRole(Long idAccount, Long idRole);
+    Optional<User> updateRole(Long idAccount, Long idRole) throws DaoException;
 
     /**
      * Read all users
      *
      * @return List user
      */
-    List<User> readAll() throws EntityExtractionFailedException;
+    List<User> readAll() throws EntityExtractionFailedException, DaoException;
 
     /**
      * Read user by id
@@ -81,7 +82,7 @@ public interface UserDao {
      * @param id id for user
      * @return User
      */
-    Optional<User> readById(Long id);
+    Optional<User> readById(Long id) throws DaoException;
 
     /**
      * Find user by email
@@ -89,7 +90,7 @@ public interface UserDao {
      * @param email email for user
      * @return User
      */
-    Optional<User> findByEmail(String email);
+    Optional<User> findByEmail(String email) throws DaoException;
 
     /**
      * Find password by login
@@ -97,7 +98,7 @@ public interface UserDao {
      * @param login login for user
      * @return User
      */
-    Optional<User> findPasswordByLogin(String login);
+    Optional<User> findPasswordByLogin(String login) throws DaoException;
 
     /**
      * Gets instance.

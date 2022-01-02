@@ -8,6 +8,7 @@ import com.epam.jwd.finalProject.controller.RequestFactory;
 import com.epam.jwd.finalProject.model.Question;
 import com.epam.jwd.finalProject.model.User;
 import com.epam.jwd.finalProject.service.api.QuestionService;
+import com.epam.jwd.finalProject.service.exception.ServiceException;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
 import com.epam.jwd.finalProject.service.factory.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
@@ -52,6 +53,8 @@ public class CreateQuestionCommand implements Command {
             request.addAttributeToJsp(QUESTION_ATTRIBUTE_NAME_RESULT, result);
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
+        }catch (ServiceException e) {
+            LOG.error("The service exception!" + e);
         }
 
         return requestFactory.createRedirectResponse(FIND_QUESTIONS_BY_ID_ACCOUNT_PAGE);

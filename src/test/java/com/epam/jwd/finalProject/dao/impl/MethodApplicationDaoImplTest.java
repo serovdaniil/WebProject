@@ -1,5 +1,6 @@
 package com.epam.jwd.finalProject.dao.impl;
 
+import com.epam.jwd.finalProject.dao.exception.DaoException;
 import com.epam.jwd.finalProject.dao.exception.EntityExtractionFailedException;
 import com.epam.jwd.finalProject.model.*;
 import org.junit.Assert;
@@ -48,15 +49,17 @@ public class MethodApplicationDaoImplTest extends Assert {
         idResult = (long) 1;
         idConferenc = (long) 5;
         application = new Application((long) 1,
-                new User((long) 1, "daniils3rov@yandex.ru", "daniils3rov@yandex.ru", "Serov231969", "Daniil", "Serov", Role.USER),
-                new SectionResult((long) 1, "Open"), new SectionConferenc((long) 1, "ART", "Name",
-                new Conferenc((long) 2, "SD", "Qwerty", new Category((long) 3, "QWE"), new Status((long) 4, "Active")), new Status((long) 1, "Active")));
+                new User((long) 1, "daniils3rov@yandex.ru", "daniils3rov@yandex.ru", "Serov231969",
+                        "Daniil", "Serov", Role.USER), new SectionResult((long) 1, "Open"),
+                new SectionConferenc((long) 1, "ART", "Name", new Conferenc((long) 2, "SD",
+                        "Qwerty", new Category((long) 3, "QWE"), new Status((long) 4, "Active")),
+                        new Status((long) 1, "Active")));
         applicationList = new ArrayList<>();
         applicationList.add(application);
     }
 
     @Test
-    public void create() {
+    public void create() throws DaoException {
         boolean expectedResult = true;
         when(dao.create(idUser, idSectionConferenc, idResult)).thenReturn(true);
         boolean actualResult = dao.create(idApplication, idUser, idResult);
@@ -64,7 +67,7 @@ public class MethodApplicationDaoImplTest extends Assert {
     }
 
     @Test
-    public void changeStatusApplicationAfterUpdateSectionConferenc() {
+    public void changeStatusApplicationAfterUpdateSectionConferenc()throws DaoException  {
         boolean expectedResult = true;
         when(dao.changeStatusApplicationAfterUpdateSectionConferenc(idSectionConferenc)).thenReturn(true);
         boolean actualResult = dao.changeStatusApplicationAfterUpdateSectionConferenc(idSectionConferenc);
@@ -72,7 +75,7 @@ public class MethodApplicationDaoImplTest extends Assert {
     }
 
     @Test
-    public void updateIdStatusApplication() {
+    public void updateIdStatusApplication() throws DaoException {
         boolean expectedResult = true;
         when(dao.updateIdStatusApplication(idApplication, idResult)).thenReturn(true);
         boolean actualResult = dao.updateIdStatusApplication(idApplication, idResult);
@@ -80,7 +83,7 @@ public class MethodApplicationDaoImplTest extends Assert {
     }
 
     @Test
-    public void readAll() throws EntityExtractionFailedException {
+    public void readAll() throws EntityExtractionFailedException, DaoException {
         List<Application> expectedResult = applicationList;
         when(dao.readAll()).thenReturn(expectedResult);
         List<Application> actualResult = dao.readAll();
@@ -88,7 +91,7 @@ public class MethodApplicationDaoImplTest extends Assert {
     }
 
     @Test
-    public void readById() {
+    public void readById() throws DaoException {
         Optional<Application> expectedResult = Optional.of(application);
         when(dao.readById((long) 1)).thenReturn(expectedResult);
         Optional<Application> actualResult = dao.readById((long) 1);
@@ -97,7 +100,7 @@ public class MethodApplicationDaoImplTest extends Assert {
 
 
     @Test
-    public void findAccountIdByApplication() {
+    public void findAccountIdByApplication()throws DaoException  {
         List<Application> expectedResult = applicationList;
         when(dao.findAccountIdByApplication(idApplication)).thenReturn(expectedResult);
         List<Application> actualResult = dao.findAccountIdByApplication(idApplication);
@@ -105,7 +108,7 @@ public class MethodApplicationDaoImplTest extends Assert {
     }
 
     @Test
-    public void findByStatusResult() {
+    public void findByStatusResult() throws DaoException {
         List<Application> expectedResult = applicationList;
         when(dao.findByStatusResult(idResult)).thenReturn(expectedResult);
         List<Application> actualResult = dao.findByStatusResult(idResult);
@@ -113,7 +116,7 @@ public class MethodApplicationDaoImplTest extends Assert {
     }
 
     @Test
-    public void delete() {
+    public void delete()throws DaoException  {
         boolean expectedResult = true;
         when(dao.delete(idApplication)).thenReturn(true);
         boolean actualResult = dao.delete(idApplication);

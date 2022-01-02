@@ -3,6 +3,7 @@ package com.epam.jwd.finalProject.dao.impl;
 import com.epam.jwd.finalProject.dao.api.ApplicationDao;
 import com.epam.jwd.finalProject.dao.connection.ConnectionPool;
 import com.epam.jwd.finalProject.dao.connection.LockingConnectionPool;
+import com.epam.jwd.finalProject.dao.exception.DaoException;
 import com.epam.jwd.finalProject.dao.exception.EntityExtractionFailedException;
 import com.epam.jwd.finalProject.model.*;
 import org.apache.logging.log4j.LogManager;
@@ -86,7 +87,7 @@ public class ApplicationDaoImpl implements ApplicationDao {
      * @return boolean result of operation
      */
     @Override
-    public boolean create(Long idAccount, Long idSectionConferenc, Long idResultSection) {
+    public boolean create(Long idAccount, Long idSectionConferenc, Long idResultSection) throws DaoException {
         boolean result = false;
         LOG.info("Start create application");
         try (Connection connection = connectionPool.getConnection();
@@ -102,8 +103,7 @@ public class ApplicationDaoImpl implements ApplicationDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", CREATE_APPLICATION);
-        } catch (NullPointerException e) {
-            LOG.error(e);
+            throw new DaoException(e);
         }
         return result;
     }
@@ -115,7 +115,7 @@ public class ApplicationDaoImpl implements ApplicationDao {
      * @return boolean result of operation
      */
     @Override
-    public boolean changeStatusApplicationAfterUpdateSectionConferenc(Long idSectionConferenc) {
+    public boolean changeStatusApplicationAfterUpdateSectionConferenc(Long idSectionConferenc) throws DaoException {
         LOG.info("START update result application");
         boolean result = false;
         try (Connection connection = connectionPool.getConnection();
@@ -129,8 +129,7 @@ public class ApplicationDaoImpl implements ApplicationDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", CHANGE_STATUS_AFTER_UPDATE_SECTION_CONFERENC);
-        } catch (NullPointerException e) {
-            LOG.error(e);
+            throw new DaoException(e);
         }
         return result;
     }
@@ -143,7 +142,7 @@ public class ApplicationDaoImpl implements ApplicationDao {
      * @return boolean result of operation
      */
     @Override
-    public boolean updateIdStatusApplication(Long idApplication, Long idResultSection) {
+    public boolean updateIdStatusApplication(Long idApplication, Long idResultSection) throws DaoException {
         LOG.info("START update result application");
         boolean result = false;
         try (Connection connection = connectionPool.getConnection();
@@ -158,8 +157,7 @@ public class ApplicationDaoImpl implements ApplicationDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", UPDATE_ID_RESULT_APPLICATION);
-        } catch (NullPointerException e) {
-            LOG.error(e);
+            throw new DaoException(e);
         }
         return result;
     }
@@ -170,7 +168,7 @@ public class ApplicationDaoImpl implements ApplicationDao {
      * @return List application
      */
     @Override
-    public List<Application> readAll() throws EntityExtractionFailedException {
+    public List<Application> readAll() throws EntityExtractionFailedException, DaoException {
         LOG.info("Start readAll application");
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ALL_APPLICATION)) {
@@ -181,6 +179,7 @@ public class ApplicationDaoImpl implements ApplicationDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", FIND_ALL_APPLICATION);
+            throw new DaoException(e);
         } catch (EntityExtractionFailedException e) {
             LOG.error("could not extract entity", e);
         }
@@ -194,7 +193,7 @@ public class ApplicationDaoImpl implements ApplicationDao {
      * @return Application
      */
     @Override
-    public Optional<Application> readById(Long id) {
+    public Optional<Application> readById(Long id) throws DaoException {
         LOG.info("Start readById application");
         Optional<Application> productOptional = Optional.empty();
         try (Connection connection = connectionPool.getConnection();
@@ -209,10 +208,9 @@ public class ApplicationDaoImpl implements ApplicationDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", FIND_ID_APPLICATION);
+            throw new DaoException(e);
         } catch (EntityExtractionFailedException e) {
             LOG.error("could not extract entity", e);
-        } catch (NullPointerException e) {
-            LOG.error(e);
         }
         return productOptional;
     }
@@ -224,7 +222,7 @@ public class ApplicationDaoImpl implements ApplicationDao {
      * @return List application
      */
     @Override
-    public List<Application> findAccountIdByApplication(Long id) {
+    public List<Application> findAccountIdByApplication(Long id) throws DaoException {
         LOG.info("Start find id by account");
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ID_ACCOUNT_BY_CAPPLICATION)) {
@@ -236,10 +234,9 @@ public class ApplicationDaoImpl implements ApplicationDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", FIND_ID_ACCOUNT_BY_CAPPLICATION);
+            throw new DaoException(e);
         } catch (EntityExtractionFailedException e) {
             LOG.error("could not extract entity", e);
-        } catch (NullPointerException e) {
-            LOG.error(e);
         }
         return Collections.emptyList();
     }
@@ -251,7 +248,7 @@ public class ApplicationDaoImpl implements ApplicationDao {
      * @return List application
      */
     @Override
-    public List<Application> findByStatusResult(Long idStatus) {
+    public List<Application> findByStatusResult(Long idStatus) throws DaoException {
         LOG.info("Start find statusResult by account");
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ID_SECTION_RESULT_BY_CAPPLICATION)) {
@@ -263,10 +260,9 @@ public class ApplicationDaoImpl implements ApplicationDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", FIND_ID_SECTION_RESULT_BY_CAPPLICATION);
+            throw new DaoException(e);
         } catch (EntityExtractionFailedException e) {
             LOG.error("could not extract entity", e);
-        } catch (NullPointerException e) {
-            LOG.error(e);
         }
         return Collections.emptyList();
     }
@@ -278,7 +274,7 @@ public class ApplicationDaoImpl implements ApplicationDao {
      * @return boolean result of operation
      */
     @Override
-    public boolean delete(Long id) {
+    public boolean delete(Long id) throws DaoException {
         LOG.info("Start delete application");
         boolean result = false;
         try (Connection connection = LockingConnectionPool.getInstance().getConnection();
@@ -288,9 +284,8 @@ public class ApplicationDaoImpl implements ApplicationDao {
             LOG.info("End delete application");
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}",APPLICATION_DELETE);
-        } catch (NullPointerException e) {
-            LOG.error(e);
+            LOG.debug("sql: {}", APPLICATION_DELETE);
+            throw new DaoException(e);
         }
         return result;
     }

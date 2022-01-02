@@ -4,6 +4,7 @@ import com.epam.jwd.finalProject.model.Category;
 import com.epam.jwd.finalProject.model.Conferenc;
 import com.epam.jwd.finalProject.model.SectionConferenc;
 import com.epam.jwd.finalProject.model.Status;
+import com.epam.jwd.finalProject.service.exception.ServiceException;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
 import org.junit.Assert;
 import org.junit.Before;
@@ -34,8 +35,10 @@ public class CategoryServiceImplTest extends Assert {
         id = (long) 1;
         category = new Category((long) 1, "PE");
         sectionConferenc = new SectionConferenc((long) 1, "ART", "Name", new Conferenc((long) 2,
-                "SD", "Qwerty", new Category((long) 3, "QWE"),new Status((long)2,"Active")),new Status((long)5,"Active"));
-        conferenc = new Conferenc((long)1,"name","description",new Category((long)3,"IT"),new Status((long)1,"Active"));
+                "SD", "Qwerty", new Category((long) 3, "QWE"),new Status((long)2,"Active")),
+                new Status((long)5,"Active"));
+        conferenc = new Conferenc((long)1,"name","description",new Category((long)3,"IT"),
+                new Status((long)1,"Active"));
         sectionConferencList = new ArrayList<>();
         sectionConferencList.add(sectionConferenc);
         categoryList = new ArrayList<>();
@@ -45,7 +48,7 @@ public class CategoryServiceImplTest extends Assert {
     }
 
     @Test
-    public void create() throws ValidationException {
+    public void create() throws ValidationException, ServiceException {
         boolean expectedResult = true;
         when(service.create(name)).thenReturn(true);
         boolean actualResult = service.create(name);
@@ -53,7 +56,7 @@ public class CategoryServiceImplTest extends Assert {
     }
 
     @Test
-    public void changeName() throws ValidationException {
+    public void changeName() throws ValidationException, ServiceException  {
         boolean expectedResult = true;
         when(service.changeName(id, name)).thenReturn(true);
         boolean actualResult = service.changeName(id, name);
@@ -61,7 +64,7 @@ public class CategoryServiceImplTest extends Assert {
     }
 
     @Test
-    public void findConferencInIdCategory() throws ValidationException {
+    public void findConferencInIdCategory() throws ValidationException, ServiceException  {
         List<Conferenc> expectedResult = conferencList;
         when(service.findConferencInIdCategory(id)).thenReturn(expectedResult);
         List<Conferenc> actualResult = service.findConferencInIdCategory(id);
@@ -69,7 +72,7 @@ public class CategoryServiceImplTest extends Assert {
     }
 
     @Test
-    public void findSectionConferencInIdCategory() throws ValidationException {
+    public void findSectionConferencInIdCategory() throws ValidationException, ServiceException  {
         List<SectionConferenc> expectedResult = sectionConferencList;
         when(service.findSectionConferencInIdCategory(id)).thenReturn(expectedResult);
         List<SectionConferenc> actualResult = service.findSectionConferencInIdCategory(id);
@@ -77,7 +80,7 @@ public class CategoryServiceImplTest extends Assert {
     }
 
     @Test
-    public void findAll() {
+    public void findAll() throws ServiceException {
         List<Category> expectedResult = categoryList;
         when(service.findAll()).thenReturn(expectedResult);
         List<Category> actualResult = service.findAll();
@@ -85,7 +88,7 @@ public class CategoryServiceImplTest extends Assert {
     }
 
     @Test
-    public void findId() throws ValidationException {
+    public void findId() throws ValidationException, ServiceException  {
         Optional<Category> expectedResult = Optional.of(category);
         when(service.findId(id)).thenReturn(expectedResult);
         Optional<Category> actualResult = service.findId(id);
@@ -93,7 +96,7 @@ public class CategoryServiceImplTest extends Assert {
     }
 
     @Test
-    public void remove() throws ValidationException {
+    public void remove() throws ValidationException, ServiceException  {
         boolean expectedResult = true;
         when(service.remove(id)).thenReturn(true);
         boolean actualResult = service.remove(id);

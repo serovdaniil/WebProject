@@ -2,6 +2,7 @@ package com.epam.jwd.finalProject.dao.impl;
 
 import com.epam.jwd.finalProject.dao.api.CategoryDao;
 import com.epam.jwd.finalProject.dao.connection.ConnectionPool;
+import com.epam.jwd.finalProject.dao.exception.DaoException;
 import com.epam.jwd.finalProject.dao.exception.EntityExtractionFailedException;
 import com.epam.jwd.finalProject.model.*;
 import org.apache.logging.log4j.LogManager;
@@ -35,8 +36,8 @@ public class CategoryDaoImpl implements CategoryDao {
     private static final String FIND_BY_ID_CONFERENC_IN_CATEGORY = "SELECT * FROM conferenc JOIN category " +
             "ON category_id=id_category JOIN status ON conferenc_status_id=id_status WHERE id_category=?";
 
-    private static final String FIND_BY_ID_SECTIONCONFERENC_IN_CATEGORY = "SELECT * FROM section_conferenc JOIN conferenc " +
-            "ON conferenc_id=id_conferenc JOIN category ON category_id=id_category JOIN status " +
+    private static final String FIND_BY_ID_SECTIONCONFERENC_IN_CATEGORY = "SELECT * FROM section_conferenc " +
+            "JOIN conferenc ON conferenc_id=id_conferenc JOIN category ON category_id=id_category JOIN status " +
             "ON conferenc_status_id=id_status WHERE id_category=?";
 
     private static final String CATEGORY_DELETE = "DELETE FROM category WHERE id_category=?";
@@ -66,7 +67,7 @@ public class CategoryDaoImpl implements CategoryDao {
      * @return boolean result of operation
      */
     @Override
-    public boolean create(String name) {
+    public boolean create(String name) throws DaoException {
         boolean result = false;
         LOG.info("Start create category");
         try (Connection connection = connectionPool.getConnection();
@@ -80,8 +81,7 @@ public class CategoryDaoImpl implements CategoryDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", CREATE_CATEGORY);
-        } catch (NullPointerException e) {
-            LOG.error(e);
+            throw new DaoException(e);
         }
         return result;
     }
@@ -94,7 +94,7 @@ public class CategoryDaoImpl implements CategoryDao {
      * @return boolean result of operation
      */
     @Override
-    public boolean changeName(Long id, String name) {
+    public boolean changeName(Long id, String name) throws DaoException {
         LOG.info("START update name by ID Category");
         boolean result = false;
         try (Connection connection = connectionPool.getConnection();
@@ -109,8 +109,7 @@ public class CategoryDaoImpl implements CategoryDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", UPDATE_NAME_BY_ID_CATEGORY);
-        } catch (NullPointerException e) {
-            LOG.error(e);
+            throw new DaoException(e);
         }
         return result;
     }
@@ -121,7 +120,7 @@ public class CategoryDaoImpl implements CategoryDao {
      * @return List category
      */
     @Override
-    public List<Category> findAll() throws EntityExtractionFailedException {
+    public List<Category> findAll() throws EntityExtractionFailedException, DaoException {
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ALL_CATEGORY)) {
@@ -131,6 +130,7 @@ public class CategoryDaoImpl implements CategoryDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", FIND_ALL_CATEGORY);
+            throw new DaoException(e);
         } catch (EntityExtractionFailedException e) {
             LOG.error("could not extract entity", e);
         }
@@ -144,7 +144,7 @@ public class CategoryDaoImpl implements CategoryDao {
      * @return Category
      */
     @Override
-    public Optional<Category> findById(Long id) {
+    public Optional<Category> findById(Long id) throws DaoException {
         LOG.info("Start readById category");
         Optional<Category> productOptional = Optional.empty();
         try (Connection connection = connectionPool.getConnection();
@@ -159,10 +159,9 @@ public class CategoryDaoImpl implements CategoryDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", FIND_ID_CATEGORY);
+            throw new DaoException(e);
         } catch (EntityExtractionFailedException e) {
             LOG.error("could not extract entity", e);
-        } catch (NullPointerException e) {
-            LOG.error(e);
         }
         return productOptional;
     }
@@ -174,7 +173,7 @@ public class CategoryDaoImpl implements CategoryDao {
      * @return List conferences
      */
     @Override
-    public List<Conferenc> findConferencInIdCategory(Long id) {
+    public List<Conferenc> findConferencInIdCategory(Long id) throws DaoException {
         LOG.info("Start find conferenc in categori by ID");
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_BY_ID_CONFERENC_IN_CATEGORY)) {
@@ -186,10 +185,9 @@ public class CategoryDaoImpl implements CategoryDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", FIND_BY_ID_CONFERENC_IN_CATEGORY);
+            throw new DaoException(e);
         } catch (EntityExtractionFailedException e) {
             LOG.error("could not extract entity", e);
-        } catch (NullPointerException e) {
-            LOG.error(e);
         }
         return Collections.emptyList();
     }
@@ -201,7 +199,7 @@ public class CategoryDaoImpl implements CategoryDao {
      * @return List section conferences
      */
     @Override
-    public List<SectionConferenc> findSectionConferencInIdCategory(Long id) {
+    public List<SectionConferenc> findSectionConferencInIdCategory(Long id) throws DaoException {
         LOG.info("Start find section conferenc in categori by ID");
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_BY_ID_SECTIONCONFERENC_IN_CATEGORY)) {
@@ -213,10 +211,9 @@ public class CategoryDaoImpl implements CategoryDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", FIND_BY_ID_SECTIONCONFERENC_IN_CATEGORY);
+            throw new DaoException(e);
         } catch (EntityExtractionFailedException e) {
             LOG.error("could not extract entity", e);
-        } catch (NullPointerException e) {
-            LOG.error(e);
         }
         return Collections.emptyList();
     }
@@ -228,7 +225,7 @@ public class CategoryDaoImpl implements CategoryDao {
      * @return boolean result of operation
      */
     @Override
-    public boolean delete(Long id) {
+    public boolean delete(Long id) throws DaoException {
         LOG.info("Start delete category");
         boolean result = false;
         try (Connection connection = connectionPool.getConnection();
@@ -239,8 +236,7 @@ public class CategoryDaoImpl implements CategoryDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", CATEGORY_DELETE);
-        } catch (NullPointerException e) {
-            LOG.error(e);
+            throw new DaoException(e);
         }
         return result;
     }

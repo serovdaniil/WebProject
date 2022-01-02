@@ -6,6 +6,7 @@ import com.epam.jwd.finalProject.command.factory.CommandResponse;
 import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
 import com.epam.jwd.finalProject.service.api.SectionConferencService;
+import com.epam.jwd.finalProject.service.exception.ServiceException;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
 import com.epam.jwd.finalProject.service.factory.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
@@ -45,6 +46,8 @@ public class UpdateDescriptionInSectionConferencCommand implements Command {
             resultUpdate = service.updateDescription(id, description);
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
+        } catch (ServiceException e) {
+            LOG.error("The service exception!" + e);
         }
         if (!resultUpdate) {
             request.addAttributeToJsp(RESULT_ATTRIBUTE_NAME, OPERATION_WAS_UNSUCCSESFUL);

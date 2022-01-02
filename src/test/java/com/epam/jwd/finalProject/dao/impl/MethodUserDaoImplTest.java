@@ -1,5 +1,6 @@
 package com.epam.jwd.finalProject.dao.impl;
 
+import com.epam.jwd.finalProject.dao.exception.DaoException;
 import com.epam.jwd.finalProject.dao.exception.EntityExtractionFailedException;
 import com.epam.jwd.finalProject.model.Role;
 import com.epam.jwd.finalProject.model.User;
@@ -41,7 +42,7 @@ public class MethodUserDaoImplTest extends Assert {
     }
 
     @Test
-    public void create() {
+    public void create() throws DaoException {
         Optional<User> expectedResult =Optional.of(user);
         when(dao.create(email, password)).thenReturn(expectedResult);
         Optional<User> actualResult = dao.create(email, password);
@@ -49,7 +50,7 @@ public class MethodUserDaoImplTest extends Assert {
     }
 
     @Test
-    public void readById() {
+    public void readById() throws DaoException {
         Optional<User> expectedResult = Optional.of(user);
         when(dao.readById((long) 1)).thenReturn(expectedResult);
         Optional<User> actualResult = dao.readById((long) 1);
@@ -57,7 +58,7 @@ public class MethodUserDaoImplTest extends Assert {
     }
 
     @Test
-    public void updatePasswordByLogin() {
+    public void updatePasswordByLogin()throws DaoException  {
         Optional<User> expectedResult = Optional.of(user);
         when(dao.updatePasswordByLogin(login, password)).thenReturn(expectedResult);
         Optional<User> actualResult = dao.updatePasswordByLogin(login, password);
@@ -66,7 +67,7 @@ public class MethodUserDaoImplTest extends Assert {
 
 
     @Test
-    public void updateEmail() {
+    public void updateEmail()throws DaoException  {
         Optional<User> expectedResult = Optional.of(user);
         when(dao.updateEmail(id, email)).thenReturn(expectedResult);
         Optional<User> actualResult = dao.updateEmail(id, email);
@@ -74,7 +75,7 @@ public class MethodUserDaoImplTest extends Assert {
     }
 
     @Test
-    public void updateFirstName() {
+    public void updateFirstName() throws DaoException {
         Optional<User> expectedResult = Optional.of(user);
         when(dao.updateFirstName(id, firstName)).thenReturn(expectedResult);
         Optional<User> actualResult = dao.updateFirstName(id, firstName);
@@ -82,7 +83,7 @@ public class MethodUserDaoImplTest extends Assert {
     }
 
     @Test
-    public void updateLastName() {
+    public void updateLastName() throws DaoException {
         Optional<User> expectedResult = Optional.of(user);
         when(dao.updateLastName(id, lastName)).thenReturn(expectedResult);
         Optional<User> actualResult = dao.updateLastName(id, lastName);
@@ -90,7 +91,7 @@ public class MethodUserDaoImplTest extends Assert {
     }
 
     @Test
-    public void updateRole() {
+    public void updateRole() throws DaoException {
         Optional<User> expectedResult = Optional.of(user);
         when(dao.updateRole(id, (long)1)).thenReturn(expectedResult);
         Optional<User> actualResult = dao.updateRole(id, (long)1);
@@ -98,7 +99,7 @@ public class MethodUserDaoImplTest extends Assert {
     }
 
     @Test
-    public void readAll() throws EntityExtractionFailedException {
+    public void readAll() throws EntityExtractionFailedException, DaoException  {
         List<User> expectedResult= users;
         when(dao.readAll()).thenReturn(expectedResult);
         List<User> actualResult = dao.readAll();
@@ -106,7 +107,7 @@ public class MethodUserDaoImplTest extends Assert {
     }
 
     @Test
-    public void findByEmail() {
+    public void findByEmail() throws DaoException {
         Optional<User> expectedResult = Optional.of(user);
         when(dao.findByEmail(email)).thenReturn(expectedResult);
         Optional<User> actualResult = dao.findByEmail(email);
@@ -114,7 +115,7 @@ public class MethodUserDaoImplTest extends Assert {
     }
 
     @Test
-    public void findPasswordByLogin() {
+    public void findPasswordByLogin() throws DaoException {
         Optional<User> expectedResult = Optional.of(user);
         when(dao.findPasswordByLogin(login)).thenReturn(expectedResult);
         Optional<User> actualResult = dao.findPasswordByLogin(login);

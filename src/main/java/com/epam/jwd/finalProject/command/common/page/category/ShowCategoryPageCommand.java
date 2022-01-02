@@ -7,9 +7,13 @@ import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
 import com.epam.jwd.finalProject.model.Category;
 import com.epam.jwd.finalProject.service.api.EntityService;
+import com.epam.jwd.finalProject.service.exception.ServiceException;
 import com.epam.jwd.finalProject.service.factory.ServiceFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
+
 /**
  * This page displays categories
  *
@@ -18,6 +22,7 @@ import java.util.List;
 public class ShowCategoryPageCommand implements Command {
     private static final String CATEGORIES_ATTRIBUTE_NAME = "categories";
     private static final String CATEGORIES_PAGE = "page.categories";
+    private static final Logger LOG = LogManager.getLogger(ShowCategoryPageCommand.class);
 
     private final EntityService<Category> service;
     private final RequestFactory requestFactory;
@@ -32,8 +37,12 @@ public class ShowCategoryPageCommand implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        final List<Category> categoriesALL = service.findAll();
-        request.addAttributeToJsp(CATEGORIES_ATTRIBUTE_NAME, categoriesALL);
+        try {
+            final List<Category> categoriesALL = service.findAll();
+            request.addAttributeToJsp(CATEGORIES_ATTRIBUTE_NAME, categoriesALL);
+        } catch (ServiceException e) {
+            LOG.error("The service exception!" + e);
+        }
         return requestFactory.createForwardResponse(propertyContext.get(CATEGORIES_PAGE));
     }
 

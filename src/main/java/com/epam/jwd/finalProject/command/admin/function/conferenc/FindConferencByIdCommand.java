@@ -7,6 +7,7 @@ import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
 import com.epam.jwd.finalProject.model.Conferenc;
 import com.epam.jwd.finalProject.service.api.ConferencService;
+import com.epam.jwd.finalProject.service.exception.ServiceException;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
 import com.epam.jwd.finalProject.service.factory.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
@@ -45,6 +46,8 @@ public class FindConferencByIdCommand implements Command {
             request.addAttributeToJsp(CONFERENCES_ATTRIBUTE_NAME_FIND, conferenc);
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
+        }catch (ServiceException e) {
+            LOG.error("The service exception!" + e);
         }
         return requestFactory.createForwardResponse(propertyContext.get(CONFERENCES_PAGE));
     }

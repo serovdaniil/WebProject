@@ -1,9 +1,11 @@
 package com.epam.jwd.finalProject.service.imlp;
 
+import com.epam.jwd.finalProject.dao.exception.DaoException;
 import com.epam.jwd.finalProject.dao.exception.EntityExtractionFailedException;
 import com.epam.jwd.finalProject.dao.impl.ApplicationDaoImpl;
 import com.epam.jwd.finalProject.model.Application;
 import com.epam.jwd.finalProject.service.api.ApplicationService;
+import com.epam.jwd.finalProject.service.exception.ServiceException;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
 import com.epam.jwd.finalProject.service.validator.ApplicationDataValidator;
 import org.apache.logging.log4j.LogManager;
@@ -50,14 +52,18 @@ public class ApplicationServiceImpl implements ApplicationService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public boolean changeStatusApplicationAfterUpdateSectionConferenc(Long idSectionConferenc) throws ValidationException {
-        LOG.debug("Service: Change status after update status section conferenc started.");
-        if (!applicationDataValidator.isIdValid(idSectionConferenc)) {
-            LOG.error("The entered data is not correct!");
-            throw new ValidationException("The entered data is not correct!");
+    public boolean changeStatusApplicationAfterUpdateSectionConferenc(Long idSectionConferenc) throws ValidationException, ServiceException {
+        try {
+            LOG.debug("Service: Change status after update status section conferenc started.");
+            if (!applicationDataValidator.isIdValid(idSectionConferenc)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            LOG.debug("Service: Change status after update status section conferenc   finished.");
+            return applicationDao.changeStatusApplicationAfterUpdateSectionConferenc(idSectionConferenc);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         }
-        LOG.debug("Service: Change status after update status section conferenc   finished.");
-        return applicationDao.changeStatusApplicationAfterUpdateSectionConferenc(idSectionConferenc);
     }
 
     /**
@@ -65,22 +71,27 @@ public class ApplicationServiceImpl implements ApplicationService {
      *
      * @param idSectionConferenc id section conferenc
      * @param idUser             id user
-     * @param idResultSection id result section
+     * @param idResultSection    id result section
      * @return boolean
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public boolean create(Long idUser, Long idSectionConferenc, Long idResultSection) throws ValidationException {
-        LOG.debug("Service: Creating application started.");
-        if (!applicationDataValidator.isIdValid(idUser) ||
-                !applicationDataValidator.isIdValid(idSectionConferenc) ||
-                !applicationDataValidator.isIdValid(idResultSection)) {
-            LOG.error("The entered data is not correct!");
-            throw new ValidationException("The entered data is not correct!");
+    public boolean create(Long idUser, Long idSectionConferenc, Long idResultSection) throws ValidationException, ServiceException {
+        try {
+            LOG.debug("Service: Creating application started.");
+            if (!applicationDataValidator.isIdValid(idUser) ||
+                    !applicationDataValidator.isIdValid(idSectionConferenc) ||
+                    !applicationDataValidator.isIdValid(idResultSection)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            LOG.debug("Service: Creating application finished.");
+            return applicationDao.create(idUser, idSectionConferenc, idResultSection);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         }
-        LOG.debug("Service: Creating application finished.");
-        return applicationDao.create(idUser, idSectionConferenc, idResultSection);
     }
+
     /**
      * Update id status application
      *
@@ -90,19 +101,22 @@ public class ApplicationServiceImpl implements ApplicationService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public boolean updateIdStatusApplication(Long idApplication, String resultSection) throws ValidationException {
-        LOG.debug("Service: Updating status result for application started.");
-        LOG.info(resultSection);
-        final Long idResult = resultSection(resultSection);
-        LOG.info(idResult);
-        if (!applicationDataValidator.isIdValid(idApplication) ||
-                !applicationDataValidator.isIdValid(idResult)) {
-            LOG.error("The entered data is not correct!");
-            throw new ValidationException("The entered data is not correct!");
+    public boolean updateIdStatusApplication(Long idApplication, String resultSection) throws ValidationException, ServiceException {
+        try {
+            LOG.debug("Service: Updating status result for application started.");
+            final Long idResult = resultSection(resultSection);
+            if (!applicationDataValidator.isIdValid(idApplication) ||
+                    !applicationDataValidator.isIdValid(idResult)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            LOG.debug("Service: Updating status result for application  finished.");
+            return applicationDao.updateIdStatusApplication(idApplication, idResult);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         }
-        LOG.debug("Service: Updating status result for application  finished.");
-        return applicationDao.updateIdStatusApplication(idApplication, idResult);
     }
+
     /**
      * Find application for user by id
      *
@@ -111,15 +125,20 @@ public class ApplicationServiceImpl implements ApplicationService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public List<Application> findAccountIdByApplication(Long id) throws ValidationException {
-        LOG.debug("Service: Find applications by id user started.");
-        if (!applicationDataValidator.isIdValid(id)) {
-            LOG.error("The entered data is not correct!");
-            throw new ValidationException("The entered data is not correct!");
+    public List<Application> findAccountIdByApplication(Long id) throws ValidationException, ServiceException {
+        try {
+            LOG.debug("Service: Find applications by id user started.");
+            if (!applicationDataValidator.isIdValid(id)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            LOG.debug("Service: Find applications by id user finished.");
+            return applicationDao.findAccountIdByApplication(id);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         }
-        LOG.debug("Service: Find applications by id user finished.");
-        return applicationDao.findAccountIdByApplication(id);
     }
+
     /**
      * Find application by status result
      *
@@ -128,32 +147,42 @@ public class ApplicationServiceImpl implements ApplicationService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public List<Application> findByStatusResult(String nameStatus) throws ValidationException {
-        LOG.debug("Service: Find applications by id status result started.");
-        final Long idStatus = resultSection(nameStatus);
-        if (!applicationDataValidator.isIdValid(idStatus)) {
-            LOG.error("The entered data is not correct!");
-            throw new ValidationException("The entered data is not correct!");
+    public List<Application> findByStatusResult(String nameStatus) throws ValidationException, ServiceException {
+        try {
+            LOG.debug("Service: Find applications by id status result started.");
+            final Long idStatus = resultSection(nameStatus);
+            if (!applicationDataValidator.isIdValid(idStatus)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            LOG.debug("Service: Find applications by id status result finished.");
+            return applicationDao.findByStatusResult(idStatus);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         }
-        LOG.debug("Service: Find applications by id status result finished.");
-        return applicationDao.findByStatusResult(idStatus);
     }
+
     /**
      * Find all applications
      *
      * @return List applications
      */
     @Override
-    public List<Application> findAll() {
-        LOG.debug("Service: Reading all applications started.");
+    public List<Application> findAll() throws ServiceException {
         try {
-            return applicationDao.readAll();
-        } catch (EntityExtractionFailedException e) {
-            e.printStackTrace();
+            LOG.debug("Service: Reading all applications started.");
+            try {
+                return applicationDao.readAll();
+            } catch (EntityExtractionFailedException e) {
+                e.printStackTrace();
+            }
+            LOG.debug("Service: Reading all applications finished.");
+            return Collections.emptyList();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         }
-        LOG.debug("Service: Reading all applications finished.");
-        return Collections.emptyList();
     }
+
     /**
      * Find application by id
      *
@@ -162,15 +191,20 @@ public class ApplicationServiceImpl implements ApplicationService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public Optional<Application> findId(Long id) throws ValidationException {
-        LOG.debug("Service: Finding application by id started.");
-        if (!applicationDataValidator.isIdValid(id)) {
-            LOG.error("The entered data is not correct!");
-            throw new ValidationException("The entered data is not correct!");
+    public Optional<Application> findId(Long id) throws ValidationException, ServiceException {
+        try {
+            LOG.debug("Service: Finding application by id started.");
+            if (!applicationDataValidator.isIdValid(id)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            LOG.debug("Service: Finding application by id finished.");
+            return applicationDao.readById(id);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         }
-        LOG.debug("Service: Finding application by id finished.");
-        return applicationDao.readById(id);
     }
+
     /**
      * Remove application for user by id
      *
@@ -179,16 +213,21 @@ public class ApplicationServiceImpl implements ApplicationService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public boolean remove(Long id) throws ValidationException {
-        LOG.debug("Service: Removing application started.");
-        if (!applicationDataValidator.isIdValid(id)) {
-            LOG.error("The entered data is not correct!");
-            throw new ValidationException("The entered data is not correct!");
+    public boolean remove(Long id) throws ValidationException, ServiceException {
+        try {
+            LOG.debug("Service: Removing application started.");
+            if (!applicationDataValidator.isIdValid(id)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            LOG.debug(id);
+            LOG.debug("Service: Removing application finished.");
+            return applicationDao.delete(id);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         }
-        LOG.debug(id);
-        LOG.debug("Service: Removing application finished.");
-        return applicationDao.delete(id);
     }
+
     /**
      * Check result section
      *

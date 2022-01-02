@@ -4,6 +4,7 @@ import com.epam.jwd.finalProject.model.Category;
 import com.epam.jwd.finalProject.model.Conferenc;
 import com.epam.jwd.finalProject.model.SectionConferenc;
 import com.epam.jwd.finalProject.model.Status;
+import com.epam.jwd.finalProject.service.exception.ServiceException;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
 import org.junit.Assert;
 import org.junit.Before;
@@ -32,9 +33,11 @@ public class SectionConferencServiceImplTest extends Assert {
     public void setUp() throws Exception {
         service = mock(SectionConferencServiceImpl.class);
         sectionConferencOne=new SectionConferenc((long)1,"ART","Name",new Conferenc((long)2,
-                "SD","Qwerty",new Category((long)3,"QWE"),new Status((long)2,"Active")),new Status((long)5,"Active"));
+                "SD","Qwerty",new Category((long)3,"QWE"),
+                new Status((long)2,"Active")),new Status((long)5,"Active"));
         sectionConferencTwo=new SectionConferenc((long)4,"ZXC","Poi",new Conferenc((long)5,
-                "KL","ASDF",new Category((long)6,"NB"),new Status((long)2,"Active")),new Status((long)5,"Active"));
+                "KL","ASDF",new Category((long)6,"NB"),new Status((long)2,"Active")),
+                new Status((long)5,"Active"));
         name="Bike";
         description="test";
         id=(long)7;
@@ -46,7 +49,7 @@ public class SectionConferencServiceImplTest extends Assert {
     }
 
     @Test
-    public void changeStatus() throws ValidationException {
+    public void changeStatus() throws ValidationException, ServiceException {
         boolean expectedResult = true;
         when(service.changeStatus(id,nameStatus)).thenReturn(true);
         boolean actualResult =service.changeStatus(id,nameStatus);
@@ -54,7 +57,7 @@ public class SectionConferencServiceImplTest extends Assert {
     }
 
     @Test
-    public void changeStatusAfterUpdateConferenc() throws ValidationException {
+    public void changeStatusAfterUpdateConferenc() throws ValidationException, ServiceException  {
         boolean expectedResult = true;
         when(service.changeStatusAfterUpdateConferenc(idConferenc)).thenReturn(true);
         boolean actualResult =service.changeStatusAfterUpdateConferenc(idConferenc);
@@ -62,7 +65,7 @@ public class SectionConferencServiceImplTest extends Assert {
     }
 
     @Test
-    public void findAll() {
+    public void findAll() throws ServiceException {
         List<SectionConferenc> expectedResult= sectionConferencs;
         when(service.findAll()).thenReturn(expectedResult);
         List<SectionConferenc> actualResult = service.findAll();
@@ -70,7 +73,7 @@ public class SectionConferencServiceImplTest extends Assert {
     }
 
     @Test
-    public void findId() throws ValidationException {
+    public void findId() throws ValidationException, ServiceException  {
         Optional<SectionConferenc> expectedResult = Optional.of(sectionConferencOne);
         when(service.findId(id)).thenReturn(expectedResult);
         Optional<SectionConferenc> actualResult = service.findId(id);
@@ -78,7 +81,7 @@ public class SectionConferencServiceImplTest extends Assert {
     }
 
     @Test
-    public void remove() throws ValidationException {
+    public void remove() throws ValidationException, ServiceException  {
         boolean expectedResult = true;
         when(service.remove(id)).thenReturn(true);
         boolean actualResult = service.remove(id);
@@ -86,7 +89,7 @@ public class SectionConferencServiceImplTest extends Assert {
     }
 
     @Test
-    public void create() throws ValidationException {
+    public void create() throws ValidationException, ServiceException  {
         boolean expectedResult = true;
         when(service.create(name,description,idConferenc)).thenReturn(true);
         boolean actualResult = service.create(name,description,idConferenc);
@@ -94,7 +97,7 @@ public class SectionConferencServiceImplTest extends Assert {
     }
 
     @Test
-    public void updateDescription() throws ValidationException {
+    public void updateDescription() throws ValidationException, ServiceException  {
         boolean expectedResult = true;
         when(service.updateDescription(id,description)).thenReturn(true);
         boolean actualResult = service.updateDescription(id,description);
@@ -102,7 +105,7 @@ public class SectionConferencServiceImplTest extends Assert {
     }
 
     @Test
-    public void findByName() throws ValidationException {
+    public void findByName() throws ValidationException, ServiceException  {
         List<SectionConferenc> expectedResult= sectionConferencs;
         when(service.findByName(name)).thenReturn(expectedResult);
         List<SectionConferenc> actualResult = service.findByName(name);
@@ -110,7 +113,7 @@ public class SectionConferencServiceImplTest extends Assert {
     }
 
     @Test
-    public void findSectionConferencesInConferencById() throws ValidationException {
+    public void findSectionConferencesInConferencById() throws ValidationException, ServiceException  {
         List<SectionConferenc> expectedResult= sectionConferencs;
         when(service.findSectionConferencesInConferencById(idConferenc)).thenReturn(expectedResult);
         List<SectionConferenc> actualResult = service.findSectionConferencesInConferencById(idConferenc);

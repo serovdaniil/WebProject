@@ -57,7 +57,9 @@ import static com.epam.jwd.finalProject.model.Role.*;
  */
 public enum CommandRegistry {
     MAIN_PAGE(ShowMainPageCommand.getInstance(), "main_page", UNAUTHORIZED, USER, ADMIN, BLOKED),
-    //Conferenc
+    /**
+     * Commands for conferenc
+     */
     SHOW_CONFERENCES(ShowConferencesPageCommand.getInstance(),
             "show_conferences", UNAUTHORIZED, USER, ADMIN, BLOKED),
     FIND_CONFERENCES_BY_NAME(FindConferencByNameCommand.getInstance(),
@@ -78,7 +80,9 @@ public enum CommandRegistry {
             "show_read_conferences_by_id", ADMIN),
     CHANGE_STATUS_CONFERENC(ChangeStatusConferencCommand.getInstance(),
             "change_status_conferenc_by_id", ADMIN),
-    // sectionConferenc
+    /**
+     * Commands for section conferenc
+     */
     SHOW_SECTON_CONFERENCES(ShowSectionConferencesPageCommand.getInstance(),
             "show_section_conferences", ADMIN),
     SHOW_READ_SECTON_CONFERENC_BY_ID(ShowReadSectionConferencByIdPageCommand.getInstance(),
@@ -101,7 +105,9 @@ public enum CommandRegistry {
             "find_section_conferences_in_conferenc_by_id", UNAUTHORIZED, USER, ADMIN, BLOKED),
     SHOW_FIND_SECTION_CONFERENCES_IN_CONFERENC_BY_ID(ShowFindSectionConferencesInConferencByIdPageCommand.getInstance(),
             "show_find_section_conferences_in_conferenc_by_id", UNAUTHORIZED, USER, ADMIN, BLOKED),
-    // categories
+    /**
+     * Commands for category
+     */
     SHOW_CATEGORIES(ShowCategoryPageCommand.getInstance(),
             "show_categories", UNAUTHORIZED, USER, ADMIN, BLOKED),
     CREATE_CATEGORY(CreateCategoryCommand.getInstance(),
@@ -120,7 +126,9 @@ public enum CommandRegistry {
             "id_category", ADMIN),
     REMOVE_CATEGORY(RemoveCategoryByIdCommand.getInstance(),
             "remove_category_by_id", ADMIN),
-    //Question
+    /**
+     * Commands for question
+     */
     SHOW_QUESTONS(ShowQuestionPageCommand.getInstance(),
             "show_questions", ADMIN),
     ADDANSWERTOQUESTION(AddAnswerToQuestionCommand.getInstance(),
@@ -133,7 +141,9 @@ public enum CommandRegistry {
             "find_question_by_id", USER, ADMIN),
     REMOVE_QUESTION_BY_ID(RemoveQuestionByIdCommand.getInstance(),
             "remove_question_by_id", USER, ADMIN),
-    //User
+    /**
+     * Commands for user
+     */
     SHOW_USERS(ShowUsersPageCommand.getInstance(),
             "show_users", ADMIN),
     UPDATE_PASSWORD_BY_USER(UpdatePasswordCommand.getInstance(),
@@ -152,7 +162,9 @@ public enum CommandRegistry {
             "show_read_user_by_id", ADMIN),
     SHOW_PERSONAL_INFORMATION_BY_USER(ShowPerosnalInformationPageCommand.getInstance(),
             "show_personal_infomation", USER, ADMIN),
-    //application
+    /**
+     * Commands for application
+     */
     SHOW_APPLICATION(ShowApplicationPageCommand.getInstance(),
             "show_applications", ADMIN),
     SHOW_APPLICATIONS_BY_ACCOUNT(FindAccountIdByApplicationCommand.getInstance(),
@@ -169,7 +181,9 @@ public enum CommandRegistry {
             "find_application_by_id", USER, ADMIN),
     UPDATE_STATUS_RESULT_APPLICATION_BY_ID(UpdateStatusResultByIdApplicationCommand.getInstance(),
             "update_status_result_application", USER, ADMIN),
-    //ADMIN PANEL
+    /**
+     * Common commands
+     */
     SHOW_ADMIN_PANEL_CONFERENC(ShowAdminPanelConferencPageCommand.getInstance(),
             "show_admin_panel_conferenc", ADMIN),
     SHOW_ADMIN_PANEL_SECTIONCONFERENC(ShowAdminPanelSectionConferencPageCommand.getInstance(),

@@ -2,6 +2,7 @@ package com.epam.jwd.finalProject.dao.impl;
 
 import com.epam.jwd.finalProject.dao.api.SectionConferencDao;
 import com.epam.jwd.finalProject.dao.connection.ConnectionPool;
+import com.epam.jwd.finalProject.dao.exception.DaoException;
 import com.epam.jwd.finalProject.dao.exception.EntityExtractionFailedException;
 import com.epam.jwd.finalProject.model.Category;
 import com.epam.jwd.finalProject.model.Conferenc;
@@ -31,8 +32,8 @@ public class SectionConferencDaoImpl implements SectionConferencDao {
             "(name,description,conferenc_id,section_conferenc_status_id) values(?,?,?,1)";
     private static final String ADD_DESCRIPTION_BY_SECTION_CONFERENC = "UPDATE section_conferenc SET description = ?" +
             " WHERE id_section_conferenc = ?";
-    private static final String UPDATE_STATUS_SECTION_CONFERENC = "UPDATE section_conferenc SET section_conferenc_status_id =?" +
-            " WHERE id_section_conferenc = ?";
+    private static final String UPDATE_STATUS_SECTION_CONFERENC = "UPDATE section_conferenc " +
+            "SET section_conferenc_status_id =? WHERE id_section_conferenc = ?";
     private static final String UPDATE_STATUS_SECTION_CONFERENC_AFTER_CONFERENC = "UPDATE section_conferenc " +
             "SET section_conferenc_status_id = ? WHERE conferenc_id = ?";
     private static final String FIND_ALL_SECTION_CONFERENC = "SELECT * FROM section_conferenc JOIN status " +
@@ -47,7 +48,8 @@ public class SectionConferencDaoImpl implements SectionConferencDao {
     private static final String SECTION_CONFERENC_DELETE = "DELETE FROM section_conferenc  WHERE id_section_conferenc=?";
     private static final String FIND_SECTION_CONFERENCES_IN_CONFERENC_BY_ID_ACTIVE = "SELECT * FROM section_conferenc " +
             "JOIN conferenc ON conferenc_id=id_conferenc JOIN category ON category_id=id_category JOIN status " +
-            "ON section_conferenc_status_id=id_status WHERE section_conferenc.conferenc_id=? && section_conferenc_status_id=1";
+            "ON section_conferenc_status_id=id_status " +
+            "WHERE section_conferenc.conferenc_id=? && section_conferenc_status_id=1";
     /**
      * Logger for this dao
      */
@@ -75,7 +77,7 @@ public class SectionConferencDaoImpl implements SectionConferencDao {
      * @return boolean result of operation
      */
     @Override
-    public boolean create(String name, String description, Long idConferenc) {
+    public boolean create(String name, String description, Long idConferenc) throws DaoException {
         boolean result = false;
         LOG.info("Start create and add new section_conferenc");
         try (Connection connection = connectionPool.getConnection();
@@ -91,8 +93,7 @@ public class SectionConferencDaoImpl implements SectionConferencDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", CREATE_SECTION_CONFERENC);
-        } catch (NullPointerException e) {
-            LOG.error(e);
+            throw new DaoException(e);
         }
         return result;
     }
@@ -105,7 +106,7 @@ public class SectionConferencDaoImpl implements SectionConferencDao {
      * @return boolean result of operation
      */
     @Override
-    public boolean changeStatus(Long idSectionConferenc, Long idStatus) {
+    public boolean changeStatus(Long idSectionConferenc, Long idStatus) throws DaoException {
         LOG.info("Start update status section conferenc");
         boolean result = false;
         try (Connection connection = connectionPool.getConnection();
@@ -120,8 +121,7 @@ public class SectionConferencDaoImpl implements SectionConferencDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}",UPDATE_STATUS_SECTION_CONFERENC);
-        } catch (NullPointerException e) {
-            LOG.error(e);
+            throw new DaoException(e);
         }
         return result;
     }
@@ -133,7 +133,7 @@ public class SectionConferencDaoImpl implements SectionConferencDao {
      * @return boolean result of operation
      */
     @Override
-    public boolean changeStatusAfterUpdateConferenc(Long idConferenc) {
+    public boolean changeStatusAfterUpdateConferenc(Long idConferenc) throws DaoException {
         LOG.info("Start update status section conferences after update conferenc");
         boolean result = false;
         try (Connection connection = connectionPool.getConnection();
@@ -148,8 +148,7 @@ public class SectionConferencDaoImpl implements SectionConferencDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", UPDATE_STATUS_SECTION_CONFERENC_AFTER_CONFERENC);
-        } catch (NullPointerException e) {
-            LOG.error(e);
+            throw new DaoException(e);
         }
         return result;
     }
@@ -162,7 +161,7 @@ public class SectionConferencDaoImpl implements SectionConferencDao {
      * @return boolean result of operation
      */
     @Override
-    public boolean updateDescription(Long id, String description) {
+    public boolean updateDescription(Long id, String description) throws DaoException {
         LOG.info("Start add description by section_conferenc");
         boolean result = false;
         try (Connection connection = connectionPool.getConnection();
@@ -177,8 +176,7 @@ public class SectionConferencDaoImpl implements SectionConferencDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", ADD_DESCRIPTION_BY_SECTION_CONFERENC);
-        } catch (NullPointerException e) {
-            LOG.error(e);
+            throw new DaoException(e);
         }
         return result;
     }
@@ -189,7 +187,7 @@ public class SectionConferencDaoImpl implements SectionConferencDao {
      * @return List section conferenc
      */
     @Override
-    public List<SectionConferenc> readAll() throws EntityExtractionFailedException {
+    public List<SectionConferenc> readAll() throws EntityExtractionFailedException, DaoException {
         LOG.info("Start readAll conferenc");
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ALL_SECTION_CONFERENC)) {
@@ -200,6 +198,7 @@ public class SectionConferencDaoImpl implements SectionConferencDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", FIND_ALL_SECTION_CONFERENC);
+            throw new DaoException(e);
         } catch (EntityExtractionFailedException e) {
             LOG.error("could not extract entity", e);
         }
@@ -213,7 +212,7 @@ public class SectionConferencDaoImpl implements SectionConferencDao {
      * @return Section conferenc
      */
     @Override
-    public Optional<SectionConferenc> readById(Long id) {
+    public Optional<SectionConferenc> readById(Long id) throws DaoException {
         LOG.info("Start readById section_conferenc");
         Optional<SectionConferenc> productOptional = Optional.empty();
         try (Connection connection = connectionPool.getConnection();
@@ -228,10 +227,9 @@ public class SectionConferencDaoImpl implements SectionConferencDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", FIND_ID_SECTION_CONFERENC);
+            throw new DaoException(e);
         } catch (EntityExtractionFailedException e) {
             LOG.error("could not extract entity", e);
-        } catch (NullPointerException e) {
-            LOG.error(e);
         }
         return productOptional;
     }
@@ -243,7 +241,7 @@ public class SectionConferencDaoImpl implements SectionConferencDao {
      * @return List section conferenc
      */
     @Override
-    public List<SectionConferenc> findByName(String name) {
+    public List<SectionConferenc> findByName(String name) throws DaoException {
         LOG.info("Start find name by section_conferenc");
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_NAME_SECTION_CONFERENC)) {
@@ -255,10 +253,9 @@ public class SectionConferencDaoImpl implements SectionConferencDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", FIND_NAME_SECTION_CONFERENC);
+            throw new DaoException(e);
         } catch (EntityExtractionFailedException e) {
             LOG.error("could not extract entity", e);
-        } catch (NullPointerException e) {
-            LOG.error(e);
         }
         return Collections.emptyList();
     }
@@ -270,7 +267,7 @@ public class SectionConferencDaoImpl implements SectionConferencDao {
      * @return boolean result of operation
      */
     @Override
-    public boolean delete(Long id) {
+    public boolean delete(Long id) throws DaoException {
         LOG.info("Start delete conferenc");
         boolean result = false;
         try (Connection connection = connectionPool.getConnection();
@@ -281,8 +278,7 @@ public class SectionConferencDaoImpl implements SectionConferencDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", SECTION_CONFERENC_DELETE);
-        } catch (NullPointerException e) {
-            LOG.error(e);
+            throw new DaoException(e);
         }
         return result;
     }
@@ -294,7 +290,7 @@ public class SectionConferencDaoImpl implements SectionConferencDao {
      * @return List section conferenc
      */
     @Override
-    public List<SectionConferenc> findSectionConferencesInConferencById(Long id) {
+    public List<SectionConferenc> findSectionConferencesInConferencById(Long id) throws DaoException {
         LOG.info("Start find section_conferences in conferenc by id");
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement =
@@ -307,10 +303,9 @@ public class SectionConferencDaoImpl implements SectionConferencDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", FIND_SECTION_CONFERENCES_IN_CONFERENC_BY_ID_ACTIVE);
+            throw new DaoException(e);
         } catch (EntityExtractionFailedException e) {
             LOG.error("could not extract entity", e);
-        } catch (NullPointerException e) {
-            LOG.error(e);
         }
         return Collections.emptyList();
     }
