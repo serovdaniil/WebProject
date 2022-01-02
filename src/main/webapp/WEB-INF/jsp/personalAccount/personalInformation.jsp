@@ -20,6 +20,7 @@
 <fmt:message bundle="${loc}" key="label.personalInformational.button.firstName" var="buttonFirstName"/>
 <fmt:message bundle="${loc}" key="label.personalInformational.button.lastName" var="buttonLastName"/>
 <fmt:message bundle="${loc}" key="label.registration.boxPasswordRepeat" var="passwordRepeat"/>
+<fmt:message bundle="${loc}" key="label.message.passwords" var="messagePasswords"/>
 <html>
 <head>
     <title>${pageTitle}</title>
@@ -57,7 +58,8 @@
           action="${pageContext.request.contextPath}/controller?command=update_last_name_by_user" method="post">
         <label for="lastName-input">${lastName}:</label>
         <input id="lastName-input" type="text" name="lastName" min="1" max="45" required
-               pattern="(^[A-Z][a-z]{0,35}(-[A-Z])*[a-z]{0,22}$)|(^[А-Я][а-я]{0,22}(-[А-Я])*[а-я]{0,22}$)|(^[A-Z][a-z]{0,45}$)|(^[А-Я][а-я]{0,45}$)" value="${sessionScope.user.lastName}"/>
+               pattern="(^[A-Z][a-z]{0,35}(-[A-Z])*[a-z]{0,22}$)|(^[А-Я][а-я]{0,22}(-[А-Я])*[а-я]{0,22}$)|(^[A-Z][a-z]{0,45}$)|(^[А-Я][а-я]{0,45}$)"
+               value="${sessionScope.user.lastName}"/>
         <c:if test="${not empty requestScope.result}">
             <b>${requestScope.result}</b>
             <br>
@@ -71,9 +73,10 @@
                pattern="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,15})$" placeholder="${password}"/>
         <label for="passwordRepeat-input">${passwordRepeat}:</label>
         <input id="passwordRepeat-input" type="password" min="2" max="15" required
-               pattern="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,15})$" name="passwordRepeat"  value=""/>
+               pattern="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,15})$" name="passwordRepeat"
+               placeholder="${password}" value=""/>
         <c:if test="${not empty requestScope.errorUpdatePassMessage}">
-            <b>${requestScope.errorUpdatePassMessage}</b>
+            <b>${messagePasswords}</b>
             <br>
         </c:if>
         <button type="submit" class="cancelbtn">${buttonPassword}</button>

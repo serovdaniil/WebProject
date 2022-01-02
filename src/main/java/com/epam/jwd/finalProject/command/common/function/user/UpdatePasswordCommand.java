@@ -34,7 +34,7 @@ public class UpdatePasswordCommand implements Command {
     private static final String UNSUCCESSFUL_RESULT_UPDATE_INFORMATION = "Unsuccessful updating of personal information";
     private static final String ERROR_PASSWORD_PASS_MESSAGE = "Passwords do not match, repeat the input!";
     private static final Logger LOG = LogManager.getLogger(UpdatePasswordCommand.class);
-    // TODO: create locale message
+
     UpdatePasswordCommand(UserService service, RequestFactory requestFactory, PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().userService();
         this.requestFactory = RequestFactory.getInstance();

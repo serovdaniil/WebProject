@@ -9,6 +9,7 @@
 <fmt:message bundle="${loc}" key="label.login.button.login" var="buttonLogin"/>
 <fmt:message bundle="${loc}" key="label.login.textLogin" var="textLogin"/>
 <fmt:message bundle="${loc}" key="label.login.removeText" var="removeText"/>
+<fmt:message bundle="${loc}" key="label.message.login" var="message"/>
 <html>
 <head>
     <title>${pageTitle}</title>
@@ -32,7 +33,7 @@
                name="password" value=""/>
         <br/>
         <c:if test="${not empty requestScope.errorLoginPassMessage}">
-            <b>${requestScope.errorLoginPassMessage}</b>
+            <b>${message}</b>
             <br>
         </c:if>
         <button type="submit">${buttonLogin}</button>

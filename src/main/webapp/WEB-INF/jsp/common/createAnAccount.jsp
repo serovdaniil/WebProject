@@ -10,7 +10,8 @@
 <fmt:message bundle="${loc}" key="label.registration.removeText" var="removeText"/>
 <fmt:message bundle="${loc}" key="label.registration.boxPasswordRepeat" var="passwordRepeat"/>
 <fmt:message bundle="${loc}" key="label.registration.create" var="createAccount"/>
-
+<fmt:message bundle="${loc}" key="label.message.newUser" var="messageNewUser"/>
+<fmt:message bundle="${loc}" key="label.message.passwords" var="messagePasswords"/>
 <!doctype html>
 <html>
 <head>
@@ -37,7 +38,11 @@
         <input id="passwordRepeat-input" type="password" min="2" max="15" required
                pattern="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,15})$" name="passwordRepeat"  value=""/>
         <c:if test="${not empty requestScope.errorRegistrationPassMessage}">
-            <b>${requestScope.errorRegistrationPassMessage}</b>
+            <b>${messageNewUser}</b>
+            <br>
+        </c:if>
+        <c:if test="${not empty requestScope.errorPasswordsPassMessage}">
+            <b>${messagePasswords}</b>
             <br>
         </c:if>
         <button type="submit">${registration}</button>

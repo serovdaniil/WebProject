@@ -24,6 +24,7 @@ public class CreateAnAccountCommand implements Command {
     private static final String INDEX_PAGE = "page.index";
     private static final String REGISTRATION_PAGE = "page.createAnAccount";
     private static final String ERROR_LOGIN_PASS_ATTRIBUTE = "errorRegistrationPassMessage";
+    private static final String ERROR_PASSWORDS_PASS_ATTRIBUTE = "errorPasswordsPassMessage";
     private static final String USER_SESSION_ATTRIBUTE_NAME = "user";
     private static final String LOGIN_REQUEST_PARAM_NAME = "email";
     private static final String PASSWORD_REQUEST_PARAM_NAME = "password";
@@ -31,7 +32,6 @@ public class CreateAnAccountCommand implements Command {
     private static final String ERROR_REGISTRATION_PASS_MESSAGE = "The user with this email already exists!";
     private static final String ERROR_PASSWORD_PASS_MESSAGE = "Passwords do not match, repeat the input!";
     private static final Logger LOG = LogManager.getLogger(CreateAnAccountCommand.class);
-    // TODO: create locale message
     private final UserService userService;
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
@@ -54,7 +54,7 @@ public class CreateAnAccountCommand implements Command {
         final Optional<User> user;
         try {
             if (!passwordRepeat.equals(password)) {
-                request.addAttributeToJsp(ERROR_LOGIN_PASS_ATTRIBUTE, ERROR_PASSWORD_PASS_MESSAGE);
+                request.addAttributeToJsp(ERROR_PASSWORDS_PASS_ATTRIBUTE, ERROR_PASSWORD_PASS_MESSAGE);
                 return requestFactory.createForwardResponse(propertyContext.get(REGISTRATION_PAGE));
             }
             user = userService.registration(email, password);
