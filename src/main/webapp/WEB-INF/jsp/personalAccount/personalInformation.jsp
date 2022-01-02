@@ -19,6 +19,7 @@
 <fmt:message bundle="${loc}" key="label.personalInformational.button.password" var="buttonPassword"/>
 <fmt:message bundle="${loc}" key="label.personalInformational.button.firstName" var="buttonFirstName"/>
 <fmt:message bundle="${loc}" key="label.personalInformational.button.lastName" var="buttonLastName"/>
+<fmt:message bundle="${loc}" key="label.registration.boxPasswordRepeat" var="passwordRepeat"/>
 <html>
 <head>
     <title>${pageTitle}</title>
@@ -45,6 +46,10 @@
         <input id="firstName-input" type="text" name="firstName" min="1" max="45" required
                pattern="(^[A-Z][a-z]{0,35}(-[A-Z])*[a-z]{0,22}$)|(^[А-Я][а-я]{0,22}(-[А-Я])*[а-я]{0,22}$)|(^[A-Z][a-z]{0,45}$)|(^[А-Я][а-я]{0,45}$)"
                value="${sessionScope.user.firstName}"/>
+        <c:if test="${not empty requestScope.result}">
+            <b>${requestScope.result}</b>
+            <br>
+        </c:if>
         <button type="submit" class="cancelbtn">${buttonFirstName}</button>
     </form>
     <br>
@@ -53,6 +58,10 @@
         <label for="lastName-input">${lastName}:</label>
         <input id="lastName-input" type="text" name="lastName" min="1" max="45" required
                pattern="(^[A-Z][a-z]{0,35}(-[A-Z])*[a-z]{0,22}$)|(^[А-Я][а-я]{0,22}(-[А-Я])*[а-я]{0,22}$)|(^[A-Z][a-z]{0,45}$)|(^[А-Я][а-я]{0,45}$)" value="${sessionScope.user.lastName}"/>
+        <c:if test="${not empty requestScope.result}">
+            <b>${requestScope.result}</b>
+            <br>
+        </c:if>
         <button type="submit" class="cancelbtn">${buttonLastName}</button>
     </form>
     <form name="updatePassword-form"
@@ -60,6 +69,13 @@
         <label for="password-input">${password}:</label>
         <input id="password-input" type="password" min="2" max="15" name="password" required
                pattern="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,15})$" placeholder="${password}"/>
+        <label for="passwordRepeat-input">${passwordRepeat}:</label>
+        <input id="passwordRepeat-input" type="password" min="2" max="15" required
+               pattern="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,15})$" name="passwordRepeat"  value=""/>
+        <c:if test="${not empty requestScope.errorUpdatePassMessage}">
+            <b>${requestScope.errorUpdatePassMessage}</b>
+            <br>
+        </c:if>
         <button type="submit" class="cancelbtn">${buttonPassword}</button>
     </form>
     <form name="updateEmail-form"
@@ -68,12 +84,13 @@
         <input id="email-input" type="text" name="email" min="2" max="45"
                required pattern="^([A-Za-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$"
                value="${sessionScope.user.email}"/>
+        <c:if test="${not empty requestScope.result}">
+            <b>${requestScope.result}</b>
+            <br>
+        </c:if>
         <button type="submit" class="cancelbtn">${buttonEmail}</button>
     </form>
 </div>
-<br>
-<h3>${requestScope.result}</h3>
-</br>
 <%@include file="/WEB-INF/jsp/common/footer.jsp" %>
 </body>
 </html>

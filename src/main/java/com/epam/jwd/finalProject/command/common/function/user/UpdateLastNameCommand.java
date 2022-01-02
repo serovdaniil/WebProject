@@ -31,7 +31,7 @@ public class UpdateLastNameCommand implements Command {
     private static final String ACCOUNT_PAGE = "page.personalInformation";
     private static final String UNSUCCESSFUL_RESULT_UPDATE_INFORMATION = "Unsuccessful updating of personal information";
     private static final Logger LOG = LogManager.getLogger(UpdateLastNameCommand.class);
-
+    // TODO: create locale message
     UpdateLastNameCommand(UserService service, RequestFactory requestFactory, PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().userService();
         this.requestFactory = RequestFactory.getInstance();

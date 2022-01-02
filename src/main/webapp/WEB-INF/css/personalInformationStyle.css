@@ -7,7 +7,7 @@ body {
 /* Bordered form */
 form {
     border: 2px solid #4CAF50;
-    height: 150px;
+    height: auto;
 }
 
 /* Full-width inputs */

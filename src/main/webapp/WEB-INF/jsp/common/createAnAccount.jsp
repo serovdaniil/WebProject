@@ -8,7 +8,7 @@
 <fmt:message bundle="${loc}" key="label.registration.boxPassword" var="password"/>
 <fmt:message bundle="${loc}" key="label.registration.button.registration" var="registration"/>
 <fmt:message bundle="${loc}" key="label.registration.removeText" var="removeText"/>
-
+<fmt:message bundle="${loc}" key="label.registration.boxPasswordRepeat" var="passwordRepeat"/>
 <fmt:message bundle="${loc}" key="label.registration.create" var="createAccount"/>
 
 <!doctype html>
@@ -33,6 +33,9 @@
         <input id="password-input" type="password" min="2" max="15" required
                pattern="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,15})$" name="password" value=""/>
         <br/>
+        <label for="passwordRepeat-input">${passwordRepeat}:</label>
+        <input id="passwordRepeat-input" type="password" min="2" max="15" required
+               pattern="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,15})$" name="passwordRepeat"  value=""/>
         <c:if test="${not empty requestScope.errorRegistrationPassMessage}">
             <b>${requestScope.errorRegistrationPassMessage}</b>
             <br>

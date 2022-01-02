@@ -28,10 +28,13 @@ public class UpdatePasswordCommand implements Command {
     private static final String FIND_PARAM_PASSWORD = "password";
     private static final String RESULT_ATTRIBUTE_NAME = "result";
     private static final String URL_ACCOUNT_PAGE = "/controller?command=show_personal_infomation";
+    private static final String ERROR_UPDATE_PASS_ATTRIBUTE = "errorUpdatePassMessage";
     private static final String ACCOUNT_PAGE = "page.personalInformation";
+    private static final String PASSWORD_REPEAT_REQUEST_PARAM_NAME = "passwordRepeat";
     private static final String UNSUCCESSFUL_RESULT_UPDATE_INFORMATION = "Unsuccessful updating of personal information";
+    private static final String ERROR_PASSWORD_PASS_MESSAGE = "Passwords do not match, repeat the input!";
     private static final Logger LOG = LogManager.getLogger(UpdatePasswordCommand.class);
-
+    // TODO: create locale message
     UpdatePasswordCommand(UserService service, RequestFactory requestFactory, PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().userService();
         this.requestFactory = RequestFactory.getInstance();
@@ -43,7 +46,12 @@ public class UpdatePasswordCommand implements Command {
         final Optional<User> userOptional = request.retrieveFromSession(USER_SESSION_ATTRIBUTE_NAME);
         final String login = userOptional.get().getLogin();
         final String password = request.getParameter(FIND_PARAM_PASSWORD);
+        final String passwordRepeat = request.getParameter(PASSWORD_REPEAT_REQUEST_PARAM_NAME);
         Optional<User> user = Optional.empty();
+        if (!passwordRepeat.equals(password)) {
+            request.addAttributeToJsp(ERROR_UPDATE_PASS_ATTRIBUTE, ERROR_PASSWORD_PASS_MESSAGE);
+            return requestFactory.createForwardResponse(propertyContext.get(ACCOUNT_PAGE));
+        }
         try {
             user = service.updatePasswordByLogin(login, password);
         } catch (ValidationException e) {
