@@ -30,6 +30,7 @@
 <fmt:message bundle="${loc}" key="label.panelConferenc.menu.searchId" var="menuSearchId"/>
 <fmt:message bundle="${loc}" key="label.panelConferenc.menu.searchName" var="menuSearchName"/>
 <fmt:message bundle="${loc}" key="label.panelConferenc.menu.update" var="menuUpdate"/>
+<fmt:message bundle="${loc}" key="label.message.resultNotOperation" var="message"/>
 <html>
 <head>
     <title>${pageTitle}</title>
@@ -49,7 +50,10 @@
 <p><a href="#searchByName" class="create">${menuSearchName}</a></p>
 <p><a href="${pageContext.request.contextPath}/controller?command=show_all_conferences" class="create">${menuReadConferenc}</a></p>
 <p><a href="${pageContext.request.contextPath}/controller?command=show_categories" class="create">${menuReadCategory}</a></p>
-<p>${requestScope.result}</p>
+<c:if test="${not empty requestScope.result}">
+    <p><b>${message}</b></p>
+    <br>
+</c:if>
 <p>${requestScope.conferenc}</p>
 <p><a name="create"></a></p>
 <p class="bolt">${textCreate}

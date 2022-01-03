@@ -42,6 +42,8 @@ public class CategoryDaoImpl implements CategoryDao {
 
     private static final String CATEGORY_DELETE = "DELETE FROM category WHERE id_category=?";
 
+    private static final String FIND_FOR_DUPLICATE_CATEGORY = "SELECT * FROM category WHERE name_category=?";
+
     /**
      * Logger for this dao
      */
@@ -82,6 +84,37 @@ public class CategoryDaoImpl implements CategoryDao {
             throw new DaoException(e);
         }
         return result;
+    }
+
+    /**
+     * Find for duplicate category
+     *
+     * @param name name for new category
+     * @return boolean result of operation
+     */
+    @Override
+    public boolean findForDuplicateCategory(String name) throws DaoException {
+        Optional<Category> productOptional = Optional.empty();
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_FOR_DUPLICATE_CATEGORY)) {
+            statement.setString(1, name);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                Category category = extractCategory(resultSet);
+                productOptional = Optional.of(category);
+            }
+        } catch (SQLException e) {
+            LOG.error("sql exception occurred", e);
+            LOG.debug("sql: {}", FIND_FOR_DUPLICATE_CATEGORY);
+            throw new DaoException(e);
+        } catch (EntityExtractionFailedException e) {
+            LOG.error("could not extract entity", e);
+        }
+        if (productOptional.isPresent()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

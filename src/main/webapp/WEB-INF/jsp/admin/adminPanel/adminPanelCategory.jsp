@@ -24,6 +24,7 @@
 <fmt:message bundle="${loc}" key="label.panelCategory.textRemove" var="textRemove"/>
 <fmt:message bundle="${loc}" key="label.panelCategory.textUpdate" var="textUpdate"/>
 <fmt:message bundle="${loc}" key="label.panelCategory.textMain" var="textMain"/>
+<fmt:message bundle="${loc}" key="label.message.resultNotOperation" var="message"/>
 <html>
 <head>
     <title>${pageTitle}</title>
@@ -41,7 +42,10 @@
 <p><a href="#remove" class="create">${menuRemove}</a></p>
 <p><a href="#searchById" class="create">${menuFinfById}</a></p>
 <p><a href="${pageContext.request.contextPath}/controller?command=show_categories" class="create">${menuReadCategories}</a></p>
-<p>${requestScope.result}</p>
+<c:if test="${not empty requestScope.result}">
+    <p><b>${message}</b></p>
+    <br>
+</c:if>
 <p>${requestScope.category}</p>
 <p><a name="create"></a></p>
 <p class="bolt">${textCreate}

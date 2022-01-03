@@ -22,6 +22,15 @@ public interface QuestionService extends EntityService<Question>{
     boolean create(String name,  Long idUser) throws ValidationException, ServiceException;
 
     /**
+     * Find for duplicate question
+     *
+     * @param idAccount id question
+     * @param question  question for new question
+     * @return boolean result of operation
+     */
+    boolean findForDuplicateQuestion(Long idAccount, String question)throws ValidationException, ServiceException;
+
+    /**
      * Add answer for question
      *
      * @param id id question

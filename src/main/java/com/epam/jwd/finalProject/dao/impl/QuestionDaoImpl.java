@@ -38,7 +38,9 @@ public class QuestionDaoImpl implements QuestionDao {
     private static final String FIND_ACCOUNT_ID_BY_QUESTION = "SELECT * FROM final_task.question JOIN final_task.user " +
             "ON user_id=id_user JOIN final_task.role ON role_id=id_role WHERE final_task.question.user_id = ?";
     private static final String QUESTION_DELETE = "DELETE FROM final_task.question WHERE final_task.question.id = ?";
-
+    private static final String FIND_DUPLICATE_QUESTION = "SELECT * FROM final_task.question JOIN final_task.user " +
+            "ON user_id=id_user JOIN final_task.role ON role_id=id_role WHERE final_task.question.user_id = ? " +
+            "&& final_task.question.question = ?";
     /**
      * Connection pool for this dao
      */
@@ -111,6 +113,39 @@ public class QuestionDaoImpl implements QuestionDao {
             throw new DaoException(e);
         }
         return result;
+    }
+
+    /**
+     * Find for duplicate question
+     *
+     * @param idAccount id question
+     * @param question  question for new question
+     * @return boolean result of operation
+     */
+    @Override
+    public boolean findForDuplicateQuestion(Long idAccount, String question) throws DaoException {
+        Optional<Question> productOptional = Optional.empty();
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_DUPLICATE_QUESTION)) {
+            statement.setLong(1, idAccount);
+            statement.setString(2, question);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                Question questionOne = extractQuestion(resultSet);
+                productOptional = Optional.of(questionOne);
+            }
+        } catch (SQLException e) {
+            LOG.error("sql exception occurred", e);
+            LOG.debug("sql: {}", FIND_DUPLICATE_QUESTION);
+            throw new DaoException(e);
+        } catch (EntityExtractionFailedException e) {
+            LOG.error("could not extract entity", e);
+        }
+        if (productOptional.isPresent()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

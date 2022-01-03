@@ -45,6 +45,11 @@ public class CreateSectionConferencCommand implements Command {
         final Long id = Long.parseLong(request.getParameter(PARAM_ID_CONFERENC));
         boolean resultCreate=false;
         try {
+            resultCreate=service.findForDuplicateSectionConferenc(name,description,id);
+            if (resultCreate) {
+                request.addAttributeToJsp(SECTIOM_CONFERENCES_ATTRIBUTE_NAME, OPERATION_WAS_UNSUCCSESFUL);
+                return requestFactory.createForwardResponse(propertyContext.get(SECTION_ADMIN_PANEL_PAGE));
+            }
             resultCreate = service.create(name, description, id);
          } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);

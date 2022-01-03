@@ -66,6 +66,28 @@ public class ConferencServiceImpl implements ConferencService {
     }
 
     /**
+     * Find for duplicate conferenc
+     *
+     * @param name        name for new conferenc
+     * @param description description for new conferenc
+     * @param idCategory  id category for new conferenc
+     * @return boolean result of operation
+     */
+    @Override
+    public boolean findForDuplicateConferenc(String name, String description, Long idCategory) throws ValidationException, ServiceException {
+        try {
+            if (!conferencDataValidator.isNameValid(name) || !conferencDataValidator.isDescriptionValid(description)
+            || !conferencDataValidator.isIdValid(idCategory)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            return conferencDao.findForDuplicateConferenc(name,description,idCategory);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    /**
      * Update description conferenc
      *
      * @param id          id conferenc

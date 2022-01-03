@@ -21,6 +21,15 @@ public interface CategoryService extends EntityService<Category> {
      * @return boolean result of operation
      */
     boolean create(String name) throws ValidationException, ServiceException;
+
+    /**
+     * Find for duplicate category
+     *
+     * @param name name for new category
+     * @return boolean result of operation
+     */
+    boolean findForDuplicateCategory(String name) throws ValidationException, ServiceException;
+
     /**
      * Change name category
      *

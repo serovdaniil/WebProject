@@ -26,6 +26,14 @@ public interface CategoryDao {
     boolean create(String name) throws DaoException;
 
     /**
+     * Find for duplicate category
+     *
+     * @param name name for new category
+     * @return boolean result of operation
+     */
+    boolean findForDuplicateCategory(String name) throws DaoException;
+
+    /**
      * Change name for category
      *
      * @param id id category

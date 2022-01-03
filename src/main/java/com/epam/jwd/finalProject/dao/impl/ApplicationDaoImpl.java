@@ -147,7 +147,6 @@ public class ApplicationDaoImpl implements ApplicationDao {
         } else {
             return false;
         }
-
     }
 
     /**

@@ -66,6 +66,25 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     /**
+     * Find for duplicate category
+     *
+     * @param name name for new category
+     * @return boolean result of operation
+     */
+    @Override
+    public boolean findForDuplicateCategory(String name) throws ValidationException, ServiceException {
+        try {
+            if (!categoryDataValidator.isNameValid(name)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            return categoryDao.findForDuplicateCategory(name);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    /**
      * Change name category
      *
      * @param id   id category

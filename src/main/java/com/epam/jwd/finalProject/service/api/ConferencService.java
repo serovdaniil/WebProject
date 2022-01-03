@@ -23,6 +23,16 @@ public interface ConferencService extends EntityService<Conferenc> {
     boolean create(String name, String description,Long idCategory) throws ValidationException, ServiceException;
 
     /**
+     * Find for duplicate conferenc
+     *
+     * @param name        name for new conferenc
+     * @param description description for new conferenc
+     * @param idCategory  id category for new conferenc
+     * @return boolean result of operation
+     */
+    boolean findForDuplicateConferenc(String name,String description,Long idCategory)  throws ValidationException, ServiceException;
+
+    /**
      * Update description for conferenc
      *
      * @param id id conferenc

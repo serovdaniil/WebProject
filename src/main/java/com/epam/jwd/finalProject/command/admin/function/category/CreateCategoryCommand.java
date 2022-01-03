@@ -39,6 +39,11 @@ public class CreateCategoryCommand implements Command {
         final String name = request.getParameter(PARAM_NAME);
         boolean resultCreate = false;
         try {
+            resultCreate=service.findForDuplicateCategory(name);
+            if (resultCreate) {
+                request.addAttributeToJsp(CATEGORIES_ATTRIBUTE_NAME_RESULT, OPERATION_WAS_UNSUCCSESFUL);
+                return requestFactory.createForwardResponse(propertyContext.get(CATEGORY_ADMIN_PANEL_PAGE));
+            }
             resultCreate = service.create(name);
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);

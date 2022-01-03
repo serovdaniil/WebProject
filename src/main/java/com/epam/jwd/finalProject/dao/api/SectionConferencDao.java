@@ -26,6 +26,17 @@ public interface SectionConferencDao {
     boolean create(String name, String description, Long idConferenc) throws DaoException;
 
     /**
+     * Find for duplicate section conferenc
+     *
+     * @param name        name for section conferenc
+     * @param description description for section conferenc
+     * @param idConferenc id conferenc for section conferenc
+     * @return boolean result of operation
+     */
+
+    boolean findForDuplicateSectionConferenc(String name, String description, Long idConferenc) throws DaoException;
+
+    /**
      * Update description by id section conferenc
      *
      * @param id          id for section conferenc

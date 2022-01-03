@@ -43,6 +43,11 @@ public class CreateConferencCommand implements Command {
         final Long id = Long.parseLong(request.getParameter(PARAM_ID_CATEGORY));
         boolean resultCreate = false;
         try {
+            resultCreate=service.findForDuplicateConferenc(name,description,id);
+            if (resultCreate) {
+                request.addAttributeToJsp(CONFERENCES_ATTRIBUTE_NAME_RESULT_CREATE, OPERATION_WAS_UNSUCCSESFUL);
+                return requestFactory.createForwardResponse(propertyContext.get(CONFERENC_ADMIN_PANEL_PAGE));
+            }
             resultCreate = service.create(name, description, id);
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);

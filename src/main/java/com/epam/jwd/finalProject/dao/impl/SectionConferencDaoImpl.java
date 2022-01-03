@@ -50,6 +50,12 @@ public class SectionConferencDaoImpl implements SectionConferencDao {
             "JOIN conferenc ON conferenc_id=id_conferenc JOIN category ON category_id=id_category JOIN status " +
             "ON section_conferenc_status_id=id_status " +
             "WHERE section_conferenc.conferenc_id=? && section_conferenc_status_id=1";
+
+    private static final String FIND_FOR_DUPLICATE_SECTION_CONFERENC = "SELECT * FROM section_conferenc JOIN status " +
+            "ON section_conferenc_status_id=id_status JOIN conferenc ON conferenc_id=id_conferenc " +
+            "JOIN category ON category_id=id_category WHERE section_conferenc.name=? && section_conferenc.description=? " +
+            "&& conferenc_id=? && section_conferenc_status_id=1";
+
     /**
      * Logger for this dao
      */
@@ -97,6 +103,41 @@ public class SectionConferencDaoImpl implements SectionConferencDao {
     }
 
     /**
+     * Find for duplicate section conferenc
+     *
+     * @param name        name for section conferenc
+     * @param description description for section conferenc
+     * @param idConferenc id conferenc for section conferenc
+     * @return boolean result of operation
+     */
+    @Override
+    public boolean findForDuplicateSectionConferenc(String name, String description, Long idConferenc) throws DaoException {
+        Optional<SectionConferenc> productOptional = Optional.empty();
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_FOR_DUPLICATE_SECTION_CONFERENC)) {
+            statement.setString(1, name);
+            statement.setString(2, description);
+            statement.setLong(3, idConferenc);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                SectionConferenc sectionConferenc = extractSectionConferenc(resultSet);
+                productOptional = Optional.of(sectionConferenc);
+            }
+        } catch (SQLException e) {
+            LOG.error("sql exception occurred", e);
+            LOG.debug("sql: {}", FIND_FOR_DUPLICATE_SECTION_CONFERENC);
+            throw new DaoException(e);
+        } catch (EntityExtractionFailedException e) {
+            LOG.error("could not extract entity", e);
+        }
+        if (productOptional.isPresent()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * Change status by id section conferenc
      *
      * @param idSectionConferenc id for section conferenc
@@ -116,7 +157,7 @@ public class SectionConferencDaoImpl implements SectionConferencDao {
             }
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}",UPDATE_STATUS_SECTION_CONFERENC);
+            LOG.debug("sql: {}", UPDATE_STATUS_SECTION_CONFERENC);
             throw new DaoException(e);
         }
         return result;

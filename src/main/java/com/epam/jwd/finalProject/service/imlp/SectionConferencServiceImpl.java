@@ -68,6 +68,29 @@ public class SectionConferencServiceImpl implements SectionConferencService {
     }
 
     /**
+     * Find for duplicate section conferenc
+     *
+     * @param name        name for section conferenc
+     * @param description description for section conferenc
+     * @param idConferenc id conferenc for section conferenc
+     * @return boolean result of operation
+     */
+    @Override
+    public boolean findForDuplicateSectionConferenc(String name, String description, Long idConferenc) throws ValidationException, ServiceException {
+        try {
+            if (!sectionConferencDataValidator.isIdValid(idConferenc)
+                    || !sectionConferencDataValidator.isNameValid(name)
+                    || !sectionConferencDataValidator.isDescriptionValid(description)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            return sectionConferencDao.findForDuplicateSectionConferenc(name,description,idConferenc);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    /**
      * Change status auto after update status conferenc
      *
      * @param idConferenc id conferenc

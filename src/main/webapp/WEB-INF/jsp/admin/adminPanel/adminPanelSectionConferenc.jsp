@@ -30,6 +30,7 @@
 <fmt:message bundle="${loc}" key="label.panelSectionConferenc.textRemove" var="textRemove"/>
 <fmt:message bundle="${loc}" key="label.panelSectionConferenc.textUpdate" var="textUpdate"/>
 <fmt:message bundle="${loc}" key="label.panelSectionConferenc.boxIdSectionConferenc" var="boxIdSectionConferenc"/>
+<fmt:message bundle="${loc}" key="label.message.resultNotOperation" var="message"/>
 <html>
 <head>
     <title>${pageTitle}</title>
@@ -52,7 +53,10 @@
       class="create">${menuReadCategory}</a></p>
 <p><a href="${pageContext.request.contextPath}/controller?command=show_section_conferences"
       class="create">${menuSectionConferenc}</a></p>
-<p>${requestScope.result}</p>
+<c:if test="${not empty requestScope.result}">
+    <p><b>${message}</b></p>
+    <br>
+</c:if>
 <p>${requestScope.sectionConferenc}</p>
 <p><a name="create"></a></p>
 <p class="bolt">${textCreate}

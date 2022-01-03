@@ -36,6 +36,15 @@ public interface QuestionDao {
     boolean addAnswer(Long id, String answer) throws DaoException;
 
     /**
+     * Find for duplicate question
+     *
+     * @param idAccount id question
+     * @param question  question for new question
+     * @return boolean result of operation
+     */
+    boolean findForDuplicateQuestion(Long idAccount, String question) throws DaoException;
+
+    /**
      * Read all questions
      *
      * @return List questions

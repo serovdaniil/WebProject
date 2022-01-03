@@ -64,6 +64,26 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     /**
+     * Find for duplicate question
+     *
+     * @param idAccount id question
+     * @param question  question for new question
+     * @return boolean result of operation
+     */
+    @Override
+    public boolean findForDuplicateQuestion(Long idAccount, String question) throws ValidationException, ServiceException {
+        try {
+            if (!questionDataValidator.isIdValid(idAccount) || !questionDataValidator.isAnswerValid(question)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            return questionDao.findForDuplicateQuestion(idAccount,question);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    /**
      * Find question by id
      *
      * @param id id question

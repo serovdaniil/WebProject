@@ -42,6 +42,10 @@ public class ConferencDaoImpl implements ConferencDao {
     private static final String FIND_NAME_CONFERENC = "SELECT * FROM conferenc JOIN category " +
             "ON category_id=id_category JOIN status ON conferenc_status_id=id_status WHERE conferenc.name=?";
     private static final String CONFERENC_DELETE = "DELETE FROM conferenc WHERE id_conferenc=?";
+    private static final String FIND_FOR_DIPLICATE_CONFERENC = "SELECT * FROM conferenc JOIN category " +
+            "ON category_id=id_category JOIN status ON conferenc_status_id=id_status WHERE name=? " +
+            "&& description=? && category_id=? && conferenc_status_id=1";
+
     /**
      * Logger for this dao
      */
@@ -86,6 +90,41 @@ public class ConferencDaoImpl implements ConferencDao {
             throw new DaoException(e);
         }
         return result;
+    }
+
+    /**
+     * Find for duplicate conferenc
+     *
+     * @param name        name for new conferenc
+     * @param description description for new conferenc
+     * @param idCategory  id category for new conferenc
+     * @return boolean result of operation
+     */
+    @Override
+    public boolean findForDuplicateConferenc(String name, String description, Long idCategory) throws DaoException {
+        Optional<Conferenc> productOptional = Optional.empty();
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_FOR_DIPLICATE_CONFERENC)) {
+            statement.setString(1, name);
+            statement.setString(2, description);
+            statement.setLong(3, idCategory);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                Conferenc conferenc = extractConferenc(resultSet);
+                productOptional = Optional.of(conferenc);
+            }
+        } catch (SQLException e) {
+            LOG.error("sql exception occurred", e);
+            LOG.debug("sql: {}", FIND_FOR_DIPLICATE_CONFERENC);
+            throw new DaoException(e);
+        } catch (EntityExtractionFailedException e) {
+            LOG.error("could not extract entity", e);
+        }
+        if (productOptional.isPresent()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

@@ -5,6 +5,7 @@ import com.epam.jwd.finalProject.service.exception.ServiceException;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
 
 import java.util.List;
+
 /**
  * The interface entity service
  *
@@ -15,17 +16,28 @@ public interface SectionConferencService extends EntityService<SectionConferenc>
     /**
      * Create section conferenc
      *
-     * @param name name for new section conferenc
+     * @param name        name for new section conferenc
      * @param description description for section conferenc
      * @return boolean result of operation
      * @throws ValidationException
      */
-    boolean create(String name, String description,Long idConferenc) throws ValidationException, ServiceException;
+    boolean create(String name, String description, Long idConferenc) throws ValidationException, ServiceException;
+
+    /**
+     * Find for duplicate section conferenc
+     *
+     * @param name        name for section conferenc
+     * @param description description for section conferenc
+     * @param idConferenc id conferenc for section conferenc
+     * @return boolean result of operation
+     */
+    boolean findForDuplicateSectionConferenc(String name, String description, Long idConferenc) throws ValidationException, ServiceException;
+
 
     /**
      * Update description for section conferenc
      *
-     * @param id id for section conferenc
+     * @param id          id for section conferenc
      * @param description description for section conferenc
      * @return boolean result of operation
      * @throws ValidationException
@@ -54,7 +66,7 @@ public interface SectionConferencService extends EntityService<SectionConferenc>
      * Change status for section conferenc
      *
      * @param idSectionConferenc id for section conferenc
-     * @param nameStatus status for section conferenc
+     * @param nameStatus         status for section conferenc
      * @return boolean result of operation
      * @throws ValidationException
      */
