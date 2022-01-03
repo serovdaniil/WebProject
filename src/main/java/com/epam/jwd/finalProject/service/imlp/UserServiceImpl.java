@@ -119,7 +119,6 @@ public class UserServiceImpl implements UserService {
                 final byte[] hashedPassword = readUser.get()
                         .getPassword()
                         .getBytes(StandardCharsets.UTF_8);
-                LOG.debug("Service: Authenticating finished.");
                 return passwordEncoder.checkPassword(enteredPassword, hashedPassword)
                         ? readUser
                         : Optional.empty();

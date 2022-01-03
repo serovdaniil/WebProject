@@ -60,6 +60,13 @@ public class ApplicationDaoImpl implements ApplicationDao {
 
     private static final String CREATE_APPLICATION = "INSERT INTO application (user_id,section_id,section_result_id) values(?,?,?)";
 
+    private static final String FIND_FOR_DUPLICATE_APPLICATION = "SELECT * FROM application JOIN final_task.user ON user_id=id_user " +
+            "JOIN final_task.role ON role_id=id_role JOIN section_result " +
+            "ON section_result_id=id_section_result JOIN section_conferenc ON section_id=id_section_conferenc " +
+            "JOIN status ON section_conferenc_status_id=id_status " +
+            "JOIN conferenc ON conferenc_id=id_conferenc JOIN category ON category_id=id_category WHERE user_id=? " +
+            "&& section_id=? && id_section_result=?";
+
     /**
      * Logger for this dao
      */
@@ -107,6 +114,43 @@ public class ApplicationDaoImpl implements ApplicationDao {
     }
 
     /**
+     * Find for duplicate application
+     *
+     * @param idAccount          id account
+     * @param idSectionConferenc id section conferenc for application
+     * @param idResultSection    id result section
+     * @return boolean result of operation
+     */
+    @Override
+    public boolean findForDuplicateApplication(Long idAccount, Long idSectionConferenc,
+                                               Long idResultSection) throws DaoException {
+        Optional<Application> productOptional = Optional.empty();
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_FOR_DUPLICATE_APPLICATION)) {
+            statement.setLong(1, idAccount);
+            statement.setLong(2, idSectionConferenc);
+            statement.setLong(3, idResultSection);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                Application application = extractApplication(resultSet);
+                productOptional = Optional.of(application);
+            }
+        } catch (SQLException e) {
+            LOG.error("sql exception occurred", e);
+            LOG.debug("sql: {}", FIND_FOR_DUPLICATE_APPLICATION);
+            throw new DaoException(e);
+        } catch (EntityExtractionFailedException e) {
+            LOG.error("could not extract entity", e);
+        }
+        if (productOptional.isPresent()) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    /**
      * Change status application after section conferenc
      *
      * @param idSectionConferenc id section conferenc for application
@@ -114,7 +158,7 @@ public class ApplicationDaoImpl implements ApplicationDao {
      */
     @Override
     public boolean changeStatusApplicationAfterUpdateSectionConferenc(Long idSectionConferenc) throws DaoException {
-               boolean result = false;
+        boolean result = false;
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(CHANGE_STATUS_AFTER_UPDATE_SECTION_CONFERENC)) {
             statement.setLong(1, idSectionConferenc);
@@ -139,7 +183,7 @@ public class ApplicationDaoImpl implements ApplicationDao {
      */
     @Override
     public boolean updateIdStatusApplication(Long idApplication, Long idResultSection) throws DaoException {
-             boolean result = false;
+        boolean result = false;
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_ID_RESULT_APPLICATION)) {
             statement.setLong(2, idApplication);

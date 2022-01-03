@@ -26,9 +26,13 @@ import java.util.Optional;
 public class CreateApplicationCommand implements Command {
     private static final String PARAM_ID = "id";
     private static final String USER_SESSION_ATTRIBUTE_NAME = "user";
+    private static final String APPLICATIONS_ACCOUNT_PAGE = "page.applicationsByAccount";
     private static final String APPLICATIONS_ATTRIBUTE_NAME_SECTION_CONFERENC = "applications";
+    private static final String ERROR_DUPLICATE_PASS_ATTRIBUTE = "errorDuplicatePassMessage";
     private static final String APPLICATIONS_ATTRIBUTE_NAME = "result";
     private static final String APPLICATIONS_PAGE = "/controller?command=show_applications_by_account";
+    private static final String ERROR_DUPLICATE_PASS_MESSAGE = "You already have an application for training, " +
+            "contact the administrator for details!";
     private static final Logger LOG = LogManager.getLogger(CreateApplicationCommand.class);
 
     private final ApplicationService applicationService;
@@ -47,16 +51,25 @@ public class CreateApplicationCommand implements Command {
         final Optional<User> userOptional = request.retrieveFromSession(USER_SESSION_ATTRIBUTE_NAME);
         final Long idAccount = userOptional.get().getId();
         final Long idSectionConferenc = Long.parseLong(request.getParameter(PARAM_ID));
-        final boolean result;
+        boolean result;
         final List<Application> applicationList;
         try {
+            for (long i = 1; i < 3; i++) {
+                result = applicationService.findForDuplicateApplication(idAccount, idSectionConferenc, i);
+                if (result == true) {
+                    request.addAttributeToJsp(ERROR_DUPLICATE_PASS_ATTRIBUTE, ERROR_DUPLICATE_PASS_MESSAGE);
+                    applicationList = applicationService.findAccountIdByApplication(idAccount);
+                    request.addAttributeToJsp(APPLICATIONS_ATTRIBUTE_NAME_SECTION_CONFERENC, applicationList);
+                    return requestFactory.createForwardResponse(propertyContext.get(APPLICATIONS_ACCOUNT_PAGE));
+                }
+            }
             result = applicationService.create(idAccount, idSectionConferenc, (long) 1);
             applicationList = applicationService.findAccountIdByApplication(idAccount);
             request.addAttributeToJsp(APPLICATIONS_ATTRIBUTE_NAME_SECTION_CONFERENC, applicationList);
             request.addAttributeToJsp(APPLICATIONS_ATTRIBUTE_NAME, result);
-        }  catch (ValidationException e) {
+        } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
-        }catch (ServiceException e) {
+        } catch (ServiceException e) {
             LOG.error("The service exception!" + e);
         }
         return requestFactory.createRedirectResponse(APPLICATIONS_PAGE);

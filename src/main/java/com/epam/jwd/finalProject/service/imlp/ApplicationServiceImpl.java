@@ -89,6 +89,29 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     /**
+     * Find for duplicate application
+     *
+     * @param idAccount          id account
+     * @param idSectionConferenc id section conferenc for application
+     * @param idResultSection    id result section
+     * @return boolean result of operation
+     */
+    @Override
+    public boolean findForDuplicateApplication(Long idAccount, Long idSectionConferenc, Long idResultSection) throws ValidationException, ServiceException {
+        try {
+            if (!applicationDataValidator.isIdValid(idAccount) ||
+                    !applicationDataValidator.isIdValid(idSectionConferenc) ||
+                    !applicationDataValidator.isIdValid(idResultSection)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            return applicationDao.findForDuplicateApplication(idAccount, idSectionConferenc, idResultSection);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    /**
      * Update id status application
      *
      * @param idApplication id application

@@ -11,6 +11,7 @@
 <fmt:message bundle="${loc}" key="label.applicationByAccount.boxNameSection" var="nameSection"/>
 <fmt:message bundle="${loc}" key="label.applicationByAccount.boxResult" var="result"/>
 <fmt:message bundle="${loc}" key="label.applicationByAccount.button.remove" var="remove"/>
+<fmt:message bundle="${loc}" key="label.message.duplicateApplication" var="message"/>
 <html>
 <head>
     <title>${pageTitle}</title>
@@ -23,6 +24,10 @@
 <%@include file="/WEB-INF/jsp/common/header.jsp" %>
 <h2>${textMain}</h2>
 <p>${text}</p>
+<c:if test="${not empty requestScope.errorDuplicatePassMessage}">
+    <p><b>${message}</b></p>
+    <br>
+</c:if>
 <table>
     <tr>
         <th>${id}</th>

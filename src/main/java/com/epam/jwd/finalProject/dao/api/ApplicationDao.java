@@ -19,10 +19,20 @@ public interface ApplicationDao {
      *
      * @param idAccount          id account
      * @param idSectionConferenc id section conferenc for application
-     * @param idResultSection    id resulr section
+     * @param idResultSection    id result section
      * @return boolean result of operation
      */
     boolean create(Long idAccount, Long idSectionConferenc, Long idResultSection) throws DaoException;
+
+    /**
+     * Find for duplicate application
+     *
+     * @param idAccount          id account
+     * @param idSectionConferenc id section conferenc for application
+     * @param idResultSection    id result section
+     * @return boolean result of operation
+     */
+    boolean findForDuplicateApplication(Long idAccount, Long idSectionConferenc, Long idResultSection) throws DaoException;
 
     /**
      * Change status application after section conferenc
