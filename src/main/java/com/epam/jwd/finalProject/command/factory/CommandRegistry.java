@@ -18,7 +18,6 @@ import com.epam.jwd.finalProject.command.admin.page.sectionConferenc.ShowReadSec
 import com.epam.jwd.finalProject.command.admin.page.user.ShowUsersPageCommand;
 import com.epam.jwd.finalProject.command.admin.page.user.ShowReadUserByIdPageCommand;
 import com.epam.jwd.finalProject.command.admin.function.user.UpdateRoleCommand;
-import com.epam.jwd.finalProject.command.common.function.ChangeLanguageCommand;
 import com.epam.jwd.finalProject.command.common.function.application.CreateApplicationCommand;
 import com.epam.jwd.finalProject.command.common.function.application.FindAccountIdByApplicationCommand;
 import com.epam.jwd.finalProject.command.common.function.application.FindApplicationByIdCommand;
@@ -208,8 +207,6 @@ public enum CommandRegistry {
             "create_an_account", UNAUTHORIZED),
     LOGOUT(LogoutCommand.getInstance(),
             "logout", USER, ADMIN, BLOKED),
-    CHANGELANGUAGE(ChangeLanguageCommand.getInstance(),
-            "changeLanguage"),
     DEFAULT(ShowMainPageCommand.getInstance(),
             "");
 

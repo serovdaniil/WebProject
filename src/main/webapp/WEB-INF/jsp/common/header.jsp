@@ -14,6 +14,10 @@
 <fmt:message bundle="${loc}" key="label.header.personalAccount" var="personalAccount"/>
 <fmt:message bundle="${loc}" key="label.header.login" var="login"/>
 <fmt:message bundle="${loc}" key="label.header.logout" var="logout"/>
+
+<script src="js/language-switch.js" type="text/javascript"></script>
+<script src="js/print-cash-account-in-header.js" type="text/javascript"></script>
+<link rel="stylesheet" href="css/account-drop-down-menu.css">
 <html>
 <head>
 </head>
@@ -52,10 +56,20 @@
     <li></li>
     <li></li>
     <li></li>
-    <li><a href="/controller?command=changeLanguage&lang=fr_FR" type="radio" aria-autocomplete="off" aria-checked >FR</a></li>
-    <li><a href="/controller?command=changeLanguage&lang=be_BE" type="radio" aria-autocomplete="off" aria-checked >BE</a></li>
-    <li><a href="/controller?command=changeLanguage&lang=ru_RU" type="radio" aria-autocomplete="off" aria-checked >RU</a></li>
-    <li><a href="/controller?command=changeLanguage&lang=en_US" type="radio" aria-autocomplete="off" aria-checked >EN</a></li>
+    <li></li>
+    <li><a class="dropdown-item" onclick="setLocaleAndReloadPage('ru_RU')" href="#">
+        RU
+    </a></li>
+    <li><a class="dropdown-item" onclick="setLocaleAndReloadPage('en_US')" href="">
+        EN
+    </a></li>
+    <li><a class="dropdown-item" onclick="setLocaleAndReloadPage('fr_FR')" href="#">
+        FR
+    </a></li>
+    <li><a class="dropdown-item" onclick="setLocaleAndReloadPage('be_BE')" href="">
+        BE
+    </a></li>
+    <li></li>
     <li></li>
     <li><c:choose>
         <c:when test="${not empty sessionScope.user}">

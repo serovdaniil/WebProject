@@ -7,7 +7,6 @@ import java.util.Objects;
  * @author Daniil Serov
  */
 public class PlainCommandResponse implements CommandResponse {
-
     private final boolean redirect;
     private final String path;
 
