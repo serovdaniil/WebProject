@@ -1,6 +1,5 @@
 package com.epam.jwd.finalProject.service.factory;
 
-import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.epam.jwd.finalProject.dao.api.UserDao;
 import com.epam.jwd.finalProject.dao.impl.*;
 import com.epam.jwd.finalProject.model.Entity;

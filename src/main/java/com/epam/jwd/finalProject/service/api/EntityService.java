@@ -16,25 +16,26 @@ public interface EntityService<T extends Entity> {
     /**
      * Find all
      *
+     * @param pageNumber selected page
      * @return boolean result of operation
      */
-    List<T> findAll() throws ServiceException;
+    List<T> findAll(Long pageNumber) throws ServiceException;
 
     /**
      * Find by id
      *
-     * @param id
+     * @param id param for find
      * @return boolean result of operation
-     * @throws ValidationException
+     * @throws ValidationException exception
      */
     Optional<T> findId(Long id) throws ValidationException, ServiceException;
 
     /**
      * Remove by id
      *
-     * @param id
+     * @param id param for find
      * @return boolean result of operation
-     * @throws ValidationException
+     * @throws ValidationException exception
      */
     boolean remove(Long id) throws ValidationException, ServiceException;
 }

@@ -7,7 +7,7 @@ public class ApplicationDataValidator {
     /**
      * Validator id
      *
-     * @param id
+     * @param id param for validator
      * @return boolean
      */
     public boolean isIdValid(Long id) {

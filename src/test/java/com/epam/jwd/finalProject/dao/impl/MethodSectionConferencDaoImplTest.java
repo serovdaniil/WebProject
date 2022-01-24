@@ -79,8 +79,8 @@ public class MethodSectionConferencDaoImplTest extends Assert {
     @Test
     public void readAll() throws EntityExtractionFailedException, DaoException  {
         List<SectionConferenc> expectedResult= sectionConferencs;
-        when(dao.readAll()).thenReturn(expectedResult);
-        List<SectionConferenc> actualResult = dao.readAll();
+        when(dao.readAll((long)1,(long)1)).thenReturn(expectedResult);
+        List<SectionConferenc> actualResult = dao.readAll((long)1,(long)1);
         assertEquals(actualResult, expectedResult);
     }
 

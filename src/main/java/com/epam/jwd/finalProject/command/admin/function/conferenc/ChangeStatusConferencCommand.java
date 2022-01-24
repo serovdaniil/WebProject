@@ -19,17 +19,19 @@ import org.apache.logging.log4j.Logger;
  * @author Daniil Serov
  */
 public class ChangeStatusConferencCommand implements Command {
-    private final ConferencService service;
-    private final SectionConferencService sectionConferencService;
-    private final RequestFactory requestFactory;
-    private final PropertyContext propertyContext;
-    private static final String PARAM_ID = "id";
+     private static final String PARAM_ID = "id";
     private static final String PARAM_STATUS = "newStatus";
     private static final String CONFERENCES_ATTRIBUTE_NAME_RESULT_REMOVE = "result";
     private static final String OPERATION_WAS_UNSUCCSESFUL = "The operation was unsuccsesful";
     private static final String CONFERENC_READ_CONFERENC_BY_ID_PAGE = "page.readConferencById";
-    private static final String CONFERENCES_PAGE = "/controller?command=show_all_conferences";
+    private static final String CONFERENCES_PAGE = "/controller?command=show_all_conferences&page=1";
+
     private static final Logger LOG = LogManager.getLogger(RemoveConferencByIdCommand.class);
+
+    private final ConferencService service;
+    private final SectionConferencService sectionConferencService;
+    private final RequestFactory requestFactory;
+    private final PropertyContext propertyContext;
 
     ChangeStatusConferencCommand(ConferencService service, SectionConferencService sectionConferencService,
                                  RequestFactory requestFactory, PropertyContext propertyContext) {

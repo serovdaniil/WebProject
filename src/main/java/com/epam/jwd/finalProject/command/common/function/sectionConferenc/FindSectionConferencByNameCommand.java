@@ -21,13 +21,15 @@ import java.util.List;
  * @author Daniil Serov
  */
 public class FindSectionConferencByNameCommand implements Command {
-    private final SectionConferencService service;
-    private final RequestFactory requestFactory;
-    private final PropertyContext propertyContext;
     private static final String FIND_PARAM_NAME = "name";
     private static final String SECTION_CONFERENCES_ATTRIBUTE_NAME = "sectionConferenc";
     private static final String SECTION_CONFERENCES_PAGE = "page.adminPanelSectionConferenc";
+
     private static final Logger LOG = LogManager.getLogger(FindSectionConferencByNameCommand.class);
+
+    private final SectionConferencService service;
+    private final RequestFactory requestFactory;
+    private final PropertyContext propertyContext;
 
     FindSectionConferencByNameCommand(SectionConferencService service, RequestFactory requestFactory,
                                       PropertyContext propertyContext) {

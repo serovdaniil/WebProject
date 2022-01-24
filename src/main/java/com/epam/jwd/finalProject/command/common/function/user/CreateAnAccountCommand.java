@@ -31,7 +31,9 @@ public class CreateAnAccountCommand implements Command {
     private static final String PASSWORD_REPEAT_REQUEST_PARAM_NAME = "passwordRepeat";
     private static final String ERROR_REGISTRATION_PASS_MESSAGE = "The user with this email already exists!";
     private static final String ERROR_PASSWORD_PASS_MESSAGE = "Passwords do not match, repeat the input!";
+
     private static final Logger LOG = LogManager.getLogger(CreateAnAccountCommand.class);
+
     private final UserService userService;
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;

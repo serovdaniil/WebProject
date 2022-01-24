@@ -13,6 +13,21 @@ import java.util.List;
 public interface QuestionService extends EntityService<Question>{
 
     /**
+     * Find count all question by user
+     *
+     * @param id id user
+     * @return count questions
+     */
+    Long findCountAllQuestionByUser(Long id) throws ServiceException, ValidationException;
+
+    /**
+     * Find count all question
+     *
+     * @return count questions
+     */
+    Long findCountAllQuestion() throws ServiceException;
+
+    /**
      * Create question
      *
      * @param name name for new conferenc
@@ -43,7 +58,8 @@ public interface QuestionService extends EntityService<Question>{
      * Find questions for user
      *
      * @param id id user
+     * @param pageNumber selected page
      * @return boolean result of operation
      */
-    List<Question> findAccountIdByQuestion(Long id) throws ValidationException, ServiceException;
+    List<Question> findAccountIdByQuestion(Long id, Long pageNumber) throws ValidationException, ServiceException;
 }

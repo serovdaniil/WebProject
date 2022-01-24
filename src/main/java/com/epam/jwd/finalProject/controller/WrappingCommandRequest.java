@@ -49,6 +49,13 @@ public class WrappingCommandRequest implements CommandRequest {
     }
 
     @Override
+    public Long retrieveFromSessionLong(String name) {
+        HttpSession session=request.getSession(false);
+        Long id = (Long) session.getAttribute(name);
+        return id;
+    }
+
+    @Override
     public void clearSession() {
         final HttpSession session = request.getSession(false);
         if (session != null) {

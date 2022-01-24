@@ -67,8 +67,8 @@ public class SectionConferencServiceImplTest extends Assert {
     @Test
     public void findAll() throws ServiceException {
         List<SectionConferenc> expectedResult= sectionConferencs;
-        when(service.findAll()).thenReturn(expectedResult);
-        List<SectionConferenc> actualResult = service.findAll();
+        when(service.findAll((long)1)).thenReturn(expectedResult);
+        List<SectionConferenc> actualResult = service.findAll((long)1);
         assertEquals(actualResult, expectedResult);
     }
 

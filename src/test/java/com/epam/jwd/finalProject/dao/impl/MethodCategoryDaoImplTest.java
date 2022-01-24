@@ -63,8 +63,8 @@ public class MethodCategoryDaoImplTest extends Assert {
     @Test
     public void readAll() throws EntityExtractionFailedException, DaoException  {
         List<Category> expectedResult = categories;
-        when(dao.findAll()).thenReturn(expectedResult);
-        List<Category> actualResult = dao.findAll();
+        when(dao.findAll((long)1,(long)1)).thenReturn(expectedResult);
+        List<Category> actualResult = dao.findAll((long)1,(long)1);
         assertEquals(actualResult, expectedResult);
     }
 

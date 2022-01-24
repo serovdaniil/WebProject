@@ -23,7 +23,8 @@ public class UpdateStatusResultByIdApplicationCommand implements Command {
     private static final String PARAM_ID = "id";
     private static final String PARAM_RESULT = "resultNew";
     private static final String APPLICATIONS_ATTRIBUTE_NAME_RESULT = "result";
-    private static final String URL_APPLICATIONS_PAGE = "/controller?command=show_applications";
+    private static final String URL_APPLICATIONS_PAGE = "/controller?command=show_applications&page=1";
+
     private static final Logger LOG = LogManager.getLogger(UpdateStatusResultByIdApplicationCommand.class);
 
     private final ApplicationService service;

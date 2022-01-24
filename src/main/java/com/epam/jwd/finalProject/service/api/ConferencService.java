@@ -13,6 +13,29 @@ import java.util.List;
 public interface ConferencService extends EntityService<Conferenc> {
 
     /**
+     * Find all Conferenc with pagination
+     *
+     * @param pageNumber selected page
+     * @return List Conferenc
+     */
+    List<Conferenc> findAllConferencLimitOffsetPagination(Long pageNumber)throws ValidationException,
+            ServiceException;
+
+    /**
+     * Find count all conferenc by active status
+     *
+     * @return count conferences
+     */
+    Long findCountAllConferencByActiveStatus() throws ServiceException;
+
+    /**
+     * Find count all conferenc
+     *
+     * @return count conferences
+     */
+    Long findCountAllConferenc() throws ServiceException;
+
+    /**
      * Create conferenc
      *
      * @param name name for new conferenc
@@ -30,7 +53,8 @@ public interface ConferencService extends EntityService<Conferenc> {
      * @param idCategory  id category for new conferenc
      * @return boolean result of operation
      */
-    boolean findForDuplicateConferenc(String name,String description,Long idCategory)  throws ValidationException, ServiceException;
+    boolean findForDuplicateConferenc(String name,String description,Long idCategory)  throws ValidationException,
+            ServiceException;
 
     /**
      * Update description for conferenc
@@ -52,9 +76,10 @@ public interface ConferencService extends EntityService<Conferenc> {
     /**
      * Find all status
      *
+     * @param pageNumber selected page
      * @return List conferenc
      */
-    List<Conferenc> findAllStatus() throws ServiceException;
+    List<Conferenc> findAllStatus(Long pageNumber) throws ServiceException;
 
     /**
      * Change status for conferenc

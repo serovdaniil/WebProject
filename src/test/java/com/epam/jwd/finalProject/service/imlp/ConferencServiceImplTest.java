@@ -51,8 +51,8 @@ public class ConferencServiceImplTest extends Assert {
     @Test
     public void readAllActive() throws ServiceException  {
         List<Conferenc> expectedResult = conferencList;
-        when(service.findAllStatus()).thenReturn(expectedResult);
-        List<Conferenc> actualResult = service.findAllStatus();
+        when(service.findAllStatus((long)1)).thenReturn(expectedResult);
+        List<Conferenc> actualResult = service.findAllStatus((long)1);
         assertEquals(actualResult, expectedResult);
     }
 
@@ -75,8 +75,8 @@ public class ConferencServiceImplTest extends Assert {
     @Test
     public void findAll() throws ServiceException {
         List<Conferenc> expectedResult = conferencList;
-        when(service.findAll()).thenReturn(expectedResult);
-        List<Conferenc> actualResult = service.findAll();
+        when(service.findAll((long)1)).thenReturn(expectedResult);
+        List<Conferenc> actualResult = service.findAll((long)1);
         assertEquals(actualResult, expectedResult);
     }
 

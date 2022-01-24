@@ -18,13 +18,15 @@ import org.apache.logging.log4j.Logger;
  * @author Daniil Serov
  */
 public class RemoveQuestionByIdCommand implements Command {
+    private static final String QUESTION_ATTRIBUTE_NAME = "result";
+    private static final String PARAM_NAME = "id";
+    private static final String FIND_QUESTIONS = "controller?command=find_questions_by_id_account&page=1";
+
+    private static final Logger LOG = LogManager.getLogger(RemoveQuestionByIdCommand.class);
+
     private final QuestionService service;
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
-    private static final String QUESTION_ATTRIBUTE_NAME = "result";
-    private static final String PARAM_NAME = "id";
-    private static final String FIND_QUESTIONS = "controller?command=find_questions_by_id_account";
-    private static final Logger LOG = LogManager.getLogger(RemoveQuestionByIdCommand.class);
 
     RemoveQuestionByIdCommand(QuestionService service, RequestFactory requestFactory,
                               PropertyContext propertyContext) {

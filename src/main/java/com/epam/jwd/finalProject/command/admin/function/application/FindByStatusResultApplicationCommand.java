@@ -25,6 +25,7 @@ public class FindByStatusResultApplicationCommand implements Command {
     private static final String PARAM_NAME_RESULT = "resultNew";
     private static final String APPLICATIONS_ATTRIBUTE_NAME = "applications";
     private static final String APPLICATIONS_PAGE = "page.applicationsByStatusResult";
+
     private static final Logger LOG = LogManager.getLogger(FindByStatusResultApplicationCommand.class);
 
     private final ApplicationService service;

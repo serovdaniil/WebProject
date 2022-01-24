@@ -6,6 +6,7 @@ import com.epam.jwd.finalProject.command.factory.CommandResponse;
 import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
 import com.epam.jwd.finalProject.model.Category;
+import com.epam.jwd.finalProject.service.api.CategoryService;
 import com.epam.jwd.finalProject.service.api.EntityService;
 import com.epam.jwd.finalProject.service.exception.ServiceException;
 import com.epam.jwd.finalProject.service.factory.ServiceFactory;
@@ -20,17 +21,20 @@ import java.util.List;
  * @author Daniil Serov
  */
 public class ShowCategoryPageCommand implements Command {
+    private static final String FIND_PARAM_PAGE = "page";
+    private static final String PAGES_ATTRIBUTE_NAME = "maxPagesCount";
     private static final String CATEGORIES_ATTRIBUTE_NAME = "categories";
     private static final String CATEGORIES_PAGE = "page.categories";
+
     private static final Logger LOG = LogManager.getLogger(ShowCategoryPageCommand.class);
 
-    private final EntityService<Category> service;
+    private final CategoryService service;
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    ShowCategoryPageCommand(EntityService<Category> service, RequestFactory requestFactory,
+    ShowCategoryPageCommand(CategoryService service, RequestFactory requestFactory,
                             PropertyContext propertyContext) {
-        this.service = ServiceFactory.simple().serviceFor(Category.class);
+        this.service = ServiceFactory.simple().categoryService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
     }
@@ -38,8 +42,11 @@ public class ShowCategoryPageCommand implements Command {
     @Override
     public CommandResponse execute(CommandRequest request) {
         try {
-            final List<Category> categoriesALL = service.findAll();
+            final Long pageNum = Long.valueOf(request.getParameter(FIND_PARAM_PAGE));
+            final Long count = service.findCountAllCategory();
+            final List<Category> categoriesALL = service.findAll(pageNum);
             request.addAttributeToJsp(CATEGORIES_ATTRIBUTE_NAME, categoriesALL);
+            request.addAttributeToJsp(PAGES_ATTRIBUTE_NAME, count);
         } catch (ServiceException e) {
             LOG.error("The service exception!" + e);
         }
@@ -52,7 +59,7 @@ public class ShowCategoryPageCommand implements Command {
 
     private static class Holder {
         public static final ShowCategoryPageCommand INSTANCE =
-                new ShowCategoryPageCommand(ServiceFactory.simple().serviceFor(Category.class),
+                new ShowCategoryPageCommand(ServiceFactory.simple().categoryService(),
                         RequestFactory.getInstance(), PropertyContext.instance());
     }
 }

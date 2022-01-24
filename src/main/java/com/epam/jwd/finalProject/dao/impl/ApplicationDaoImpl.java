@@ -26,47 +26,63 @@ public class ApplicationDaoImpl implements ApplicationDao {
     /**
      * SQL query for this dao
      */
-    private static final String FIND_ALL_APPLICATION = "SELECT * FROM application JOIN final_task.user ON user_id=id_user " +
-            "JOIN final_task.role ON role_id=id_role JOIN section_result " +
+    private static final String FIND_ALL_APPLICATION = "SELECT * FROM application JOIN final_task.user " +
+            "ON user_id=id_user JOIN final_task.role ON role_id=id_role JOIN section_result " +
             "ON section_result_id=id_section_result JOIN section_conferenc ON section_id=id_section_conferenc " +
             "JOIN status ON section_conferenc_status_id=id_status " +
-            "JOIN conferenc ON conferenc_id=id_conferenc JOIN category ON category_id=id_category";
+            "JOIN conferenc ON conferenc_id=id_conferenc JOIN category ON category_id=id_category LIMIT ? OFFSET ?";
 
     private static final String FIND_ID_APPLICATION = "SELECT * FROM application JOIN final_task.user " +
             "ON user_id=id_user JOIN final_task.role ON role_id=id_role JOIN section_result " +
             "ON section_result_id=id_section_result JOIN section_conferenc ON section_id=id_section_conferenc " +
             "JOIN status ON section_conferenc_status_id=id_status " +
-            "JOIN conferenc ON conferenc_id=id_conferenc JOIN category ON category_id=id_category WHERE id_application=?";
+            "JOIN conferenc ON conferenc_id=id_conferenc JOIN category " +
+            "ON category_id=id_category WHERE id_application=?";
 
     private static final String FIND_ID_ACCOUNT_BY_CAPPLICATION = "SELECT * FROM application JOIN final_task.user " +
             "ON user_id=id_user JOIN final_task.role ON role_id=id_role JOIN section_result " +
             "ON section_result_id=id_section_result JOIN section_conferenc ON section_id=id_section_conferenc " +
             "JOIN status ON section_conferenc_status_id=id_status " +
-            "JOIN conferenc ON conferenc_id=id_conferenc JOIN category ON category_id=id_category WHERE id_user=?";
+            "JOIN conferenc ON conferenc_id=id_conferenc JOIN category ON category_id=id_category " +
+            "WHERE id_user=? LIMIT ? OFFSET ?";
 
-    private static final String FIND_ID_SECTION_RESULT_BY_CAPPLICATION = "SELECT * FROM application JOIN final_task.user " +
-            "ON user_id=id_user JOIN final_task.role ON role_id=id_role JOIN section_result " +
+    private static final String FIND_ID_SECTION_RESULT_BY_CAPPLICATION = "SELECT * FROM application " +
+            "JOIN final_task.user ON user_id=id_user JOIN final_task.role ON role_id=id_role JOIN section_result " +
             "ON section_result_id=id_section_result JOIN section_conferenc ON section_id=id_section_conferenc " +
             "JOIN status ON section_conferenc_status_id=id_status " +
-            "JOIN conferenc ON conferenc_id=id_conferenc JOIN category ON category_id=id_category WHERE id_section_result=?";
+            "JOIN conferenc ON conferenc_id=id_conferenc JOIN category " +
+            "ON category_id=id_category WHERE id_section_result=?";
 
     private static final String APPLICATION_DELETE = "DELETE FROM application WHERE id_application=?";
 
     private static final String UPDATE_ID_RESULT_APPLICATION = "UPDATE application SET section_result_id = ? " +
             "WHERE id_application = ?";
 
-    private static final String CHANGE_STATUS_AFTER_UPDATE_SECTION_CONFERENC = "UPDATE application SET section_result_id = 4 " +
-            "WHERE section_id = ?";
+    private static final String CHANGE_STATUS_AFTER_UPDATE_SECTION_CONFERENC = "UPDATE application " +
+            "SET section_result_id = 4 WHERE section_id = ?";
 
-    private static final String CREATE_APPLICATION = "INSERT INTO application (user_id,section_id,section_result_id) values(?,?,?)";
+    private static final String CREATE_APPLICATION = "INSERT INTO application (user_id,section_id,section_result_id) " +
+            "values(?,?,?)";
 
-    private static final String FIND_FOR_DUPLICATE_APPLICATION = "SELECT * FROM application JOIN final_task.user ON user_id=id_user " +
-            "JOIN final_task.role ON role_id=id_role JOIN section_result " +
+    private static final String FIND_FOR_DUPLICATE_APPLICATION = "SELECT * FROM application JOIN final_task.user " +
+            "ON user_id=id_user JOIN final_task.role ON role_id=id_role JOIN section_result " +
             "ON section_result_id=id_section_result JOIN section_conferenc ON section_id=id_section_conferenc " +
             "JOIN status ON section_conferenc_status_id=id_status " +
             "JOIN conferenc ON conferenc_id=id_conferenc JOIN category ON category_id=id_category WHERE user_id=? " +
             "&& section_id=? && id_section_result=?";
 
+    private static final String FIND_COUNT_ALL_APPLICATION = "SELECT COUNT(id_application) FROM application " +
+            "JOIN final_task.user ON user_id=id_user JOIN final_task.role ON role_id=id_role JOIN section_result " +
+            "ON section_result_id=id_section_result JOIN section_conferenc ON section_id=id_section_conferenc " +
+            "JOIN status ON section_conferenc_status_id=id_status " +
+            "JOIN conferenc ON conferenc_id=id_conferenc JOIN category ON category_id=id_category";
+
+    private static final String FIND_COUNT_ALL_APPLICATION_BY_ID_ACCOUNT = "SELECT COUNT(id_application) " +
+            "FROM application JOIN final_task.user ON user_id=id_user " +
+            "JOIN final_task.role ON role_id=id_role JOIN section_result " +
+            "ON section_result_id=id_section_result JOIN section_conferenc ON section_id=id_section_conferenc " +
+            "JOIN status ON section_conferenc_status_id=id_status " +
+            "JOIN conferenc ON conferenc_id=id_conferenc JOIN category ON category_id=id_category WHERE id_user=?";
     /**
      * Logger for this dao
      */
@@ -83,6 +99,52 @@ public class ApplicationDaoImpl implements ApplicationDao {
      */
     public ApplicationDaoImpl(ConnectionPool connectionPool) {
         this.connectionPool = connectionPool;
+    }
+
+    /**
+     * Find count all application by user
+     *
+     * @param id id user
+     * @return count applications
+     */
+    @Override
+    public Long findCountAllApplicationByUser(Long id) throws DaoException {
+        Long result = (long) 0;
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_COUNT_ALL_APPLICATION_BY_ID_ACCOUNT)) {
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getLong(1);
+            }
+        } catch (SQLException e) {
+            LOG.error("sql exception occurred", e);
+            LOG.debug("sql: {}", FIND_COUNT_ALL_APPLICATION_BY_ID_ACCOUNT);
+            throw new DaoException(e);
+        }
+        return result;
+    }
+
+    /**
+     * Find count all application
+     *
+     * @return count applications
+     */
+    @Override
+    public Long findCountAllApplication() throws DaoException {
+        Long result = (long) 0;
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_COUNT_ALL_APPLICATION)) {
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getLong(1);
+            }
+        } catch (SQLException e) {
+            LOG.error("sql exception occurred", e);
+            LOG.debug("sql: {}", FIND_COUNT_ALL_APPLICATION);
+            throw new DaoException(e);
+        }
+        return result;
     }
 
     /**
@@ -202,12 +264,16 @@ public class ApplicationDaoImpl implements ApplicationDao {
     /**
      * Read all application
      *
+     * @param limit number of rows in the selection
+     * @param offset offset from the beginning of the selection
      * @return List application
      */
     @Override
-    public List<Application> readAll() throws EntityExtractionFailedException, DaoException {
+    public List<Application> readAll(Long limit, Long offset) throws EntityExtractionFailedException, DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ALL_APPLICATION)) {
+            statement.setLong(1, limit);
+            statement.setLong(2, offset);
             ResultSet resultSet = statement.executeQuery();
             ResultSetExtractor<Application> extractor = ApplicationDaoImpl::extractApplication;
             return extractor.extractAll(resultSet);
@@ -252,13 +318,17 @@ public class ApplicationDaoImpl implements ApplicationDao {
      * Find application by id account
      *
      * @param id id application
+     * @param limit number of rows in the selection
+     * @param offset offset from the beginning of the selection
      * @return List application
      */
     @Override
-    public List<Application> findAccountIdByApplication(Long id) throws DaoException {
+    public List<Application> findAccountIdByApplication(Long id, Long limit, Long offset) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ID_ACCOUNT_BY_CAPPLICATION)) {
             statement.setLong(1, id);
+            statement.setLong(2, limit);
+            statement.setLong(3, offset);
             ResultSet resultSet = statement.executeQuery();
             ResultSetExtractor<Application> extractor = ApplicationDaoImpl::extractApplication;
             return extractor.extractAll(resultSet);
@@ -304,7 +374,7 @@ public class ApplicationDaoImpl implements ApplicationDao {
      */
     @Override
     public boolean delete(Long id) throws DaoException {
-        boolean result = false;
+        boolean result;
         try (Connection connection = LockingConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(APPLICATION_DELETE)) {
             statement.setLong(1, id);

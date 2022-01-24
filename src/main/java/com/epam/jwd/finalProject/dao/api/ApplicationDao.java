@@ -14,6 +14,22 @@ import java.util.Optional;
  * @author Daniil Serov
  */
 public interface ApplicationDao {
+
+    /**
+     * Find count all application by user
+     *
+     * @param id id user
+     * @return count applications
+     */
+    Long findCountAllApplicationByUser(Long id) throws DaoException;
+
+    /**
+     * Find count all application
+     *
+     * @return count applications
+     */
+    Long findCountAllApplication() throws DaoException;
+
     /**
      * Create application
      *
@@ -32,7 +48,8 @@ public interface ApplicationDao {
      * @param idResultSection    id result section
      * @return boolean result of operation
      */
-    boolean findForDuplicateApplication(Long idAccount, Long idSectionConferenc, Long idResultSection) throws DaoException;
+    boolean findForDuplicateApplication(Long idAccount, Long idSectionConferenc,
+                                        Long idResultSection) throws DaoException;
 
     /**
      * Change status application after section conferenc
@@ -54,9 +71,11 @@ public interface ApplicationDao {
     /**
      * Read all application
      *
+     * @param limit number of rows in the selection
+     * @param offset offset from the beginning of the selection
      * @return List application
      */
-    List<Application> readAll() throws EntityExtractionFailedException, DaoException;
+    List<Application> readAll(Long limit, Long offset) throws EntityExtractionFailedException, DaoException;
 
     /**
      * Read apllication by id
@@ -70,9 +89,11 @@ public interface ApplicationDao {
      * Find application by id account
      *
      * @param id id application
+     * @param limit number of rows in the selection
+     * @param offset offset from the beginning of the selection
      * @return List application
      */
-    List<Application> findAccountIdByApplication(Long id) throws DaoException;
+    List<Application> findAccountIdByApplication(Long id, Long limit, Long offset) throws DaoException;
 
     /**
      * Find application by status result

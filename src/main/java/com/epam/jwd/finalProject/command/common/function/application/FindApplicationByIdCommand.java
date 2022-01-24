@@ -22,14 +22,15 @@ import java.util.Optional;
  * @author Daniil Serov
  */
 public class FindApplicationByIdCommand implements Command {
-    private final ApplicationService applicationService;
-    private final RequestFactory requestFactory;
-    private final PropertyContext propertyContext;
-
     private static final String APPLICATION_ATTRIBUTE_NAME = "application";
     private static final String PARAM_NAME = "id";
     private static final String FIND_APPLICATION_BY_ID = "page.applicationById";
+
     private static final Logger LOG = LogManager.getLogger(FindApplicationByIdCommand.class);
+
+    private final ApplicationService applicationService;
+    private final RequestFactory requestFactory;
+    private final PropertyContext propertyContext;
 
     FindApplicationByIdCommand(EntityService<Application> service, RequestFactory requestFactory,
                                PropertyContext propertyContext) {

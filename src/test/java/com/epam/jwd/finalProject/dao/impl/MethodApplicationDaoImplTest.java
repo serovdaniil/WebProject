@@ -85,8 +85,8 @@ public class MethodApplicationDaoImplTest extends Assert {
     @Test
     public void readAll() throws EntityExtractionFailedException, DaoException {
         List<Application> expectedResult = applicationList;
-        when(dao.readAll()).thenReturn(expectedResult);
-        List<Application> actualResult = dao.readAll();
+        when(dao.readAll(idUser,idUser)).thenReturn(expectedResult);
+        List<Application> actualResult = dao.readAll(idUser,idUser);
         assertEquals(actualResult, expectedResult);
     }
 
@@ -102,8 +102,8 @@ public class MethodApplicationDaoImplTest extends Assert {
     @Test
     public void findAccountIdByApplication()throws DaoException  {
         List<Application> expectedResult = applicationList;
-        when(dao.findAccountIdByApplication(idApplication)).thenReturn(expectedResult);
-        List<Application> actualResult = dao.findAccountIdByApplication(idApplication);
+        when(dao.findAccountIdByApplication(idApplication,idUser,idUser)).thenReturn(expectedResult);
+        List<Application> actualResult = dao.findAccountIdByApplication(idApplication,idUser,idUser);
         assertEquals(actualResult, expectedResult);
     }
 

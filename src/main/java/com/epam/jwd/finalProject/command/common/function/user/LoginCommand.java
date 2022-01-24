@@ -21,15 +21,14 @@ import java.util.Optional;
  * @author Daniil Serov
  */
 public class LoginCommand implements Command {
-
     private static final String INDEX_PAGE = "page.index";
     private static final String LOGIN_PAGE = "page.login";
-
     private static final String ERROR_LOGIN_PASS_ATTRIBUTE = "errorLoginPassMessage";
     private static final String USER_SESSION_ATTRIBUTE_NAME = "user";
     private static final String LOGIN_REQUEST_PARAM_NAME = "login";
     private static final String PASSWORD_REQUEST_PARAM_NAME = "password";
     private static final String ERROR_LOGIN_PASS_MESSAGE = "Invalid login or password";
+
     private static final Logger LOG = LogManager.getLogger(LoginCommand.class);
 
     private final UserService userService;

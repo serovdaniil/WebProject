@@ -82,8 +82,8 @@ public class CategoryServiceImplTest extends Assert {
     @Test
     public void findAll() throws ServiceException {
         List<Category> expectedResult = categoryList;
-        when(service.findAll()).thenReturn(expectedResult);
-        List<Category> actualResult = service.findAll();
+        when(service.findAll((long)1)).thenReturn(expectedResult);
+        List<Category> actualResult = service.findAll((long)1);
         assertEquals(actualResult, expectedResult);
     }
 

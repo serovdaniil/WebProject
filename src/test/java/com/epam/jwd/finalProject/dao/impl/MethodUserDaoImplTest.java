@@ -101,8 +101,8 @@ public class MethodUserDaoImplTest extends Assert {
     @Test
     public void readAll() throws EntityExtractionFailedException, DaoException  {
         List<User> expectedResult= users;
-        when(dao.readAll()).thenReturn(expectedResult);
-        List<User> actualResult = dao.readAll();
+        when(dao.readAll((long)1, (long)1)).thenReturn(expectedResult);
+        List<User> actualResult = dao.readAll((long)1, (long)1);
         assertEquals(actualResult, expectedResult);
     }
 

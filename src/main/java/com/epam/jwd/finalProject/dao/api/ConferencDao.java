@@ -16,6 +16,29 @@ import java.util.Optional;
 public interface ConferencDao {
 
     /**
+     * Find all Conferenc with pagination
+     *
+     * @param limit number of rows in the selection
+     * @param offset offset from the beginning of the selection
+     * @return List Conferenc
+     */
+    List<Conferenc> findAllConferencLimitOffsetPagination(Long limit,Long offset) throws DaoException;
+
+    /**
+     * Find count all conferenc by active status
+     *
+     * @return count conferences
+     */
+    Long findCountAllConferencByActiveStatus() throws DaoException;
+
+    /**
+     * Find count all conferenc
+     *
+     * @return count conferences
+     */
+    Long findCountAllConferenc() throws DaoException;
+
+    /**
      * Create conferenc
      *
      * @param name        name for new conferenc
@@ -54,9 +77,11 @@ public interface ConferencDao {
     /**
      * Read all conferenc
      *
+     * @param limit number of rows in the selection
+     * @param offset offset from the beginning of the selection
      * @return List Conferenc
      */
-    List<Conferenc> readAll() throws EntityExtractionFailedException, DaoException;
+    List<Conferenc> readAll(Long limit,Long offset) throws EntityExtractionFailedException, DaoException;
 
     /**
      * Read conferenc by id

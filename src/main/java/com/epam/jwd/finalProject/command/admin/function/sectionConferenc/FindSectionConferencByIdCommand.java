@@ -21,14 +21,15 @@ import java.util.Optional;
  * @author Daniil Serov
  */
 public class FindSectionConferencByIdCommand implements Command {
-    private final SectionConferencService service;
-    private final RequestFactory requestFactory;
-    private final PropertyContext propertyContext;
-
     private static final String PARAM_ID = "id";
     private static final String SECTION_CONFERENCES_ATTRIBUTE_NAME = "sectionConferenc";
     private static final String SECTION_CONFERENCES_PAGE = "page.readSectionConferencById";
+
     private static final Logger LOG = LogManager.getLogger(FindSectionConferencByIdCommand.class);
+
+    private final SectionConferencService service;
+    private final RequestFactory requestFactory;
+    private final PropertyContext propertyContext;
 
     FindSectionConferencByIdCommand(SectionConferencService service, RequestFactory requestFactory,
                                     PropertyContext propertyContext) {

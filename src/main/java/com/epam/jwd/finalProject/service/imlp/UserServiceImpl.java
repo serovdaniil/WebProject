@@ -44,6 +44,11 @@ public class UserServiceImpl implements UserService {
     private final UserDataValidator userDataValidator = new UserDataValidator().getInstance();
 
     /**
+     * Limit for pagination
+     */
+    private static final Long LIMIT = (long) 5;
+
+    /**
      * Constructor - creating a new object
      *
      * @param userDao         dao for this service
@@ -55,22 +60,42 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * Find all users
+     * Find count all users
      *
-     * @return List user
+     * @return count users
      */
     @Override
-    public List<User> findAll() throws ServiceException {
+    public Long findCountAllUser() throws ServiceException {
         try {
-            try {
-                return userDao.readAll();
-            } catch (EntityExtractionFailedException e) {
-                e.printStackTrace();
+            final Long countUser = userDao.findCountAllUser();
+            Long pageCount = countUser / LIMIT;
+            if ((countUser - pageCount * LIMIT) > 0) {
+                pageCount++;
             }
-            return Collections.emptyList();
+            return pageCount;
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
+    }
+
+    /**
+     * Find all users
+     *
+     * @param pageNumber selected page
+     * @return List user
+     */
+    @Override
+    public List<User> findAll(Long pageNumber) throws ServiceException {
+        try {
+            final Long offset = LIMIT * (pageNumber - 1);
+            return userDao.readAll(LIMIT, offset);
+        } catch (EntityExtractionFailedException e) {
+            e.printStackTrace();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+
+        return Collections.emptyList();
     }
 
     /**
@@ -140,7 +165,8 @@ public class UserServiceImpl implements UserService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public Optional<User> registration(String email, String password) throws ValidationException, ServiceException {
+    public Optional<User> registration(String email, String password)
+            throws ValidationException, ServiceException {
         try {
             if (!userDataValidator.isEmailValid(email) || !userDataValidator.isPasswordValid(password)) {
                 LOG.error("The entered data is not correct!");
@@ -161,7 +187,8 @@ public class UserServiceImpl implements UserService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public Optional<User> updatePasswordByLogin(String login, String password) throws ValidationException, ServiceException {
+    public Optional<User> updatePasswordByLogin(String login, String password)
+            throws ValidationException, ServiceException {
         try {
             if (!userDataValidator.isLoginValid(login) || !userDataValidator.isPasswordValid(password)) {
                 LOG.error("The entered data is not correct!");

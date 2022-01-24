@@ -33,6 +33,10 @@ public class SectionConferencServiceImpl implements SectionConferencService {
      */
     private final SectionConferencDataValidator sectionConferencDataValidator =
             new SectionConferencDataValidator().getInstance();
+    /**
+     * Limit for pagination
+     */
+    private static final Long LIMIT = (long) 5;
 
     /**
      * Constructor - creating a new object
@@ -41,6 +45,73 @@ public class SectionConferencServiceImpl implements SectionConferencService {
      */
     public SectionConferencServiceImpl(SectionConferencDaoImpl sectionConferencDao) {
         this.sectionConferencDao = sectionConferencDao.getInstance();
+    }
+
+    /**
+     * Find section conferenc by id conferenc with pagination
+     *
+     * @param id         id for conferenc
+     * @param pageNumber selected page
+     * @return List section conferenc
+     */
+    @Override
+    public List<SectionConferenc> findSectionConferencesInConferencByIdWithPagination(Long id, Long pageNumber)
+            throws ValidationException, ServiceException {
+        try {
+            if (!sectionConferencDataValidator.isIdValid(pageNumber) ||
+                    !sectionConferencDataValidator.isIdValid(id)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            final Long offset = LIMIT * (pageNumber - 1);
+            return sectionConferencDao.findSectionConferencesInConferencByIdWithPagination(id, LIMIT, offset);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    /**
+     * Find count all section conferenc
+     *
+     * @param id id conferenc for section conferenc
+     * @return count section conferences
+     */
+    @Override
+    public Long findCountAllSectionConferencInConferenc(Long id) throws ServiceException, ValidationException {
+        try {
+            if (!sectionConferencDataValidator.isIdValid(id)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            final Long countSectionConferenc = sectionConferencDao.findCountAllSectionConferencInConferenc(id);
+            Long pageCount = countSectionConferenc / LIMIT;
+            if ((countSectionConferenc - pageCount * LIMIT) > 0) {
+                pageCount++;
+            }
+            return pageCount;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+
+    /**
+     * Find count all section conferenc
+     *
+     * @return count section conferences
+     */
+    @Override
+    public Long findCountAllSectionConferenc() throws ServiceException {
+        try {
+            final Long countSectionConferenc = sectionConferencDao.findCountAllSectionConferenc();
+            Long pageCount = countSectionConferenc / LIMIT;
+            if ((countSectionConferenc - pageCount * LIMIT) > 0) {
+                pageCount++;
+            }
+            return pageCount;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
     }
 
     /**
@@ -76,7 +147,8 @@ public class SectionConferencServiceImpl implements SectionConferencService {
      * @return boolean result of operation
      */
     @Override
-    public boolean findForDuplicateSectionConferenc(String name, String description, Long idConferenc) throws ValidationException, ServiceException {
+    public boolean findForDuplicateSectionConferenc(String name, String description, Long idConferenc)
+            throws ValidationException, ServiceException {
         try {
             if (!sectionConferencDataValidator.isIdValid(idConferenc)
                     || !sectionConferencDataValidator.isNameValid(name)
@@ -84,7 +156,7 @@ public class SectionConferencServiceImpl implements SectionConferencService {
                 LOG.error("The entered data is not correct!");
                 throw new ValidationException("The entered data is not correct!");
             }
-            return sectionConferencDao.findForDuplicateSectionConferenc(name,description,idConferenc);
+            return sectionConferencDao.findForDuplicateSectionConferenc(name, description, idConferenc);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -98,7 +170,8 @@ public class SectionConferencServiceImpl implements SectionConferencService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public boolean changeStatusAfterUpdateConferenc(Long idConferenc) throws ValidationException, ServiceException {
+    public boolean changeStatusAfterUpdateConferenc(Long idConferenc)
+            throws ValidationException, ServiceException {
         try {
             if (!sectionConferencDataValidator.isIdValid(idConferenc)) {
                 LOG.error("The entered data is not correct!");
@@ -113,21 +186,21 @@ public class SectionConferencServiceImpl implements SectionConferencService {
     /**
      * Find all section conferences
      *
+     * @param pageNumber selected page
      * @return List section conferences
      */
     @Override
-    public List<SectionConferenc> findAll() throws ServiceException {
-        try {
+    public List<SectionConferenc> findAll(Long pageNumber) throws ServiceException {
             try {
-                return sectionConferencDao.readAll();
+                final Long offset = LIMIT * (pageNumber - 1);
+                return sectionConferencDao.readAll(LIMIT, offset);
             } catch (EntityExtractionFailedException e) {
                 e.printStackTrace();
+            }catch (DaoException e) {
+                throw new ServiceException(e);
             }
             return Collections.emptyList();
-        } catch (DaoException e) {
-            throw new ServiceException(e);
         }
-    }
 
     /**
      * Find section conferenc by id
@@ -243,7 +316,8 @@ public class SectionConferencServiceImpl implements SectionConferencService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public List<SectionConferenc> findSectionConferencesInConferencById(Long id) throws ValidationException, ServiceException {
+    public List<SectionConferenc> findSectionConferencesInConferencById(Long id)
+            throws ValidationException, ServiceException {
         try {
             if (!sectionConferencDataValidator.isIdValid(id)) {
                 LOG.error("The entered data is not correct!");

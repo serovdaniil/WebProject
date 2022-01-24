@@ -1,5 +1,6 @@
 package com.epam.jwd.finalProject.command.common.function.sectionConferenc;
 
+import com.epam.jwd.finalProject.command.common.page.conferenc.ShowConferencesPageCommand;
 import com.epam.jwd.finalProject.command.factory.Command;
 import com.epam.jwd.finalProject.command.factory.CommandRequest;
 import com.epam.jwd.finalProject.command.factory.CommandResponse;
@@ -15,25 +16,24 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
-/**
- * This command is used to search for the conference section by the conference id
- *
- * @author Daniil Serov
- */
-public class FindSectionConferencesInConferencByIdCommand implements Command {
-    private static final String FIND_PARAM_ID = "id";
+public class ShowSectionConferencWithPaginationForFirstPageCommand implements Command {
+    private static final String FIND_PARAM_PAGE = "page";
+    private static final String PAGES_ATTRIBUTE_NAME = "maxPagesCount";
     private static final String CONFERENCES_ATTRIBUTE_NAME = "conferences";
+    private static final String ID_CONFERENC_SESSION_ATTRIBUTE_NAME = "idConferenc";
+    private static final String FIND_PARAM_ID = "id";
     private static final String FIND_SECTION_CONFERENCES_BY_NAME_PAGE = "page." +
             "findSectionConferencesInConferencById";
 
-    private static final Logger LOG = LogManager.getLogger(FindSectionConferencesInConferencByIdCommand.class);
+    private static final Logger LOG = LogManager.getLogger(ShowConferencesPageCommand.class);
 
     private final SectionConferencService service;
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    FindSectionConferencesInConferencByIdCommand(SectionConferencService service, RequestFactory requestFactory,
-                                                 PropertyContext propertyContext) {
+    ShowSectionConferencWithPaginationForFirstPageCommand(SectionConferencService service,
+                                                          RequestFactory requestFactory,
+                                                          PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().sectionConferencService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -41,26 +41,30 @@ public class FindSectionConferencesInConferencByIdCommand implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        final Long id = Long.parseLong(request.getParameter(FIND_PARAM_ID));
-        final List<SectionConferenc> conferencesAll;
         try {
-            conferencesAll = service.findSectionConferencesInConferencById(id);
+            final Long pageNum = Long.valueOf(request.getParameter(FIND_PARAM_PAGE));
+             Long id = Long.parseLong(request.getParameter(FIND_PARAM_ID));
+            if ((pageNum == 1) && !(id == 0)) {
+                request.addToSession(ID_CONFERENC_SESSION_ATTRIBUTE_NAME, id);
+            }
+            final List<SectionConferenc> conferencesAll =
+                    service.findSectionConferencesInConferencByIdWithPagination(id, pageNum);
+            final Long count = service.findCountAllSectionConferencInConferenc(id);
             request.addAttributeToJsp(CONFERENCES_ATTRIBUTE_NAME, conferencesAll);
-        } catch (ValidationException e) {
-            LOG.error("The entered data is not correct!" + e);
-        }catch (ServiceException e) {
+            request.addAttributeToJsp(PAGES_ATTRIBUTE_NAME, count);
+        } catch (ServiceException | ValidationException e) {
             LOG.error("The service exception!" + e);
         }
         return requestFactory.createForwardResponse(propertyContext.get(FIND_SECTION_CONFERENCES_BY_NAME_PAGE));
     }
 
-    public static FindSectionConferencesInConferencByIdCommand getInstance() {
-        return FindSectionConferencesInConferencByIdCommand.Holder.INSTANCE;
+    public static ShowSectionConferencWithPaginationForFirstPageCommand getInstance() {
+        return ShowSectionConferencWithPaginationForFirstPageCommand.Holder.INSTANCE;
     }
 
     private static class Holder {
-        public static final FindSectionConferencesInConferencByIdCommand INSTANCE =
-                new FindSectionConferencesInConferencByIdCommand(ServiceFactory.simple().sectionConferencService(),
+        public static final ShowSectionConferencWithPaginationForFirstPageCommand INSTANCE =
+                new ShowSectionConferencWithPaginationForFirstPageCommand(ServiceFactory.simple().sectionConferencService(),
                         RequestFactory.getInstance(), PropertyContext.instance());
     }
 }

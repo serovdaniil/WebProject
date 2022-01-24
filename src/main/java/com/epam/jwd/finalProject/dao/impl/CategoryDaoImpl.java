@@ -27,9 +27,12 @@ public class CategoryDaoImpl implements CategoryDao {
      */
     private static final String CREATE_CATEGORY = "INSERT INTO category (name_category) values(?)";
 
-    private static final String UPDATE_NAME_BY_ID_CATEGORY = "UPDATE category SET name_category= ? WHERE id_category = ?";
+    private static final String UPDATE_NAME_BY_ID_CATEGORY = "UPDATE category SET name_category= ? " +
+            "WHERE id_category = ?";
 
-    private static final String FIND_ALL_CATEGORY = "SELECT * FROM category";
+    private static final String FIND_ALL_CATEGORY = "SELECT * FROM category LIMIT ? OFFSET ?";
+
+    private static final String FIND_COUNT_ALL_CATEGORY = "SELECT COUNT(id_category) FROM category";
 
     private static final String FIND_ID_CATEGORY = "SELECT * FROM category WHERE id_category=?";
 
@@ -60,6 +63,28 @@ public class CategoryDaoImpl implements CategoryDao {
      */
     public CategoryDaoImpl(ConnectionPool connectionPool) {
         this.connectionPool = connectionPool;
+    }
+
+    /**
+     * Find count all category
+     *
+     * @return count category
+     */
+    @Override
+    public Long findCountAllCategory() throws DaoException {
+        Long result = (long) 0;
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_COUNT_ALL_CATEGORY)) {
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getLong(1);
+            }
+        } catch (SQLException e) {
+            LOG.error("sql exception occurred", e);
+            LOG.debug("sql: {}", FIND_COUNT_ALL_CATEGORY);
+            throw new DaoException(e);
+        }
+        return result;
     }
 
     /**
@@ -146,12 +171,16 @@ public class CategoryDaoImpl implements CategoryDao {
     /**
      * Find all categories
      *
+     * @param limit  number of rows in the selection
+     * @param offset offset from the beginning of the selection
      * @return List category
      */
     @Override
-    public List<Category> findAll() throws EntityExtractionFailedException, DaoException {
+    public List<Category> findAll(Long limit, Long offset) throws EntityExtractionFailedException, DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ALL_CATEGORY)) {
+            statement.setLong(1, limit);
+            statement.setLong(2, offset);
             ResultSet resultSet = statement.executeQuery();
             ResultSetExtractor<Category> extractor = CategoryDaoImpl::extractCategory;
             return extractor.extractAll(resultSet);
@@ -248,7 +277,7 @@ public class CategoryDaoImpl implements CategoryDao {
      */
     @Override
     public boolean delete(Long id) throws DaoException {
-        boolean result = false;
+        boolean result;
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(CATEGORY_DELETE)) {
             statement.setLong(1, id);
@@ -270,6 +299,7 @@ public class CategoryDaoImpl implements CategoryDao {
             throw new EntityExtractionFailedException();
         }
     }
+
     /**
      * Get conferenc
      *
@@ -295,7 +325,8 @@ public class CategoryDaoImpl implements CategoryDao {
      *
      * @return Section conferenc
      */
-    private static SectionConferenc extractSectionConferenc(ResultSet resultSet) throws EntityExtractionFailedException {
+    private static SectionConferenc extractSectionConferenc(ResultSet resultSet)
+            throws EntityExtractionFailedException {
         try {
             return new SectionConferenc(
                     resultSet.getLong("id_section_conferenc"),

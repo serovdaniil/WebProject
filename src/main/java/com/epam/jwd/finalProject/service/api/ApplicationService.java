@@ -1,6 +1,5 @@
 package com.epam.jwd.finalProject.service.api;
 
-import com.epam.jwd.finalProject.dao.exception.DaoException;
 import com.epam.jwd.finalProject.model.Application;
 import com.epam.jwd.finalProject.service.exception.ServiceException;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
@@ -13,6 +12,21 @@ import java.util.List;
  * @author Daniil Serov
  */
 public interface ApplicationService extends EntityService<Application> {
+
+    /**
+     * Find count all application by user
+     *
+     * @param id id user
+     * @return count applications
+     */
+    Long findCountAllApplicationByUser(Long id) throws ServiceException, ValidationException;
+
+    /**
+     * Find count all application
+     *
+     * @return count applications
+     */
+    Long findCountAllApplication() throws ServiceException;
 
     /**
      * Create application
@@ -51,9 +65,11 @@ public interface ApplicationService extends EntityService<Application> {
      * Find application for account by id
      *
      * @param id id for application
+     * @param pageNumber selected page
      * @return List application
      */
-    List<Application> findAccountIdByApplication(Long id) throws ValidationException, ServiceException;
+    List<Application> findAccountIdByApplication(Long id, Long pageNumber) throws ValidationException,
+            ServiceException;
 
     /**
      * Find application by status result

@@ -21,15 +21,18 @@ import java.util.Optional;
  * @author Daniil Serov
  */
 public class FindQuestionByIdCommand implements Command {
-    private final QuestionService service;
-    private final RequestFactory requestFactory;
-    private final PropertyContext propertyContext;
     private static final String QUESTION_ATTRIBUTE_NAME = "question";
     private static final String PARAM_NAME = "id";
     private static final String FIND_QUESTIONS_BY_ID = "page.findQuestionById";
+
     private static final Logger LOG = LogManager.getLogger(FindQuestionByIdCommand.class);
 
-    FindQuestionByIdCommand(QuestionService service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    private final QuestionService service;
+    private final RequestFactory requestFactory;
+    private final PropertyContext propertyContext;
+
+    FindQuestionByIdCommand(QuestionService service, RequestFactory requestFactory,
+                            PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().questionService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -58,7 +61,7 @@ public class FindQuestionByIdCommand implements Command {
 
     private static class Holder {
         public static final FindQuestionByIdCommand INSTANCE =
-                new FindQuestionByIdCommand(ServiceFactory.simple().questionService(), RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new FindQuestionByIdCommand(ServiceFactory.simple().questionService(),
+                        RequestFactory.getInstance(), PropertyContext.instance());
     }
 }

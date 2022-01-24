@@ -3,6 +3,7 @@ package com.epam.jwd.finalProject.service.api;
 import com.epam.jwd.finalProject.model.User;
 import com.epam.jwd.finalProject.service.exception.ServiceException;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
+
 /**
  * The interface user service
  *
@@ -14,12 +15,19 @@ import java.util.Optional;
 public interface UserService extends EntityService<User> {
 
     /**
+     * Find count all users
+     *
+     * @return count users
+     */
+    Long findCountAllUser() throws ServiceException;
+
+    /**
      * Authenticate
      *
      * @param email email for section conferenc
      * @param password password for section conferenc
      * @return User
-     * @throws ValidationException
+     * @throws ValidationException if there are validation problems
      */
     Optional<User> authenticate(String email, String password) throws ValidationException, ServiceException;
 
@@ -29,7 +37,7 @@ public interface UserService extends EntityService<User> {
      * @param email email for section conferenc
      * @param password password for section conferenc
      * @return User
-     * @throws ValidationException
+     * @throws ValidationException if there are validation problems
      */
     Optional<User> registration(String email, String password) throws ValidationException, ServiceException;
 
@@ -39,7 +47,7 @@ public interface UserService extends EntityService<User> {
      * @param login login for section conferenc
      * @param password password for section conferenc
      * @return User
-     * @throws ValidationException
+     * @throws ValidationException if there are validation problems
      */
     Optional<User> updatePasswordByLogin(String login, String password) throws ValidationException, ServiceException;
 
@@ -49,7 +57,7 @@ public interface UserService extends EntityService<User> {
      * @param email email for section conferenc
      * @param id id section conferenc conferenc
      * @return User
-     * @throws ValidationException
+     * @throws ValidationException if there are validation problems
      */
     Optional<User> updateEmail(Long id, String email) throws ValidationException, ServiceException;
 

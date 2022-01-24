@@ -31,7 +31,8 @@ public class UpdatePasswordCommand implements Command {
     private static final String ERROR_UPDATE_PASS_ATTRIBUTE = "errorUpdatePassMessage";
     private static final String ACCOUNT_PAGE = "page.personalInformation";
     private static final String PASSWORD_REPEAT_REQUEST_PARAM_NAME = "passwordRepeat";
-    private static final String UNSUCCESSFUL_RESULT_UPDATE_INFORMATION = "Unsuccessful updating of personal information";
+    private static final String UNSUCCESSFUL_RESULT_UPDATE_INFORMATION = "Unsuccessful " +
+            "updating of personal information";
     private static final String ERROR_PASSWORD_PASS_MESSAGE = "Passwords do not match, repeat the input!";
     private static final Logger LOG = LogManager.getLogger(UpdatePasswordCommand.class);
 

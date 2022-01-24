@@ -18,6 +18,13 @@ import java.util.Optional;
 public interface CategoryDao {
 
     /**
+     * Find count all category
+     *
+     * @return count category
+     */
+    Long findCountAllCategory() throws DaoException;
+
+    /**
      * Create category
      *
      * @param name name for new category
@@ -45,9 +52,11 @@ public interface CategoryDao {
     /**
      * Find all categories
      *
+     * @param limit number of rows in the selection
+     * @param offset offset from the beginning of the selection
      * @return List category
      */
-    List<Category> findAll() throws EntityExtractionFailedException, DaoException;
+    List<Category> findAll(Long limit, Long offset) throws EntityExtractionFailedException, DaoException;
 
     /**
      * Find category by id

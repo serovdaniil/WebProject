@@ -22,13 +22,15 @@ import java.util.List;
  * @author Daniil Serov
  */
 public class FindConferencByNameCommand implements Command {
-    private final ConferencService service;
-    private final RequestFactory requestFactory;
-    private final PropertyContext propertyContext;
     private static final String FIND_PARAM_NAME = "name";
     private static final String CONFERENCES_ATTRIBUTE_NAME = "conferences";
     private static final String FIND_CONFERENCES_BY_NAME_PAGE = "page.findConferencesByName";
+
     private static final Logger LOG = LogManager.getLogger(RemoveConferencByIdCommand.class);
+
+    private final ConferencService service;
+    private final RequestFactory requestFactory;
+    private final PropertyContext propertyContext;
 
     FindConferencByNameCommand(ConferencService service, RequestFactory requestFactory,
                                PropertyContext propertyContext) {
@@ -45,9 +47,9 @@ public class FindConferencByNameCommand implements Command {
         try {
             conferencesAll = service.findByName(name);
             request.addAttributeToJsp(CONFERENCES_ATTRIBUTE_NAME, conferencesAll);
-        }  catch (ValidationException e) {
+        } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
-        }catch (ServiceException e) {
+        } catch (ServiceException e) {
             LOG.error("The service exception!" + e);
         }
         return requestFactory.createForwardResponse(propertyContext.get(FIND_CONFERENCES_BY_NAME_PAGE));

@@ -18,17 +18,20 @@ import org.apache.logging.log4j.Logger;
  * @author Daniil Serov
  */
 public class RemoveCategoryByIdCommand implements Command {
-    private final CategoryService service;
-    private final RequestFactory requestFactory;
-    private final PropertyContext propertyContext;
     private static final String PARAM_ID = "id";
     private static final String CATEGORIES_ATTRIBUTE_NAME_RESULT = "result";
     private static final String OPERATION_WAS_UNSUCCSESFUL = "The operation was unsuccsesful";
     private static final String CATEGORY_ADMIN_PANEL_PAGE = "page.adminPanelCategory";
-    private static final String CATEGORY_PAGE = "/controller?command=show_categories";
+    private static final String CATEGORY_PAGE = "/controller?command=show_categories&page=1";
+
     private static final Logger LOG = LogManager.getLogger(RemoveCategoryByIdCommand.class);
 
-    RemoveCategoryByIdCommand(CategoryService service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    private final CategoryService service;
+    private final RequestFactory requestFactory;
+    private final PropertyContext propertyContext;
+
+    RemoveCategoryByIdCommand(CategoryService service, RequestFactory requestFactory,
+                              PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().categoryService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -36,13 +39,13 @@ public class RemoveCategoryByIdCommand implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        final Long id =Long.parseLong(request.getParameter(PARAM_ID));
-        boolean resultRemove=false;
+        final Long id = Long.parseLong(request.getParameter(PARAM_ID));
+        boolean resultRemove = false;
         try {
             resultRemove = service.remove(id);
-         } catch (ValidationException e) {
+        } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
-        }catch (ServiceException e) {
+        } catch (ServiceException e) {
             LOG.error("The service exception!" + e);
         }
         if (!resultRemove) {
@@ -59,7 +62,7 @@ public class RemoveCategoryByIdCommand implements Command {
 
     private static class Holder {
         public static final RemoveCategoryByIdCommand INSTANCE =
-                new RemoveCategoryByIdCommand(ServiceFactory.simple().categoryService(),RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new RemoveCategoryByIdCommand(ServiceFactory.simple().categoryService(),
+                        RequestFactory.getInstance(), PropertyContext.instance());
     }
 }

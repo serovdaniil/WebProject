@@ -36,16 +36,23 @@ public class UserDaoImpl implements UserDao {
     private static final String UPDATE_LASTNAME_BY_ID_ACCOUNT = "UPDATE user JOIN role ON role_id=id_role  " +
             "SET last_name=? WHERE id_user = ?";
 
-    private static final String UPDATE_ROLE_BY_ID_ACCOUNT = "UPDATE user JOIN role ON role_id=id_role SET role_id=? " +
-            "WHERE id_user = ?";
+    private static final String UPDATE_ROLE_BY_ID_ACCOUNT = "UPDATE user JOIN role ON role_id=id_role " +
+            "SET role_id=? WHERE id_user = ?";
 
-    private static final String FIND_ALL_ACCOUNT = "SELECT * FROM final_task.user JOIN final_task.role ON role_id=id_role";
+    private static final String FIND_ALL_ACCOUNT = "SELECT * FROM final_task.user JOIN final_task.role " +
+            "ON role_id=id_role LIMIT ? OFFSET ?";
 
     private static final String FIND_ID_USER = "SELECT * FROM user JOIN role ON role_id=id_role WHERE id_user=?";
 
-    private static final String FIND_EMAIL_BY_ACCOUNT = "SELECT * FROM user JOIN role ON role_id=id_role WHERE email=?";
+    private static final String FIND_EMAIL_BY_ACCOUNT = "SELECT * FROM user JOIN role " +
+            "ON role_id=id_role WHERE email=?";
 
-    private static final String FIND_PASSWORD_BY_LOGIN = "SELECT * FROM user JOIN role ON role_id=id_role WHERE login=?";
+    private static final String FIND_PASSWORD_BY_LOGIN = "SELECT * FROM user JOIN role " +
+            "ON role_id=id_role WHERE login=?";
+
+    private static final String FIND_COUNT_ALL_USER = "SELECT COUNT(id_user) FROM user JOIN role " +
+            "ON role_id=id_role";
+
     /**
      * Logger for this dao
      */
@@ -62,6 +69,28 @@ public class UserDaoImpl implements UserDao {
      */
     public UserDaoImpl(ConnectionPool connectionPool) {
         this.connectionPool = connectionPool;
+    }
+
+    /**
+     * Find count all users
+     *
+     * @return count users
+     */
+    @Override
+    public Long findCountAllUser() throws DaoException {
+        Long result = (long) 0;
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_COUNT_ALL_USER)) {
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getLong(1);
+            }
+        } catch (SQLException e) {
+            LOG.error("sql exception occurred", e);
+            LOG.debug("sql: {}", FIND_COUNT_ALL_USER);
+            throw new DaoException(e);
+        }
+        return result;
     }
 
     /**
@@ -157,7 +186,6 @@ public class UserDaoImpl implements UserDao {
      */
     @Override
     public Optional<User> updateEmail(Long id, String email) throws DaoException {
-        boolean result = false;
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_EMAIL_BY_ID_ACCOUNT)) {
             statement.setLong(2, id);
@@ -243,12 +271,16 @@ public class UserDaoImpl implements UserDao {
     /**
      * Read all users
      *
+     * @param limit  number of rows in the selection
+     * @param offset offset from the beginning of the selectio
      * @return List user
      */
     @Override
-    public List<User> readAll() throws EntityExtractionFailedException, DaoException {
+    public List<User> readAll(Long limit, Long offset) throws EntityExtractionFailedException, DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ALL_ACCOUNT)) {
+            statement.setLong(1, limit);
+            statement.setLong(2, offset);
             ResultSet resultSet = statement.executeQuery();
             ResultSetExtractor<User> extractor = UserDaoImpl::extractUser;
             return extractor.extractAll(resultSet);

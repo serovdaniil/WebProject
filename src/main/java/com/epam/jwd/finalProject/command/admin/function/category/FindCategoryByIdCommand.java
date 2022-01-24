@@ -21,15 +21,18 @@ import java.util.Optional;
  * @author Daniil Serov
  */
 public class FindCategoryByIdCommand implements Command {
-    private final CategoryService service;
-    private final RequestFactory requestFactory;
-    private final PropertyContext propertyContext;
     private static final String PARAM_ID = "id";
     private static final String CATEGORIES_ATTRIBUTE_NAME = "category";
     private static final String CATEGORIES_PAGE = "page.adminPanelCategory";
+
     private static final Logger LOG = LogManager.getLogger(FindCategoryByIdCommand.class);
 
-    FindCategoryByIdCommand(CategoryService service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    private final CategoryService service;
+    private final RequestFactory requestFactory;
+    private final PropertyContext propertyContext;
+
+    FindCategoryByIdCommand(CategoryService service, RequestFactory requestFactory,
+                            PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().categoryService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -44,7 +47,7 @@ public class FindCategoryByIdCommand implements Command {
             request.addAttributeToJsp(CATEGORIES_ATTRIBUTE_NAME, category);
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
-        }catch (ServiceException e) {
+        } catch (ServiceException e) {
             LOG.error("The service exception!" + e);
         }
         return requestFactory.createForwardResponse(propertyContext.get(CATEGORIES_PAGE));
@@ -56,7 +59,7 @@ public class FindCategoryByIdCommand implements Command {
 
     private static class Holder {
         public static final FindCategoryByIdCommand INSTANCE =
-                new FindCategoryByIdCommand(ServiceFactory.simple().categoryService(), RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new FindCategoryByIdCommand(ServiceFactory.simple().categoryService(),
+                        RequestFactory.getInstance(), PropertyContext.instance());
     }
 }

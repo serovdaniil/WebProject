@@ -23,13 +23,17 @@ import java.util.Optional;
  * @author Daniil Serov
  */
 public class FindQuestionByIdAccountCommand implements Command {
-    private final QuestionService service;
-    private final RequestFactory requestFactory;
-    private final PropertyContext propertyContext;
+    private static final String FIND_PARAM_PAGE = "page";
+    private static final String PAGES_ATTRIBUTE_NAME = "maxPagesCount";
     private static final String USER_SESSION_ATTRIBUTE_NAME = "user";
     private static final String QUESTION_ATTRIBUTE_NAME = "questions";
     private static final String FIND_QUESTIONS_BY_ID_ACCOUNT_PAGE = "page.findQuestionsByIdAccount";
+
     private static final Logger LOG = LogManager.getLogger(FindQuestionByIdAccountCommand.class);
+
+    private final QuestionService service;
+    private final RequestFactory requestFactory;
+    private final PropertyContext propertyContext;
 
     FindQuestionByIdAccountCommand(QuestionService service, RequestFactory requestFactory,
                                    PropertyContext propertyContext) {
@@ -44,11 +48,14 @@ public class FindQuestionByIdAccountCommand implements Command {
         final Long idAccount = userOptional.get().getId();
         final List<Question> questionList;
         try {
-            questionList = service.findAccountIdByQuestion(idAccount);
+            final Long pageNum = Long.valueOf(request.getParameter(FIND_PARAM_PAGE));
+            final Long count = service.findCountAllQuestionByUser(idAccount);
+            questionList = service.findAccountIdByQuestion(idAccount,pageNum);
             request.addAttributeToJsp(QUESTION_ATTRIBUTE_NAME, questionList);
+            request.addAttributeToJsp(PAGES_ATTRIBUTE_NAME, count);
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
-        }catch (ServiceException e) {
+        } catch (ServiceException e) {
             LOG.error("The service exception!" + e);
         }
 

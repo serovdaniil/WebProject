@@ -2,6 +2,7 @@ package com.epam.jwd.finalProject.command.factory;
 
 import com.epam.jwd.finalProject.model.User;
 
+import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 /**
@@ -20,6 +21,8 @@ public interface CommandRequest {
     boolean addToSession(String name, Object value);
 
     Optional<User> retrieveFromSession(String name);
+
+    Long retrieveFromSessionLong(String name);
 
     void clearSession();
 

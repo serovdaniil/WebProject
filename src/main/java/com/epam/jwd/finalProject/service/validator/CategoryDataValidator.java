@@ -16,7 +16,7 @@ public class CategoryDataValidator {
     /**
      * Validator id
      *
-     * @param id
+     * @param id param for validator
      * @return boolean
      */
     public boolean isIdValid(Long id) {
@@ -29,7 +29,7 @@ public class CategoryDataValidator {
     /**
      * Validator name
      *
-     * @param name
+     * @param name param for validator
      * @return boolean
      */
     public boolean isNameValid(String name) {

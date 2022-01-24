@@ -17,7 +17,7 @@ public class ConferencDataValidator {
     /**
      * Validator id
      *
-     * @param id
+     * @param id param for validator
      * @return boolean
      */
     public boolean isIdValid(Long id) {
@@ -29,7 +29,7 @@ public class ConferencDataValidator {
     /**
      * Validator name
      *
-     * @param name
+     * @param name param for validator
      * @return boolean
      */
     public boolean isNameValid(String name) {
@@ -44,7 +44,7 @@ public class ConferencDataValidator {
     /**
      * Validator description
      *
-     * @param description
+     * @param description param for validator
      * @return boolean
      */
     public boolean isDescriptionValid(String description) {

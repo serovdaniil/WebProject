@@ -25,7 +25,7 @@ public class UserDataValidator {
     /**
      * Validator first name
      *
-     * @param firstName
+     * @param firstName param for validator
      * @return boolean
      */
     public boolean isFirstNameValid(String firstName) {
@@ -39,7 +39,7 @@ public class UserDataValidator {
     /**
      * Validator last name
      *
-     * @param lastName
+     * @param lastName param for validator
      * @return boolean
      */
     public boolean isLastNameValid(String lastName) {
@@ -53,7 +53,7 @@ public class UserDataValidator {
     /**
      * Validator email
      *
-     * @param email
+     * @param email param for validator
      * @return boolean
      */
     public boolean isEmailValid(String email) {
@@ -67,7 +67,7 @@ public class UserDataValidator {
     /**
      * Validator password
      *
-     * @param password
+     * @param password param for validator
      * @return boolean
      */
     public boolean isPasswordValid(String password) {
@@ -81,7 +81,7 @@ public class UserDataValidator {
     /**
      * Validator login
      *
-     * @param login
+     * @param login param for validator
      * @return boolean
      */
     public boolean isLoginValid(String login) {
@@ -95,7 +95,7 @@ public class UserDataValidator {
     /**
      * Validator id
      *
-     * @param id
+     * @param id param for validator
      * @return boolean
      */
     public boolean isIdValid(Long id) {

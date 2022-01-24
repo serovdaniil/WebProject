@@ -30,31 +30,55 @@ public class SectionConferencDaoImpl implements SectionConferencDao {
      */
     private static final String CREATE_SECTION_CONFERENC = "INSERT INTO section_conferenc " +
             "(name,description,conferenc_id,section_conferenc_status_id) values(?,?,?,1)";
+
     private static final String ADD_DESCRIPTION_BY_SECTION_CONFERENC = "UPDATE section_conferenc SET description = ?" +
             " WHERE id_section_conferenc = ?";
+
     private static final String UPDATE_STATUS_SECTION_CONFERENC = "UPDATE section_conferenc " +
             "SET section_conferenc_status_id =? WHERE id_section_conferenc = ?";
+
     private static final String UPDATE_STATUS_SECTION_CONFERENC_AFTER_CONFERENC = "UPDATE section_conferenc " +
             "SET section_conferenc_status_id = ? WHERE conferenc_id = ?";
+
     private static final String FIND_ALL_SECTION_CONFERENC = "SELECT * FROM section_conferenc JOIN status " +
             "ON section_conferenc_status_id=id_status JOIN conferenc ON conferenc_id=id_conferenc JOIN category " +
-            "ON category_id=id_category ";
+            "ON category_id=id_category LIMIT ? OFFSET ?";
+
     private static final String FIND_ID_SECTION_CONFERENC = "SELECT * FROM section_conferenc JOIN status " +
             "ON section_conferenc_status_id=id_status JOIN conferenc " +
             "ON conferenc_id=id_conferenc JOIN category ON category_id=id_category WHERE id_section_conferenc=?";
+
     private static final String FIND_NAME_SECTION_CONFERENC = "SELECT * FROM section_conferenc JOIN status " +
             "ON section_conferenc_status_id=id_status JOIN conferenc " +
             "ON conferenc_id=id_conferenc JOIN category ON category_id=id_category WHERE section_conferenc.name=?";
+
     private static final String SECTION_CONFERENC_DELETE = "DELETE FROM section_conferenc  WHERE id_section_conferenc=?";
+
     private static final String FIND_SECTION_CONFERENCES_IN_CONFERENC_BY_ID_ACTIVE = "SELECT * FROM section_conferenc " +
             "JOIN conferenc ON conferenc_id=id_conferenc JOIN category ON category_id=id_category JOIN status " +
             "ON section_conferenc_status_id=id_status " +
             "WHERE section_conferenc.conferenc_id=? && section_conferenc_status_id=1";
 
+    private static final String FIND_SECTION_CONFERENCES_IN_CONFERENC_BY_ID_ACTIVE_WITH_PAGINATION = "SELECT * FROM " +
+            "section_conferenc JOIN conferenc ON conferenc_id=id_conferenc JOIN category " +
+            "ON category_id=id_category JOIN status ON section_conferenc_status_id=id_status " +
+            "WHERE section_conferenc.conferenc_id=? && section_conferenc_status_id=1 LIMIT ? OFFSET ?";
+
+    private static final String FIND_ALL_COUNT_SECTION_CONFERENC_IN_CONFERENC =
+            "SELECT COUNT(id_section_conferenc) FROM section_conferenc JOIN conferenc " +
+                    "ON conferenc_id=id_conferenc JOIN category " +
+                    "ON category_id=id_category JOIN status ON section_conferenc_status_id=id_status " +
+                    "WHERE section_conferenc.conferenc_id=? && section_conferenc_status_id=1";
+
+    private static final String FIND_ALL_COUNT_SECTION_CONFERENC=
+            "SELECT COUNT(id_section_conferenc) FROM section_conferenc JOIN conferenc " +
+                    "ON conferenc_id=id_conferenc JOIN category ON category_id=id_category JOIN status " +
+                    "ON section_conferenc_status_id=id_status";
+
     private static final String FIND_FOR_DUPLICATE_SECTION_CONFERENC = "SELECT * FROM section_conferenc JOIN status " +
             "ON section_conferenc_status_id=id_status JOIN conferenc ON conferenc_id=id_conferenc " +
-            "JOIN category ON category_id=id_category WHERE section_conferenc.name=? && section_conferenc.description=? " +
-            "&& conferenc_id=? && section_conferenc_status_id=1";
+            "JOIN category ON category_id=id_category WHERE section_conferenc.name=? " +
+            "&& section_conferenc.description=? && conferenc_id=? && section_conferenc_status_id=1";
 
     /**
      * Logger for this dao
@@ -97,6 +121,51 @@ public class SectionConferencDaoImpl implements SectionConferencDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", CREATE_SECTION_CONFERENC);
+            throw new DaoException(e);
+        }
+        return result;
+    }
+
+    /**
+     * Find count all section conferenc
+     *
+     * @return count section conferences
+     */
+    @Override
+    public Long findCountAllSectionConferenc() throws DaoException {
+        Long result = (long) 0;
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_ALL_COUNT_SECTION_CONFERENC)) {
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getLong(1);
+            }
+        } catch (SQLException e) {
+            LOG.error("sql exception occurred", e);
+            LOG.debug("sql: {}", FIND_ALL_COUNT_SECTION_CONFERENC);
+            throw new DaoException(e);
+        }
+        return result;
+    }
+
+    /**
+     * Find count all section conferenc
+     *
+     * @return count section conferences
+     */
+    @Override
+    public Long findCountAllSectionConferencInConferenc(Long id) throws DaoException {
+        Long result = (long) 0;
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_ALL_COUNT_SECTION_CONFERENC_IN_CONFERENC)) {
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getLong(1);
+            }
+        } catch (SQLException e) {
+            LOG.error("sql exception occurred", e);
+            LOG.debug("sql: {}", FIND_ALL_COUNT_SECTION_CONFERENC_IN_CONFERENC);
             throw new DaoException(e);
         }
         return result;
@@ -217,12 +286,16 @@ public class SectionConferencDaoImpl implements SectionConferencDao {
     /**
      * Read all section conferenc
      *
+     * @param limit  number of rows in the selection
+     * @param offset offset from the beginning of the selection
      * @return List section conferenc
      */
     @Override
-    public List<SectionConferenc> readAll() throws EntityExtractionFailedException, DaoException {
+    public List<SectionConferenc> readAll(Long limit,Long offset) throws EntityExtractionFailedException, DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ALL_SECTION_CONFERENC)) {
+            statement.setLong(1, limit);
+            statement.setLong(2, offset);
             ResultSet resultSet = statement.executeQuery();
             ResultSetExtractor<SectionConferenc> extractor = SectionConferencDaoImpl::extractSectionConferenc;
             return extractor.extractAll(resultSet);
@@ -295,7 +368,7 @@ public class SectionConferencDaoImpl implements SectionConferencDao {
      */
     @Override
     public boolean delete(Long id) throws DaoException {
-        boolean result = false;
+        boolean result;
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(SECTION_CONFERENC_DELETE)) {
             statement.setLong(1, id);
@@ -306,6 +379,37 @@ public class SectionConferencDaoImpl implements SectionConferencDao {
             throw new DaoException(e);
         }
         return result;
+    }
+
+    /**
+     * Find section conferenc by id conferenc with pagination
+     *
+     * @param id     id for conferenc
+     * @param limit  number of rows in the selection
+     * @param offset offset from the beginning of the selection
+     * @return List section conferenc
+     */
+    @Override
+    public List<SectionConferenc> findSectionConferencesInConferencByIdWithPagination(Long id,
+                                                                                      Long limit,
+                                                                                      Long offset) throws DaoException {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement =
+                     connection.prepareStatement(FIND_SECTION_CONFERENCES_IN_CONFERENC_BY_ID_ACTIVE_WITH_PAGINATION)) {
+            statement.setLong(1, id);
+            statement.setLong(2, limit);
+            statement.setLong(3, offset);
+            ResultSet resultSet = statement.executeQuery();
+            ResultSetExtractor<SectionConferenc> extractor = SectionConferencDaoImpl::extractSectionConferenc;
+            return extractor.extractAll(resultSet);
+        } catch (SQLException e) {
+            LOG.error("sql exception occurred", e);
+            LOG.debug("sql: {}", FIND_SECTION_CONFERENCES_IN_CONFERENC_BY_ID_ACTIVE_WITH_PAGINATION);
+            throw new DaoException(e);
+        } catch (EntityExtractionFailedException e) {
+            LOG.error("could not extract entity", e);
+        }
+        return Collections.emptyList();
     }
 
     /**
@@ -338,7 +442,8 @@ public class SectionConferencDaoImpl implements SectionConferencDao {
      *
      * @return Section conferenc
      */
-    private static SectionConferenc extractSectionConferenc(ResultSet resultSet) throws EntityExtractionFailedException {
+    private static SectionConferenc extractSectionConferenc(ResultSet resultSet)
+            throws EntityExtractionFailedException {
         try {
             return new SectionConferenc(
                     resultSet.getLong("id_section_conferenc"),

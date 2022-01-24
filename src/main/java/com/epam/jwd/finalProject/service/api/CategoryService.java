@@ -14,6 +14,14 @@ import java.util.List;
  * @author Daniil Serov
  */
 public interface CategoryService extends EntityService<Category> {
+
+    /**
+     * Find count all category
+     *
+     * @return count category
+     */
+    Long findCountAllCategory() throws ServiceException;
+
     /**
      * Create category
      *

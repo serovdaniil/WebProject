@@ -26,7 +26,9 @@ public class AddAnswerToQuestionCommand implements Command {
     private static final String PARAM_ANSWER = "answer";
     private static final String APPLICATIONS_ATTRIBUTE_NAME_RESULT_ADD = "result";
     private static final String QUESTIONS_ATTRIBUTE_NAME = "question";
-    private static final String URL_QUESTION_PAGE = "/controller?command=show_questions";
+    private static final String PAGES_ATTRIBUTE_NAME = "maxPagesCount";
+    private static final String URL_QUESTION_PAGE = "/controller?command=show_questions&page=1";
+
     private static final Logger LOG = LogManager.getLogger(AddAnswerToQuestionCommand.class);
 
 
@@ -45,10 +47,12 @@ public class AddAnswerToQuestionCommand implements Command {
     public CommandResponse execute(CommandRequest request) {
         final Long id = Long.parseLong(request.getParameter(PARAM_ID));
         final String answer = request.getParameter(PARAM_ANSWER);
+        final Long pageNumber=(long)1;
         final boolean resultAdd;
         try {
+            final Long count = questionService.findCountAllQuestion();
             resultAdd = questionService.addAnswer(id, answer);
-            final List<Question> questionList = questionService.findAll();
+            final List<Question> questionList = questionService.findAll(pageNumber);
             String result;
             if (!resultAdd) {
                 result = "Unsuccessful create";
@@ -56,10 +60,11 @@ public class AddAnswerToQuestionCommand implements Command {
                 result = "Successful create";
             }
             request.addAttributeToJsp(QUESTIONS_ATTRIBUTE_NAME, questionList);
+            request.addAttributeToJsp(PAGES_ATTRIBUTE_NAME, count);
             request.addAttributeToJsp(APPLICATIONS_ATTRIBUTE_NAME_RESULT_ADD, result);
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
-        }catch (ServiceException e) {
+        } catch (ServiceException e) {
             LOG.error("The service exception!" + e);
         }
 

@@ -17,6 +17,21 @@ import java.util.Optional;
 public interface QuestionDao {
 
     /**
+     * Find count all question by user
+     *
+     * @param id id user
+     * @return count questions
+     */
+    Long findCountAllQuestionByUser(Long id) throws DaoException;
+
+    /**
+     * Find count all question
+     *
+     * @return count questions
+     */
+    Long findCountAllQuestion() throws DaoException;
+
+    /**
      * Create question
      *
      * @param name   name for new question
@@ -47,9 +62,11 @@ public interface QuestionDao {
     /**
      * Read all questions
      *
+     * @param limit number of rows in the selection
+     * @param offset offset from the beginning of the selection
      * @return List questions
      */
-    List<Question> readAll() throws EntityExtractionFailedException, DaoException;
+    List<Question> readAll(Long limit,Long offset) throws EntityExtractionFailedException, DaoException;
 
     /**
      * Read question by id
@@ -63,9 +80,11 @@ public interface QuestionDao {
      * Find questions by id user
      *
      * @param id id user
+     * @param limit number of rows in the selection
+     * @param offset offset from the beginning of the selection
      * @return List questions
      */
-    List<Question> findAccountIdByQuestion(Long id) throws DaoException;
+    List<Question> findAccountIdByQuestion(Long id, Long limit,Long offset) throws DaoException;
 
     /**
      * Remove question by id

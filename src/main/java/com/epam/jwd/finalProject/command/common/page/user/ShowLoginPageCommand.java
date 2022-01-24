@@ -11,7 +11,6 @@ import com.epam.jwd.finalProject.controller.RequestFactory;
  * @author Daniil Serov
  */
 public class ShowLoginPageCommand implements Command {
-
     private static final String LOGIN_PAGE = "page.login";
 
     private final RequestFactory requestFactory;

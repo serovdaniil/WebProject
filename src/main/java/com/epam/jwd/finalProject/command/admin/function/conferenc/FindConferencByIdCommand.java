@@ -21,15 +21,18 @@ import java.util.Optional;
  * @author Daniil Serov
  */
 public class FindConferencByIdCommand implements Command {
-    private final ConferencService service;
-    private final RequestFactory requestFactory;
-    private final PropertyContext propertyContext;
     private static final String PARAM_ID = "id";
     private static final String CONFERENCES_ATTRIBUTE_NAME_FIND = "conferenc";
     private static final String CONFERENCES_PAGE = "page.readConferencById";
+
     private static final Logger LOG = LogManager.getLogger(FindConferencByIdCommand.class);
 
-    FindConferencByIdCommand(ConferencService service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    private final ConferencService service;
+    private final RequestFactory requestFactory;
+    private final PropertyContext propertyContext;
+
+    FindConferencByIdCommand(ConferencService service, RequestFactory requestFactory,
+                             PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().conferencService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -46,7 +49,7 @@ public class FindConferencByIdCommand implements Command {
             request.addAttributeToJsp(CONFERENCES_ATTRIBUTE_NAME_FIND, conferenc);
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
-        }catch (ServiceException e) {
+        } catch (ServiceException e) {
             LOG.error("The service exception!" + e);
         }
         return requestFactory.createForwardResponse(propertyContext.get(CONFERENCES_PAGE));
@@ -58,7 +61,7 @@ public class FindConferencByIdCommand implements Command {
 
     private static class Holder {
         public static final FindConferencByIdCommand INSTANCE =
-                new FindConferencByIdCommand(ServiceFactory.simple().conferencService(), RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new FindConferencByIdCommand(ServiceFactory.simple().conferencService(),
+                        RequestFactory.getInstance(), PropertyContext.instance());
     }
 }

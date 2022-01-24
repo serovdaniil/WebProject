@@ -41,7 +41,7 @@
 <p><a href="#update" class="create">${menuUpdate}</a></p>
 <p><a href="#remove" class="create">${menuRemove}</a></p>
 <p><a href="#searchById" class="create">${menuFinfById}</a></p>
-<p><a href="${pageContext.request.contextPath}/controller?command=show_categories" class="create">${menuReadCategories}</a></p>
+<p><a href="${pageContext.request.contextPath}/controller?command=show_categories&page=1" class="create">${menuReadCategories}</a></p>
 <c:if test="${not empty requestScope.result}">
     <p><b>${message}</b></p>
     <br>

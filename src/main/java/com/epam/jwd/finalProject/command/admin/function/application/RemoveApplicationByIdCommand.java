@@ -22,7 +22,8 @@ import org.apache.logging.log4j.Logger;
 public class RemoveApplicationByIdCommand implements Command {
     private static final String PARAM_ID = "id";
     private static final String APPLICATIONS_ATTRIBUTE_NAME_RESULT = "result";
-    private static final String URL_APPLICATIONS_PAGE = "/controller?command=show_applications_by_account";
+    private static final String URL_APPLICATIONS_PAGE = "/controller?command=show_applications_by_account&page=1";
+
     private static final Logger LOG = LogManager.getLogger(UpdateStatusResultByIdApplicationCommand.class);
 
     private final ApplicationService service;

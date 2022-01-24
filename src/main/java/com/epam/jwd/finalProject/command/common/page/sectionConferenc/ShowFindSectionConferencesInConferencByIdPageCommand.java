@@ -22,7 +22,8 @@ import java.util.List;
  * @author Daniil Serov
  */
 public class ShowFindSectionConferencesInConferencByIdPageCommand implements Command {
-    private static final String FIND_SECTION_CONFERENCES_BY_NAME_PAGE = "page.findSectionConferencesInConferencById";
+    private static final String FIND_SECTION_CONFERENCES_BY_NAME_PAGE = "page." +
+            "findSectionConferencesInConferencById";
     private final SectionConferencService service;
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;

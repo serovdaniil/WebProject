@@ -27,20 +27,34 @@ public class QuestionDaoImpl implements QuestionDao {
      */
     private static final String CREATE_QUESTION = "INSERT INTO final_task.question (question,answer,date,user_id) " +
             "values(?,?,?,?)";
+
     private static final String ADD_ANSWER = "UPDATE final_task.question SET final_task.question.answer = ? " +
             "WHERE final_task.question.id = ?";
+
     private static final String FIND_ALL_QUESTION = "SELECT * FROM final_task.question JOIN final_task.user " +
-            "ON user_id=id_user " +
-            "JOIN final_task.role ON role_id=id_role";
+            "ON user_id=id_user JOIN final_task.role ON role_id=id_role ORDER BY  date ASC LIMIT ? OFFSET ?";
+
     private static final String FIND_ID_QUESTION = "SELECT * FROM final_task.question JOIN final_task.user " +
             "ON user_id=id_user " +
             "JOIN final_task.role ON role_id=id_role WHERE final_task.question.id = ?";
-    private static final String FIND_ACCOUNT_ID_BY_QUESTION = "SELECT * FROM final_task.question JOIN final_task.user " +
-            "ON user_id=id_user JOIN final_task.role ON role_id=id_role WHERE final_task.question.user_id = ?";
+
+    private static final String FIND_ACCOUNT_ID_BY_QUESTION = "SELECT * FROM final_task.question " +
+            "JOIN final_task.user ON user_id=id_user JOIN final_task.role ON role_id=id_role " +
+            "WHERE final_task.question.user_id =? LIMIT ? OFFSET ?";
+
     private static final String QUESTION_DELETE = "DELETE FROM final_task.question WHERE final_task.question.id = ?";
+
     private static final String FIND_DUPLICATE_QUESTION = "SELECT * FROM final_task.question JOIN final_task.user " +
             "ON user_id=id_user JOIN final_task.role ON role_id=id_role WHERE final_task.question.user_id = ? " +
             "&& final_task.question.question = ?";
+
+    private static final String FIND_COUNT_ALL_QUESTION_BY_USER = "SELECT COUNT(id) FROM final_task.question " +
+            "JOIN final_task.user ON user_id=id_user JOIN final_task.role ON role_id=id_role " +
+            "WHERE final_task.question.user_id = ?";
+
+    private static final String FIND_COUNT_ALL_QUESTION = "SELECT COUNT(id) FROM final_task.question " +
+            "JOIN final_task.user ON user_id=id_user JOIN final_task.role ON role_id=id_role";
+
     /**
      * Connection pool for this dao
      */
@@ -59,6 +73,52 @@ public class QuestionDaoImpl implements QuestionDao {
      * Logger for this dao
      */
     private static final Logger LOG = LogManager.getLogger(QuestionDaoImpl.class);
+
+    /**
+     * Find count all question by user
+     *
+     * @param id id user
+     * @return count questions
+     */
+    @Override
+    public Long findCountAllQuestionByUser(Long id) throws DaoException {
+        Long result = (long) 0;
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_COUNT_ALL_QUESTION_BY_USER)) {
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getLong(1);
+            }
+        } catch (SQLException e) {
+            LOG.error("sql exception occurred", e);
+            LOG.debug("sql: {}", FIND_COUNT_ALL_QUESTION_BY_USER);
+            throw new DaoException(e);
+        }
+        return result;
+    }
+
+    /**
+     * Find count all question
+     *
+     * @return count questions
+     */
+    @Override
+    public Long findCountAllQuestion() throws DaoException {
+        Long result = (long) 0;
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_COUNT_ALL_QUESTION)) {
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getLong(1);
+            }
+        } catch (SQLException e) {
+            LOG.error("sql exception occurred", e);
+            LOG.debug("sql: {}", FIND_COUNT_ALL_QUESTION);
+            throw new DaoException(e);
+        }
+        return result;
+    }
 
     /**
      * Create question
@@ -151,12 +211,16 @@ public class QuestionDaoImpl implements QuestionDao {
     /**
      * Read all questions
      *
+     * @param limit  number of rows in the selection
+     * @param offset offset from the beginning of the selection
      * @return List questions
      */
     @Override
-    public List<Question> readAll() throws EntityExtractionFailedException, DaoException {
+    public List<Question> readAll(Long limit, Long offset) throws EntityExtractionFailedException, DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ALL_QUESTION)) {
+            statement.setLong(1, limit);
+            statement.setLong(2, offset);
             ResultSet resultSet = statement.executeQuery();
             ResultSetExtractor<Question> extractor = QuestionDaoImpl::extractQuestion;
             return extractor.extractAll(resultSet);
@@ -201,13 +265,17 @@ public class QuestionDaoImpl implements QuestionDao {
      * Find questions by id user
      *
      * @param id id user
+     * @param limit  number of rows in the selection
+     * @param offset offset from the beginning of the selection
      * @return List questions
      */
     @Override
-    public List<Question> findAccountIdByQuestion(Long id) throws DaoException {
+    public List<Question> findAccountIdByQuestion(Long id, Long limit, Long offset) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ACCOUNT_ID_BY_QUESTION)) {
             statement.setLong(1, id);
+            statement.setLong(2, limit);
+            statement.setLong(3, offset);
             ResultSet resultSet = statement.executeQuery();
             ResultSetExtractor<Question> extractor = QuestionDaoImpl::extractQuestion;
             return extractor.extractAll(resultSet);
@@ -229,7 +297,7 @@ public class QuestionDaoImpl implements QuestionDao {
      */
     @Override
     public boolean delete(Long id) throws DaoException {
-        boolean result = false;
+        boolean result;
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(QUESTION_DELETE)) {
             statement.setLong(1, id);

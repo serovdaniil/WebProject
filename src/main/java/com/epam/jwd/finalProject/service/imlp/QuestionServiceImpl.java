@@ -36,6 +36,11 @@ public class QuestionServiceImpl implements QuestionService {
     private static final Logger LOG = LogManager.getLogger(QuestionServiceImpl.class);
 
     /**
+     * Limit for pagination
+     */
+    private static final Long LIMIT = (long) 5;
+
+    /**
      * Constructor - creating a new object
      *
      * @param questionDao dao for this service
@@ -45,23 +50,66 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     /**
-     * Find all question
+     * Find count all question by user
      *
-     * @return List question
+     * @param id id user
+     * @return count questions
      */
     @Override
-    public List<Question> findAll() throws ServiceException {
-        try {
-            try {
-                return questionDao.readAll();
-            } catch (EntityExtractionFailedException e) {
-                e.printStackTrace();
+    public Long findCountAllQuestionByUser(Long id) throws ServiceException, ValidationException {
+        try { if (!questionDataValidator.isIdValid(id)) {
+            LOG.error("The entered data is not correct!");
+            throw new ValidationException("The entered data is not correct!");
+        }
+            final Long countConferenc = questionDao.findCountAllQuestionByUser(id);
+            Long pageCount = countConferenc / LIMIT;
+            if ((countConferenc - pageCount * LIMIT) > 0) {
+                pageCount++;
             }
-            return Collections.emptyList();
+            return pageCount;
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
     }
+
+    /**
+     * Find count all question
+     *
+     * @return count questions
+     */
+    @Override
+    public Long findCountAllQuestion() throws ServiceException {
+        try {
+            final Long countConferenc = questionDao.findCountAllQuestion();
+            Long pageCount = countConferenc / LIMIT;
+            if ((countConferenc - pageCount * LIMIT) > 0) {
+                pageCount++;
+            }
+            return pageCount;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    /**
+     * Find all question
+     *
+     * @param pageNumber selected page
+     * @return List question
+     */
+    @Override
+    public List<Question> findAll(Long pageNumber) throws ServiceException {
+            try {
+                final Long offset = LIMIT * (pageNumber - 1);
+                return questionDao.readAll(LIMIT, offset);
+            } catch (EntityExtractionFailedException e) {
+                e.printStackTrace();
+            }catch (DaoException e) {
+                throw new ServiceException(e);
+            }
+            return Collections.emptyList();
+        }
+
 
     /**
      * Find for duplicate question
@@ -71,13 +119,14 @@ public class QuestionServiceImpl implements QuestionService {
      * @return boolean result of operation
      */
     @Override
-    public boolean findForDuplicateQuestion(Long idAccount, String question) throws ValidationException, ServiceException {
+    public boolean findForDuplicateQuestion(Long idAccount, String question)
+            throws ValidationException, ServiceException {
         try {
             if (!questionDataValidator.isIdValid(idAccount) || !questionDataValidator.isAnswerValid(question)) {
                 LOG.error("The entered data is not correct!");
                 throw new ValidationException("The entered data is not correct!");
             }
-            return questionDao.findForDuplicateQuestion(idAccount,question);
+            return questionDao.findForDuplicateQuestion(idAccount, question);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -175,13 +224,15 @@ public class QuestionServiceImpl implements QuestionService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public List<Question> findAccountIdByQuestion(Long id) throws ValidationException, ServiceException {
+    public List<Question> findAccountIdByQuestion(Long id, Long pageNumber)
+            throws ValidationException, ServiceException {
         try {
             if (!questionDataValidator.isIdValid(id)) {
                 LOG.error("The entered data is not correct!");
                 throw new ValidationException("The entered data is not correct!");
             }
-            return questionDao.findAccountIdByQuestion(id);
+            final Long offset = LIMIT * (pageNumber - 1);
+            return questionDao.findAccountIdByQuestion(id, LIMIT, offset);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

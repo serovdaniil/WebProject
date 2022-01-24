@@ -6,6 +6,7 @@ import com.epam.jwd.finalProject.command.factory.CommandResponse;
 import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
 import com.epam.jwd.finalProject.model.Conferenc;
+import com.epam.jwd.finalProject.service.api.ConferencService;
 import com.epam.jwd.finalProject.service.api.EntityService;
 import com.epam.jwd.finalProject.service.exception.ServiceException;
 import com.epam.jwd.finalProject.service.factory.ServiceFactory;
@@ -20,18 +21,20 @@ import java.util.List;
  * @author Daniil Serov
  */
 public class ShowConferencesPageCommand implements Command {
-
+    private static final String FIND_PARAM_PAGE = "page";
+    private static final String PAGES_ATTRIBUTE_NAME = "maxPagesCount";
     private static final String CONFERENCES_ATTRIBUTE_NAME = "conferences";
     private static final String CONFERENCES_PAGE = "page.conferences";
+
     private static final Logger LOG = LogManager.getLogger(ShowConferencesPageCommand.class);
 
-    private final EntityService<Conferenc> service;
+    private final ConferencService service;
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    ShowConferencesPageCommand(EntityService<Conferenc> service, RequestFactory requestFactory,
+    ShowConferencesPageCommand(ConferencService service, RequestFactory requestFactory,
                                PropertyContext propertyContext) {
-        this.service = ServiceFactory.simple().serviceFor(Conferenc.class);
+        this.service = ServiceFactory.simple().conferencService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
     }
@@ -39,8 +42,11 @@ public class ShowConferencesPageCommand implements Command {
     @Override
     public CommandResponse execute(CommandRequest request) {
         try {
-            final List<Conferenc> conferencesAll = service.findAll();
+            final Long pageNum = Long.valueOf(request.getParameter(FIND_PARAM_PAGE));
+            final Long count = service.findCountAllConferencByActiveStatus();
+            final List<Conferenc> conferencesAll = service.findAll(pageNum);
             request.addAttributeToJsp(CONFERENCES_ATTRIBUTE_NAME, conferencesAll);
+            request.addAttributeToJsp(PAGES_ATTRIBUTE_NAME, count);
         } catch (ServiceException e) {
             LOG.error("The service exception!" + e);
         }
@@ -53,7 +59,7 @@ public class ShowConferencesPageCommand implements Command {
 
     private static class Holder {
         public static final ShowConferencesPageCommand INSTANCE =
-                new ShowConferencesPageCommand(ServiceFactory.simple().serviceFor(Conferenc.class),
+                new ShowConferencesPageCommand(ServiceFactory.simple().conferencService(),
                         RequestFactory.getInstance(), PropertyContext.instance());
     }
 }

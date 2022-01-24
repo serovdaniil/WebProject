@@ -18,17 +18,18 @@ import org.apache.logging.log4j.Logger;
  * @author Daniil Serov
  */
 public class UpdateDescriptionInSectionConferencCommand implements Command {
-    private final SectionConferencService service;
-    private final RequestFactory requestFactory;
-    private final PropertyContext propertyContext;
-
     private static final String PARAM_ID = "id";
     private static final String PARAM_DESCTIPTION = "description";
     private static final String RESULT_ATTRIBUTE_NAME = "result";
     private static final String OPERATION_WAS_UNSUCCSESFUL = "The operation was unsuccsesful";
     private static final String SECTION_ADMIN_PANEL_PAGE = "page.adminPanelSectionConferenc";
-    private static final String SECTION_CONFERENCES_PAGE = "/controller?command=show_section_conferences";
+    private static final String SECTION_CONFERENCES_PAGE = "/controller?command=show_section_conferences&page=1";
+
     private static final Logger LOG = LogManager.getLogger(UpdateDescriptionInSectionConferencCommand.class);
+
+    private final SectionConferencService service;
+    private final RequestFactory requestFactory;
+    private final PropertyContext propertyContext;
 
     UpdateDescriptionInSectionConferencCommand(SectionConferencService service, RequestFactory requestFactory,
                                                PropertyContext propertyContext) {

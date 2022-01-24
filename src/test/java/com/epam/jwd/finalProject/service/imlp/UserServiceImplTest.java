@@ -46,8 +46,8 @@ public class UserServiceImplTest extends Assert {
     @Test
     public void findAll() throws ServiceException {
         List<User> expectedResult= users;
-        when(service.findAll()).thenReturn(expectedResult);
-        List<User> actualResult = service.findAll();
+        when(service.findAll((long)1)).thenReturn(expectedResult);
+        List<User> actualResult = service.findAll((long)1);
         assertEquals(actualResult, expectedResult);
     }
 

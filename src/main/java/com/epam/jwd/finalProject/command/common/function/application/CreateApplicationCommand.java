@@ -24,15 +24,17 @@ import java.util.Optional;
  * @author Daniil Serov
  */
 public class CreateApplicationCommand implements Command {
+    private static final String PAGES_ATTRIBUTE_NAME = "maxPagesCount";
     private static final String PARAM_ID = "id";
     private static final String USER_SESSION_ATTRIBUTE_NAME = "user";
     private static final String APPLICATIONS_ACCOUNT_PAGE = "page.applicationsByAccount";
     private static final String APPLICATIONS_ATTRIBUTE_NAME_SECTION_CONFERENC = "applications";
     private static final String ERROR_DUPLICATE_PASS_ATTRIBUTE = "errorDuplicatePassMessage";
     private static final String APPLICATIONS_ATTRIBUTE_NAME = "result";
-    private static final String APPLICATIONS_PAGE = "/controller?command=show_applications_by_account";
+    private static final String APPLICATIONS_PAGE = "/controller?command=show_applications_by_account&page=1";
     private static final String ERROR_DUPLICATE_PASS_MESSAGE = "You already have an application for training, " +
             "contact the administrator for details!";
+
     private static final Logger LOG = LogManager.getLogger(CreateApplicationCommand.class);
 
     private final ApplicationService applicationService;
@@ -54,19 +56,22 @@ public class CreateApplicationCommand implements Command {
         boolean result;
         final List<Application> applicationList;
         try {
+            final Long count = applicationService.findCountAllApplicationByUser(idAccount);
             for (long i = 1; i < 3; i++) {
                 result = applicationService.findForDuplicateApplication(idAccount, idSectionConferenc, i);
                 if (result == true) {
                     request.addAttributeToJsp(ERROR_DUPLICATE_PASS_ATTRIBUTE, ERROR_DUPLICATE_PASS_MESSAGE);
-                    applicationList = applicationService.findAccountIdByApplication(idAccount);
+                    applicationList = applicationService.findAccountIdByApplication(idAccount,(long)1);
                     request.addAttributeToJsp(APPLICATIONS_ATTRIBUTE_NAME_SECTION_CONFERENC, applicationList);
+                    request.addAttributeToJsp(PAGES_ATTRIBUTE_NAME, count);
                     return requestFactory.createForwardResponse(propertyContext.get(APPLICATIONS_ACCOUNT_PAGE));
                 }
             }
             result = applicationService.create(idAccount, idSectionConferenc, (long) 1);
-            applicationList = applicationService.findAccountIdByApplication(idAccount);
+            applicationList = applicationService.findAccountIdByApplication(idAccount,(long)1);
             request.addAttributeToJsp(APPLICATIONS_ATTRIBUTE_NAME_SECTION_CONFERENC, applicationList);
             request.addAttributeToJsp(APPLICATIONS_ATTRIBUTE_NAME, result);
+            request.addAttributeToJsp(PAGES_ATTRIBUTE_NAME, count);
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
         } catch (ServiceException e) {

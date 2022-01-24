@@ -29,7 +29,8 @@ public class UpdateLastNameCommand implements Command {
     private static final String RESULT_ATTRIBUTE_NAME = "result";
     private static final String URL_ACCOUNT_PAGE = "/controller?command=show_personal_infomation";
     private static final String ACCOUNT_PAGE = "page.personalInformation";
-    private static final String UNSUCCESSFUL_RESULT_UPDATE_INFORMATION = "Unsuccessful updating of personal information";
+    private static final String UNSUCCESSFUL_RESULT_UPDATE_INFORMATION = "Unsuccessful " +
+            "updating of personal information";
     private static final Logger LOG = LogManager.getLogger(UpdateLastNameCommand.class);
 
     UpdateLastNameCommand(UserService service, RequestFactory requestFactory, PropertyContext propertyContext) {

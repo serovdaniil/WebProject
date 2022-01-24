@@ -18,6 +18,7 @@ import com.epam.jwd.finalProject.command.admin.page.sectionConferenc.ShowReadSec
 import com.epam.jwd.finalProject.command.admin.page.user.ShowUsersPageCommand;
 import com.epam.jwd.finalProject.command.admin.page.user.ShowReadUserByIdPageCommand;
 import com.epam.jwd.finalProject.command.admin.function.user.UpdateRoleCommand;
+import com.epam.jwd.finalProject.command.common.function.conferenc.ShowConferencesWithPaginationCommand;
 import com.epam.jwd.finalProject.command.common.function.application.CreateApplicationCommand;
 import com.epam.jwd.finalProject.command.common.function.application.FindAccountIdByApplicationCommand;
 import com.epam.jwd.finalProject.command.common.function.application.FindApplicationByIdCommand;
@@ -59,6 +60,8 @@ public enum CommandRegistry {
     /**
      * Commands for conferenc
      */
+    SHOW_CONFERENCES_WITH_PAGINATION(ShowConferencesWithPaginationCommand.getInstance(),
+            "show_conferences_with_pagination", UNAUTHORIZED, USER, ADMIN, BLOKED),
     SHOW_CONFERENCES(ShowConferencesPageCommand.getInstance(),
             "show_conferences", UNAUTHORIZED, USER, ADMIN, BLOKED),
     FIND_CONFERENCES_BY_NAME(FindConferencByNameCommand.getInstance(),
@@ -102,8 +105,16 @@ public enum CommandRegistry {
             "show_find_section_conferences_by_name", ADMIN),
     FIND_SECTION_CONFERENCES_IN_CONFERENC_BY_ID(FindSectionConferencesInConferencByIdCommand.getInstance(),
             "find_section_conferences_in_conferenc_by_id", UNAUTHORIZED, USER, ADMIN, BLOKED),
-    SHOW_FIND_SECTION_CONFERENCES_IN_CONFERENC_BY_ID(ShowFindSectionConferencesInConferencByIdPageCommand.getInstance(),
+    SHOW_FIND_SECTION_CONFERENCES_IN_CONFERENC_BY_ID
+            (ShowFindSectionConferencesInConferencByIdPageCommand.getInstance(),
             "show_find_section_conferences_in_conferenc_by_id", UNAUTHORIZED, USER, ADMIN, BLOKED),
+    SHOW_FIND_SECTION_CONFERENCES_IN_CONFERENC_BY_ID_WITH_PAGINATION
+            (ShowSectionConferencWithPaginationCommand.getInstance(),
+            "show_find_section_conferences_in_conferenc_by_id_pagination", UNAUTHORIZED, USER, ADMIN, BLOKED),
+    SHOW_FIND_SECTION_CONFERENCES_IN_CONFERENC_BY_ID_WITH_PAGINATION_BY_FIRST_PAGE
+            (ShowSectionConferencWithPaginationForFirstPageCommand.getInstance(),
+            "show_section_conferences_in_conferenc_pagination_by_first_page",
+                    UNAUTHORIZED, USER, ADMIN, BLOKED),
     /**
      * Commands for category
      */

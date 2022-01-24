@@ -49,8 +49,8 @@
 <ul id="menu">
     <li><a href="${pageContext.request.contextPath}/controller?command=">${main}</a></li>
     <li><a href="${pageContext.request.contextPath}/controller?command=show_about_page">${about}</a></li>
-    <li><a href="${pageContext.request.contextPath}/controller?command=show_conferences">${conferences}</a></li>
-    <li><a href="${pageContext.request.contextPath}/controller?command=show_categories">${category}</a></li>
+    <li><a href="${pageContext.request.contextPath}/controller?command=show_conferences_with_pagination&page=1">${conferences}</a></li>
+    <li><a href="${pageContext.request.contextPath}/controller?command=show_categories&page=1">${category}</a></li>
     <li><a href="${pageContext.request.contextPath}/controller?command=show_contact">${contacts}</a></li>
     <li></li>
     <li></li>

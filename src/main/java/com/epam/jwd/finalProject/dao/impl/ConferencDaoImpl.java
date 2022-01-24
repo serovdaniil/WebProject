@@ -27,21 +27,40 @@ public class ConferencDaoImpl implements ConferencDao {
     /**
      * SQL query for this dao
      */
+    private static final String FIND_ALL_CONFERENC_LIMIT_OFFSET_PAGINATION = "SELECT * FROM conferenc " +
+            "JOIN category ON category_id=id_category JOIN status ON conferenc_status_id=id_status " +
+            "WHERE conferenc_status_id=1 LIMIT ? OFFSET ?";
+
+    private static final String FIND_ALL_COUNT_CONFERENEC_BY_ACTIVE_STATUS = "SELECT COUNT(id_conferenc) " +
+            "FROM conferenc JOIN category " +
+            "ON category_id=id_category JOIN status ON conferenc_status_id=id_status WHERE conferenc_status_id=1";
+
+    private static final String FIND_ALL_COUNT_CONFERENEC = "SELECT COUNT(id_conferenc) FROM conferenc JOIN category " +
+            "ON category_id=id_category JOIN status ON conferenc_status_id=id_status";
+
     private static final String CREATE_CONFERENC = "INSERT INTO conferenc " +
             "(name,description,category_id,conferenc_status_id) values(?,?,?,1)";
+
     private static final String ADD_DESCRIPTION_BY_CONFERENC = "UPDATE conferenc SET description = ?" +
             " WHERE id_conferenc = ?";
+
     private static final String UPDATE_STATUS_CONFERENC = "UPDATE conferenc SET conferenc_status_id = ?" +
             " WHERE id_conferenc = ?";
+
     private static final String FIND_ALL_CONFERENC_ACTIVE = "SELECT * FROM conferenc JOIN category " +
             "ON category_id=id_category JOIN status ON conferenc_status_id=id_status WHERE conferenc_status_id=1";
+
     private static final String FIND_ALL_CONFERENC = "SELECT * FROM conferenc JOIN category " +
-            "ON category_id=id_category JOIN status ON conferenc_status_id=id_status";
+            "ON category_id=id_category JOIN status ON conferenc_status_id=id_status LIMIT ? OFFSET ?";
+
     private static final String FIND_ID_CONFERENC = "SELECT * FROM conferenc JOIN category " +
             "ON category_id=id_category JOIN status ON conferenc_status_id=id_status WHERE id_conferenc=?";
+
     private static final String FIND_NAME_CONFERENC = "SELECT * FROM conferenc JOIN category " +
             "ON category_id=id_category JOIN status ON conferenc_status_id=id_status WHERE conferenc.name=?";
+
     private static final String CONFERENC_DELETE = "DELETE FROM conferenc WHERE id_conferenc=?";
+
     private static final String FIND_FOR_DIPLICATE_CONFERENC = "SELECT * FROM conferenc JOIN category " +
             "ON category_id=id_category JOIN status ON conferenc_status_id=id_status WHERE name=? " +
             "&& description=? && category_id=? && conferenc_status_id=1";
@@ -62,6 +81,78 @@ public class ConferencDaoImpl implements ConferencDao {
      */
     public ConferencDaoImpl(ConnectionPool connectionPool) {
         this.connectionPool = connectionPool;
+    }
+
+    /**
+     * Find all Conferenc with pagination
+     *
+     * @param limit  number of rows in the selection
+     * @param offset offset from the beginning of the selection
+     * @return List Conferenc
+     */
+    @Override
+    public List<Conferenc> findAllConferencLimitOffsetPagination(Long limit, Long offset) throws DaoException {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_ALL_CONFERENC_LIMIT_OFFSET_PAGINATION)) {
+            statement.setLong(1, limit);
+            statement.setLong(2, offset);
+            ResultSet resultSet = statement.executeQuery();
+            ResultSetExtractor<Conferenc> extractor = ConferencDaoImpl::extractConferenc;
+            return extractor.extractAll(resultSet);
+        } catch (SQLException e) {
+            LOG.error("sql exception occurred", e);
+            LOG.debug("sql: {}", FIND_ALL_CONFERENC_LIMIT_OFFSET_PAGINATION);
+            throw new DaoException(e);
+        } catch (EntityExtractionFailedException e) {
+            LOG.error("could not extract entity", e);
+        }
+        return Collections.emptyList();
+
+    }
+
+    /**
+     * Find count all conferenc
+     *
+     * @return count conferences
+     */
+    @Override
+    public Long findCountAllConferencByActiveStatus() throws DaoException {
+        Long result = (long) 0;
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_ALL_COUNT_CONFERENEC_BY_ACTIVE_STATUS)) {
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getLong(1);
+            }
+        } catch (SQLException e) {
+            LOG.error("sql exception occurred", e);
+            LOG.debug("sql: {}", FIND_ALL_COUNT_CONFERENEC_BY_ACTIVE_STATUS);
+            throw new DaoException(e);
+        }
+        return result;
+    }
+
+
+    /**
+     * Find count all conferenc
+     *
+     * @return count conferences
+     */
+    @Override
+    public Long findCountAllConferenc() throws DaoException {
+        Long result = (long) 0;
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_ALL_COUNT_CONFERENEC)) {
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getLong(1);
+            }
+        } catch (SQLException e) {
+            LOG.error("sql exception occurred", e);
+            LOG.debug("sql: {}", FIND_ALL_COUNT_CONFERENEC);
+            throw new DaoException(e);
+        }
+        return result;
     }
 
     /**
@@ -182,12 +273,16 @@ public class ConferencDaoImpl implements ConferencDao {
     /**
      * Read all conferenc
      *
+     * @param limit number of rows in the selection
+     * @param offset offset from the beginning of the selection
      * @return List Conferenc
      */
     @Override
-    public List<Conferenc> readAll() throws EntityExtractionFailedException, DaoException {
+    public List<Conferenc> readAll(Long limit,Long offset) throws EntityExtractionFailedException, DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ALL_CONFERENC)) {
+            statement.setLong(1, limit);
+            statement.setLong(2, offset);
             ResultSet resultSet = statement.executeQuery();
             ResultSetExtractor<Conferenc> extractor = ConferencDaoImpl::extractConferenc;
             return extractor.extractAll(resultSet);

@@ -20,6 +20,7 @@
 <style>
     <%@include file="/WEB-INF/css/tableStyle.css"%>
     <%@include file="/WEB-INF/css/text.css"%>
+    <%@include file="/WEB-INF/css/pagination.css"%>
 </style>
 <%@include file="/WEB-INF/jsp/common/header.jsp" %>
 <h2>${textMain}</h2>
@@ -61,6 +62,15 @@
         </form>
     </c:forEach>
 </table>
+<div id="container">
+    <ul class="pagination">
+        <c:forEach var="pageNum" begin="1" end="${requestScope.maxPagesCount}">
+            <li>
+                <a href="${pageContext.request.contextPath}/controller?command=show_users&page=${pageNum}">${pageNum}</a>
+            </li>
+        </c:forEach>
+    </ul>
+</div>
 <%@include file="/WEB-INF/jsp/common/footer.jsp" %>
 </body>
 </html>

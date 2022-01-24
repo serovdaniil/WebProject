@@ -21,16 +21,18 @@ import java.util.Optional;
  * @author Daniil Serov
  */
 public class UpdateRoleCommand implements Command {
-    private final UserService service;
-    private final RequestFactory requestFactory;
-    private final PropertyContext propertyContext;
     private static final String FIND_PARAM_ID_ROLE = "roleNew";
     private static final String FIND_PARAM_ID_ACCOUNT = "id";
-    private static final String URL_UPDATE_ROLE_USER_PAGE = "/controller?command=show_users";
+    private static final String URL_UPDATE_ROLE_USER_PAGE = "/controller?command=show_users&page=1";
     private static final String RESULT_ATTRIBUTE_NAME = "result";
     private static final String OPERATION_WAS_UNSUCCSESFUL = "The operation was unsuccsesful";
     private static final String SHOW_USERS_PAGE = "page.users";
+
     private static final Logger LOG = LogManager.getLogger(UpdateRoleCommand.class);
+
+    private final UserService service;
+    private final RequestFactory requestFactory;
+    private final PropertyContext propertyContext;
 
     UpdateRoleCommand(UserService service, RequestFactory requestFactory, PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().userService();

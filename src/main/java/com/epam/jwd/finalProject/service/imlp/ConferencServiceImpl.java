@@ -32,6 +32,10 @@ public class ConferencServiceImpl implements ConferencService {
      * Validator for this service
      */
     private final ConferencDataValidator conferencDataValidator = new ConferencDataValidator().getInstance();
+    /**
+     * Limit for pagination
+     */
+    private static final Long LIMIT = (long) 5;
 
     /**
      * Constructor - creating a new object
@@ -43,6 +47,66 @@ public class ConferencServiceImpl implements ConferencService {
     }
 
     /**
+     * Find all Conferenc with pagination
+     *
+     * @param pageNumber selected page
+     * @return List Conferenc
+     * @throws ValidationException if there are validation problems
+     */
+    @Override
+    public List<Conferenc> findAllConferencLimitOffsetPagination(Long pageNumber)
+            throws ValidationException, ServiceException {
+        try {
+            if (!conferencDataValidator.isIdValid(pageNumber)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            final Long offset = LIMIT * (pageNumber - 1);
+            return conferencDao.findAllConferencLimitOffsetPagination(LIMIT, offset);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    /**
+     * Find count all conferenc
+     *
+     * @return count conferences
+     */
+    @Override
+    public Long findCountAllConferencByActiveStatus() throws ServiceException {
+        try {
+            final Long countConferenc = conferencDao.findCountAllConferencByActiveStatus();
+            Long pageCount = countConferenc / LIMIT;
+            if ((countConferenc - pageCount * LIMIT) > 0) {
+                pageCount++;
+            }
+            return pageCount;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    /**
+     * Find count all conferenc
+     *
+     * @return count conferences
+     */
+    @Override
+    public Long findCountAllConferenc() throws ServiceException {
+        try {
+            final Long countConferenc = conferencDao.findCountAllConferenc();
+            Long pageCount = countConferenc / LIMIT;
+            if ((countConferenc - pageCount * LIMIT) > 0) {
+                pageCount++;
+            }
+            return pageCount;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    /**
      * Change status conferenc
      *
      * @param idConferenc id conferenc
@@ -51,7 +115,8 @@ public class ConferencServiceImpl implements ConferencService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public boolean changeStatus(Long idConferenc, String nameStatus) throws ValidationException, ServiceException {
+    public boolean changeStatus(Long idConferenc, String nameStatus)
+            throws ValidationException, ServiceException {
         try {
             final Long idStatus = resultSection(nameStatus);
             if (!conferencDataValidator.isIdValid(idConferenc) || !conferencDataValidator.isIdValid(idStatus)) {
@@ -74,14 +139,15 @@ public class ConferencServiceImpl implements ConferencService {
      * @return boolean result of operation
      */
     @Override
-    public boolean findForDuplicateConferenc(String name, String description, Long idCategory) throws ValidationException, ServiceException {
+    public boolean findForDuplicateConferenc(String name, String description, Long idCategory)
+            throws ValidationException, ServiceException {
         try {
             if (!conferencDataValidator.isNameValid(name) || !conferencDataValidator.isDescriptionValid(description)
-            || !conferencDataValidator.isIdValid(idCategory)) {
+                    || !conferencDataValidator.isIdValid(idCategory)) {
                 LOG.error("The entered data is not correct!");
                 throw new ValidationException("The entered data is not correct!");
             }
-            return conferencDao.findForDuplicateConferenc(name,description,idCategory);
+            return conferencDao.findForDuplicateConferenc(name, description, idCategory);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -96,7 +162,8 @@ public class ConferencServiceImpl implements ConferencService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public boolean updateDescription(Long id, String description) throws ValidationException, ServiceException {
+    public boolean updateDescription(Long id, String description)
+            throws ValidationException, ServiceException {
         try {
             if (!conferencDataValidator.isIdValid(id) || !conferencDataValidator.isDescriptionValid(description)) {
                 LOG.error("The entered data is not correct!");
@@ -131,13 +198,15 @@ public class ConferencServiceImpl implements ConferencService {
     /**
      * Find conferences by status
      *
+     * @param pageNumber selected page
      * @return List conferences
      */
     @Override
-    public List<Conferenc> findAllStatus() throws ServiceException {
+    public List<Conferenc> findAllStatus(Long pageNumber) throws ServiceException {
         try {
             try {
-                return conferencDao.readAll();
+                final Long offset = LIMIT * (pageNumber - 1);
+                return conferencDao.readAll(LIMIT,offset);
             } catch (EntityExtractionFailedException e) {
                 e.printStackTrace();
             }
@@ -153,18 +222,16 @@ public class ConferencServiceImpl implements ConferencService {
      * @return List conferences
      */
     @Override
-    public List<Conferenc> findAll() throws ServiceException {
-        try {
+    public List<Conferenc> findAll(Long pageNumber) throws ServiceException {
             try {
                 return conferencDao.readAllActive();
             } catch (EntityExtractionFailedException e) {
                 e.printStackTrace();
+            }catch (DaoException e) {
+                throw new ServiceException(e);
             }
             return Collections.emptyList();
-        } catch (DaoException e) {
-            throw new ServiceException(e);
         }
-    }
 
     /**
      * Create conferenc
@@ -176,7 +243,8 @@ public class ConferencServiceImpl implements ConferencService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public boolean create(String name, String description, Long idCategory) throws ValidationException, ServiceException {
+    public boolean create(String name, String description, Long idCategory)
+            throws ValidationException, ServiceException {
         try {
             if (!conferencDataValidator.isNameValid(name) ||
                     !conferencDataValidator.isDescriptionValid(description) ||

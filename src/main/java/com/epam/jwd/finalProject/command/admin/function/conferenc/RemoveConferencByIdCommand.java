@@ -18,17 +18,20 @@ import org.apache.logging.log4j.Logger;
  * @author Daniil Serov
  */
 public class RemoveConferencByIdCommand implements Command {
-    private final ConferencService service;
-    private final RequestFactory requestFactory;
-    private final PropertyContext propertyContext;
     private static final String PARAM_ID = "id";
     private static final String CONFERENCES_ATTRIBUTE_NAME_RESULT_REMOVE = "result";
     private static final String OPERATION_WAS_UNSUCCSESFUL = "The operation was unsuccsesful";
     private static final String CONFERENC_ADMIN_PANEL_PAGE = "page.adminPanelConferenc";
-    private static final String CONFERENCES_PAGE = "/controller?command=show_conferences";
+    private static final String CONFERENCES_PAGE = "/controller?command=show_all_conferences&page=1";
+
     private static final Logger LOG = LogManager.getLogger(RemoveConferencByIdCommand.class);
 
-    RemoveConferencByIdCommand(ConferencService service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    private final ConferencService service;
+    private final RequestFactory requestFactory;
+    private final PropertyContext propertyContext;
+
+    RemoveConferencByIdCommand(ConferencService service, RequestFactory requestFactory,
+                               PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().conferencService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -42,7 +45,7 @@ public class RemoveConferencByIdCommand implements Command {
             resultRemove = service.remove(id);
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
-        }catch (ServiceException e) {
+        } catch (ServiceException e) {
             LOG.error("The service exception!" + e);
         }
         if (!resultRemove) {
@@ -59,7 +62,7 @@ public class RemoveConferencByIdCommand implements Command {
 
     private static class Holder {
         public static final RemoveConferencByIdCommand INSTANCE =
-                new RemoveConferencByIdCommand(ServiceFactory.simple().conferencService(), RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new RemoveConferencByIdCommand(ServiceFactory.simple().conferencService(),
+                        RequestFactory.getInstance(), PropertyContext.instance());
     }
 }

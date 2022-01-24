@@ -33,6 +33,7 @@ public class ShowReadSectionConferencByIdPageCommand implements Command {
 
     private static class Holder {
         public static final ShowReadSectionConferencByIdPageCommand INSTANCE =
-                new ShowReadSectionConferencByIdPageCommand(RequestFactory.getInstance(), PropertyContext.instance());
+                new ShowReadSectionConferencByIdPageCommand(RequestFactory.getInstance(),
+                        PropertyContext.instance());
     }
 }

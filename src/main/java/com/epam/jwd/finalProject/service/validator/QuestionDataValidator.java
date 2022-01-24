@@ -17,7 +17,7 @@ public class QuestionDataValidator {
     /**
      * Validator id
      *
-     * @param id
+     * @param id param for validator
      * @return boolean
      */
     public boolean isIdValid(Long id) {
@@ -29,7 +29,7 @@ public class QuestionDataValidator {
     /**
      * Validator name
      *
-     * @param name
+     * @param name param for validator
      * @return boolean
      */
     public boolean isNameValid(String name) {
@@ -43,7 +43,7 @@ public class QuestionDataValidator {
     /**
      * Validator answer
      *
-     * @param answer
+     * @param answer param for validator
      * @return boolean
      */
     public boolean isAnswerValid(String answer) {

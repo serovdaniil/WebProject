@@ -67,8 +67,8 @@ public class MethodConferencDaoImplTest extends Assert{
     @Test
     public void readAll() throws EntityExtractionFailedException, DaoException  {
         List<Conferenc> expectedResult = conferencList;
-        when(dao.readAll()).thenReturn(expectedResult);
-        List<Conferenc> actualResult = dao.readAll();
+        when(dao.readAll((long)1,(long)1)).thenReturn(expectedResult);
+        List<Conferenc> actualResult = dao.readAll((long)1,(long)1);
         assertEquals(actualResult, expectedResult);
     }
 

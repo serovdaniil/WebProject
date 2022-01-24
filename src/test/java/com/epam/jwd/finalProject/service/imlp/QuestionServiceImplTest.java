@@ -46,8 +46,8 @@ public class QuestionServiceImplTest extends Assert {
     @Test
     public void findAll() throws ServiceException {
         List<Question> expectedResult = questionList;
-        when(service.findAll()).thenReturn(expectedResult);
-        List<Question> actualResult = service.findAll();
+        when(service.findAll((long)1)).thenReturn(expectedResult);
+        List<Question> actualResult = service.findAll((long)1);
         assertEquals(actualResult, expectedResult);
     }
 
@@ -86,8 +86,8 @@ public class QuestionServiceImplTest extends Assert {
     @Test
     public void findAccountIdByQuestion() throws ValidationException, ServiceException  {
         List<Question> expectedResult = questionList;
-        when(service.findAccountIdByQuestion(idUser)).thenReturn(expectedResult);
-        List<Question> actualResult = service.findAccountIdByQuestion(idUser);
+        when(service.findAccountIdByQuestion(idUser,(long)1)).thenReturn(expectedResult);
+        List<Question> actualResult = service.findAccountIdByQuestion(idUser,(long)1);
         assertEquals(actualResult, expectedResult);
     }
 }

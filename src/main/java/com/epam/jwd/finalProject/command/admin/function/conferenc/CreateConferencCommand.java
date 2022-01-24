@@ -18,19 +18,22 @@ import org.apache.logging.log4j.Logger;
  * @author Daniil Serov
  */
 public class CreateConferencCommand implements Command {
-    private final ConferencService service;
-    private final RequestFactory requestFactory;
-    private final PropertyContext propertyContext;
     private static final String PARAM_NAME = "name";
     private static final String PARAM_DESCRIPTION = "description";
     private static final String PARAM_ID_CATEGORY = "idCategory";
     private static final String CONFERENCES_ATTRIBUTE_NAME_RESULT_CREATE = "result";
     private static final String OPERATION_WAS_UNSUCCSESFUL = "The operation was unsuccsesful";
     private static final String CONFERENC_ADMIN_PANEL_PAGE = "page.adminPanelConferenc";
-    private static final String CONFERENCES_PAGE = "/controller?command=show_conferences";
+    private static final String CONFERENCES_PAGE = "/controller?command=show_all_conferences&page=1";
+
     private static final Logger LOG = LogManager.getLogger(FindConferencByIdCommand.class);
 
-    CreateConferencCommand(ConferencService service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    private final ConferencService service;
+    private final RequestFactory requestFactory;
+    private final PropertyContext propertyContext;
+
+    CreateConferencCommand(ConferencService service, RequestFactory requestFactory,
+                           PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().conferencService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -43,7 +46,7 @@ public class CreateConferencCommand implements Command {
         final Long id = Long.parseLong(request.getParameter(PARAM_ID_CATEGORY));
         boolean resultCreate = false;
         try {
-            resultCreate=service.findForDuplicateConferenc(name,description,id);
+            resultCreate = service.findForDuplicateConferenc(name, description, id);
             if (resultCreate) {
                 request.addAttributeToJsp(CONFERENCES_ATTRIBUTE_NAME_RESULT_CREATE, OPERATION_WAS_UNSUCCSESFUL);
                 return requestFactory.createForwardResponse(propertyContext.get(CONFERENC_ADMIN_PANEL_PAGE));
@@ -51,7 +54,7 @@ public class CreateConferencCommand implements Command {
             resultCreate = service.create(name, description, id);
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
-        }catch (ServiceException e) {
+        } catch (ServiceException e) {
             LOG.error("The service exception!" + e);
         }
         if (!resultCreate) {
@@ -68,7 +71,7 @@ public class CreateConferencCommand implements Command {
 
     private static class Holder {
         public static final CreateConferencCommand INSTANCE =
-                new CreateConferencCommand(ServiceFactory.simple().conferencService(), RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new CreateConferencCommand(ServiceFactory.simple().conferencService(),
+                        RequestFactory.getInstance(), PropertyContext.instance());
     }
 }

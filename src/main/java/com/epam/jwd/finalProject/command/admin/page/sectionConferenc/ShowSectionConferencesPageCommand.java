@@ -6,7 +6,7 @@ import com.epam.jwd.finalProject.command.factory.CommandResponse;
 import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
 import com.epam.jwd.finalProject.model.SectionConferenc;
-import com.epam.jwd.finalProject.service.api.EntityService;
+import com.epam.jwd.finalProject.service.api.SectionConferencService;
 import com.epam.jwd.finalProject.service.exception.ServiceException;
 import com.epam.jwd.finalProject.service.factory.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
@@ -21,25 +21,31 @@ import java.util.List;
  */
 public class ShowSectionConferencesPageCommand implements Command {
     private static final String CONFERENCES_ATTRIBUTE_NAME = "sectionConferences";
+    private static final String PAGES_ATTRIBUTE_NAME = "maxPagesCount";
+    private static final String FIND_PARAM_PAGE = "page";
     private static final String SECTION_CONFERENCES_PAGE = "page.sectionConferences";
+
     private static final Logger LOG = LogManager.getLogger(ShowSectionConferencesPageCommand.class);
 
-    private final EntityService<SectionConferenc> service;
+    private final SectionConferencService service;
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    ShowSectionConferencesPageCommand(EntityService<SectionConferenc> service, RequestFactory requestFactory,
+    ShowSectionConferencesPageCommand(SectionConferencService service, RequestFactory requestFactory,
                                       PropertyContext propertyContext) {
-        this.service = ServiceFactory.simple().serviceFor(SectionConferenc.class);
+        this.service = ServiceFactory.simple().sectionConferencService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
     }
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        try{
-        final List<SectionConferenc> sectionConferencesAll = service.findAll();
-        request.addAttributeToJsp(CONFERENCES_ATTRIBUTE_NAME, sectionConferencesAll);
+        try {
+            final Long pageNum = Long.valueOf(request.getParameter(FIND_PARAM_PAGE));
+            final Long count = service.findCountAllSectionConferenc();
+            final List<SectionConferenc> sectionConferencesAll = service.findAll(pageNum);
+            request.addAttributeToJsp(CONFERENCES_ATTRIBUTE_NAME, sectionConferencesAll);
+            request.addAttributeToJsp(PAGES_ATTRIBUTE_NAME, count);
         } catch (ServiceException e) {
             LOG.error("The service exception!" + e);
         }
@@ -52,7 +58,7 @@ public class ShowSectionConferencesPageCommand implements Command {
 
     private static class Holder {
         public static final ShowSectionConferencesPageCommand INSTANCE =
-                new ShowSectionConferencesPageCommand(ServiceFactory.simple().serviceFor(SectionConferenc.class),
+                new ShowSectionConferencesPageCommand(ServiceFactory.simple().sectionConferencService(),
                         RequestFactory.getInstance(), PropertyContext.instance());
     }
 }

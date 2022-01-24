@@ -36,12 +36,60 @@ public class ApplicationServiceImpl implements ApplicationService {
     private final ApplicationDataValidator applicationDataValidator = new ApplicationDataValidator().getInstance();
 
     /**
+     * Limit for pagination
+     */
+    private static final Long LIMIT = (long) 5;
+
+    /**
      * Constructor - creating a new object
      *
      * @param applicationDao dao for this service
      */
     public ApplicationServiceImpl(ApplicationDaoImpl applicationDao) {
         this.applicationDao = applicationDao.getInstance();
+    }
+
+    /**
+     * Find count all application by user
+     *
+     * @param id id user
+     * @return count applications
+     */
+    @Override
+    public Long findCountAllApplicationByUser(Long id) throws ServiceException, ValidationException {
+        try {
+            if (!applicationDataValidator.isIdValid(id)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            final Long countConferenc = applicationDao.findCountAllApplicationByUser(id);
+            Long pageCount = countConferenc / LIMIT;
+            if ((countConferenc - pageCount * LIMIT) > 0) {
+                pageCount++;
+            }
+            return pageCount;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    /**
+     * Find count all application
+     *
+     * @return count applications
+     */
+    @Override
+    public Long findCountAllApplication() throws ServiceException {
+        try {
+            final Long countConferenc = applicationDao.findCountAllApplication();
+            Long pageCount = countConferenc / LIMIT;
+            if ((countConferenc - pageCount * LIMIT) > 0) {
+                pageCount++;
+            }
+            return pageCount;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
     }
 
     /**
@@ -52,7 +100,8 @@ public class ApplicationServiceImpl implements ApplicationService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public boolean changeStatusApplicationAfterUpdateSectionConferenc(Long idSectionConferenc) throws ValidationException, ServiceException {
+    public boolean changeStatusApplicationAfterUpdateSectionConferenc(Long idSectionConferenc)
+            throws ValidationException, ServiceException {
         try {
             if (!applicationDataValidator.isIdValid(idSectionConferenc)) {
                 LOG.error("The entered data is not correct!");
@@ -74,7 +123,8 @@ public class ApplicationServiceImpl implements ApplicationService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public boolean create(Long idUser, Long idSectionConferenc, Long idResultSection) throws ValidationException, ServiceException {
+    public boolean create(Long idUser, Long idSectionConferenc, Long idResultSection)
+            throws ValidationException, ServiceException {
         try {
             if (!applicationDataValidator.isIdValid(idUser) ||
                     !applicationDataValidator.isIdValid(idSectionConferenc) ||
@@ -97,7 +147,8 @@ public class ApplicationServiceImpl implements ApplicationService {
      * @return boolean result of operation
      */
     @Override
-    public boolean findForDuplicateApplication(Long idAccount, Long idSectionConferenc, Long idResultSection) throws ValidationException, ServiceException {
+    public boolean findForDuplicateApplication(Long idAccount, Long idSectionConferenc, Long idResultSection)
+            throws ValidationException, ServiceException {
         try {
             if (!applicationDataValidator.isIdValid(idAccount) ||
                     !applicationDataValidator.isIdValid(idSectionConferenc) ||
@@ -120,7 +171,8 @@ public class ApplicationServiceImpl implements ApplicationService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public boolean updateIdStatusApplication(Long idApplication, String resultSection) throws ValidationException, ServiceException {
+    public boolean updateIdStatusApplication(Long idApplication, String resultSection)
+            throws ValidationException, ServiceException {
         try {
             final Long idResult = resultSection(resultSection);
             if (!applicationDataValidator.isIdValid(idApplication) ||
@@ -142,13 +194,15 @@ public class ApplicationServiceImpl implements ApplicationService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public List<Application> findAccountIdByApplication(Long id) throws ValidationException, ServiceException {
+    public List<Application> findAccountIdByApplication(Long id, Long pageNumber)
+            throws ValidationException, ServiceException {
         try {
             if (!applicationDataValidator.isIdValid(id)) {
                 LOG.error("The entered data is not correct!");
                 throw new ValidationException("The entered data is not correct!");
             }
-            return applicationDao.findAccountIdByApplication(id);
+            final Long offset = LIMIT * (pageNumber - 1);
+            return applicationDao.findAccountIdByApplication(id, LIMIT, offset);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -162,7 +216,8 @@ public class ApplicationServiceImpl implements ApplicationService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public List<Application> findByStatusResult(String nameStatus) throws ValidationException, ServiceException {
+    public List<Application> findByStatusResult(String nameStatus)
+            throws ValidationException, ServiceException {
         try {
             final Long idStatus = resultSection(nameStatus);
             if (!applicationDataValidator.isIdValid(idStatus)) {
@@ -178,20 +233,20 @@ public class ApplicationServiceImpl implements ApplicationService {
     /**
      * Find all applications
      *
+     * @param pageNumber selected page
      * @return List applications
      */
     @Override
-    public List<Application> findAll() throws ServiceException {
+    public List<Application> findAll(Long pageNumber) throws ServiceException {
         try {
-            try {
-                return applicationDao.readAll();
-            } catch (EntityExtractionFailedException e) {
-                e.printStackTrace();
-            }
-            return Collections.emptyList();
+            final Long offset = LIMIT * (pageNumber - 1);
+            return applicationDao.readAll(LIMIT, offset);
+        } catch (EntityExtractionFailedException e) {
+            e.printStackTrace();
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
+        return Collections.emptyList();
     }
 
     /**

@@ -47,11 +47,11 @@
 <p><a href="#update" class="create">${menuUpdateDescription}</a></p>
 <p><a href="#remove" class="create">${menuRemove}</a></p>
 <%--<p><a href="#searchById" class="create">${menuSearchById}</a></p>--%>
-<p><a href="${pageContext.request.contextPath}/controller?command=show_conferences"
+<p><a href="${pageContext.request.contextPath}/controller?command=show_all_conferences&page=1"
       class="create">${menuReadConferenc}</a></p>
-<p><a href="${pageContext.request.contextPath}/controller?command=show_categories"
+<p><a href="${pageContext.request.contextPath}/controller?command=show_categories&page=1"
       class="create">${menuReadCategory}</a></p>
-<p><a href="${pageContext.request.contextPath}/controller?command=show_section_conferences"
+<p><a href="${pageContext.request.contextPath}/controller?command=show_section_conferences&page=1"
       class="create">${menuSectionConferenc}</a></p>
 <c:if test="${not empty requestScope.result}">
     <p><b>${message}</b></p>

@@ -24,9 +24,12 @@ import java.util.Optional;
  * @author Daniil Serov
  */
 public class FindAccountIdByApplicationCommand implements Command {
+    private static final String FIND_PARAM_PAGE = "page";
+    private static final String PAGES_ATTRIBUTE_NAME = "maxPagesCount";
     private static final String USER_SESSION_ATTRIBUTE_NAME = "user";
     private static final String APPLICATIONS_ATTRIBUTE_NAME = "applications";
     private static final String APPLICATIONS_PAGE = "page.applicationsByAccount";
+
     private static final Logger LOG = LogManager.getLogger(FindAccountIdByApplicationCommand.class);
 
     private final ApplicationService service;
@@ -46,11 +49,14 @@ public class FindAccountIdByApplicationCommand implements Command {
         final Long id = userOptional.get().getId();
         final List<Application> applicationList;
         try {
-            applicationList = service.findAccountIdByApplication(id);
+            final Long pageNum = Long.valueOf(request.getParameter(FIND_PARAM_PAGE));
+            final Long count = service.findCountAllApplicationByUser(id);
+            applicationList = service.findAccountIdByApplication(id,pageNum);
             request.addAttributeToJsp(APPLICATIONS_ATTRIBUTE_NAME, applicationList);
-        }  catch (ValidationException e) {
+            request.addAttributeToJsp(PAGES_ATTRIBUTE_NAME, count);
+        } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
-        }catch (ServiceException e) {
+        } catch (ServiceException e) {
             LOG.error("The service exception!" + e);
         }
         return requestFactory.createForwardResponse(propertyContext.get(APPLICATIONS_PAGE));

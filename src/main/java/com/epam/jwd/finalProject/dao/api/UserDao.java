@@ -16,6 +16,13 @@ import java.util.Optional;
 public interface UserDao {
 
     /**
+     * Find count all users
+     *
+     * @return count users
+     */
+    Long findCountAllUser() throws DaoException;
+
+    /**
      * Create user
      *
      * @param email    email for new user
@@ -72,9 +79,11 @@ public interface UserDao {
     /**
      * Read all users
      *
+     * @param limit  number of rows in the selection
+     * @param offset offset from the beginning of the selectio
      * @return List user
      */
-    List<User> readAll() throws EntityExtractionFailedException, DaoException;
+    List<User> readAll(Long limit,Long offset) throws EntityExtractionFailedException, DaoException;
 
     /**
      * Read user by id

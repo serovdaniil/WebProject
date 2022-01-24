@@ -48,7 +48,7 @@
             <p class="title">${blockQuestionTitle}</p>
             <p>${blockQuestionText}</p>
             <a class="button"
-               href="${pageContext.request.contextPath}/controller?command=show_questions">${blockQuestionButton}</a>
+               href="${pageContext.request.contextPath}/controller?command=show_questions&page=1">${blockQuestionButton}</a>
         </div>
     </c:if>
     <c:if test="${not empty sessionScope.user}">
@@ -66,7 +66,7 @@
             <p class="title">${blockMyApplicationTitle}</p>
             <p>${blockMyApplicationText}</p>
             <a class="button"
-               href="${pageContext.request.contextPath}/controller?command=show_applications_by_account">
+               href="${pageContext.request.contextPath}/controller?command=show_applications_by_account&page=1">
                     ${blockMyApplicationButton}</a>
         </div>
     </c:if>
@@ -76,7 +76,7 @@
             <p class="title">${blockMyQuestionTitle}</p>
             <p>${blockMyQuestionText}</p>
             <a class="button"
-               href="${pageContext.request.contextPath}/controller?command=find_questions_by_id_account">
+               href="${pageContext.request.contextPath}/controller?command=find_questions_by_id_account&page=1">
                     ${blockMyQuestionButton}</a>
         </div>
     </c:if>
@@ -85,7 +85,7 @@
             <p class="center-pic"><img src="/jpg/users.png" alt="img"/></p>
             <p class="title">${blockUsersTitle}</p>
             <p>${blockUsersText}</p>
-            <a class="button" href="${pageContext.request.contextPath}/controller?command=show_users">
+            <a class="button" href="${pageContext.request.contextPath}/controller?command=show_users&page=1">
                     ${blockUsersButton}</a>
         </div>
     </c:if>
@@ -95,7 +95,7 @@
             <p class="title">${blockApplicationsTitle}</p>
             <p>${blockApplicationsText}</p>
             <a class="button"
-               href="${pageContext.request.contextPath}/controller?command=show_applications">
+               href="${pageContext.request.contextPath}/controller?command=show_applications&page=1">
                     ${blockApplicationsButton}</a>
         </div>
     </c:if>

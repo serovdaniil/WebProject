@@ -21,13 +21,15 @@ import java.util.Optional;
  * @author Daniil Serov
  */
 public class ReadUserByIdCommand implements Command {
-    private final UserService service;
-    private final RequestFactory requestFactory;
-    private final PropertyContext propertyContext;
     private static final String FIND_PARAM_ID_ACCOUNT = "id";
     private static final String USER_ATTRIBUTE_NAME = "user";
     private static final String READ_USER_BY_ID_PAGE = "page.readUserById";
+
     private static final Logger LOG = LogManager.getLogger(ReadUserByIdCommand.class);
+
+    private final UserService service;
+    private final RequestFactory requestFactory;
+    private final PropertyContext propertyContext;
 
     ReadUserByIdCommand(UserService service, RequestFactory requestFactory, PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().userService();

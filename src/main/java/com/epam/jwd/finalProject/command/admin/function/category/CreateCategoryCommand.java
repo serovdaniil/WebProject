@@ -18,17 +18,20 @@ import org.apache.logging.log4j.Logger;
  * @author Daniil Serov
  */
 public class CreateCategoryCommand implements Command {
-    private final CategoryService service;
-    private final RequestFactory requestFactory;
-    private final PropertyContext propertyContext;
     private static final String PARAM_NAME = "name";
     private static final String CATEGORIES_ATTRIBUTE_NAME_RESULT = "result";
     private static final String OPERATION_WAS_UNSUCCSESFUL = "The operation was unsuccsesful";
     private static final String CATEGORY_ADMIN_PANEL_PAGE = "page.adminPanelCategory";
-    private static final String CATEGORY_PAGE = "/controller?command=show_categories";
+    private static final String CATEGORY_PAGE = "/controller?command=show_categories&page=1";
+
     private static final Logger LOG = LogManager.getLogger(CreateCategoryCommand.class);
 
-    CreateCategoryCommand(CategoryService service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    private final CategoryService service;
+    private final RequestFactory requestFactory;
+    private final PropertyContext propertyContext;
+
+    CreateCategoryCommand(CategoryService service, RequestFactory requestFactory,
+                          PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().categoryService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();

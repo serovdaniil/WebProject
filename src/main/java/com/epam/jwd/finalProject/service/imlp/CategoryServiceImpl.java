@@ -45,6 +45,30 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     /**
+     * Limit for pagination
+     */
+    private static final Long LIMIT = (long) 5;
+
+    /**
+     * Find count all category
+     *
+     * @return count category
+     */
+    @Override
+    public Long findCountAllCategory() throws ServiceException {
+        try {
+            final Long countConferenc = categoryDao.findCountAllCategory();
+            Long pageCount = countConferenc / LIMIT;
+            if ((countConferenc - pageCount * LIMIT) > 0) {
+                pageCount++;
+            }
+            return pageCount;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    /**
      * Create category
      *
      * @param name name category
@@ -133,7 +157,8 @@ public class CategoryServiceImpl implements CategoryService {
      * @throws ValidationException if there are validation problems
      */
     @Override
-    public List<SectionConferenc> findSectionConferencInIdCategory(Long id) throws ValidationException, ServiceException {
+    public List<SectionConferenc> findSectionConferencInIdCategory(Long id)
+            throws ValidationException, ServiceException {
         try {
             if (!categoryDataValidator.isIdValid(id)) {
                 LOG.error("The entered data is not correct!");
@@ -148,20 +173,21 @@ public class CategoryServiceImpl implements CategoryService {
     /**
      * Find all categories
      *
+     * @param pageNumber selected page
      * @return List categories
      */
     @Override
-    public List<Category> findAll() throws ServiceException {
+    public List<Category> findAll(Long pageNumber) throws ServiceException {
+
         try {
-            try {
-                return categoryDao.findAll();
-            } catch (EntityExtractionFailedException e) {
-                e.printStackTrace();
-            }
-            return Collections.emptyList();
+            final Long offset = LIMIT * (pageNumber - 1);
+            return categoryDao.findAll(LIMIT,offset);
+        } catch (EntityExtractionFailedException e) {
+            e.printStackTrace();
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
+        return Collections.emptyList();
     }
 
     /**

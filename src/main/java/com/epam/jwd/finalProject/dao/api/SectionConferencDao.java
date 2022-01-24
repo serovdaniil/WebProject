@@ -48,9 +48,11 @@ public interface SectionConferencDao {
     /**
      * Read all section conferenc
      *
+     * @param limit  number of rows in the selection
+     * @param offset offset from the beginning of the selection
      * @return List section conferenc
      */
-    List<SectionConferenc> readAll() throws EntityExtractionFailedException, DaoException;
+    List<SectionConferenc> readAll(Long limit, Long offset) throws EntityExtractionFailedException, DaoException;
 
     /**
      * Find section conferenc by id
@@ -67,6 +69,32 @@ public interface SectionConferencDao {
      * @return List section conferenc
      */
     List<SectionConferenc> findByName(String name) throws DaoException;
+
+    /**
+     * Find section conferenc by id conferenc with pagination
+     *
+     * @param id     id for conferenc
+     * @param limit  number of rows in the selection
+     * @param offset offset from the beginning of the selection
+     * @return List section conferenc
+     */
+    List<SectionConferenc> findSectionConferencesInConferencByIdWithPagination(Long id, Long limit,
+                                                                               Long offset) throws DaoException;
+
+    /**
+     * Find count all section conferenc
+     *
+     * @param id id for conferenc
+     * @return count section conferences
+     */
+    Long findCountAllSectionConferencInConferenc(Long id) throws DaoException;
+
+    /**
+     * Find count all section conferenc
+     *
+     * @return count section conferences
+     */
+    Long findCountAllSectionConferenc() throws DaoException;
 
     /**
      * Find section conferenc by id conferenc

@@ -21,13 +21,15 @@ import java.util.List;
  * @author Daniil Serov
  */
 public class FindSectionConferencInCategoryByIdCommand implements Command {
-    private final CategoryService service;
-    private final RequestFactory requestFactory;
-    private final PropertyContext propertyContext;
     private static final String PARAM_ID = "id";
     private static final String ALL_SECTION_CONFERENC_IN_CATEGORY_ATTRIBUTE_NAME = "sectionConferences";
     private static final String ALL_SECTION_CONFERENC_IN_CATEGORY_PAGE = "page.allSectionConferencesInCategory";
+
     private static final Logger LOG = LogManager.getLogger(FindSectionConferencInCategoryByIdCommand.class);
+
+    private final CategoryService service;
+    private final RequestFactory requestFactory;
+    private final PropertyContext propertyContext;
 
     FindSectionConferencInCategoryByIdCommand(CategoryService service, RequestFactory requestFactory,
                                               PropertyContext propertyContext) {

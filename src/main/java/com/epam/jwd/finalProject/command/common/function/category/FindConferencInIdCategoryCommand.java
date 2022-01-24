@@ -21,13 +21,15 @@ import java.util.List;
  * @author Daniil Serov
  */
 public class FindConferencInIdCategoryCommand implements Command {
-    private final CategoryService service;
-    private final RequestFactory requestFactory;
-    private final PropertyContext propertyContext;
     private static final String PARAM_ID = "id";
     private static final String ALL_CONFERENC_IN_CATEGORY_ATTRIBUTE_NAME = "conferences";
     private static final String ALL_CONFERENC_IN_CATEGORY_PAGE = "page.allConferencesInCategory";
+
     private static final Logger LOG = LogManager.getLogger(FindConferencInIdCategoryCommand.class);
+
+    private final CategoryService service;
+    private final RequestFactory requestFactory;
+    private final PropertyContext propertyContext;
 
     FindConferencInIdCategoryCommand(CategoryService service, RequestFactory requestFactory,
                                      PropertyContext propertyContext) {
@@ -45,7 +47,7 @@ public class FindConferencInIdCategoryCommand implements Command {
             request.addAttributeToJsp(ALL_CONFERENC_IN_CATEGORY_ATTRIBUTE_NAME, conferencInIdCategory);
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
-        }catch (ServiceException e) {
+        } catch (ServiceException e) {
             LOG.error("The service exception!" + e);
         }
         return requestFactory.createForwardResponse(propertyContext.get(ALL_CONFERENC_IN_CATEGORY_PAGE));
