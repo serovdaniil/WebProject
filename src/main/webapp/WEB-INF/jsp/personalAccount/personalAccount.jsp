@@ -129,15 +129,6 @@
                     ${blockPanelButton}</a>
         </div>
     </c:if>
-    <%--<c:if test="${not empty sessionScope.user && sessionScope.user.role eq Role.ADMIN}">
-        <div id="container-center">
-            <p class="center-pic"><img src="/jpg/pngegg7.png" alt="img"/></p>
-            <p class="title">Поиск пользователя по id</p>
-            <p>Страница для детального просмотра пользователя по id.</p>
-            <a class="button" href="${pageContext.request.contextPath}/controller?command=show_read_user_by_id">Find user
-                by id</a>
-        </div>
-    </c:if>--%>
 </div>
 <%@include file="/WEB-INF/jsp/common/footer.jsp" %>
 </body>

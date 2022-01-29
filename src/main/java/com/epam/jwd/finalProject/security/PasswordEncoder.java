@@ -24,8 +24,8 @@ public class PasswordEncoder {
     /**
      * Constructor - creating a new object
      *
-     * @param hasher   dao for this service
-     * @param verifier dao for this service
+     * @param hasher   hasher for help BCrypt
+     * @param verifier verifier for help BCrypt
      */
     public PasswordEncoder(BCrypt.Hasher hasher, BCrypt.Verifyer verifier) {
         this.hasher = hasher;

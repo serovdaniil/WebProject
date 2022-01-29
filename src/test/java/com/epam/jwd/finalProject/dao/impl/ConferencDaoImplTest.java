@@ -16,7 +16,7 @@ import java.util.Optional;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class MethodConferencDaoImplTest extends Assert{
+public class ConferencDaoImplTest extends Assert{
     private ConferencDaoImpl dao;
     private Long id;
     private Long idStatus;

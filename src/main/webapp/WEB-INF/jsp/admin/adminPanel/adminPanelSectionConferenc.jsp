@@ -31,6 +31,7 @@
 <fmt:message bundle="${loc}" key="label.panelSectionConferenc.textUpdate" var="textUpdate"/>
 <fmt:message bundle="${loc}" key="label.panelSectionConferenc.boxIdSectionConferenc" var="boxIdSectionConferenc"/>
 <fmt:message bundle="${loc}" key="label.message.resultNotOperation" var="message"/>
+<fmt:message bundle="${loc}" key="label.message.exception.common" var="exceptionCommon"/>
 <html>
 <head>
     <title>${pageTitle}</title>
@@ -46,7 +47,6 @@
 <p><a href="#create" class="create">${menuCreate}</a></p>
 <p><a href="#update" class="create">${menuUpdateDescription}</a></p>
 <p><a href="#remove" class="create">${menuRemove}</a></p>
-<%--<p><a href="#searchById" class="create">${menuSearchById}</a></p>--%>
 <p><a href="${pageContext.request.contextPath}/controller?command=show_all_conferences&page=1"
       class="create">${menuReadConferenc}</a></p>
 <p><a href="${pageContext.request.contextPath}/controller?command=show_categories&page=1"
@@ -66,13 +66,16 @@
 <form name="createSectionConferenc-form"
       action="${pageContext.request.contextPath}/controller?command=create_section_conferenc" method="post">
     <label for="nameSectionConferenc-input" class="bolt">${boxNameSection}</label>
-    <input id="nameSectionConferenc-input" type="text" name="name" min="2" max="400" value="" required pattern="^.{0,1000}$"/>
+    <input id="nameSectionConferenc-input" type="text" name="name" min="2" max="400" value="" required pattern="^.{0,400}$"
+           oninput="validateName(this)"/>
     <br>
     <label for="description-input" class="bolt">${boxDescription}</label>
-    <input id="description-input" type="text" name="description" min="2" max="1000" value="" required pattern="^.{0,1000}$"/>
+    <input id="description-input" type="text" name="description" min="2" max="1000" value="" required pattern="^.{0,1000}$"
+           oninput="validateDescription(this)"/>
     <br>
     <label for="idCategory-input" class="bolt">${boxIdConferenc}</label>
-    <input id="idCategory-input" type="text" name="idConferenc" required pattern="^[0-9]+$" value=""/>
+    <input id="idCategory-input" type="text" name="idConferenc" required pattern="^[0-9]+$" value=""
+           oninput="validateId(this)"/>
     <button type="submit" class="create">${buttonCreate}</button>
     <br>
 </form>
@@ -85,11 +88,12 @@
       action="${pageContext.request.contextPath}/controller?command=update_description_in_section_conferenc"
       method="post">
     <label for="idUpdateSection-input" class="bolt">${boxIdSectionConferenc}</label>
-    <input id="idUpdateSection-input" type="text" name="id" value=""required pattern="^[0-9]+$"/>
+    <input id="idUpdateSection-input" type="text" name="id" value=""required pattern="^[0-9]+$"
+           oninput="validateId(this)"/>
     <br>
     <label for="descriprionSectionConferenc-input" class="bolt">${boxDescription}</label>
     <input id="descriprionSectionConferenc-input" type="text" name="description" min="2" max="1000" value=""required
-           pattern="^.{0,1000}$"/>
+           pattern="^.{0,1000}$" oninput="validateDescription(this)"/>
     <button type="submit" class="create">${buttonUpdateSectionConferenc}</button>
     <br>
 </form>
@@ -102,23 +106,11 @@
 <form name="removeSectionConferenc-form"
       action="${pageContext.request.contextPath}/controller?command=remove_section_conferenc_by_id" method="post">
     <label for="idSection-input" class="bolt">${boxIdSectionConferenc}</label>
-    <input id="idSection-input" type="text" name="id" value="" required pattern="^[0-9]+$"/>
+    <input id="idSection-input" type="text" name="id" value="" required pattern="^[0-9]+$"
+           oninput="validateId(this)"/>
     <button type="submit" class="create">${buttonRemoveSectionConferenc}</button>
 </form>
-
 <br>
-<%--<p><a name="searchById"></a></p>
-<p class="bolt">${textFindId}
-    <br>
-    ${textAfterFindId}
-</p>
-<form name="findSectionConferencById-form"
-action="${pageContext.request.contextPath}/controller?command=find_section_conferenc_by_id" method="post">
-    <label for="idSectionConferenc-input" class="bolt">${boxIdSectionConferenc}</label>
-    <input id="idSectionConferenc-input" type="text" name="id" value=""required pattern="^[0-9]+$"/>
-    <button type="submit" class="create">${buttonFindSectionConferenc}</button>
-</form>
-<br>--%>
 <p><a name="searchByName"></a></p>
 <p class="bolt">${textFindName}
     <br>${textAfterFindName}
@@ -127,9 +119,37 @@ action="${pageContext.request.contextPath}/controller?command=find_section_confe
       action="${pageContext.request.contextPath}/controller?command=find_section_conferences_by_name" method="post">
     <label for="searchNameSectionConferenc-input" class="bolt">${boxIdSectionConferenc}</label>
     <input id="searchNameSectionConferenc-input" type="text" name="name" min="2" max="400" value=""required
-           pattern="^.{2,1000}$"/>
+           pattern="^.{2,400}$" oninput="validateName(this)"/>
     <button type="submit" class="create">${buttonFindSectionConferenc}</button>
 </form>
 <%@include file="/WEB-INF/jsp/common/footer.jsp" %>
 </body>
 </html>
+<script>
+    var regexId = /^[0-9]+$/;
+    var regexName = /^.{2,400}$/;
+    var regexDescription = /^.{2,1000}$/;
+
+    function validateId(input) {
+        if (!regexId.test(input.value)) {
+            input.setCustomValidity("${exceptionCommon}");
+        } else {
+            input.setCustomValidity("");
+        }
+    }
+
+    function validateName(input) {
+        if (!regexName.test(input.value)) {
+            input.setCustomValidity("${exceptionCommon}");
+        } else {
+            input.setCustomValidity("");
+        }
+    }
+    function validateDescription(input) {
+        if (!regexDescription.test(input.value)) {
+            input.setCustomValidity("${exceptionCommon}");
+        } else {
+            input.setCustomValidity("");
+        }
+    }
+</script>

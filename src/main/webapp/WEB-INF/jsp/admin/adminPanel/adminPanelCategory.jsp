@@ -25,6 +25,7 @@
 <fmt:message bundle="${loc}" key="label.panelCategory.textUpdate" var="textUpdate"/>
 <fmt:message bundle="${loc}" key="label.panelCategory.textMain" var="textMain"/>
 <fmt:message bundle="${loc}" key="label.message.resultNotOperation" var="message"/>
+<fmt:message bundle="${loc}" key="label.message.exception.common" var="exceptionCommon"/>
 <html>
 <head>
     <title>${pageTitle}</title>
@@ -41,7 +42,8 @@
 <p><a href="#update" class="create">${menuUpdate}</a></p>
 <p><a href="#remove" class="create">${menuRemove}</a></p>
 <p><a href="#searchById" class="create">${menuFinfById}</a></p>
-<p><a href="${pageContext.request.contextPath}/controller?command=show_categories&page=1" class="create">${menuReadCategories}</a></p>
+<p><a href="${pageContext.request.contextPath}/controller?command=show_categories&page=1"
+      class="create">${menuReadCategories}</a></p>
 <c:if test="${not empty requestScope.result}">
     <p><b>${message}</b></p>
     <br>
@@ -50,12 +52,14 @@
 <p><a name="create"></a></p>
 <p class="bolt">${textCreate}
     <br>
-   ${textAfterCreate}
+    ${textAfterCreate}
 </p>
-<form name="createCategory-form" action="${pageContext.request.contextPath}/controller?command=create_category" method="post">
+<form name="createCategory-form" action="${pageContext.request.contextPath}/controller?command=create_category"
+      method="post">
     <label for="name-input" class="bolt">${boxNameCategory}</label>
-    <input id="name-input" type="text" name="name" min="2" max="50" value="" required pattern="^.{2,50}$"/>
-   <button type="submit" class="create"> ${buttonCreate}</button>
+    <input id="name-input" type="text" name="name" min="2" max="50" value="" required pattern="^.{2,50}$"
+           oninput="validateName(this)"/>
+    <button type="submit" class="create"> ${buttonCreate}</button>
     <br>
 </form>
 <br>
@@ -66,11 +70,11 @@
 <form name="updateNameCategory-form" action="${pageContext.request.contextPath}/controller?command=change_name_category"
       method="post">
     <label for="idUpdate-input" class="bolt">${boxIdCategory}</label>
-    <input id="idUpdate-input" type="text" name="id" value=""required pattern="^[0-9]+$"/>
+    <input id="idUpdate-input" type="text" name="id" value="" required pattern="^[0-9]+$" oninput="validateId(this)"/>
     <br>
     <label for="nameCategory-input" class="bolt">${boxNameCategory}</label>
-    <input id="nameCategory-input" type="text" name="name" min="2" max="45" value=""required
-           pattern="^[A-ZА-Яa-zа-я]+((\s)?((\'|\-|\.|\,)?([A-ZА-Яa-zа-я])+))*$"/>
+    <input id="nameCategory-input" type="text" name="name" min="2" max="50" value="" required
+           pattern="^.{2,50}$" oninput="validateName(this)"/>
     <button type="submit" class="create">${buttonUpdateName}</button>
     <br>
 </form>
@@ -78,11 +82,12 @@
 <p><a name="remove"></a></p>
 <p class="bolt">${textRemove}
     <br>
-   ${textAfterRemove}
+    ${textAfterRemove}
 </p>
-<form name="removeCategory-form" action="${pageContext.request.contextPath}/controller?command=remove_category_by_id" method="post">
+<form name="removeCategory-form" action="${pageContext.request.contextPath}/controller?command=remove_category_by_id"
+      method="post">
     <label for="idForm-input" class="bolt">${boxIdCategory}</label>
-    <input id="idForm-input" type="text" name="id" value=""required pattern="^[0-9]+$"/>
+    <input id="idForm-input" type="text" name="id" value="" required pattern="^[0-9]+$" oninput="validateId(this)"/>
     <button type="submit" class="create">${buttonRemove}</button>
 </form>
 <br>
@@ -91,12 +96,33 @@
     <br>
     ${textAfterFindId}
 </p>
-<form name="findCategoryById-form" action="${pageContext.request.contextPath}/controller?command=id_category" method="post">
+<form name="findCategoryById-form" action="${pageContext.request.contextPath}/controller?command=id_category"
+      method="post">
     <label for="idCategory-input" class="bolt">${boxIdCategory}</label>
-    <input id="idCategory-input" type="text" name="id" value=""required pattern="^[0-9]+$"/>
+    <input id="idCategory-input" type="text" name="id" value="" required pattern="^[0-9]+$" oninput="validateId(this)"/>
     <button type="submit" class="create">${buttonSearch}</button>
 </form>
 
 <%@include file="/WEB-INF/jsp/common/footer.jsp" %>
 </body>
 </html>
+<script>
+    var regexId = /^[0-9]+$/;
+    var regexName = /^.{2,50}$/;
+
+    function validateId(input) {
+        if (!regexId.test(input.value)) {
+            input.setCustomValidity("${exceptionCommon}");
+        } else {
+            input.setCustomValidity("");
+        }
+    }
+
+    function validateName(input) {
+        if (!regexName.test(input.value)) {
+            input.setCustomValidity("${exceptionCommon}");
+        } else {
+            input.setCustomValidity("");
+        }
+    }
+</script>

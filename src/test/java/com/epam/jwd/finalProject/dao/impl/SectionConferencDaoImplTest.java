@@ -14,7 +14,7 @@ import java.util.Optional;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class MethodSectionConferencDaoImplTest extends Assert {
+public class SectionConferencDaoImplTest extends Assert {
     private SectionConferencDaoImpl dao;
     private SectionConferenc sectionConferencOne;
     private SectionConferenc sectionConferencTwo;

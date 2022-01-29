@@ -14,7 +14,7 @@ import java.util.Optional;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class MethodCategoryDaoImplTest extends Assert {
+public class CategoryDaoImplTest extends Assert {
     private CategoryDaoImpl dao;
     private String name;
     private Long id;

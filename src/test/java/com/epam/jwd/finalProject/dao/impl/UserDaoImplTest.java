@@ -15,7 +15,7 @@ import java.util.Optional;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class MethodUserDaoImplTest extends Assert {
+public class UserDaoImplTest extends Assert {
     private UserDaoImpl dao;
     private User user;
     private String firstName;

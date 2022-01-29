@@ -6,6 +6,7 @@
 <fmt:message bundle="${loc}" key="label.contacts.title" var="title"/>
 <fmt:message bundle="${loc}" key="label.contacts.boxQuestion" var="boxQuestion"/>
 <fmt:message bundle="${loc}" key="label.contacts.button" var="button"/>
+<fmt:message bundle="${loc}" key="label.message.exception.common" var="exceptionCommon"/>
 <html>
 <head>
     <title>${pageTitle}</title>
@@ -19,7 +20,8 @@
 <h3>${title}</h3>
 <form name="createQuestion-form" action="${pageContext.request.contextPath}/controller?command=create_question" method="post">
     <label for="name-input">${boxQuestion}:</label>
-    <input id="name-input" type="text" name="name" min="2" max="1000" pattern="^.{2,1000}$" value=""/>
+    <input id="name-input" type="text" name="name" min="2" max="1000" pattern="^.{2,1000}$" value=""
+           oninput="validateName(this)"/>
     <br>
     <c:if test="${not empty sessionScope.user}">
     <button type="submit">${button}</button>
@@ -32,3 +34,11 @@
 <%@include file="/WEB-INF/jsp/common/footer.jsp" %>
 </body>
 </html>
+<script>
+    var regexName=/^.{2,1000}$/;
+    function validateName(input) {
+        if (!regexName.test(input.value)) {
+            input.setCustomValidity("${exceptionCommon}");
+        }else{input.setCustomValidity("");}
+    }
+</script>

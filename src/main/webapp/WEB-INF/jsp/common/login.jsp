@@ -10,6 +10,8 @@
 <fmt:message bundle="${loc}" key="label.login.textLogin" var="textLogin"/>
 <fmt:message bundle="${loc}" key="label.login.removeText" var="removeText"/>
 <fmt:message bundle="${loc}" key="label.message.login" var="message"/>
+<fmt:message bundle="${loc}" key="label.message.exception.login" var="exceptionLogin"/>
+<fmt:message bundle="${loc}" key="label.message.exception.password" var="exceptionPassword"/>
 <html>
 <head>
     <title>${pageTitle}</title>
@@ -25,12 +27,12 @@
         <label for="login-input">${boxLogin}:</label>
         <input id="login-input" type="email" min="1" max="45" required
                pattern="^([A-Za-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$" name="login"
-               value=""/>
+               value="" oninput="validateLogin(this)"/>
         <br>
         <label for="password-input">${boxPassword}:</label>
         <input id="password-input" type="password" min="2" max="15" required
                pattern="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,15})$"
-               name="password" value=""/>
+               name="password" value="" oninput="validatePassword(this)"/>
         <br/>
         <c:if test="${not empty requestScope.errorLoginPassMessage}">
             <b>${message}</b>
@@ -42,7 +44,22 @@
         <button type="reset" class="cancelbtn">${removeText}</button>
         <%-- <span class="psw">Forgot <a href="#">password?</a></span>--%>
     </div>
+
 </form>
 <%@include file="/WEB-INF/jsp/common/footer.jsp" %>
 </body>
 </html>
+<script>
+    var regexPassword = /(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,15})$/;
+    var regexLogin = /^([A-Za-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/;
+    function validatePassword(input) {
+        if (!regexPassword.test(input.value)) {
+            input.setCustomValidity("${exceptionPassword}");
+        }else{input.setCustomValidity("");}
+    }
+    function validateLogin(input) {
+        if (!regexLogin.test(input.value)) {
+            input.setCustomValidity("${exceptionLogin}");
+        }else{input.setCustomValidity("");}
+    }
+</script>

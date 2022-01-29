@@ -1,21 +1,25 @@
 package com.epam.jwd.finalProject.dao.impl;
 
+import com.epam.jwd.finalProject.dao.connection.ConnectionPool;
 import com.epam.jwd.finalProject.dao.exception.DaoException;
 import com.epam.jwd.finalProject.dao.exception.EntityExtractionFailedException;
 import com.epam.jwd.finalProject.model.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class MethodApplicationDaoImplTest extends Assert {
-    private ApplicationDaoImpl dao;
+public class ApplicationDaoImplTest extends Assert {
+    @Mock
+    ConnectionPool connectionPool;
+    private ApplicationDaoImpl dao=new ApplicationDaoImpl(connectionPool);
     private Long idApplication;
     private Long idUser;
     private Long idResult;
@@ -34,7 +38,7 @@ public class MethodApplicationDaoImplTest extends Assert {
 
     @Before
     public void setUp() {
-        dao = mock(ApplicationDaoImpl.class);
+        MockitoAnnotations.initMocks(this);
         firstName = "Daniil";
         lastName = "Serov";
         email = "daniils3rov@yandex.ru";
@@ -63,7 +67,7 @@ public class MethodApplicationDaoImplTest extends Assert {
         boolean expectedResult = true;
         when(dao.create(idUser, idSectionConferenc, idResult)).thenReturn(true);
         boolean actualResult = dao.create(idApplication, idUser, idResult);
-        Assert.assertEquals(actualResult, expectedResult);
+        Assert.assertEquals(expectedResult, actualResult);
     }
 
     @Test

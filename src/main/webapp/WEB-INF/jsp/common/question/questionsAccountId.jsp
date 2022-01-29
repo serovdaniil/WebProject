@@ -15,6 +15,7 @@
 <fmt:message bundle="${loc}" key="label.questionAccountId.button.remove" var="remove"/>
 <fmt:message bundle="${loc}" key="label.questionAccountId.boxNewQuestion" var="newQuestion"/>
 <fmt:message bundle="${loc}" key="label.message.duplicateQuestion" var="message"/>
+<fmt:message bundle="${loc}" key="label.message.exception.common" var="exceptionCommon"/>
 <html>
 <head>
     <title>${pageTitle}</title>
@@ -74,7 +75,7 @@
       method="post">
     <label for="nameNewQuestionLogin-input">${newQuestion}</label>
     <input id="nameNewQuestionLogin-input" type="text" required min="2" max="1000" name="name"
-           pattern="^.{2,1000}$" value=""/>
+           pattern="^.{2,1000}$" value=""  oninput="validateName(this)"/>
     <button type="submit" class="create">${create}</button>
 </form>
 <div id="container">
@@ -90,3 +91,11 @@
 <%@include file="/WEB-INF/jsp/common/footer.jsp" %>
 </body>
 </html>
+<script>
+    var regexName=/^.{2,1000}$/;
+    function validateName(input) {
+        if (!regexName.test(input.value)) {
+            input.setCustomValidity("${exceptionCommon}");
+        }else{input.setCustomValidity("");}
+    }
+</script>
