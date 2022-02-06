@@ -246,6 +246,7 @@ public class SectionConferencDaoImpl implements SectionConferencDao {
             statement.setLong(1, 2);
             statement.setLong(2, idConferenc);
             int rowCount = statement.executeUpdate();
+            LOG.info("+++++");
             if (rowCount != 0) {
                 result = true;
             }

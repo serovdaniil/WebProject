@@ -217,23 +217,6 @@ public class ConferencServiceImpl implements ConferencService {
     }
 
     /**
-     * Find all conferences
-     *
-     * @return List conferences
-     */
-    @Override
-    public List<Conferenc> findAll(Long pageNumber) throws ServiceException {
-            try {
-                return conferencDao.readAllActive();
-            } catch (EntityExtractionFailedException e) {
-                e.printStackTrace();
-            }catch (DaoException e) {
-                throw new ServiceException(e);
-            }
-            return Collections.emptyList();
-        }
-
-    /**
      * Create conferenc
      *
      * @param name        name conferenc

@@ -73,14 +73,6 @@ public class ConferencDaoImplTest extends Assert{
     }
 
     @Test
-    public void readAllActive() throws EntityExtractionFailedException, DaoException  {
-        List<Conferenc> expectedResult = conferencList;
-        when(dao.readAllActive()).thenReturn(expectedResult);
-        List<Conferenc> actualResult = dao.readAllActive();
-        assertEquals(actualResult, expectedResult);
-    }
-
-    @Test
     public void readById() throws DaoException {
         Optional<Conferenc> expectedResult= Optional.of(conferenc);
         when(dao.readById((long)1)).thenReturn(expectedResult);

@@ -19,7 +19,9 @@ public interface EntityService<T extends Entity> {
      * @param pageNumber selected page
      * @return boolean result of operation
      */
-    List<T> findAll(Long pageNumber) throws ServiceException;
+    default List<T> findAll(Long pageNumber) throws ServiceException {
+        return null;
+    }
 
     /**
      * Find by id

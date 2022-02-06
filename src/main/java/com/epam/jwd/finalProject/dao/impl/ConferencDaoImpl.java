@@ -47,9 +47,6 @@ public class ConferencDaoImpl implements ConferencDao {
     private static final String UPDATE_STATUS_CONFERENC = "UPDATE conferenc SET conferenc_status_id = ?" +
             " WHERE id_conferenc = ?";
 
-    private static final String FIND_ALL_CONFERENC_ACTIVE = "SELECT * FROM conferenc JOIN category " +
-            "ON category_id=id_category JOIN status ON conferenc_status_id=id_status WHERE conferenc_status_id=1";
-
     private static final String FIND_ALL_CONFERENC = "SELECT * FROM conferenc JOIN category " +
             "ON category_id=id_category JOIN status ON conferenc_status_id=id_status LIMIT ? OFFSET ?";
 
@@ -289,28 +286,6 @@ public class ConferencDaoImpl implements ConferencDao {
         } catch (SQLException e) {
             LOG.error("sql exception occurred", e);
             LOG.debug("sql: {}", FIND_ALL_CONFERENC);
-            throw new DaoException(e);
-        } catch (EntityExtractionFailedException e) {
-            LOG.error("could not extract entity", e);
-        }
-        return Collections.emptyList();
-    }
-
-    /**
-     * Read all active status conferenc
-     *
-     * @return List Conferenc
-     */
-    @Override
-    public List<Conferenc> readAllActive() throws EntityExtractionFailedException, DaoException {
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(FIND_ALL_CONFERENC_ACTIVE)) {
-            ResultSet resultSet = statement.executeQuery();
-            ResultSetExtractor<Conferenc> extractor = ConferencDaoImpl::extractConferenc;
-            return extractor.extractAll(resultSet);
-        } catch (SQLException e) {
-            LOG.error("sql exception occurred", e);
-            LOG.debug("sql: {}", FIND_ALL_CONFERENC_ACTIVE);
             throw new DaoException(e);
         } catch (EntityExtractionFailedException e) {
             LOG.error("could not extract entity", e);

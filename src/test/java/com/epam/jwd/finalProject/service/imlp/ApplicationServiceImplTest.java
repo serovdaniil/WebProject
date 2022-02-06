@@ -2,25 +2,27 @@ package com.epam.jwd.finalProject.service.imlp;
 
 import com.epam.jwd.finalProject.dao.exception.DaoException;
 import com.epam.jwd.finalProject.dao.impl.ApplicationDaoImpl;
-import com.epam.jwd.finalProject.model.Application;
+import com.epam.jwd.finalProject.model.*;
 import com.epam.jwd.finalProject.service.exception.ServiceException;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
+import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.mockito.*;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class ApplicationServiceImplTest {
     @Mock
     private ApplicationDaoImpl applicationDao;
+    @Spy
     @InjectMocks
-    private ApplicationServiceImpl applicationService=new ApplicationServiceImpl(applicationDao);
+    private ApplicationServiceImpl applicationService = new ApplicationServiceImpl(applicationDao);
     private String nameResult;
     private Long idApplication;
     private Long idSectionConferenc;
@@ -29,10 +31,9 @@ public class ApplicationServiceImplTest {
     private Application application;
     private List<Application> applicationList;
 
-    @Before
+    @BeforeAll
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        /**
         nameResult = "Activate";
         idApplication = (long) 5;
         idSectionConferenc = (long) 4;
@@ -46,19 +47,38 @@ public class ApplicationServiceImplTest {
                                 new Status((long) 4, "Active")), new Status((long) 1, "Active")));
         applicationList = new ArrayList<>();
         applicationList.add(application);
-         **/
+
     }
+
 
     @Test
     public void changeStatusApplicationAfterUpdateSectionConferenc() throws ValidationException, ServiceException, DaoException {
         boolean expectedResult = true;
-        Long idSectionConferenc=(long)1;
-        when(applicationDao.changeStatusApplicationAfterUpdateSectionConferenc(idSectionConferenc)).thenReturn(expectedResult);
+        Long idSectionConferenc = (long) 1000;
+        Mockito.when(applicationDao.changeStatusApplicationAfterUpdateSectionConferenc(idSectionConferenc)).thenReturn(expectedResult);
         boolean actualResult = applicationService.changeStatusApplicationAfterUpdateSectionConferenc(idSectionConferenc);
+        System.out.println(actualResult);
         assertEquals(expectedResult, actualResult);
 
     }
 
+    @Test
+    public void create() throws ValidationException, ServiceException, DaoException {
+        boolean expectedResult = false;
+        when(applicationDao.create(idUser, idSectionConferenc, idResult)).thenReturn(expectedResult);
+        boolean actualResult = applicationDao.create(idUser, idSectionConferenc, idResult);
+        assertEquals(actualResult, expectedResult);
+
+    }
+
+    @Test
+    public void findId() throws ValidationException, ServiceException, DaoException {
+        Optional<Application> expectedResult = Optional.of(application);
+        when(applicationDao.readById(idApplication)).thenReturn(expectedResult);
+        Optional<Application> actualResult = applicationDao.readById(idApplication);
+        System.out.println(expectedResult + "+" + actualResult);
+        assertEquals(expectedResult, actualResult);
+    }
 
 /**
  *     @Test
@@ -68,12 +88,7 @@ public class ApplicationServiceImplTest {
  *         List<Application> actualResult = applicationService.findAll((long) 1);
  *         assertEquals(expectedResult, actualResult);
  *     }
- * @Test public void create() throws ValidationException, ServiceException, DaoException {
- * boolean expectedResult = false;
- * when(applicationDao.create(idUser, idSectionConferenc, idResult)).thenReturn(expectedResult);
- * boolean actualResult = applicationService.create(idUser, idSectionConferenc, idResult);
- * assertEquals(actualResult, expectedResult);
- * }
+ *
  * @Test public void updateIdStatusApplication() throws ValidationException, ServiceException, DaoException {
  * boolean expectedResult = true;
  * when(applicationDao.updateIdStatusApplication(idApplication, idResult)).thenReturn(true);
@@ -99,12 +114,7 @@ public class ApplicationServiceImplTest {
 
 
 /**
- @Test public void findId() throws ValidationException, ServiceException {
- Optional<Application> expectedResult = Optional.of(application);
- when(dao.findId(idApplication)).thenReturn(expectedResult);
- Optional<Application> actualResult = dao.findId(idApplication);
- assertEquals(actualResult, expectedResult);
- }
+
 
  @Test public void remove() throws ValidationException, ServiceException {
  boolean expectedResult = true;

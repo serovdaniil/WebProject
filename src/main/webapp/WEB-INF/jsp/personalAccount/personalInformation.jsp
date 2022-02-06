@@ -69,6 +69,7 @@
         </c:if>
         <button type="submit" class="cancelbtn">${buttonLastName}</button>
     </form>
+    <br>
     <form name="updatePassword-form"
           action="${pageContext.request.contextPath}/controller?command=update_password_by_user" method="post">
         <label for="password-input">${password}:</label>
@@ -78,13 +79,15 @@
         <label for="passwordRepeat-input">${passwordRepeat}:</label>
         <input id="passwordRepeat-input" type="password" min="2" max="15" required
                pattern="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,15})$" name="passwordRepeat"
-               placeholder="${password}" value="" oninput="validatePassword(this)"/>
+               placeholder="${password}" oninput="validatePassword(this)"/>
         <c:if test="${not empty requestScope.errorUpdatePassMessage}">
             <b>${messagePasswords}</b>
             <br>
         </c:if>
+        <br>
         <button type="submit" class="cancelbtn">${buttonPassword}</button>
     </form>
+    <br>
     <form name="updateEmail-form"
           action="${pageContext.request.contextPath}/controller?command=update_email_by_user" method="post">
         <label for="email-input">${email}:</label>
@@ -104,20 +107,29 @@
 <script>
     var regexPassword = /(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,15})$/;
     var regexLogin = /^([A-Za-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/;
-    var regexName=/(^[A-Z][a-z]{0,35}(-[A-Z])*[a-z]{0,22}$)|(^[А-Я][а-я]{0,22}(-[А-Я])*[а-я]{0,22}$)|(^[A-Z][a-z]{0,45}$)|(^[А-Я][а-я]{0,45}$)/;
+    var regexName = /(^[A-Z][a-z]{0,35}(-[A-Z])*[a-z]{0,22}$)|(^[А-Я][а-я]{0,22}(-[А-Я])*[а-я]{0,22}$)|(^[A-Z][a-z]{0,45}$)|(^[А-Я][а-я]{0,45}$)/;
+
     function validatePassword(input) {
         if (!regexPassword.test(input.value)) {
             input.setCustomValidity("${exceptionPassword}");
-        }else{input.setCustomValidity("");}
+        } else {
+            input.setCustomValidity("");
+        }
     }
+
     function validateEmail(input) {
         if (!regexLogin.test(input.value)) {
             input.setCustomValidity("${exceptionLogin}");
-        }else{input.setCustomValidity("");}
+        } else {
+            input.setCustomValidity("");
+        }
     }
+
     function validateName(input) {
         if (!regexName.test(input.value)) {
             input.setCustomValidity("${exceptionCommon}");
-        }else{input.setCustomValidity("");}
+        } else {
+            input.setCustomValidity("");
+        }
     }
 </script>

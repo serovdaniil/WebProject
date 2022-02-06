@@ -68,13 +68,6 @@ public interface ConferencDao {
     boolean updateDescription(Long id, String description) throws DaoException;
 
     /**
-     * Read all active status conferenc
-     *
-     * @return List Conferenc
-     */
-    List<Conferenc> readAllActive() throws EntityExtractionFailedException, DaoException;
-
-    /**
      * Read all conferenc
      *
      * @param limit number of rows in the selection
