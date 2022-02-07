@@ -21,9 +21,6 @@ import java.util.Optional;
  * @author Daniil Serov
  */
 public class UpdatePasswordCommand implements Command {
-    private final UserService service;
-    private final RequestFactory requestFactory;
-    private final PropertyContext propertyContext;
     private static final String USER_SESSION_ATTRIBUTE_NAME = "user";
     private static final String FIND_PARAM_PASSWORD = "password";
     private static final String RESULT_ATTRIBUTE_NAME = "result";
@@ -34,7 +31,12 @@ public class UpdatePasswordCommand implements Command {
     private static final String UNSUCCESSFUL_RESULT_UPDATE_INFORMATION = "Unsuccessful " +
             "updating of personal information";
     private static final String ERROR_PASSWORD_PASS_MESSAGE = "Passwords do not match, repeat the input!";
+
     private static final Logger LOG = LogManager.getLogger(UpdatePasswordCommand.class);
+
+    private final UserService service;
+    private final RequestFactory requestFactory;
+    private final PropertyContext propertyContext;
 
     UpdatePasswordCommand(UserService service, RequestFactory requestFactory, PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().userService();

@@ -36,6 +36,7 @@ public enum PagePaths {
     FINDQUESTIONBYID("/WEB-INF/jsp/common/question/questionById.jsp"),
     APPLICATIONBYID("/WEB-INF/jsp/common/application/applicationById.jsp"),
     CONTACT("/WEB-INF/jsp/personalAccount/contact.jsp"),
+    RECOVERYPASSWORD("/WEB-INF/jsp/common/recoveryPassword.jsp"),
     ERROR("/WEB-INF/jsp/error/error.jsp");
 
     private final String path;

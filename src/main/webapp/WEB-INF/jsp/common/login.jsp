@@ -12,6 +12,7 @@
 <fmt:message bundle="${loc}" key="label.message.login" var="message"/>
 <fmt:message bundle="${loc}" key="label.message.exception.login" var="exceptionLogin"/>
 <fmt:message bundle="${loc}" key="label.message.exception.password" var="exceptionPassword"/>
+<fmt:message bundle="${loc}" key="label.recovery.title" var="buttonRecovery"/>
 <html>
 <head>
     <title>${pageTitle}</title>
@@ -25,7 +26,7 @@
 <form name="login-form" action="${pageContext.request.contextPath}/controller?command=login" method="post">
     <div class="container">
         <label for="login-input">${boxLogin}:</label>
-        <input id="login-input" type="email" min="1" max="45" required
+        <input id="login-input" type="text" min="1" max="45" required
                pattern="^([A-Za-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$" name="login"
                value="" oninput="validateLogin(this)"/>
         <br>
@@ -42,7 +43,8 @@
     </div>
     <div class="container" style="background-color:#ffffff">
         <button type="reset" class="cancelbtn">${removeText}</button>
-        <%-- <span class="psw">Forgot <a href="#">password?</a></span>--%>
+       <span class="psw"><a href="${pageContext.request.contextPath}/controller?command=show_recovery_password">
+           ${buttonRecovery}</a></span>
     </div>
 
 </form>

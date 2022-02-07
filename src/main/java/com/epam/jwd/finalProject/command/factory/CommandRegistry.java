@@ -23,6 +23,9 @@ import com.epam.jwd.finalProject.command.common.function.application.CreateAppli
 import com.epam.jwd.finalProject.command.common.function.application.FindAccountIdByApplicationCommand;
 import com.epam.jwd.finalProject.command.common.function.application.FindApplicationByIdCommand;
 import com.epam.jwd.finalProject.command.common.function.user.*;
+import com.epam.jwd.finalProject.command.common.function.user.recoveryPassword.RecoveryPasswordStageAfterCodeCommand;
+import com.epam.jwd.finalProject.command.common.function.user.recoveryPassword.RecoveryPasswordStageBeforeCodeCommand;
+import com.epam.jwd.finalProject.command.common.function.user.recoveryPassword.RecoveryPasswordStageCodeCommand;
 import com.epam.jwd.finalProject.command.common.page.ShowAboutPageCommand;
 import com.epam.jwd.finalProject.command.common.page.ShowContactPageCommand;
 import com.epam.jwd.finalProject.command.common.page.ShowMainPageCommand;
@@ -216,6 +219,14 @@ public enum CommandRegistry {
             "show_create_an_account", UNAUTHORIZED),
     CREATE_AN_ACCOUNT(CreateAnAccountCommand.getInstance(),
             "create_an_account", UNAUTHORIZED),
+    SHOW_RECOVERY_PASSWORD_PAGE(ShowRecoveryPasswordPageCommand.getInstance(),
+            "show_recovery_password", UNAUTHORIZED),
+    RECOVERY_PASSWORD_FIRST_STAGE(RecoveryPasswordStageBeforeCodeCommand.getInstance(),
+            "recovery_password_first_stage", UNAUTHORIZED),
+    RECOVERY_PASSWORD_SECOND_STAGE(RecoveryPasswordStageCodeCommand.getInstance(),
+            "recovery_password_second_stage", UNAUTHORIZED),
+    RECOVERY_PASSWORD_THREE_STAGE(RecoveryPasswordStageAfterCodeCommand.getInstance(),
+            "recovery_password_three_stage", UNAUTHORIZED),
     LOGOUT(LogoutCommand.getInstance(),
             "logout", USER, ADMIN, BLOKED),
     DEFAULT(ShowMainPageCommand.getInstance(),

@@ -19,9 +19,26 @@ public class UserDataValidator {
             "^([A-Za-z0-9_-]+\\.)*[a-z0-9_-]+@[a-z0-9_-]+(\\.[a-z0-9_-]+)*\\.[a-z]{2,6}$";
     private static final String REGEX_PASSWORD =
             "(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,15})$";
+    private static final String REGEX_CODE ="(?<!\\d)[1-9]\\d{5}(?!\\d)";
 
     private Pattern pattern;
     private Matcher matcher;
+
+    /**
+     * Validator code for recovery password
+     *
+     * @param code param for validator
+     * @return boolean
+     */
+    public boolean isCodeValid(String code) {
+        if (code.isEmpty()) {
+            return false;
+        }
+        pattern = Pattern.compile(REGEX_CODE, Pattern.UNICODE_CHARACTER_CLASS);
+        matcher = pattern.matcher(code);
+        return matcher.matches();
+    }
+
     /**
      * Validator first name
      *

@@ -21,9 +21,6 @@ import java.util.Optional;
  * @author Daniil Serov
  */
 public class UpdateLastNameCommand implements Command {
-    private final UserService service;
-    private final RequestFactory requestFactory;
-    private final PropertyContext propertyContext;
     private static final String USER_SESSION_ATTRIBUTE_NAME = "user";
     private static final String FIND_PARAM_FIRTS_NAME = "lastName";
     private static final String RESULT_ATTRIBUTE_NAME = "result";
@@ -31,7 +28,12 @@ public class UpdateLastNameCommand implements Command {
     private static final String ACCOUNT_PAGE = "page.personalInformation";
     private static final String UNSUCCESSFUL_RESULT_UPDATE_INFORMATION = "Unsuccessful " +
             "updating of personal information";
+
     private static final Logger LOG = LogManager.getLogger(UpdateLastNameCommand.class);
+
+    private final UserService service;
+    private final RequestFactory requestFactory;
+    private final PropertyContext propertyContext;
 
     UpdateLastNameCommand(UserService service, RequestFactory requestFactory, PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().userService();

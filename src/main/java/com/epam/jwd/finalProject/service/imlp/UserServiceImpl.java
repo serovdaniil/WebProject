@@ -3,6 +3,7 @@ package com.epam.jwd.finalProject.service.imlp;
 import com.epam.jwd.finalProject.dao.exception.DaoException;
 import com.epam.jwd.finalProject.dao.exception.EntityExtractionFailedException;
 import com.epam.jwd.finalProject.dao.impl.UserDaoImpl;
+import com.epam.jwd.finalProject.mail.MailSender;
 import com.epam.jwd.finalProject.model.User;
 import com.epam.jwd.finalProject.security.PasswordEncoder;
 import com.epam.jwd.finalProject.service.api.UserService;
@@ -12,6 +13,7 @@ import com.epam.jwd.finalProject.service.validator.UserDataValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.mail.MessagingException;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
@@ -49,6 +51,17 @@ public class UserServiceImpl implements UserService {
     private static final Long LIMIT = (long) 5;
 
     /**
+     * Subject message
+     */
+    private static final String subjectMsg = "Password recovery code!";
+
+    /**
+     * Text message
+     */
+    private static final String textMsg = "Enter this code in the appropriate field on the website " +
+            "to recover the password from your personal account. Code: ";
+
+    /**
      * Constructor - creating a new object
      *
      * @param userDao         dao for this service
@@ -57,6 +70,45 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl(UserDaoImpl userDao, PasswordEncoder passwordEncoder) {
         this.userDao = userDao.getInstance();
         this.passwordEncoder = passwordEncoder.getInstance();
+    }
+
+    /**
+     * Find user by email
+     *
+     * @param email email for user
+     *
+     * @return result found
+     * @throws ValidationException if there are validation problems
+     */
+    @Override
+    public boolean findByEmail(String email) throws ValidationException, ServiceException {
+        try {
+            if (!userDataValidator.isEmailValid(email)) {
+                LOG.error("The entered data is not correct!");
+                throw new ValidationException("The entered data is not correct!");
+            }
+            return userDao.findByEmail(email).isPresent();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    /**
+     * Mail to send the password recovery code
+     *
+     * @param email Email to send
+     * @param code  Recovery code
+     */
+    @Override
+    public void recoveryPassword(String email, Long code) throws ValidationException {
+        if (!userDataValidator.isCodeValid(Long.toString(code)) ||
+                !userDataValidator.isEmailValid(email)) {
+            LOG.error("The entered data is not correct!");
+            throw new ValidationException("The entered data is not correct!");
+        }
+        MailSender mailSender = new MailSender();
+        final String text = textMsg + code;
+        mailSender.send(subjectMsg, text, email);
     }
 
     /**

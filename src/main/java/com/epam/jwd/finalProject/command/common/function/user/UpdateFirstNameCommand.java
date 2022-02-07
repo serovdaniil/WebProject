@@ -21,9 +21,6 @@ import java.util.Optional;
  * @author Daniil Serov
  */
 public class UpdateFirstNameCommand implements Command {
-    private final UserService service;
-    private final RequestFactory requestFactory;
-    private final PropertyContext propertyContext;
     private static final String USER_SESSION_ATTRIBUTE_NAME = "user";
     private static final String FIND_PARAM_FIRTS_NAME = "firstName";
     private static final String RESULT_ATTRIBUTE_NAME = "result";
@@ -31,7 +28,12 @@ public class UpdateFirstNameCommand implements Command {
     private static final String ACCOUNT_PAGE = "page.personalInformation";
     private static final String UNSUCCESSFUL_RESULT_UPDATE_INFORMATION = "Unsuccessful " +
             "updating of personal information";
+
     private static final Logger LOG = LogManager.getLogger(UpdateFirstNameCommand.class);
+
+    private final UserService service;
+    private final RequestFactory requestFactory;
+    private final PropertyContext propertyContext;
 
     UpdateFirstNameCommand(UserService service, RequestFactory requestFactory, PropertyContext propertyContext) {
         this.service = ServiceFactory.simple().userService();
@@ -49,7 +51,7 @@ public class UpdateFirstNameCommand implements Command {
             user = service.updateFirstName(id, firstName);
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
-        }catch (ServiceException e) {
+        } catch (ServiceException e) {
             LOG.error("The service exception!" + e);
         }
         if (firstName.equals(user.get().getFirstName())) {

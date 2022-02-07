@@ -15,6 +15,24 @@ import java.util.Optional;
 public interface UserService extends EntityService<User> {
 
     /**
+     * Find user by email
+     *
+     * @param email email for user
+     *
+     * @return result found
+     * @throws ValidationException if there are validation problems
+     */
+    boolean findByEmail(String email) throws ValidationException, ServiceException;
+
+    /**
+     * Mail to send the password recovery code
+     *
+     * @param email Email to send
+     * @param code Recovery code
+     */
+    void recoveryPassword(String email, Long code) throws ValidationException;
+
+    /**
      * Find count all users
      *
      * @return count users
@@ -24,8 +42,8 @@ public interface UserService extends EntityService<User> {
     /**
      * Authenticate
      *
-     * @param email email for section conferenc
-     * @param password password for section conferenc
+     * @param email email for user
+     * @param password password for user
      * @return User
      * @throws ValidationException if there are validation problems
      */
@@ -34,8 +52,8 @@ public interface UserService extends EntityService<User> {
     /**
      * Registration
      *
-     * @param email email for section conferenc
-     * @param password password for section conferenc
+     * @param email email for user
+     * @param password password for user
      * @return User
      * @throws ValidationException if there are validation problems
      */
@@ -44,8 +62,8 @@ public interface UserService extends EntityService<User> {
     /**
      * Update password
      *
-     * @param login login for section conferenc
-     * @param password password for section conferenc
+     * @param login login for user
+     * @param password password for user
      * @return User
      * @throws ValidationException if there are validation problems
      */
@@ -54,8 +72,8 @@ public interface UserService extends EntityService<User> {
     /**
      * Update email
      *
-     * @param email email for section conferenc
-     * @param id id section conferenc conferenc
+     * @param email email for user
+     * @param id id for user
      * @return User
      * @throws ValidationException if there are validation problems
      */

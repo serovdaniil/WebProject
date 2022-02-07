@@ -29,7 +29,7 @@
 <form name="login-form" action="${pageContext.request.contextPath}/controller?command=create_an_account" method="post">
     <div class="container">
         <label for="login-input">${login}:</label>
-        <input id="login-input" type="email"  name="email"  min="1" max="45" value="" required
+        <input id="login-input" type="text"  name="email"  min="1" max="45" value="" required
                pattern="^([A-Za-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$"
                oninput="validateLogin(this)"/>
         <br>

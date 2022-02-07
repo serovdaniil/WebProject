@@ -64,7 +64,6 @@ public class LoginCommand implements Command {
         }catch (ServiceException e) {
             LOG.error("The service exception!" + e);
         }
-
         return requestFactory.createRedirectResponse(propertyContext.get(INDEX_PAGE));
     }
 
