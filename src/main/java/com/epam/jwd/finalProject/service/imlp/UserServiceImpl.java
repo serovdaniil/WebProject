@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
      * @param passwordEncoder encoder for this password
      */
     public UserServiceImpl(UserDaoImpl userDao, PasswordEncoder passwordEncoder) {
-        this.userDao = userDao.getInstance();
+        this.userDao = userDao;
         this.passwordEncoder = passwordEncoder.getInstance();
     }
 

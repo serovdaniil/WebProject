@@ -44,7 +44,7 @@ public class SectionConferencServiceImpl implements SectionConferencService {
      * @param sectionConferencDao dao for this service
      */
     public SectionConferencServiceImpl(SectionConferencDaoImpl sectionConferencDao) {
-        this.sectionConferencDao = sectionConferencDao.getInstance();
+        this.sectionConferencDao = sectionConferencDao;
     }
 
     /**

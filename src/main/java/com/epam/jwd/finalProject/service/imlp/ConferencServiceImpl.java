@@ -43,7 +43,7 @@ public class ConferencServiceImpl implements ConferencService {
      * @param conferencDao dao for this service
      */
     public ConferencServiceImpl(ConferencDaoImpl conferencDao) {
-        this.conferencDao = conferencDao.getInstance();
+        this.conferencDao = conferencDao;
     }
 
     /**

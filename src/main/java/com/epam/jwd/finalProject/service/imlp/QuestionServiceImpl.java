@@ -46,7 +46,7 @@ public class QuestionServiceImpl implements QuestionService {
      * @param questionDao dao for this service
      */
     public QuestionServiceImpl(QuestionDaoImpl questionDao) {
-        this.questionDao = questionDao.getInstance();
+        this.questionDao = questionDao;
     }
 
     /**

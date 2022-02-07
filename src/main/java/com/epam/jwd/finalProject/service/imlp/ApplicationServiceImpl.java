@@ -46,7 +46,7 @@ public class ApplicationServiceImpl implements ApplicationService {
      * @param applicationDao dao for this service
      */
     public ApplicationServiceImpl(ApplicationDaoImpl applicationDao) {
-        this.applicationDao = applicationDao.getInstance();
+        this.applicationDao = applicationDao;
     }
 
     /**
@@ -62,9 +62,9 @@ public class ApplicationServiceImpl implements ApplicationService {
                 LOG.error("The entered data is not correct!");
                 throw new ValidationException("The entered data is not correct!");
             }
-            final Long countConferenc = applicationDao.findCountAllApplicationByUser(id);
-            Long pageCount = countConferenc / LIMIT;
-            if ((countConferenc - pageCount * LIMIT) > 0) {
+            final Long countApplication = applicationDao.findCountAllApplicationByUser(id);
+            Long pageCount = countApplication / LIMIT;
+            if ((countApplication - pageCount * LIMIT) > 0) {
                 pageCount++;
             }
             return pageCount;

@@ -41,7 +41,7 @@ public class CategoryServiceImpl implements CategoryService {
      * @param categoryDao dao for this service
      */
     public CategoryServiceImpl(CategoryDaoImpl categoryDao) {
-        this.categoryDao = categoryDao.getInstance();
+        this.categoryDao = categoryDao;
     }
 
     /**
