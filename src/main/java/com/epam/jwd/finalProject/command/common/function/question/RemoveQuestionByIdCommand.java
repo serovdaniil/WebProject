@@ -3,7 +3,6 @@ package com.epam.jwd.finalProject.command.common.function.question;
 import com.epam.jwd.finalProject.command.factory.Command;
 import com.epam.jwd.finalProject.command.factory.CommandRequest;
 import com.epam.jwd.finalProject.command.factory.CommandResponse;
-import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
 import com.epam.jwd.finalProject.service.api.QuestionService;
 import com.epam.jwd.finalProject.service.exception.ServiceException;
@@ -26,13 +25,10 @@ public class RemoveQuestionByIdCommand implements Command {
 
     private final QuestionService service;
     private final RequestFactory requestFactory;
-    private final PropertyContext propertyContext;
 
-    RemoveQuestionByIdCommand(QuestionService service, RequestFactory requestFactory,
-                              PropertyContext propertyContext) {
+    RemoveQuestionByIdCommand() {
         this.service = ServiceFactory.simple().questionService();
         this.requestFactory = RequestFactory.getInstance();
-        this.propertyContext = PropertyContext.instance();
     }
 
     @Override
@@ -62,7 +58,6 @@ public class RemoveQuestionByIdCommand implements Command {
 
     private static class Holder {
         public static final RemoveQuestionByIdCommand INSTANCE =
-                new RemoveQuestionByIdCommand(ServiceFactory.simple().questionService(),
-                        RequestFactory.getInstance(), PropertyContext.instance());
+                new RemoveQuestionByIdCommand();
     }
 }

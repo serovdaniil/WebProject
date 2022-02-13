@@ -204,11 +204,7 @@ public class ApplicationDaoImpl implements ApplicationDao {
         } catch (EntityExtractionFailedException e) {
             LOG.error("could not extract entity", e);
         }
-        if (productOptional.isPresent()) {
-            return true;
-        } else {
-            return false;
-        }
+        return productOptional.isPresent();
     }
 
     /**
@@ -264,7 +260,7 @@ public class ApplicationDaoImpl implements ApplicationDao {
     /**
      * Read all application
      *
-     * @param limit number of rows in the selection
+     * @param limit  number of rows in the selection
      * @param offset offset from the beginning of the selection
      * @return List application
      */
@@ -317,8 +313,8 @@ public class ApplicationDaoImpl implements ApplicationDao {
     /**
      * Find application by id account
      *
-     * @param id id application
-     * @param limit number of rows in the selection
+     * @param id     id application
+     * @param limit  number of rows in the selection
      * @param offset offset from the beginning of the selection
      * @return List application
      */

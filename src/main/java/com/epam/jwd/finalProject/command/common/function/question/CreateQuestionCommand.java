@@ -41,8 +41,7 @@ public class CreateQuestionCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    CreateQuestionCommand(QuestionService service, RequestFactory requestFactory,
-                          PropertyContext propertyContext) {
+    CreateQuestionCommand() {
         this.service = ServiceFactory.simple().questionService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -51,7 +50,10 @@ public class CreateQuestionCommand implements Command {
     @Override
     public CommandResponse execute(CommandRequest request) {
         final Optional<User> userOptional = request.retrieveFromSession(USER_SESSION_ATTRIBUTE_NAME);
-        final Long idAccount = userOptional.get().getId();
+        Long idAccount = (long) 0;
+        if (userOptional.isPresent()) {
+            idAccount = userOptional.get().getId();
+        }
         final Long pageNumber = (long) 1;
         final String name = request.getParameter(FIND_PARAM_NAME);
         boolean result;
@@ -59,7 +61,7 @@ public class CreateQuestionCommand implements Command {
         try {
             result = service.findForDuplicateQuestion(idAccount, name);
             final Long count = service.findCountAllQuestionByUser(idAccount);
-            if (result == true) {
+            if (result) {
                 request.addAttributeToJsp(ERROR_DUPLICATE_PASS_ATTRIBUTE, ERROR_DUPLICATE_PASS_MESSAGE);
                 questionList = service.findAccountIdByQuestion(idAccount, pageNumber);
                 request.addAttributeToJsp(QUESTION_ATTRIBUTE_NAME, questionList);
@@ -85,7 +87,6 @@ public class CreateQuestionCommand implements Command {
 
     private static class Holder {
         public static final CreateQuestionCommand INSTANCE =
-                new CreateQuestionCommand(ServiceFactory.simple().questionService(),
-                        RequestFactory.getInstance(), PropertyContext.instance());
+                new CreateQuestionCommand();
     }
 }

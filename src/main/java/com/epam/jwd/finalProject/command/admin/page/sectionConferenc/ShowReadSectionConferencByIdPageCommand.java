@@ -17,7 +17,7 @@ public class ShowReadSectionConferencByIdPageCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    ShowReadSectionConferencByIdPageCommand(RequestFactory requestFactory, PropertyContext propertyContext) {
+    ShowReadSectionConferencByIdPageCommand() {
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
     }
@@ -33,7 +33,6 @@ public class ShowReadSectionConferencByIdPageCommand implements Command {
 
     private static class Holder {
         public static final ShowReadSectionConferencByIdPageCommand INSTANCE =
-                new ShowReadSectionConferencByIdPageCommand(RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new ShowReadSectionConferencByIdPageCommand();
     }
 }

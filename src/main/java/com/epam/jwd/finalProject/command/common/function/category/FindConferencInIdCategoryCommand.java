@@ -31,8 +31,7 @@ public class FindConferencInIdCategoryCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    FindConferencInIdCategoryCommand(CategoryService service, RequestFactory requestFactory,
-                                     PropertyContext propertyContext) {
+    FindConferencInIdCategoryCommand() {
         this.service = ServiceFactory.simple().categoryService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -59,7 +58,6 @@ public class FindConferencInIdCategoryCommand implements Command {
 
     private static class Holder {
         public static final FindConferencInIdCategoryCommand INSTANCE =
-                new FindConferencInIdCategoryCommand(ServiceFactory.simple().categoryService(),
-                        RequestFactory.getInstance(), PropertyContext.instance());
+                new FindConferencInIdCategoryCommand();
     }
 }

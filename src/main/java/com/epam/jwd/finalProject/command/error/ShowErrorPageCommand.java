@@ -18,7 +18,7 @@ public class ShowErrorPageCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    ShowErrorPageCommand(RequestFactory requestFactory, PropertyContext propertyContext) {
+    ShowErrorPageCommand() {
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
     }
@@ -34,6 +34,6 @@ public class ShowErrorPageCommand implements Command {
 
     private static class Holder {
         public static final ShowErrorPageCommand INSTANCE =
-                new ShowErrorPageCommand(RequestFactory.getInstance(), PropertyContext.instance());
+                new ShowErrorPageCommand();
     }
 }

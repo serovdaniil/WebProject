@@ -31,8 +31,7 @@ public class FindSectionConferencByIdCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    FindSectionConferencByIdCommand(SectionConferencService service, RequestFactory requestFactory,
-                                    PropertyContext propertyContext) {
+    FindSectionConferencByIdCommand() {
         this.service = ServiceFactory.simple().sectionConferencService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -42,14 +41,16 @@ public class FindSectionConferencByIdCommand implements Command {
     public CommandResponse execute(CommandRequest request) {
         final Long id = Long.parseLong(request.getParameter(PARAM_ID));
         final Optional<SectionConferenc> sectionConferencOptional;
-        SectionConferenc sectionConferenc;
+        SectionConferenc sectionConferenc = null;
         try {
             sectionConferencOptional = service.findId(id);
-            sectionConferenc=sectionConferencOptional.get();
+            if (sectionConferencOptional.isPresent()) {
+                sectionConferenc = sectionConferencOptional.get();
+            }
             request.addAttributeToJsp(SECTION_CONFERENCES_ATTRIBUTE_NAME, sectionConferenc);
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
-        }catch (ServiceException e) {
+        } catch (ServiceException e) {
             LOG.error("The service exception!" + e);
         }
         return requestFactory.createForwardResponse(propertyContext.get(SECTION_CONFERENCES_PAGE));
@@ -61,7 +62,6 @@ public class FindSectionConferencByIdCommand implements Command {
 
     private static class Holder {
         public static final FindSectionConferencByIdCommand INSTANCE =
-                new FindSectionConferencByIdCommand(ServiceFactory.simple().sectionConferencService(),
-                        RequestFactory.getInstance(), PropertyContext.instance());
+                new FindSectionConferencByIdCommand();
     }
 }

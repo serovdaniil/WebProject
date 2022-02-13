@@ -30,8 +30,7 @@ public class RemoveConferencByIdCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    RemoveConferencByIdCommand(ConferencService service, RequestFactory requestFactory,
-                               PropertyContext propertyContext) {
+    RemoveConferencByIdCommand() {
         this.service = ServiceFactory.simple().conferencService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -62,7 +61,6 @@ public class RemoveConferencByIdCommand implements Command {
 
     private static class Holder {
         public static final RemoveConferencByIdCommand INSTANCE =
-                new RemoveConferencByIdCommand(ServiceFactory.simple().conferencService(),
-                        RequestFactory.getInstance(), PropertyContext.instance());
+                new RemoveConferencByIdCommand();
     }
 }

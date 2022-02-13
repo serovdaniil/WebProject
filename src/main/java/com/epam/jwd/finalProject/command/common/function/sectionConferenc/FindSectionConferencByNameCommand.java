@@ -31,8 +31,7 @@ public class FindSectionConferencByNameCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    FindSectionConferencByNameCommand(SectionConferencService service, RequestFactory requestFactory,
-                                      PropertyContext propertyContext) {
+    FindSectionConferencByNameCommand() {
         this.service = ServiceFactory.simple().sectionConferencService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -59,7 +58,6 @@ public class FindSectionConferencByNameCommand implements Command {
 
     private static class Holder {
         public static final FindSectionConferencByNameCommand INSTANCE =
-                new FindSectionConferencByNameCommand(ServiceFactory.simple().sectionConferencService(),
-                        RequestFactory.getInstance(), PropertyContext.instance());
+                new FindSectionConferencByNameCommand();
     }
 }

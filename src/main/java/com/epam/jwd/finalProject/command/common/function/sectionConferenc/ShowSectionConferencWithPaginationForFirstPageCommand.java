@@ -31,9 +31,7 @@ public class ShowSectionConferencWithPaginationForFirstPageCommand implements Co
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    ShowSectionConferencWithPaginationForFirstPageCommand(SectionConferencService service,
-                                                          RequestFactory requestFactory,
-                                                          PropertyContext propertyContext) {
+    ShowSectionConferencWithPaginationForFirstPageCommand() {
         this.service = ServiceFactory.simple().sectionConferencService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -64,7 +62,6 @@ public class ShowSectionConferencWithPaginationForFirstPageCommand implements Co
 
     private static class Holder {
         public static final ShowSectionConferencWithPaginationForFirstPageCommand INSTANCE =
-                new ShowSectionConferencWithPaginationForFirstPageCommand(ServiceFactory.simple().sectionConferencService(),
-                        RequestFactory.getInstance(), PropertyContext.instance());
+                new ShowSectionConferencWithPaginationForFirstPageCommand();
     }
 }

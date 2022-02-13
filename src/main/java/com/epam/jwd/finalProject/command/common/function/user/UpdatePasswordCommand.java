@@ -38,7 +38,7 @@ public class UpdatePasswordCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    UpdatePasswordCommand(UserService service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    UpdatePasswordCommand() {
         this.service = ServiceFactory.simple().userService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -47,7 +47,11 @@ public class UpdatePasswordCommand implements Command {
     @Override
     public CommandResponse execute(CommandRequest request) {
         final Optional<User> userOptional = request.retrieveFromSession(USER_SESSION_ATTRIBUTE_NAME);
-        final String login = userOptional.get().getLogin();
+        String login = "";
+        String newPassword = "";
+        if (userOptional.isPresent()) {
+            login = userOptional.get().getLogin();
+        }
         final String password = request.getParameter(FIND_PARAM_PASSWORD);
         final String passwordRepeat = request.getParameter(PASSWORD_REPEAT_REQUEST_PARAM_NAME);
         Optional<User> user = Optional.empty();
@@ -57,12 +61,15 @@ public class UpdatePasswordCommand implements Command {
         }
         try {
             user = service.updatePasswordByLogin(login, password);
+            if (user.isPresent()) {
+                newPassword = user.get().getPassword();
+            }
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
         } catch (ServiceException e) {
             LOG.error("The service exception!" + e);
         }
-        if (!password.equals(user.get().getPassword())) {
+        if (!password.equals(newPassword) && (user.isPresent())) {
             request.clearSession();
             request.createSession();
             request.addToSession(USER_SESSION_ATTRIBUTE_NAME, user.get());
@@ -79,7 +86,6 @@ public class UpdatePasswordCommand implements Command {
 
     private static class Holder {
         public static final UpdatePasswordCommand INSTANCE =
-                new UpdatePasswordCommand(ServiceFactory.simple().userService(), RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new UpdatePasswordCommand();
     }
 }

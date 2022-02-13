@@ -11,10 +11,7 @@ public class ApplicationDataValidator {
      * @return boolean
      */
     public boolean isIdValid(Long id) {
-        if (id<=0) {
-            return false;
-        }
-        return true;
+        return id<=0;
     }
     public static ApplicationDataValidator getInstance() {
         return ApplicationDataValidator.Holder.INSTANCE;

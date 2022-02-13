@@ -2,7 +2,6 @@ package com.epam.jwd.finalProject.command.factory;
 
 import com.epam.jwd.finalProject.model.User;
 
-import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 /**
@@ -27,6 +26,4 @@ public interface CommandRequest {
     void clearSession();
 
     void createSession();
-
-    String getURL();
 }

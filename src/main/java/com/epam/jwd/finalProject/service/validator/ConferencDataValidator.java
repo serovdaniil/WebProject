@@ -21,10 +21,7 @@ public class ConferencDataValidator {
      * @return boolean
      */
     public boolean isIdValid(Long id) {
-        if (id<=0) {
-            return false;
-        }
-        return true;
+        return id<=0;
     }
     /**
      * Validator name

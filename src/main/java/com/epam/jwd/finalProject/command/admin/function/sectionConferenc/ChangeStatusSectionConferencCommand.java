@@ -22,7 +22,6 @@ public class ChangeStatusSectionConferencCommand implements Command {
     private static final String PARAM_STATUS = "newStatus";
     private static final String CONFERENCES_ATTRIBUTE_NAME_RESULT_REMOVE = "result";
     private static final String OPERATION_WAS_UNSUCCSESFUL = "The operation was unsuccsesful";
-    private static final String SECTION_CONFERENCES_ATTRIBUTE_NAME = "sectionConferenc";
     private static final String READ_SECTION_CONFERENCES_BY_ID_PAGE = "page.readSectionConferencById";
     private static final String SECTION_CONFERENCES_PAGE = "/controller?command=show_section_conferences&page=1";
 
@@ -32,8 +31,7 @@ public class ChangeStatusSectionConferencCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    ChangeStatusSectionConferencCommand(SectionConferencService service, RequestFactory requestFactory,
-                                        PropertyContext propertyContext) {
+    ChangeStatusSectionConferencCommand() {
         this.service = ServiceFactory.simple().sectionConferencService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -65,7 +63,6 @@ public class ChangeStatusSectionConferencCommand implements Command {
 
     private static class Holder {
         public static final ChangeStatusSectionConferencCommand INSTANCE =
-                new ChangeStatusSectionConferencCommand(ServiceFactory.simple().sectionConferencService(),
-                        RequestFactory.getInstance(), PropertyContext.instance());
+                new ChangeStatusSectionConferencCommand();
     }
 }

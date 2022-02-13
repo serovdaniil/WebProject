@@ -6,7 +6,6 @@ import com.epam.jwd.finalProject.command.factory.CommandResponse;
 import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
 import com.epam.jwd.finalProject.model.Question;
-import com.epam.jwd.finalProject.service.api.EntityService;
 import com.epam.jwd.finalProject.service.api.QuestionService;
 import com.epam.jwd.finalProject.service.exception.ServiceException;
 import com.epam.jwd.finalProject.service.factory.ServiceFactory;
@@ -32,8 +31,7 @@ public class ShowQuestionPageCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    ShowQuestionPageCommand(EntityService<Question> questionServiceservice, RequestFactory requestFactory,
-                            PropertyContext propertyContext) {
+    ShowQuestionPageCommand() {
         this.questionService = ServiceFactory.simple().questionService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -59,7 +57,6 @@ public class ShowQuestionPageCommand implements Command {
 
     private static class Holder {
         public static final ShowQuestionPageCommand INSTANCE =
-                new ShowQuestionPageCommand(ServiceFactory.simple().questionService(),
-                        RequestFactory.getInstance(), PropertyContext.instance());
+                new ShowQuestionPageCommand();
     }
 }

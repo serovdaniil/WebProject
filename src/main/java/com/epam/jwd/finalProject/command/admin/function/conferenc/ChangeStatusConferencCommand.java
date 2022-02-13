@@ -33,8 +33,7 @@ public class ChangeStatusConferencCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    ChangeStatusConferencCommand(ConferencService service, SectionConferencService sectionConferencService,
-                                 RequestFactory requestFactory, PropertyContext propertyContext) {
+    ChangeStatusConferencCommand() {
         this.service = ServiceFactory.simple().conferencService();
         this.sectionConferencService = ServiceFactory.simple().sectionConferencService();
         this.requestFactory = RequestFactory.getInstance();
@@ -70,8 +69,6 @@ public class ChangeStatusConferencCommand implements Command {
 
     private static class Holder {
         public static final ChangeStatusConferencCommand INSTANCE =
-                new ChangeStatusConferencCommand(ServiceFactory.simple().conferencService(),
-                        ServiceFactory.simple().sectionConferencService(), RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new ChangeStatusConferencCommand();
     }
 }

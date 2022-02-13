@@ -7,7 +7,6 @@ import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
 import com.epam.jwd.finalProject.model.Category;
 import com.epam.jwd.finalProject.service.api.CategoryService;
-import com.epam.jwd.finalProject.service.api.EntityService;
 import com.epam.jwd.finalProject.service.exception.ServiceException;
 import com.epam.jwd.finalProject.service.factory.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
@@ -32,8 +31,7 @@ public class ShowCategoryPageCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    ShowCategoryPageCommand(CategoryService service, RequestFactory requestFactory,
-                            PropertyContext propertyContext) {
+    ShowCategoryPageCommand() {
         this.service = ServiceFactory.simple().categoryService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -59,7 +57,6 @@ public class ShowCategoryPageCommand implements Command {
 
     private static class Holder {
         public static final ShowCategoryPageCommand INSTANCE =
-                new ShowCategoryPageCommand(ServiceFactory.simple().categoryService(),
-                        RequestFactory.getInstance(), PropertyContext.instance());
+                new ShowCategoryPageCommand();
     }
 }

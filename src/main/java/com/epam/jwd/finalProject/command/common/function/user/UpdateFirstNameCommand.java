@@ -35,7 +35,7 @@ public class UpdateFirstNameCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    UpdateFirstNameCommand(UserService service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    UpdateFirstNameCommand() {
         this.service = ServiceFactory.simple().userService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -44,17 +44,24 @@ public class UpdateFirstNameCommand implements Command {
     @Override
     public CommandResponse execute(CommandRequest request) {
         final Optional<User> userOptional = request.retrieveFromSession(USER_SESSION_ATTRIBUTE_NAME);
-        final Long id = userOptional.get().getId();
+        Long id=(long)0;
+        String newFirstName="";
+        if (userOptional.isPresent()){
+            id = userOptional.get().getId();
+        }
         final String firstName = request.getParameter(FIND_PARAM_FIRTS_NAME);
         Optional<User> user = Optional.empty();
         try {
             user = service.updateFirstName(id, firstName);
+            if (user.isPresent()){
+                newFirstName=user.get().getFirstName();
+            }
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
         } catch (ServiceException e) {
             LOG.error("The service exception!" + e);
         }
-        if (firstName.equals(user.get().getFirstName())) {
+        if (firstName.equals(newFirstName) && (user.isPresent())) {
             request.clearSession();
             request.createSession();
             request.addToSession(USER_SESSION_ATTRIBUTE_NAME, user.get());
@@ -71,7 +78,6 @@ public class UpdateFirstNameCommand implements Command {
 
     private static class Holder {
         public static final UpdateFirstNameCommand INSTANCE =
-                new UpdateFirstNameCommand(ServiceFactory.simple().userService(), RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new UpdateFirstNameCommand();
     }
 }

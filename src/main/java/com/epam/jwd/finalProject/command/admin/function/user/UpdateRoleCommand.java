@@ -34,7 +34,7 @@ public class UpdateRoleCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    UpdateRoleCommand(UserService service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    UpdateRoleCommand() {
         this.service = ServiceFactory.simple().userService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -52,7 +52,7 @@ public class UpdateRoleCommand implements Command {
         }catch (ServiceException e) {
             LOG.error("The service exception!" + e);
         }
-        if (user.get().equals(Optional.empty())) {
+        if (user.isPresent()) {
             request.addAttributeToJsp(RESULT_ATTRIBUTE_NAME, OPERATION_WAS_UNSUCCSESFUL);
             return requestFactory.createForwardResponse(propertyContext.get(SHOW_USERS_PAGE));
         } else {
@@ -66,7 +66,6 @@ public class UpdateRoleCommand implements Command {
 
     private static class Holder {
         public static final UpdateRoleCommand INSTANCE =
-                new UpdateRoleCommand(ServiceFactory.simple().userService(), RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new UpdateRoleCommand();
     }
 }

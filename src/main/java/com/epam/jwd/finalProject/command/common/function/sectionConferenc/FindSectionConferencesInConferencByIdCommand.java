@@ -32,8 +32,7 @@ public class FindSectionConferencesInConferencByIdCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    FindSectionConferencesInConferencByIdCommand(SectionConferencService service, RequestFactory requestFactory,
-                                                 PropertyContext propertyContext) {
+    FindSectionConferencesInConferencByIdCommand() {
         this.service = ServiceFactory.simple().sectionConferencService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -60,7 +59,6 @@ public class FindSectionConferencesInConferencByIdCommand implements Command {
 
     private static class Holder {
         public static final FindSectionConferencesInConferencByIdCommand INSTANCE =
-                new FindSectionConferencesInConferencByIdCommand(ServiceFactory.simple().sectionConferencService(),
-                        RequestFactory.getInstance(), PropertyContext.instance());
+                new FindSectionConferencesInConferencByIdCommand();
     }
 }

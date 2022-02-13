@@ -30,8 +30,7 @@ public class CreateCategoryCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    CreateCategoryCommand(CategoryService service, RequestFactory requestFactory,
-                          PropertyContext propertyContext) {
+    CreateCategoryCommand() {
         this.service = ServiceFactory.simple().categoryService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -67,7 +66,6 @@ public class CreateCategoryCommand implements Command {
 
     private static class Holder {
         public static final CreateCategoryCommand INSTANCE =
-                new CreateCategoryCommand(ServiceFactory.simple().categoryService(), RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new CreateCategoryCommand();
     }
 }

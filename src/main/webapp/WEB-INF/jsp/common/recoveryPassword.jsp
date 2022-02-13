@@ -15,6 +15,8 @@
 <fmt:message bundle="${loc}" key="label.recovery.buttonCode" var="buttonCode"/>
 <fmt:message bundle="${loc}" key="label.recovery.buttonEmail" var="buttonEmail"/>
 <fmt:message bundle="${loc}" key="label.recovery.buttonPassword" var="buttonPassword"/>
+<fmt:message bundle="${loc}" key="label.message.exception.login" var="exceptionLogin"/>
+<fmt:message bundle="${loc}" key="label.message.exception.password" var="exceptionPassword"/>
 <html>
 <html>
 <head>

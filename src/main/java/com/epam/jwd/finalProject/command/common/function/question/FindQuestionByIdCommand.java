@@ -31,8 +31,7 @@ public class FindQuestionByIdCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    FindQuestionByIdCommand(QuestionService service, RequestFactory requestFactory,
-                            PropertyContext propertyContext) {
+    FindQuestionByIdCommand() {
         this.service = ServiceFactory.simple().questionService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -42,14 +41,16 @@ public class FindQuestionByIdCommand implements Command {
     public CommandResponse execute(CommandRequest request) {
         final Long id = Long.parseLong(request.getParameter(PARAM_NAME));
         final Optional<Question> questionById;
-        final Question question;
+        Question question = null;
         try {
             questionById = service.findId(id);
-            question=questionById.get();
+            if (questionById.isPresent()) {
+                question = questionById.get();
+            }
             request.addAttributeToJsp(QUESTION_ATTRIBUTE_NAME, question);
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
-        }catch (ServiceException e) {
+        } catch (ServiceException e) {
             LOG.error("The service exception!" + e);
         }
         return requestFactory.createForwardResponse(propertyContext.get(FIND_QUESTIONS_BY_ID));
@@ -61,7 +62,6 @@ public class FindQuestionByIdCommand implements Command {
 
     private static class Holder {
         public static final FindQuestionByIdCommand INSTANCE =
-                new FindQuestionByIdCommand(ServiceFactory.simple().questionService(),
-                        RequestFactory.getInstance(), PropertyContext.instance());
+                new FindQuestionByIdCommand();
     }
 }

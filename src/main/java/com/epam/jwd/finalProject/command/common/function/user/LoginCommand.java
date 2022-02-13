@@ -35,8 +35,7 @@ public class LoginCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    LoginCommand(UserService userService, RequestFactory requestFactory,
-                 PropertyContext propertyContext) {
+    LoginCommand() {
         this.userService = ServiceFactory.simple().userService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -73,8 +72,6 @@ public class LoginCommand implements Command {
 
     private static class Holder {
         public static final LoginCommand INSTANCE =
-                new LoginCommand(ServiceFactory.simple().userService(),
-                        RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new LoginCommand();
     }
 }

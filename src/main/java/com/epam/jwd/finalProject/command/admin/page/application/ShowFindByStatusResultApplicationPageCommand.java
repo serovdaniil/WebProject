@@ -17,7 +17,7 @@ public class ShowFindByStatusResultApplicationPageCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    ShowFindByStatusResultApplicationPageCommand(RequestFactory requestFactory, PropertyContext propertyContext) {
+    ShowFindByStatusResultApplicationPageCommand() {
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
     }
@@ -33,7 +33,6 @@ public class ShowFindByStatusResultApplicationPageCommand implements Command {
 
     private static class Holder {
         public static final ShowFindByStatusResultApplicationPageCommand INSTANCE =
-                new ShowFindByStatusResultApplicationPageCommand(RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new ShowFindByStatusResultApplicationPageCommand();
     }
 }

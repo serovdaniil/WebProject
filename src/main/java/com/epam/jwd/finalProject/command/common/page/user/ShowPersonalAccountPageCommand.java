@@ -16,7 +16,7 @@ public class ShowPersonalAccountPageCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    ShowPersonalAccountPageCommand(RequestFactory requestFactory, PropertyContext propertyContext) {
+    ShowPersonalAccountPageCommand() {
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
     }
@@ -32,6 +32,6 @@ public class ShowPersonalAccountPageCommand implements Command {
 
     private static class Holder {
         public static final ShowPersonalAccountPageCommand INSTANCE =
-                new ShowPersonalAccountPageCommand(RequestFactory.getInstance(), PropertyContext.instance());
+                new ShowPersonalAccountPageCommand();
     }
 }

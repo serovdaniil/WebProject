@@ -8,8 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface ResultSetExtractor <T extends Entity>{
-    T extract(ResultSet resultSet) throws EntityExtractionFailedException, EntityExtractionFailedException;
+public interface ResultSetExtractor<T extends Entity> {
+    T extract(ResultSet resultSet) throws EntityExtractionFailedException;
 
     default List<T> extractAll(ResultSet resultSet) throws SQLException, EntityExtractionFailedException {
         List<T> entities = new ArrayList<>();

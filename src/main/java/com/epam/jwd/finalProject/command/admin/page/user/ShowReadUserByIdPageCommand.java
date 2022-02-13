@@ -17,7 +17,7 @@ public class ShowReadUserByIdPageCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    ShowReadUserByIdPageCommand(RequestFactory requestFactory, PropertyContext propertyContext) {
+    ShowReadUserByIdPageCommand() {
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
     }
@@ -33,6 +33,6 @@ public class ShowReadUserByIdPageCommand implements Command {
 
     private static class Holder {
         public static final ShowReadUserByIdPageCommand INSTANCE =
-                new ShowReadUserByIdPageCommand(RequestFactory.getInstance(), PropertyContext.instance());
+                new ShowReadUserByIdPageCommand();
     }
 }

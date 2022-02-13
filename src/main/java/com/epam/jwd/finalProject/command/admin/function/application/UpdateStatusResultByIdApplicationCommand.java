@@ -3,11 +3,8 @@ package com.epam.jwd.finalProject.command.admin.function.application;
 import com.epam.jwd.finalProject.command.factory.Command;
 import com.epam.jwd.finalProject.command.factory.CommandRequest;
 import com.epam.jwd.finalProject.command.factory.CommandResponse;
-import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
-import com.epam.jwd.finalProject.model.Application;
 import com.epam.jwd.finalProject.service.api.ApplicationService;
-import com.epam.jwd.finalProject.service.api.EntityService;
 import com.epam.jwd.finalProject.service.exception.ServiceException;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
 import com.epam.jwd.finalProject.service.factory.ServiceFactory;
@@ -29,13 +26,10 @@ public class UpdateStatusResultByIdApplicationCommand implements Command {
 
     private final ApplicationService service;
     private final RequestFactory requestFactory;
-    private final PropertyContext propertyContext;
 
-    UpdateStatusResultByIdApplicationCommand(EntityService<Application> service, RequestFactory requestFactory,
-                                             PropertyContext propertyContext) {
+    UpdateStatusResultByIdApplicationCommand() {
         this.service = ServiceFactory.simple().applicationService();
         this.requestFactory = RequestFactory.getInstance();
-        this.propertyContext = PropertyContext.instance();
     }
 
     @Override
@@ -67,7 +61,6 @@ public class UpdateStatusResultByIdApplicationCommand implements Command {
 
     private static class Holder {
         public static final UpdateStatusResultByIdApplicationCommand INSTANCE =
-                new UpdateStatusResultByIdApplicationCommand(ServiceFactory.simple().serviceFor(Application.class),
-                        RequestFactory.getInstance(), PropertyContext.instance());
+                new UpdateStatusResultByIdApplicationCommand();
     }
 }

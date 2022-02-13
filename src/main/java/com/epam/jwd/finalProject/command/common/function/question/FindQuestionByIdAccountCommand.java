@@ -35,8 +35,7 @@ public class FindQuestionByIdAccountCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    FindQuestionByIdAccountCommand(QuestionService service, RequestFactory requestFactory,
-                                   PropertyContext propertyContext) {
+    FindQuestionByIdAccountCommand() {
         this.service = ServiceFactory.simple().questionService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -45,12 +44,15 @@ public class FindQuestionByIdAccountCommand implements Command {
     @Override
     public CommandResponse execute(CommandRequest request) {
         final Optional<User> userOptional = request.retrieveFromSession(USER_SESSION_ATTRIBUTE_NAME);
-        final Long idAccount = userOptional.get().getId();
+        Long idAccount = (long) 0;
+        if (userOptional.isPresent()) {
+            idAccount = userOptional.get().getId();
+        }
         final List<Question> questionList;
         try {
             final Long pageNum = Long.valueOf(request.getParameter(FIND_PARAM_PAGE));
             final Long count = service.findCountAllQuestionByUser(idAccount);
-            questionList = service.findAccountIdByQuestion(idAccount,pageNum);
+            questionList = service.findAccountIdByQuestion(idAccount, pageNum);
             request.addAttributeToJsp(QUESTION_ATTRIBUTE_NAME, questionList);
             request.addAttributeToJsp(PAGES_ATTRIBUTE_NAME, count);
         } catch (ValidationException e) {
@@ -68,7 +70,6 @@ public class FindQuestionByIdAccountCommand implements Command {
 
     private static class Holder {
         public static final FindQuestionByIdAccountCommand INSTANCE =
-                new FindQuestionByIdAccountCommand(ServiceFactory.simple().questionService(),
-                        RequestFactory.getInstance(), PropertyContext.instance());
+                new FindQuestionByIdAccountCommand();
     }
 }

@@ -7,7 +7,6 @@ import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
 import com.epam.jwd.finalProject.model.Application;
 import com.epam.jwd.finalProject.service.api.ApplicationService;
-import com.epam.jwd.finalProject.service.api.EntityService;
 import com.epam.jwd.finalProject.service.exception.ServiceException;
 import com.epam.jwd.finalProject.service.factory.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
@@ -32,8 +31,7 @@ public class ShowApplicationPageCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    ShowApplicationPageCommand(EntityService<Application> service, RequestFactory requestFactory,
-                               PropertyContext propertyContext) {
+    ShowApplicationPageCommand() {
         this.service = ServiceFactory.simple().applicationService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -59,7 +57,6 @@ public class ShowApplicationPageCommand implements Command {
 
     private static class Holder {
         public static final ShowApplicationPageCommand INSTANCE =
-                new ShowApplicationPageCommand(ServiceFactory.simple().serviceFor(Application.class),
-                        RequestFactory.getInstance(), PropertyContext.instance());
+                new ShowApplicationPageCommand();
     }
 }

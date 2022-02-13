@@ -27,7 +27,7 @@ public class RecoveryPasswordStageBeforeCodeCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    RecoveryPasswordStageBeforeCodeCommand(UserService service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    RecoveryPasswordStageBeforeCodeCommand() {
         this.service = ServiceFactory.simple().userService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -39,7 +39,7 @@ public class RecoveryPasswordStageBeforeCodeCommand implements Command {
         final Long code = generatorCode();
         try {
             boolean resultFound = service.findByEmail(email);
-            if (resultFound == false) {
+            if (!resultFound) {
                 request.addAttributeToJsp(ERROR_FIND_USER_PASS_ATTRIBUTE, ERROR_FIND_USER_PASS_MESSAGE);
                 return requestFactory.createForwardResponse(propertyContext.get(RECOVERY_PASSWORD_PAGE));
             }
@@ -65,7 +65,6 @@ public class RecoveryPasswordStageBeforeCodeCommand implements Command {
 
     private static class Holder {
         public static final RecoveryPasswordStageBeforeCodeCommand INSTANCE =
-                new RecoveryPasswordStageBeforeCodeCommand(ServiceFactory.simple().userService(), RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new RecoveryPasswordStageBeforeCodeCommand();
     }
 }

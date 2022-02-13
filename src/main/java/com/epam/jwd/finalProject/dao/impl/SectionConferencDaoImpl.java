@@ -70,7 +70,7 @@ public class SectionConferencDaoImpl implements SectionConferencDao {
                     "ON category_id=id_category JOIN status ON section_conferenc_status_id=id_status " +
                     "WHERE section_conferenc.conferenc_id=? && section_conferenc_status_id=1";
 
-    private static final String FIND_ALL_COUNT_SECTION_CONFERENC=
+    private static final String FIND_ALL_COUNT_SECTION_CONFERENC =
             "SELECT COUNT(id_section_conferenc) FROM section_conferenc JOIN conferenc " +
                     "ON conferenc_id=id_conferenc JOIN category ON category_id=id_category JOIN status " +
                     "ON section_conferenc_status_id=id_status";
@@ -199,11 +199,7 @@ public class SectionConferencDaoImpl implements SectionConferencDao {
         } catch (EntityExtractionFailedException e) {
             LOG.error("could not extract entity", e);
         }
-        if (productOptional.isPresent()) {
-            return true;
-        } else {
-            return false;
-        }
+        return productOptional.isPresent();
     }
 
     /**
@@ -292,7 +288,7 @@ public class SectionConferencDaoImpl implements SectionConferencDao {
      * @return List section conferenc
      */
     @Override
-    public List<SectionConferenc> readAll(Long limit,Long offset) throws EntityExtractionFailedException, DaoException {
+    public List<SectionConferenc> readAll(Long limit, Long offset) throws EntityExtractionFailedException, DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ALL_SECTION_CONFERENC)) {
             statement.setLong(1, limit);

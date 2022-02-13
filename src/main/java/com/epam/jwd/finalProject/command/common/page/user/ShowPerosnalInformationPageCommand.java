@@ -16,7 +16,7 @@ public class ShowPerosnalInformationPageCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    ShowPerosnalInformationPageCommand(RequestFactory requestFactory, PropertyContext propertyContext) {
+    ShowPerosnalInformationPageCommand() {
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
     }
@@ -32,6 +32,6 @@ public class ShowPerosnalInformationPageCommand implements Command {
 
     private static class Holder {
         public static final ShowPerosnalInformationPageCommand INSTANCE =
-                new ShowPerosnalInformationPageCommand(RequestFactory.getInstance(), PropertyContext.instance());
+                new ShowPerosnalInformationPageCommand();
     }
 }

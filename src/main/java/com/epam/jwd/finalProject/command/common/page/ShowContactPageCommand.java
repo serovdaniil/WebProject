@@ -16,7 +16,7 @@ public class ShowContactPageCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    ShowContactPageCommand(RequestFactory requestFactory, PropertyContext propertyContext) {
+    ShowContactPageCommand() {
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
     }
@@ -32,6 +32,6 @@ public class ShowContactPageCommand implements Command {
 
     private static class Holder {
         public static final ShowContactPageCommand INSTANCE =
-                new ShowContactPageCommand(RequestFactory.getInstance(), PropertyContext.instance());
+                new ShowContactPageCommand();
     }
 }

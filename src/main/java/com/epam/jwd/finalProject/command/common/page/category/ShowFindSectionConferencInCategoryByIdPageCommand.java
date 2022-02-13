@@ -18,8 +18,7 @@ public class ShowFindSectionConferencInCategoryByIdPageCommand implements Comman
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    ShowFindSectionConferencInCategoryByIdPageCommand(RequestFactory requestFactory,
-                                                      PropertyContext propertyContext) {
+    ShowFindSectionConferencInCategoryByIdPageCommand() {
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
     }
@@ -35,7 +34,6 @@ public class ShowFindSectionConferencInCategoryByIdPageCommand implements Comman
 
     private static class Holder {
         public static final ShowFindSectionConferencInCategoryByIdPageCommand INSTANCE =
-                new ShowFindSectionConferencInCategoryByIdPageCommand(RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new ShowFindSectionConferencInCategoryByIdPageCommand();
     }
 }

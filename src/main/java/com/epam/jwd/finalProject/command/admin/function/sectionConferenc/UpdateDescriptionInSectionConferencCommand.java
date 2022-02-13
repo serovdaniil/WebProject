@@ -31,8 +31,7 @@ public class UpdateDescriptionInSectionConferencCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    UpdateDescriptionInSectionConferencCommand(SectionConferencService service, RequestFactory requestFactory,
-                                               PropertyContext propertyContext) {
+    UpdateDescriptionInSectionConferencCommand() {
         this.service = ServiceFactory.simple().sectionConferencService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -64,7 +63,6 @@ public class UpdateDescriptionInSectionConferencCommand implements Command {
 
     private static class Holder {
         public static final UpdateDescriptionInSectionConferencCommand INSTANCE =
-                new UpdateDescriptionInSectionConferencCommand(ServiceFactory.simple().sectionConferencService(),
-                        RequestFactory.getInstance(), PropertyContext.instance());
+                new UpdateDescriptionInSectionConferencCommand();
     }
 }

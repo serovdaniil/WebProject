@@ -16,7 +16,7 @@ public class ShowAboutPageCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    ShowAboutPageCommand(RequestFactory requestFactory, PropertyContext propertyContext) {
+    ShowAboutPageCommand() {
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
     }
@@ -32,6 +32,6 @@ public class ShowAboutPageCommand implements Command {
 
     private static class Holder {
         public static final ShowAboutPageCommand INSTANCE =
-                new ShowAboutPageCommand(RequestFactory.getInstance(), PropertyContext.instance());
+                new ShowAboutPageCommand();
     }
 }

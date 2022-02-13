@@ -31,8 +31,7 @@ public class ShowFindSectionConferencesInConferencByIdPageCommand implements Com
     private static final String CONFERENCES_ATTRIBUTE_NAME = "conferences";
     private static final Logger LOG = LogManager.getLogger(FindSectionConferencByNameCommand.class);
 
-    ShowFindSectionConferencesInConferencByIdPageCommand(RequestFactory requestFactory,
-                                                         PropertyContext propertyContext) {
+    ShowFindSectionConferencesInConferencByIdPageCommand() {
         this.service = ServiceFactory.simple().sectionConferencService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -59,7 +58,6 @@ public class ShowFindSectionConferencesInConferencByIdPageCommand implements Com
 
     private static class Holder {
         public static final ShowFindSectionConferencesInConferencByIdPageCommand INSTANCE =
-                new ShowFindSectionConferencesInConferencByIdPageCommand(RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new ShowFindSectionConferencesInConferencByIdPageCommand();
     }
 }

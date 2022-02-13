@@ -3,10 +3,8 @@ package com.epam.jwd.finalProject.command.admin.function.question;
 import com.epam.jwd.finalProject.command.factory.Command;
 import com.epam.jwd.finalProject.command.factory.CommandRequest;
 import com.epam.jwd.finalProject.command.factory.CommandResponse;
-import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
 import com.epam.jwd.finalProject.model.Question;
-import com.epam.jwd.finalProject.service.api.EntityService;
 import com.epam.jwd.finalProject.service.api.QuestionService;
 import com.epam.jwd.finalProject.service.exception.ServiceException;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
@@ -34,13 +32,10 @@ public class AddAnswerToQuestionCommand implements Command {
 
     private final QuestionService questionService;
     private final RequestFactory requestFactory;
-    private final PropertyContext propertyContext;
 
-    AddAnswerToQuestionCommand(EntityService<Question> questionServiceservice, RequestFactory requestFactory,
-                               PropertyContext propertyContext) {
+    AddAnswerToQuestionCommand() {
         this.questionService = ServiceFactory.simple().questionService();
         this.requestFactory = RequestFactory.getInstance();
-        this.propertyContext = PropertyContext.instance();
     }
 
     @Override
@@ -77,7 +72,6 @@ public class AddAnswerToQuestionCommand implements Command {
 
     private static class Holder {
         public static final AddAnswerToQuestionCommand INSTANCE =
-                new AddAnswerToQuestionCommand(ServiceFactory.simple().serviceFor(Question.class),
-                        RequestFactory.getInstance(), PropertyContext.instance());
+                new AddAnswerToQuestionCommand();
     }
 }

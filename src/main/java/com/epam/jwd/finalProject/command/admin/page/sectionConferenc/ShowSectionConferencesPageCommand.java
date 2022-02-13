@@ -31,8 +31,7 @@ public class ShowSectionConferencesPageCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    ShowSectionConferencesPageCommand(SectionConferencService service, RequestFactory requestFactory,
-                                      PropertyContext propertyContext) {
+    ShowSectionConferencesPageCommand() {
         this.service = ServiceFactory.simple().sectionConferencService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -58,7 +57,6 @@ public class ShowSectionConferencesPageCommand implements Command {
 
     private static class Holder {
         public static final ShowSectionConferencesPageCommand INSTANCE =
-                new ShowSectionConferencesPageCommand(ServiceFactory.simple().sectionConferencService(),
-                        RequestFactory.getInstance(), PropertyContext.instance());
+                new ShowSectionConferencesPageCommand();
     }
 }

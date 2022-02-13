@@ -16,7 +16,7 @@ public class ShowCreateAnAccountCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    ShowCreateAnAccountCommand(RequestFactory requestFactory, PropertyContext propertyContext) {
+    ShowCreateAnAccountCommand() {
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
     }
@@ -32,6 +32,6 @@ public class ShowCreateAnAccountCommand implements Command {
 
     private static class Holder {
         public static final ShowCreateAnAccountCommand INSTANCE =
-                new ShowCreateAnAccountCommand(RequestFactory.getInstance(), PropertyContext.instance());
+                new ShowCreateAnAccountCommand();
     }
 }

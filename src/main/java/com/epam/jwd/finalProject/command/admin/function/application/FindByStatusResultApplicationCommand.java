@@ -7,7 +7,6 @@ import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
 import com.epam.jwd.finalProject.model.Application;
 import com.epam.jwd.finalProject.service.api.ApplicationService;
-import com.epam.jwd.finalProject.service.api.EntityService;
 import com.epam.jwd.finalProject.service.exception.ServiceException;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
 import com.epam.jwd.finalProject.service.factory.ServiceFactory;
@@ -32,8 +31,7 @@ public class FindByStatusResultApplicationCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    FindByStatusResultApplicationCommand(EntityService<Application> service, RequestFactory requestFactory,
-                                         PropertyContext propertyContext) {
+    FindByStatusResultApplicationCommand() {
         this.service = ServiceFactory.simple().applicationService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -60,7 +58,6 @@ public class FindByStatusResultApplicationCommand implements Command {
 
     private static class Holder {
         public static final FindByStatusResultApplicationCommand INSTANCE =
-                new FindByStatusResultApplicationCommand(ServiceFactory.simple().serviceFor(Application.class),
-                        RequestFactory.getInstance(), PropertyContext.instance());
+                new FindByStatusResultApplicationCommand();
     }
 }

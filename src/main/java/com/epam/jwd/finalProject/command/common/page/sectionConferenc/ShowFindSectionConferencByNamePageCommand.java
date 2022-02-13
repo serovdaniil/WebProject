@@ -16,7 +16,7 @@ public class ShowFindSectionConferencByNamePageCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    ShowFindSectionConferencByNamePageCommand(RequestFactory requestFactory, PropertyContext propertyContext) {
+    ShowFindSectionConferencByNamePageCommand() {
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
     }
@@ -32,7 +32,6 @@ public class ShowFindSectionConferencByNamePageCommand implements Command {
 
     private static class Holder {
         public static final ShowFindSectionConferencByNamePageCommand INSTANCE =
-                new ShowFindSectionConferencByNamePageCommand(RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new ShowFindSectionConferencByNamePageCommand();
     }
 }

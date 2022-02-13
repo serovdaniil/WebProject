@@ -38,8 +38,7 @@ public class CreateAnAccountCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    CreateAnAccountCommand(UserService userService, RequestFactory requestFactory,
-                           PropertyContext propertyContext) {
+    CreateAnAccountCommand() {
         this.userService = ServiceFactory.simple().userService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -81,8 +80,6 @@ public class CreateAnAccountCommand implements Command {
 
     private static class Holder {
         public static final CreateAnAccountCommand INSTANCE =
-                new CreateAnAccountCommand(ServiceFactory.simple().userService(),
-                        RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new CreateAnAccountCommand();
     }
 }

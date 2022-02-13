@@ -31,7 +31,7 @@ public class ReadUserByIdCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    ReadUserByIdCommand(UserService service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    ReadUserByIdCommand() {
         this.service = ServiceFactory.simple().userService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -41,14 +41,16 @@ public class ReadUserByIdCommand implements Command {
     public CommandResponse execute(CommandRequest request) {
         final Long idAccount = Long.parseLong(request.getParameter(FIND_PARAM_ID_ACCOUNT));
         final Optional<User> optionalUser;
-        final User user;
+        User user = null;
         try {
             optionalUser = service.findId(idAccount);
-            user=optionalUser.get();
+            if (optionalUser.isPresent()) {
+                user = optionalUser.get();
+            }
             request.addAttributeToJsp(USER_ATTRIBUTE_NAME, user);
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
-        }catch (ServiceException e) {
+        } catch (ServiceException e) {
             LOG.error("The service exception!" + e);
         }
 
@@ -61,7 +63,6 @@ public class ReadUserByIdCommand implements Command {
 
     private static class Holder {
         public static final ReadUserByIdCommand INSTANCE =
-                new ReadUserByIdCommand(ServiceFactory.simple().userService(), RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new ReadUserByIdCommand();
     }
 }

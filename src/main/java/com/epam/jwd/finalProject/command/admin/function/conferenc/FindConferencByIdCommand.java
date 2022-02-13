@@ -31,8 +31,7 @@ public class FindConferencByIdCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    FindConferencByIdCommand(ConferencService service, RequestFactory requestFactory,
-                             PropertyContext propertyContext) {
+    FindConferencByIdCommand() {
         this.service = ServiceFactory.simple().conferencService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -42,10 +41,12 @@ public class FindConferencByIdCommand implements Command {
     public CommandResponse execute(CommandRequest request) {
         final Long id = Long.parseLong(request.getParameter(PARAM_ID));
         final Optional<Conferenc> conferencOptional;
-        final Conferenc conferenc;
+        Conferenc conferenc = null;
         try {
             conferencOptional = service.findId(id);
-            conferenc = conferencOptional.get();
+            if (conferencOptional.isPresent()) {
+                conferenc = conferencOptional.get();
+            }
             request.addAttributeToJsp(CONFERENCES_ATTRIBUTE_NAME_FIND, conferenc);
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
@@ -61,7 +62,6 @@ public class FindConferencByIdCommand implements Command {
 
     private static class Holder {
         public static final FindConferencByIdCommand INSTANCE =
-                new FindConferencByIdCommand(ServiceFactory.simple().conferencService(),
-                        RequestFactory.getInstance(), PropertyContext.instance());
+                new FindConferencByIdCommand();
     }
 }

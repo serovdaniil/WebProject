@@ -36,7 +36,7 @@ public class UpdateEmailCommand implements Command {
     private final PropertyContext propertyContext;
 
 
-    UpdateEmailCommand(UserService service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    UpdateEmailCommand() {
         this.service = ServiceFactory.simple().userService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -45,17 +45,24 @@ public class UpdateEmailCommand implements Command {
     @Override
     public CommandResponse execute(CommandRequest request) {
         final Optional<User> userOptional = request.retrieveFromSession(USER_SESSION_ATTRIBUTE_NAME);
-        final Long id = userOptional.get().getId();
+        Long id = (long) 0;
+        String newEmail = "";
+        if (userOptional.isPresent()) {
+            id = userOptional.get().getId();
+        }
         final String email = request.getParameter(FIND_PARAM_EMAIL);
         Optional<User> user = Optional.empty();
         try {
             user = service.updateEmail(id, email);
+            if (user.isPresent()) {
+                newEmail = user.get().getEmail();
+            }
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
-        }catch (ServiceException e) {
+        } catch (ServiceException e) {
             LOG.error("The service exception!" + e);
         }
-        if (email.equals(user.get().getEmail())) {
+        if (email.equals(newEmail) && (user.isPresent())) {
             request.clearSession();
             request.createSession();
             request.addToSession(USER_SESSION_ATTRIBUTE_NAME, user.get());
@@ -72,7 +79,6 @@ public class UpdateEmailCommand implements Command {
 
     private static class Holder {
         public static final UpdateEmailCommand INSTANCE =
-                new UpdateEmailCommand(ServiceFactory.simple().userService(), RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new UpdateEmailCommand();
     }
 }

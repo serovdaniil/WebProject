@@ -12,7 +12,7 @@ public class ShowRecoveryPasswordPageCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    ShowRecoveryPasswordPageCommand(RequestFactory requestFactory, PropertyContext propertyContext) {
+    ShowRecoveryPasswordPageCommand() {
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
     }
@@ -28,6 +28,6 @@ public class ShowRecoveryPasswordPageCommand implements Command {
 
     private static class Holder {
         public static final ShowRecoveryPasswordPageCommand INSTANCE =
-                new ShowRecoveryPasswordPageCommand(RequestFactory.getInstance(), PropertyContext.instance());
+                new ShowRecoveryPasswordPageCommand();
     }
 }

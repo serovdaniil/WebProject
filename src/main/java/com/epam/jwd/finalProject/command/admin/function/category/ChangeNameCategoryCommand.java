@@ -31,8 +31,7 @@ public class ChangeNameCategoryCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    ChangeNameCategoryCommand(CategoryService service, RequestFactory requestFactory,
-                              PropertyContext propertyContext) {
+    ChangeNameCategoryCommand() {
         this.service = ServiceFactory.simple().categoryService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -64,7 +63,6 @@ public class ChangeNameCategoryCommand implements Command {
 
     private static class Holder {
         public static final ChangeNameCategoryCommand INSTANCE =
-                new ChangeNameCategoryCommand(ServiceFactory.simple().categoryService(),
-                        RequestFactory.getInstance(), PropertyContext.instance());
+                new ChangeNameCategoryCommand();
     }
 }

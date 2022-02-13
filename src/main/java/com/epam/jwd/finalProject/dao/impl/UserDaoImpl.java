@@ -102,7 +102,7 @@ public class UserDaoImpl implements UserDao {
      */
     @Override
     public Optional<User> create(String email, String password) throws DaoException {
-        boolean result = false;
+        boolean result;
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(CREATE_USER)) {
             statement.setString(1, email);
@@ -160,7 +160,7 @@ public class UserDaoImpl implements UserDao {
      */
     @Override
     public Optional<User> updatePasswordByLogin(String login, String password) throws DaoException {
-        boolean result = false;
+        boolean result;
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_PASSWORD_BY_LOGIN_ACCOUNT)) {
             statement.setString(2, login);

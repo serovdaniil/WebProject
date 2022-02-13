@@ -208,11 +208,7 @@ public class ConferencDaoImpl implements ConferencDao {
         } catch (EntityExtractionFailedException e) {
             LOG.error("could not extract entity", e);
         }
-        if (productOptional.isPresent()) {
-            return true;
-        } else {
-            return false;
-        }
+        return productOptional.isPresent();
     }
 
     /**
@@ -270,12 +266,12 @@ public class ConferencDaoImpl implements ConferencDao {
     /**
      * Read all conferenc
      *
-     * @param limit number of rows in the selection
+     * @param limit  number of rows in the selection
      * @param offset offset from the beginning of the selection
      * @return List Conferenc
      */
     @Override
-    public List<Conferenc> readAll(Long limit,Long offset) throws EntityExtractionFailedException, DaoException {
+    public List<Conferenc> readAll(Long limit, Long offset) throws EntityExtractionFailedException, DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ALL_CONFERENC)) {
             statement.setLong(1, limit);
@@ -352,7 +348,7 @@ public class ConferencDaoImpl implements ConferencDao {
      */
     @Override
     public boolean delete(Long id) throws DaoException {
-        boolean result = false;
+        boolean result;
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(CONFERENC_DELETE)) {
             statement.setLong(1, id);

@@ -201,11 +201,7 @@ public class QuestionDaoImpl implements QuestionDao {
         } catch (EntityExtractionFailedException e) {
             LOG.error("could not extract entity", e);
         }
-        if (productOptional.isPresent()) {
-            return true;
-        } else {
-            return false;
-        }
+        return productOptional.isPresent();
     }
 
     /**

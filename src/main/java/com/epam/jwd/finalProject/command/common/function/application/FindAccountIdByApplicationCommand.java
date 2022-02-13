@@ -8,7 +8,6 @@ import com.epam.jwd.finalProject.controller.RequestFactory;
 import com.epam.jwd.finalProject.model.Application;
 import com.epam.jwd.finalProject.model.User;
 import com.epam.jwd.finalProject.service.api.ApplicationService;
-import com.epam.jwd.finalProject.service.api.EntityService;
 import com.epam.jwd.finalProject.service.exception.ServiceException;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
 import com.epam.jwd.finalProject.service.factory.ServiceFactory;
@@ -36,8 +35,7 @@ public class FindAccountIdByApplicationCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    FindAccountIdByApplicationCommand(EntityService<Application> service, RequestFactory requestFactory,
-                                      PropertyContext propertyContext) {
+    FindAccountIdByApplicationCommand() {
         this.service = ServiceFactory.simple().applicationService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -46,12 +44,15 @@ public class FindAccountIdByApplicationCommand implements Command {
     @Override
     public CommandResponse execute(CommandRequest request) {
         final Optional<User> userOptional = request.retrieveFromSession(USER_SESSION_ATTRIBUTE_NAME);
-        final Long id = userOptional.get().getId();
+        Long id = (long) 0;
+        if (userOptional.isPresent()) {
+            id = userOptional.get().getId();
+        }
         final List<Application> applicationList;
         try {
             final Long pageNum = Long.valueOf(request.getParameter(FIND_PARAM_PAGE));
             final Long count = service.findCountAllApplicationByUser(id);
-            applicationList = service.findAccountIdByApplication(id,pageNum);
+            applicationList = service.findAccountIdByApplication(id, pageNum);
             request.addAttributeToJsp(APPLICATIONS_ATTRIBUTE_NAME, applicationList);
             request.addAttributeToJsp(PAGES_ATTRIBUTE_NAME, count);
         } catch (ValidationException e) {
@@ -68,7 +69,6 @@ public class FindAccountIdByApplicationCommand implements Command {
 
     private static class Holder {
         public static final FindAccountIdByApplicationCommand INSTANCE =
-                new FindAccountIdByApplicationCommand(ServiceFactory.simple().serviceFor(Application.class),
-                        RequestFactory.getInstance(), PropertyContext.instance());
+                new FindAccountIdByApplicationCommand();
     }
 }

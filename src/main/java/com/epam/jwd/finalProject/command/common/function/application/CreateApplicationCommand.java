@@ -8,7 +8,6 @@ import com.epam.jwd.finalProject.controller.RequestFactory;
 import com.epam.jwd.finalProject.model.Application;
 import com.epam.jwd.finalProject.model.User;
 import com.epam.jwd.finalProject.service.api.ApplicationService;
-import com.epam.jwd.finalProject.service.api.EntityService;
 import com.epam.jwd.finalProject.service.exception.ServiceException;
 import com.epam.jwd.finalProject.service.exception.ValidationException;
 import com.epam.jwd.finalProject.service.factory.ServiceFactory;
@@ -41,8 +40,7 @@ public class CreateApplicationCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    CreateApplicationCommand(EntityService<Application> service, RequestFactory requestFactory,
-                             PropertyContext propertyContext) {
+    CreateApplicationCommand() {
         this.applicationService = ServiceFactory.simple().applicationService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -51,7 +49,10 @@ public class CreateApplicationCommand implements Command {
     @Override
     public CommandResponse execute(CommandRequest request) {
         final Optional<User> userOptional = request.retrieveFromSession(USER_SESSION_ATTRIBUTE_NAME);
-        final Long idAccount = userOptional.get().getId();
+        Long idAccount = (long) 0;
+        if (userOptional.isPresent()) {
+            idAccount = userOptional.get().getId();
+        }
         final Long idSectionConferenc = Long.parseLong(request.getParameter(PARAM_ID));
         boolean result;
         final List<Application> applicationList;
@@ -59,16 +60,16 @@ public class CreateApplicationCommand implements Command {
             final Long count = applicationService.findCountAllApplicationByUser(idAccount);
             for (long i = 1; i < 3; i++) {
                 result = applicationService.findForDuplicateApplication(idAccount, idSectionConferenc, i);
-                if (result == true) {
+                if (result) {
                     request.addAttributeToJsp(ERROR_DUPLICATE_PASS_ATTRIBUTE, ERROR_DUPLICATE_PASS_MESSAGE);
-                    applicationList = applicationService.findAccountIdByApplication(idAccount,(long)1);
+                    applicationList = applicationService.findAccountIdByApplication(idAccount, (long) 1);
                     request.addAttributeToJsp(APPLICATIONS_ATTRIBUTE_NAME_SECTION_CONFERENC, applicationList);
                     request.addAttributeToJsp(PAGES_ATTRIBUTE_NAME, count);
                     return requestFactory.createForwardResponse(propertyContext.get(APPLICATIONS_ACCOUNT_PAGE));
                 }
             }
             result = applicationService.create(idAccount, idSectionConferenc, (long) 1);
-            applicationList = applicationService.findAccountIdByApplication(idAccount,(long)1);
+            applicationList = applicationService.findAccountIdByApplication(idAccount, (long) 1);
             request.addAttributeToJsp(APPLICATIONS_ATTRIBUTE_NAME_SECTION_CONFERENC, applicationList);
             request.addAttributeToJsp(APPLICATIONS_ATTRIBUTE_NAME, result);
             request.addAttributeToJsp(PAGES_ATTRIBUTE_NAME, count);
@@ -86,7 +87,6 @@ public class CreateApplicationCommand implements Command {
 
     private static class Holder {
         public static final CreateApplicationCommand INSTANCE =
-                new CreateApplicationCommand(ServiceFactory.simple().serviceFor(Application.class),
-                        RequestFactory.getInstance(), PropertyContext.instance());
+                new CreateApplicationCommand();
     }
 }

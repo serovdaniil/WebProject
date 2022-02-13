@@ -17,7 +17,7 @@ public class ShowFindConferencInIdCategoryPageCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    ShowFindConferencInIdCategoryPageCommand(RequestFactory requestFactory, PropertyContext propertyContext) {
+    ShowFindConferencInIdCategoryPageCommand() {
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
     }
@@ -33,7 +33,6 @@ public class ShowFindConferencInIdCategoryPageCommand implements Command {
 
     private static class Holder {
         public static final ShowFindConferencInIdCategoryPageCommand INSTANCE =
-                new ShowFindConferencInIdCategoryPageCommand(RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new ShowFindConferencInIdCategoryPageCommand();
     }
 }

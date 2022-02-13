@@ -16,7 +16,7 @@ public class ShowLoginPageCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    ShowLoginPageCommand(RequestFactory requestFactory, PropertyContext propertyContext) {
+    ShowLoginPageCommand() {
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
     }
@@ -32,6 +32,6 @@ public class ShowLoginPageCommand implements Command {
 
     private static class Holder {
         public static final ShowLoginPageCommand INSTANCE =
-                new ShowLoginPageCommand(RequestFactory.getInstance(), PropertyContext.instance());
+                new ShowLoginPageCommand();
     }
 }

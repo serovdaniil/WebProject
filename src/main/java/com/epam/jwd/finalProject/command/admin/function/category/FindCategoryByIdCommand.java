@@ -31,8 +31,7 @@ public class FindCategoryByIdCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    FindCategoryByIdCommand(CategoryService service, RequestFactory requestFactory,
-                            PropertyContext propertyContext) {
+    FindCategoryByIdCommand() {
         this.service = ServiceFactory.simple().categoryService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -59,7 +58,6 @@ public class FindCategoryByIdCommand implements Command {
 
     private static class Holder {
         public static final FindCategoryByIdCommand INSTANCE =
-                new FindCategoryByIdCommand(ServiceFactory.simple().categoryService(),
-                        RequestFactory.getInstance(), PropertyContext.instance());
+                new FindCategoryByIdCommand();
     }
 }

@@ -30,8 +30,7 @@ public class RemoveCategoryByIdCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    RemoveCategoryByIdCommand(CategoryService service, RequestFactory requestFactory,
-                              PropertyContext propertyContext) {
+    RemoveCategoryByIdCommand() {
         this.service = ServiceFactory.simple().categoryService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -62,7 +61,6 @@ public class RemoveCategoryByIdCommand implements Command {
 
     private static class Holder {
         public static final RemoveCategoryByIdCommand INSTANCE =
-                new RemoveCategoryByIdCommand(ServiceFactory.simple().categoryService(),
-                        RequestFactory.getInstance(), PropertyContext.instance());
+                new RemoveCategoryByIdCommand();
     }
 }

@@ -19,7 +19,7 @@ public class LogoutCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    LogoutCommand(RequestFactory requestFactory, PropertyContext propertyContext) {
+    LogoutCommand() {
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
     }
@@ -46,6 +46,6 @@ public class LogoutCommand implements Command {
 
     private static class Holder {
         public static final LogoutCommand INSTANCE =
-                new LogoutCommand(RequestFactory.getInstance(), PropertyContext.instance());
+                new LogoutCommand();
     }
 }

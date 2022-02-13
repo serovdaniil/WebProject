@@ -30,8 +30,7 @@ public class ShowSectionConferencWithPaginationCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    ShowSectionConferencWithPaginationCommand(SectionConferencService service, RequestFactory requestFactory,
-                                              PropertyContext propertyContext) {
+    ShowSectionConferencWithPaginationCommand() {
         this.service = ServiceFactory.simple().sectionConferencService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -40,7 +39,7 @@ public class ShowSectionConferencWithPaginationCommand implements Command {
     @Override
     public CommandResponse execute(CommandRequest request) {
         try {
-            final Long pageNum = Long.valueOf(request.getParameter(FIND_PARAM_PAGE));
+            final Long pageNum = Long.parseLong(request.getParameter(FIND_PARAM_PAGE));
             Long id = request.retrieveFromSessionLong(ID_CONFERENC_SESSION_ATTRIBUTE_NAME);
             final List<SectionConferenc> conferencesAll =
                     service.findSectionConferencesInConferencByIdWithPagination(id, pageNum);
@@ -59,7 +58,6 @@ public class ShowSectionConferencWithPaginationCommand implements Command {
 
     private static class Holder {
         public static final ShowSectionConferencWithPaginationCommand INSTANCE =
-                new ShowSectionConferencWithPaginationCommand(ServiceFactory.simple().sectionConferencService(),
-                        RequestFactory.getInstance(), PropertyContext.instance());
+                new ShowSectionConferencWithPaginationCommand();
     }
 }

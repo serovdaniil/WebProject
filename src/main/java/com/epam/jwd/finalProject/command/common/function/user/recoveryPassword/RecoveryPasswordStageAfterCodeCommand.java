@@ -15,7 +15,6 @@ import org.apache.logging.log4j.Logger;
 
 public class RecoveryPasswordStageAfterCodeCommand implements Command {
     private static final String PARAM_EMAIL = "email";
-    private static final String PARAM_RESULT = "result";
     private static final String PASSWORD_REQUEST_PARAM_NAME = "password";
     private static final String PASSWORD_REPEAT_REQUEST_PARAM_NAME = "passwordRepeat";
     private static final String ERROR_PASSWORD_PASS_MESSAGE = "Passwords do not match, repeat the input!";
@@ -30,7 +29,7 @@ public class RecoveryPasswordStageAfterCodeCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    RecoveryPasswordStageAfterCodeCommand(UserService service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    RecoveryPasswordStageAfterCodeCommand() {
         this.service = ServiceFactory.simple().userService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -61,7 +60,6 @@ public class RecoveryPasswordStageAfterCodeCommand implements Command {
 
     private static class Holder {
         public static final RecoveryPasswordStageAfterCodeCommand INSTANCE =
-                new RecoveryPasswordStageAfterCodeCommand(ServiceFactory.simple().userService(), RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new RecoveryPasswordStageAfterCodeCommand();
     }
 }

@@ -16,7 +16,7 @@ public class ShowMainPageCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    ShowMainPageCommand(RequestFactory requestFactory, PropertyContext propertyContext) {
+    ShowMainPageCommand() {
           this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
     }
@@ -31,6 +31,6 @@ public class ShowMainPageCommand implements Command {
 
     private static class Holder {
         public static final ShowMainPageCommand INSTANCE =
-                new ShowMainPageCommand(RequestFactory.getInstance(), PropertyContext.instance());
+                new ShowMainPageCommand();
     }
 }

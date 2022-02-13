@@ -32,8 +32,7 @@ public class CreateConferencCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    CreateConferencCommand(ConferencService service, RequestFactory requestFactory,
-                           PropertyContext propertyContext) {
+    CreateConferencCommand() {
         this.service = ServiceFactory.simple().conferencService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -71,7 +70,6 @@ public class CreateConferencCommand implements Command {
 
     private static class Holder {
         public static final CreateConferencCommand INSTANCE =
-                new CreateConferencCommand(ServiceFactory.simple().conferencService(),
-                        RequestFactory.getInstance(), PropertyContext.instance());
+                new CreateConferencCommand();
     }
 }

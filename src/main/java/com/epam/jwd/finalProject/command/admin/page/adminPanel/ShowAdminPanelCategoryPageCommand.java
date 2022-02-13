@@ -17,7 +17,7 @@ public class ShowAdminPanelCategoryPageCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    ShowAdminPanelCategoryPageCommand(RequestFactory requestFactory, PropertyContext propertyContext) {
+    ShowAdminPanelCategoryPageCommand() {
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
     }
@@ -33,6 +33,6 @@ public class ShowAdminPanelCategoryPageCommand implements Command {
 
     private static class Holder {
         public static final ShowAdminPanelCategoryPageCommand INSTANCE =
-                new ShowAdminPanelCategoryPageCommand(RequestFactory.getInstance(), PropertyContext.instance());
+                new ShowAdminPanelCategoryPageCommand();
     }
 }

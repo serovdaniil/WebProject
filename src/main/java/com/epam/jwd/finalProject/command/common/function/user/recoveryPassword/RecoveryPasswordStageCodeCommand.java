@@ -1,15 +1,10 @@
 package com.epam.jwd.finalProject.command.common.function.user.recoveryPassword;
 
-import com.epam.jwd.finalProject.command.common.function.user.UpdatePasswordCommand;
 import com.epam.jwd.finalProject.command.factory.Command;
 import com.epam.jwd.finalProject.command.factory.CommandRequest;
 import com.epam.jwd.finalProject.command.factory.CommandResponse;
 import com.epam.jwd.finalProject.controller.PropertyContext;
 import com.epam.jwd.finalProject.controller.RequestFactory;
-import com.epam.jwd.finalProject.service.api.UserService;
-import com.epam.jwd.finalProject.service.factory.ServiceFactory;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class RecoveryPasswordStageCodeCommand implements Command {
     private static final String CODE_SESSION_ATTRIBUTE_NAME = "code";
@@ -19,15 +14,10 @@ public class RecoveryPasswordStageCodeCommand implements Command {
     private static final String ERROR_FIND_USER_PASS_ATTRIBUTE = "errorCodePassMessage";
     private static final String RECOVERY_PASSWORD_PAGE = "page.recoveryPassword";
 
-
-    private static final Logger LOG = LogManager.getLogger(UpdatePasswordCommand.class);
-
-    private final UserService service;
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    RecoveryPasswordStageCodeCommand(UserService service, RequestFactory requestFactory, PropertyContext propertyContext) {
-        this.service = ServiceFactory.simple().userService();
+    RecoveryPasswordStageCodeCommand() {
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
     }
@@ -54,7 +44,6 @@ public class RecoveryPasswordStageCodeCommand implements Command {
 
     private static class Holder {
         public static final RecoveryPasswordStageCodeCommand INSTANCE =
-                new RecoveryPasswordStageCodeCommand(ServiceFactory.simple().userService(), RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new RecoveryPasswordStageCodeCommand();
     }
 }

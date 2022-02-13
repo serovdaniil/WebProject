@@ -35,7 +35,7 @@ public class UpdateLastNameCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    UpdateLastNameCommand(UserService service, RequestFactory requestFactory, PropertyContext propertyContext) {
+    UpdateLastNameCommand() {
         this.service = ServiceFactory.simple().userService();
         this.requestFactory = RequestFactory.getInstance();
         this.propertyContext = PropertyContext.instance();
@@ -44,17 +44,24 @@ public class UpdateLastNameCommand implements Command {
     @Override
     public CommandResponse execute(CommandRequest request) {
         final Optional<User> userOptional = request.retrieveFromSession(USER_SESSION_ATTRIBUTE_NAME);
-        final Long id = userOptional.get().getId();
+        Long id = (long) 0;
+        String newLastName = "";
+        if (userOptional.isPresent()) {
+            id = userOptional.get().getId();
+        }
         final String lastName = request.getParameter(FIND_PARAM_FIRTS_NAME);
         Optional<User> user = Optional.empty();
         try {
             user = service.updateLastName(id, lastName);
+            if (user.isPresent()) {
+                newLastName = user.get().getLastName();
+            }
         } catch (ValidationException e) {
             LOG.error("The entered data is not correct!" + e);
-        }catch (ServiceException e) {
+        } catch (ServiceException e) {
             LOG.error("The service exception!" + e);
         }
-        if (lastName.equals(user.get().getLastName())) {
+        if (lastName.equals(newLastName) && (user.isPresent())) {
             request.clearSession();
             request.createSession();
             request.addToSession(USER_SESSION_ATTRIBUTE_NAME, user.get());
@@ -71,7 +78,6 @@ public class UpdateLastNameCommand implements Command {
 
     private static class Holder {
         public static final UpdateLastNameCommand INSTANCE =
-                new UpdateLastNameCommand(ServiceFactory.simple().userService(), RequestFactory.getInstance(),
-                        PropertyContext.instance());
+                new UpdateLastNameCommand();
     }
 }
